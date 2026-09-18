@@ -106,8 +106,9 @@ jobs:
                      CODE_SIGN_IDENTITY="" \
                      PROVISIONING_PROFILE_SPEC="" \
                      build 2>&1 | tee xcodebuild.log || {
-                       echo "===== XCODEBUILD LOG ERRORS ====="
-                       tail -n 120 xcodebuild.log
+                       echo "::error::Xcode build failed!"
+                       grep -E "error:|fatal error:" xcodebuild.log | head -n 30 || true
+                       tail -n 80 xcodebuild.log
                        exit 1
                      }
 
@@ -129,6 +130,13 @@ jobs:
           cp -r "$APP_PATH" ../../build-output/Payload/
           cd ../../build-output
           zip -r RavanAstro.ipa Payload
+
+      - name: Upload Build Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-log
+          path: ios/App/xcodebuild.log
 
       - name: Upload iOS App (.ipa) Artifact
         uses: actions/upload-artifact@v4
