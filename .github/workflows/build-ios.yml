@@ -26,11 +26,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Node, Ruby & Build Dependencies
+      - name: Install Node & Build Dependencies
         run: |
           npm install -g @capacitor/cli
           npm install
-          gem install xcodeproj
 
       - name: Prepare Capacitor iOS Project
         run: |
@@ -87,27 +86,61 @@ jobs:
           /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity:NSAllowsArbitraryLoads bool true" ios/App/App/Info.plist || true
           /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity:NSAllowsLocalNetworking bool true" ios/App/App/Info.plist || true
 
-      - name: Configure Xcode Project with xcodeproj
-        run: |
-          ruby ios_src/setup_xcode.rb
-
       - name: Build iOS App with Xcode
         run: |
           cd ios/App
           pod install || true
+
+          HEADER_PATH="$(pwd)/Frameworks/Python.xcframework/ios-arm64/Python.framework/Headers"
+          FRAMEWORK_PATH="$(pwd)/Frameworks/Python.xcframework/ios-arm64"
+          BRIDGING_HEADER="$(pwd)/App/App-Bridging-Header.h"
+
           xcodebuild -workspace App.xcworkspace \
                      -scheme App \
                      -sdk iphoneos \
                      -configuration Release \
                      -derivedDataPath build \
+                     SWIFT_OBJC_BRIDGING_HEADER="$BRIDGING_HEADER" \
+                     HEADER_SEARCH_PATHS="$HEADER_PATH" \
+                     FRAMEWORK_SEARCH_PATHS="$FRAMEWORK_PATH $(pwd)/Frameworks" \
+                     OTHER_LDFLAGS="-F$FRAMEWORK_PATH -framework Python" \
+                     ENABLE_BITCODE=NO \
                      CODE_SIGNING_ALLOWED=NO \
                      CODE_SIGNING_REQUIRED=NO \
                      CODE_SIGN_IDENTITY="" \
                      PROVISIONING_PROFILE_SPEC="" \
-                     build || xcodebuild -project App.xcodeproj -scheme App -sdk iphoneos -configuration Release -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build
+                     build || xcodebuild -project App.xcodeproj \
+                                         -scheme App \
+                                         -sdk iphoneos \
+                                         -configuration Release \
+                                         -derivedDataPath build \
+                                         SWIFT_OBJC_BRIDGING_HEADER="$BRIDGING_HEADER" \
+                                         HEADER_SEARCH_PATHS="$HEADER_PATH" \
+                                         FRAMEWORK_SEARCH_PATHS="$FRAMEWORK_PATH $(pwd)/Frameworks" \
+                                         OTHER_LDFLAGS="-F$FRAMEWORK_PATH -framework Python" \
+                                         ENABLE_BITCODE=NO \
+                                         CODE_SIGNING_ALLOWED=NO \
+                                         CODE_SIGNING_REQUIRED=NO \
+                                         CODE_SIGN_IDENTITY="" \
+                                         PROVISIONING_PROFILE_SPEC="" \
+                                         build
 
+          # Embed Python Framework, Python standard library, site-packages, backend code, and Swiss Ephemeris
+          APP_PATH="build/Build/Products/Release-iphoneos/App.app"
+          mkdir -p "$APP_PATH/Frameworks"
+          cp -r "Frameworks/Python.xcframework/ios-arm64/Python.framework" "$APP_PATH/Frameworks/"
+          cp -r "App/python" "$APP_PATH/"
+          cp -r "App/python_app" "$APP_PATH/"
+          cp "App/libswisseph.dylib" "$APP_PATH/"
+
+          # Ad-hoc sign embedded binaries
+          codesign --force --sign - "$APP_PATH/Frameworks/Python.framework"
+          codesign --force --sign - "$APP_PATH/libswisseph.dylib"
+          codesign --force --sign - "$APP_PATH"
+
+          # Create IPA
           mkdir -p ../../build-output/Payload
-          cp -r build/Build/Products/Release-iphoneos/App.app ../../build-output/Payload/
+          cp -r "$APP_PATH" ../../build-output/Payload/
           cd ../../build-output
           zip -r RavanAstro.ipa Payload
 
