@@ -1,98 +1,16 @@
 import UIKit
 import Capacitor
-import CoreLocation
-import WebKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, WKUIDelegate, WKScriptMessageHandler {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var locationManager: CLLocationManager?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("[RavanAstro] Launching embedded offline Python engine...")
-        setupLocationManager()
         startEmbeddedPython()
         waitForServer()
-        setupWebViewGeolocation()
         return true
-    }
-
-    private func setupLocationManager() {
-        DispatchQueue.main.async {
-            let manager = CLLocationManager()
-            manager.delegate = self
-            manager.desiredAccuracy = kCLLocationAccuracyBest
-            manager.requestWhenInUseAuthorization()
-            manager.startUpdatingLocation()
-            self.locationManager = manager
-            print("[Location] CLLocationManager initialized and requested authorization")
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let loc = locations.last else { return }
-        let lat = loc.coordinate.latitude
-        let lon = loc.coordinate.longitude
-        print("[Location] Native iOS GPS coordinate updated: \(lat), \(lon)")
-
-        let pySync = """
-import os
-os.environ['DEVICE_LAT'] = '\(lat)'
-os.environ['DEVICE_LON'] = '\(lon)'
-"""
-        RunPythonCode(pySync)
-    }
-
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("[Location] CLLocationManager error: \(error.localizedDescription)")
-    }
-
-    private func setupWebViewGeolocation() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-            if let rootVC = self.window?.rootViewController as? CAPBridgeViewController,
-               let webView = rootVC.webView {
-                webView.uiDelegate = self
-                webView.configuration.userContentController.add(self, name: "nativePrint")
-                
-                let printOverrideScript = WKUserScript(
-                    source: """
-                    window.print = function() {
-                        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
-                            window.webkit.messageHandlers.nativePrint.postMessage('print');
-                        }
-                    };
-                    """,
-                    injectionTime: .atDocumentStart,
-                    forMainFrameOnly: false
-                )
-                webView.configuration.userContentController.addUserScript(printOverrideScript)
-                print("[WebKit] Attached WKUIDelegate and nativePrint message handler")
-            }
-        }
-    }
-
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "nativePrint" {
-            DispatchQueue.main.async {
-                guard let rootVC = self.window?.rootViewController as? CAPBridgeViewController,
-                      let webView = rootVC.webView else { return }
-                let printController = UIPrintInteractionController.shared
-                let printInfo = UIPrintInfo(dictionary: nil)
-                printInfo.outputType = .general
-                printInfo.jobName = "Ravan Astro Horoscope"
-                printController.printInfo = printInfo
-                printController.printFormatter = webView.viewPrintFormatter()
-                printController.present(animated: true, completionHandler: nil)
-                print("[Print] Presented UIPrintInteractionController")
-            }
-        }
-    }
-
-    @available(iOS 15.0, *)
-    func webView(_ webView: WKWebView, requestGeolocationPermissionFor origin: WKSecurityOrigin, initiatedBy frame: WKFrameInfo, decisionHandler: @escaping (WKPermissionDecision) -> Void) {
-        print("[WebKit] Auto-granting geolocation permission for \(origin.host)")
-        decisionHandler(.grant)
     }
 
     private func startEmbeddedPython() {

@@ -22,6 +22,9 @@ target = project.targets.find { |t| t.name == 'App' } || project.targets.first
     config.build_settings['OTHER_LDFLAGS'] << '-F$(PROJECT_DIR)/Frameworks/Python.xcframework/ios-arm64 -framework Python'
     config.build_settings['ENABLE_BITCODE'] = 'NO'
     config.build_settings['CLANG_ALLOW_MODULE_REDEFINITIONS'] = 'YES'
+    config.build_settings['ASSETCATALOG_COMPILER_APPICON_NAME'] = 'AppIcon'
+    config.build_settings['INFOPLIST_KEY_NSLocationWhenInUseUsageDescription'] = 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'
+    config.build_settings['INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription'] = 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'
   end
 end
 

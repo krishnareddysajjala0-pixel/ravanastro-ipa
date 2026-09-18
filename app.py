@@ -43,12 +43,16 @@ def get_translations_dict(lang):
             TRANSLATIONS_CACHE[lang] = {}
     return TRANSLATIONS_CACHE[lang]
 
-# Pre-warm all language dictionaries in memory at startup for instant language selection
-for _l in ['en', 'hi', 'kn', 'ta', 'ml', 'or']:
-    try:
-        get_translations_dict(_l)
-    except Exception:
-        pass
+# Pre-warm all language dictionaries in memory in background thread for instant language selection without delaying startup
+import threading
+def _bg_prewarm():
+    for _l in ['en', 'hi', 'kn', 'ta', 'ml', 'or']:
+        try:
+            get_translations_dict(_l)
+        except Exception:
+            pass
+threading.Thread(target=_bg_prewarm, daemon=True).start()
+
 
 def tr(text, lang=None):
     if not text:

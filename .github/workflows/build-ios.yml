@@ -11,6 +11,8 @@ jobs:
   build-ios:
     name: Build iOS App (.ipa)
     runs-on: macos-14
+    env:
+      ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: "node24"
 
     steps:
       - name: Checkout Code
@@ -24,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install Node & Build Dependencies
         run: |
@@ -37,6 +39,8 @@ jobs:
           mkdir -p www
           npx cap init "Ravan Astro" "com.ravanastro.app" --web-dir www || true
           npx cap add ios || true
+          mkdir -p ios/App/App/Assets.xcassets/AppIcon.appiconset
+          cp -rf ios_src/AppIcon.appiconset/* ios/App/App/Assets.xcassets/AppIcon.appiconset/
           npx cap sync ios
 
       - name: Download and Unpack BeeWare Embedded CPython 3.11
@@ -130,6 +134,13 @@ jobs:
           cp -r "App/python_app" "$APP_PATH/"
           cp "App/libswisseph.dylib" "$APP_PATH/"
           cp "App/libswisseph.dylib" "$APP_PATH/Frameworks/"
+          cp -rf ../../ios_src/AppIcon.appiconset/*.png "$APP_PATH/" 2>/dev/null || true
+
+          # Ensure Info.plist in the final App bundle contains location descriptions
+          /usr/libexec/PlistBuddy -c "Add :NSLocationWhenInUseUsageDescription string 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'" "$APP_PATH/Info.plist" || true
+          /usr/libexec/PlistBuddy -c "Set :NSLocationWhenInUseUsageDescription 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'" "$APP_PATH/Info.plist" || true
+          /usr/libexec/PlistBuddy -c "Add :NSLocationAlwaysAndWhenInUseUsageDescription string 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'" "$APP_PATH/Info.plist" || true
+          /usr/libexec/PlistBuddy -c "Set :NSLocationAlwaysAndWhenInUseUsageDescription 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'" "$APP_PATH/Info.plist" || true
 
           # Ad-hoc sign all shared libraries and embedded binaries
           find "$APP_PATH" -type f \( -name "*.so" -o -name "*.dylib" \) -exec codesign --force --sign - {} +
