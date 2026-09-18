@@ -8,8 +8,11 @@ _lib = None
 candidates = [
     "libswisseph.dylib",
     os.path.join(os.environ.get("RESOURCE_PATH", ""), "libswisseph.dylib"),
+    os.path.join(os.environ.get("RESOURCE_PATH", ""), "Frameworks", "libswisseph.dylib"),
     os.path.join(os.path.dirname(__file__), "libswisseph.dylib"),
+    os.path.join(os.path.dirname(__file__), "..", "libswisseph.dylib"),
     os.path.join(os.path.dirname(__file__), "..", "Frameworks", "libswisseph.dylib"),
+    os.path.join(os.path.dirname(__file__), "Frameworks", "libswisseph.dylib"),
     "libswisseph.so",
     os.path.join(os.path.dirname(__file__), "libswisseph.dll"),
 ]

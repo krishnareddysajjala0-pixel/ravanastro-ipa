@@ -1,8 +1,12 @@
 #ifndef App_Bridging_Header_h
 #define App_Bridging_Header_h
 
-#include <Python.h>
-#include <stdlib.h>
+#if __has_include(<Python/Python.h>)
+#import <Python/Python.h>
+#elif __has_include(<Python.h>)
+#import <Python.h>
+#endif
+#import <stdlib.h>
 
 static inline void StartPythonEngine(const char *pyHome, const char *pyPath, const char *resourcePath) {
     setenv("PYTHONHOME", pyHome, 1);

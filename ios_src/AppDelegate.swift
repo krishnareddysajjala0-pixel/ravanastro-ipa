@@ -56,7 +56,7 @@ except Exception as e:
                 request.timeoutInterval = 0.4
                 let sema = DispatchSemaphore(value: 0)
                 let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
-                    if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    if let httpResponse = response as? HTTPURLResponse, (200...399).contains(httpResponse.statusCode) {
                         serverReady = true
                     }
                     sema.signal()

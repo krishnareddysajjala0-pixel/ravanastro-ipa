@@ -45,8 +45,11 @@ jobs:
           tar -xzf Python-3.11-iOS-support.b10.tar.gz
           mkdir -p ios/App/Frameworks
           cp -r Python.xcframework ios/App/Frameworks/
+          # Remove standalone include directories to avoid duplicate modulemap definition with Python.framework
+          rm -rf ios/App/Frameworks/Python.xcframework/*/include
           mkdir -p ios/App/App/python/lib/python3.11
           cp -r Python.xcframework/lib/python3.11/* ios/App/App/python/lib/python3.11/
+          cp -r Python.xcframework/ios-arm64/lib-arm64/python3.11/* ios/App/App/python/lib/python3.11/
 
       - name: Bundle Python Dependencies (Flask, Jinja2, etc.)
         run: |
@@ -120,11 +123,12 @@ jobs:
           cp -r "App/python" "$APP_PATH/"
           cp -r "App/python_app" "$APP_PATH/"
           cp "App/libswisseph.dylib" "$APP_PATH/"
+          cp "App/libswisseph.dylib" "$APP_PATH/Frameworks/"
 
-          # Ad-hoc sign embedded binaries
-          codesign --force --sign - "$APP_PATH/Frameworks/Python.framework"
-          codesign --force --sign - "$APP_PATH/libswisseph.dylib"
-          codesign --force --sign - "$APP_PATH"
+          # Ad-hoc sign all shared libraries and embedded binaries
+          find "$APP_PATH" -type f \( -name "*.so" -o -name "*.dylib" \) -exec codesign --force --sign - {} +
+          codesign --force --sign - --deep "$APP_PATH/Frameworks/Python.framework"
+          codesign --force --sign - --deep "$APP_PATH"
 
           # Create IPA
           mkdir -p ../../build-output/Payload
