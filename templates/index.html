@@ -5613,7 +5613,7 @@ body {
 
         try {
           const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${numLat}&lon=${numLon}&zoom=10&addressdetails=1`,
+            `/api/reverse_geocode?lat=&lon=`,
             { headers: { 'Accept': 'application/json' } }
           );
           const data = await response.json();
@@ -5823,27 +5823,7 @@ body {
 
 
 
-      const url =
-
-
-
-        "https://nominatim.openstreetmap.org/search" +
-
-
-
-        "?format=json" +
-
-
-
-        "&limit=8" +
-
-
-
-        "&addressdetails=1" +
-
-
-
-        "&q=" + encodeURIComponent(q);
+      const url = `/api/search_place?q=${encodeURIComponent(q)}`;
 
 
 
@@ -6391,7 +6371,7 @@ body {
             lonInput.value = parseFloat(deviceLoc.longitude).toFixed(4);
             placeInput.value = `Location (${parseFloat(deviceLoc.latitude).toFixed(2)}, ${parseFloat(deviceLoc.longitude).toFixed(2)})`;
             // Attempt reverse geocoding
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${deviceLoc.latitude}&lon=${deviceLoc.longitude}&zoom=10&addressdetails=1`)
+            fetch(`/api/reverse_geocode?lat=&lon=`)
               .then(r => r.json())
               .then(geo => { if (geo && geo.display_name) placeInput.value = geo.display_name; })
               .catch(() => {});
@@ -6488,7 +6468,7 @@ body {
 
 
 
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`
+              `/api/reverse_geocode?lat=&lon=`
 
 
 
@@ -7343,7 +7323,7 @@ body {
 
       const applyEditCoords = async (lat, lon) => {
         try {
-          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`);
+          const response = await fetch(`/api/reverse_geocode?lat=&lon=`);
           const data = await response.json();
           if (data && data.display_name && placeEl) {
             placeEl.value = data.display_name;
@@ -7410,7 +7390,7 @@ body {
       if (editController) editController.abort();
       editController = new AbortController();
 
-      const url = "https://nominatim.openstreetmap.org/search?format=json&limit=8&addressdetails=1&q=" + encodeURIComponent(q);
+      const url = `/api/search_place?q=${encodeURIComponent(q)}`;
 
       try {
         const res = await fetch(url, { signal: editController.signal, headers: { "Accept": "application/json" } });
@@ -7581,7 +7561,7 @@ body {
 
 
 
-            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`);
+            const res = await fetch(`/api/reverse_geocode?lat=&lon=`);
 
 
 

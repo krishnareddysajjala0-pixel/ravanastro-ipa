@@ -2065,10 +2065,8 @@ body {
 
                 controller = new AbortController();
 
-                const url = `https://nominatim.openstreetmap.org/search?format=json&limit=8&addressdetails=1&q=${encodeURIComponent(q)}`;
-
+                const url = `/api/search_place?q=${encodeURIComponent(q)}`;
                 try {
-
                 const res = await fetch(url, { signal: controller.signal });
 
                 const data = await res.json();
@@ -2182,54 +2180,23 @@ body {
 
 
     function reverseGeocode(lat, lon, callback) {
-
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`;
-
-        fetch(url, { headers: { 'Accept-Language': 'en' } })
-
+        fetch(`/api/reverse_geocode?lat=${lat}&lon=${lon}`)
             .then(r => r.json())
-
             .then(data => {
-
-                const a = data.address || {};
-
-                const city    = a.city || a.town || a.village || a.county || '';
-
-                const state   = a.state || '';
-
-                const country = a.country || '';
-
-                const place   = [city, state, country].filter(Boolean).join(', ');
-
-                callback(place || 'Current Location');
-
+                callback(data.display_name || 'Current Location');
             })
-
             .catch(() => callback('Current Location'));
-
     }
-
-
 
     function setPersonLocation(num, lat, lon, placeName) {
-
         document.getElementById('lat' + num).value = lat;
-
         document.getElementById('lon' + num).value = lon;
-
         document.getElementById('place' + num).value = placeName;
-
     }
-
-
 
     function clearLocationFor(num) {
-
         setPersonLocation(num, '', '', '');
-
     }
-
-
 
     function getCurrentLocationFor(num) {
         function applyCompareCoords(lat, lon) {
@@ -2274,119 +2241,43 @@ body {
             },
             { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
         );
-    },
-
-            function(err) {
-
-                navigator.geolocation.getCurrentPosition(
-
-                    function(pos) {
-
-                        const lat = pos.coords.latitude;
-
-                        const lon = pos.coords.longitude;
-
-                        document.getElementById('lat' + num).value = lat;
-
-                        document.getElementById('lon' + num).value = lon;
-
-                        reverseGeocode(lat, lon, function(placeName) {
-
-                            document.getElementById('place' + num).value = placeName;
-
-                        });
-
-                    },
-
-                    function(err2) {},
-
-                    { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false }
-
-                );
-
-            },
-
-            { timeout: 8000, maximumAge: 60000, enableHighAccuracy: true }
-
-        );
-
     }
-
-
 
     function detectLocation() {
+        function applyBothCoords(lat, lon) {
+            document.getElementById('lat1').value = lat;
+            document.getElementById('lon1').value = lon;
+            document.getElementById('lat2').value = lat;
+            document.getElementById('lon2').value = lon;
+            reverseGeocode(lat, lon, function(placeName) {
+                if (!document.getElementById('place1').value) document.getElementById('place1').value = placeName;
+                if (!document.getElementById('place2').value) document.getElementById('place2').value = placeName;
+            });
+        }
 
-        if (!navigator.geolocation) return;
-
-        navigator.geolocation.getCurrentPosition(
-
-            function(pos) {
-
-                const lat = pos.coords.latitude;
-
-                const lon = pos.coords.longitude;
-
-                document.getElementById('lat1').value = lat;
-
-                document.getElementById('lon1').value = lon;
-
-                document.getElementById('lat2').value = lat;
-
-                document.getElementById('lon2').value = lon;
-
-                reverseGeocode(lat, lon, function(placeName) {
-
-                    if (!document.getElementById('place1').value) document.getElementById('place1').value = placeName;
-
-                    if (!document.getElementById('place2').value) document.getElementById('place2').value = placeName;
-
-                });
-
-            },
-
-            function(err) {
-
-                navigator.geolocation.getCurrentPosition(
-
-                    function(pos) {
-
-                        const lat = pos.coords.latitude;
-
-                        const lon = pos.coords.longitude;
-
-                        document.getElementById('lat1').value = lat;
-
-                        document.getElementById('lon1').value = lon;
-
-                        document.getElementById('lat2').value = lat;
-
-                        document.getElementById('lon2').value = lon;
-
-                        reverseGeocode(lat, lon, function(placeName) {
-
-                            if (!document.getElementById('place1').value) document.getElementById('place1').value = placeName;
-
-                            if (!document.getElementById('place2').value) document.getElementById('place2').value = placeName;
-
-                        });
-
-                    },
-
-                    function(err2) {},
-
-                    { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false }
-
-                );
-
-            },
-
-            { timeout: 8000, maximumAge: 60000, enableHighAccuracy: true }
-
-        );
-
+        fetch('/api/device_location')
+            .then(r => r.json())
+            .then(d => {
+                if (d && d.available && d.latitude && d.longitude) {
+                    applyBothCoords(d.latitude, d.longitude);
+                } else if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude),
+                        err => {},
+                        { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
+                    );
+                }
+            })
+            .catch(() => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude),
+                        err => {},
+                        { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
+                    );
+                }
+            });
     }
-
-
 
     detectLocation();
 

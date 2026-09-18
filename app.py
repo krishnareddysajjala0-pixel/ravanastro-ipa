@@ -691,6 +691,8 @@ def get_exact_tithi_times(jd, tithi_index):
         
         # Relative speed approx 12.19 deg/day
         speed = m_info[0][3] - s_info[0][3]
+        if abs(speed) < 0.001:
+            speed = 12.1907
         
         diff = (elongation - target_start_deg) % 360
         if diff > 180: diff -= 360
@@ -709,6 +711,8 @@ def get_exact_tithi_times(jd, tithi_index):
         elongation = (moon_lon - sun_lon) % 360
         
         speed = m_info[0][3] - s_info[0][3]
+        if abs(speed) < 0.001:
+            speed = 12.1907
         
         diff = (target_end_deg - elongation) % 360
         if diff > 180: diff -= 360
@@ -1048,6 +1052,146 @@ def api_device_location():
         "latitude": lat_f,
         "longitude": lon_f
     })
+
+# Local offline database of prominent cities and towns
+LOCAL_CITIES = [
+    {"display_name": "Hyderabad, Telangana, India", "lat": 17.3850, "lon": 78.4867},
+    {"display_name": "Secunderabad, Telangana, India", "lat": 17.4399, "lon": 78.4983},
+    {"display_name": "Vijayawada, Andhra Pradesh, India", "lat": 16.5062, "lon": 80.6480},
+    {"display_name": "Visakhapatnam, Andhra Pradesh, India", "lat": 17.6868, "lon": 83.2185},
+    {"display_name": "Guntur, Andhra Pradesh, India", "lat": 16.3067, "lon": 80.4365},
+    {"display_name": "Tirupati, Andhra Pradesh, India", "lat": 13.6288, "lon": 79.4192},
+    {"display_name": "Kurnool, Andhra Pradesh, India", "lat": 15.8281, "lon": 78.0373},
+    {"display_name": "Nellore, Andhra Pradesh, India", "lat": 14.4426, "lon": 79.9865},
+    {"display_name": "Rajahmundry, Andhra Pradesh, India", "lat": 17.0005, "lon": 81.8040},
+    {"display_name": "Kakinada, Andhra Pradesh, India", "lat": 16.9891, "lon": 82.2475},
+    {"display_name": "Warangal, Telangana, India", "lat": 17.9689, "lon": 79.5941},
+    {"display_name": "Karimnagar, Telangana, India", "lat": 18.4386, "lon": 79.1288},
+    {"display_name": "Nizamabad, Telangana, India", "lat": 18.6725, "lon": 78.0941},
+    {"display_name": "Khammam, Telangana, India", "lat": 17.2473, "lon": 80.1514},
+    {"display_name": "Anantapur, Andhra Pradesh, India", "lat": 14.6819, "lon": 77.6006},
+    {"display_name": "Kadapa (Cuddapah), Andhra Pradesh, India", "lat": 14.4673, "lon": 78.8242},
+    {"display_name": "Vizianagaram, Andhra Pradesh, India", "lat": 18.1067, "lon": 83.3956},
+    {"display_name": "Eluru, Andhra Pradesh, India", "lat": 16.7107, "lon": 81.0952},
+    {"display_name": "Ongole, Andhra Pradesh, India", "lat": 15.5057, "lon": 80.0499},
+    {"display_name": "Nandyal, Andhra Pradesh, India", "lat": 15.4886, "lon": 78.4836},
+    {"display_name": "Machilipatnam, Andhra Pradesh, India", "lat": 16.1875, "lon": 81.1389},
+    {"display_name": "Tenali, Andhra Pradesh, India", "lat": 16.2437, "lon": 80.6400},
+    {"display_name": "Chittoor, Andhra Pradesh, India", "lat": 13.2172, "lon": 79.1003},
+    {"display_name": "Hindupur, Andhra Pradesh, India", "lat": 13.8292, "lon": 77.4916},
+    {"display_name": "Bhimavaram, Andhra Pradesh, India", "lat": 16.5449, "lon": 81.5212},
+    {"display_name": "Madanapalle, Andhra Pradesh, India", "lat": 13.5560, "lon": 78.5010},
+    {"display_name": "Srikakulam, Andhra Pradesh, India", "lat": 18.2949, "lon": 83.8938},
+    {"display_name": "Gudivada, Andhra Pradesh, India", "lat": 16.4410, "lon": 80.9926},
+    {"display_name": "Mahbubnagar, Telangana, India", "lat": 16.7488, "lon": 78.0035},
+    {"display_name": "Nalgonda, Telangana, India", "lat": 17.0575, "lon": 79.2684},
+    {"display_name": "Suryapet, Telangana, India", "lat": 17.1439, "lon": 79.6239},
+    {"display_name": "Siddipet, Telangana, India", "lat": 18.1018, "lon": 78.8520},
+    {"display_name": "Mancherial, Telangana, India", "lat": 18.8679, "lon": 79.4639},
+    {"display_name": "Adilabad, Telangana, India", "lat": 19.6641, "lon": 78.5320},
+    {"display_name": "Bengaluru (Bangalore), Karnataka, India", "lat": 12.9716, "lon": 77.5946},
+    {"display_name": "Chennai (Madras), Tamil Nadu, India", "lat": 13.0827, "lon": 80.2707},
+    {"display_name": "Mumbai (Bombay), Maharashtra, India", "lat": 19.0760, "lon": 72.8777},
+    {"display_name": "New Delhi, Delhi, India", "lat": 28.6139, "lon": 77.2090},
+    {"display_name": "Kolkata (Calcutta), West Bengal, India", "lat": 22.5726, "lon": 88.3639},
+    {"display_name": "Pune, Maharashtra, India", "lat": 18.5204, "lon": 73.8567},
+    {"display_name": "Ahmedabad, Gujarat, India", "lat": 23.0225, "lon": 72.5714},
+    {"display_name": "Jaipur, Rajasthan, India", "lat": 26.9124, "lon": 75.7873},
+    {"display_name": "Bhubaneswar, Odisha, India", "lat": 20.2961, "lon": 85.8245},
+    {"display_name": "Cuttack, Odisha, India", "lat": 20.4625, "lon": 85.8828},
+    {"display_name": "Puri, Odisha, India", "lat": 19.8135, "lon": 85.8312},
+    {"display_name": "Kochi, Kerala, India", "lat": 9.9312, "lon": 76.2673},
+    {"display_name": "Thiruvananthapuram, Kerala, India", "lat": 8.5241, "lon": 76.9366},
+    {"display_name": "Coimbatore, Tamil Nadu, India", "lat": 11.0168, "lon": 76.9558},
+    {"display_name": "Madurai, Tamil Nadu, India", "lat": 9.9252, "lon": 78.1198},
+    {"display_name": "Mysuru (Mysore), Karnataka, India", "lat": 12.2958, "lon": 76.6394},
+    {"display_name": "Dubai, United Arab Emirates", "lat": 25.2048, "lon": 55.2708},
+    {"display_name": "London, United Kingdom", "lat": 51.5074, "lon": -0.1278},
+    {"display_name": "New York, NY, USA", "lat": 40.7128, "lon": -74.0060},
+    {"display_name": "San Francisco, CA, USA", "lat": 37.7749, "lon": -122.4194},
+    {"display_name": "Dallas, TX, USA", "lat": 32.7767, "lon": -96.7970},
+    {"display_name": "Chicago, IL, USA", "lat": 41.8781, "lon": -87.6298},
+    {"display_name": "Toronto, Ontario, Canada", "lat": 43.6532, "lon": -79.3832},
+    {"display_name": "Sydney, NSW, Australia", "lat": -33.8688, "lon": 151.2093},
+    {"display_name": "Singapore", "lat": 1.3521, "lon": 103.8198}
+]
+
+@app.route("/api/search_place")
+def api_search_place():
+    q = request.args.get("q", "").strip()
+    if not q or len(q) < 2:
+        return jsonify([])
+    
+    q_lower = q.lower()
+    results = []
+    seen = set()
+
+    # Match in local offline dataset first
+    for city in LOCAL_CITIES:
+        name = city["display_name"]
+        if q_lower in name.lower():
+            results.append(city)
+            seen.add(name.lower())
+
+    # Try external Nominatim with valid User-Agent if available
+    try:
+        url = f"https://nominatim.openstreetmap.org/search?format=json&limit=8&addressdetails=1&q={requests.utils.quote(q)}"
+        headers = {"User-Agent": "RavanAstroApp/1.0 (info@ravanastro.com)"}
+        resp = requests.get(url, headers=headers, timeout=2.5)
+        if resp.status_code == 200:
+            for item in resp.json():
+                d_name = item.get("display_name", "")
+                if d_name.lower() not in seen:
+                    results.append({
+                        "display_name": d_name,
+                        "lat": float(item.get("lat", 0)),
+                        "lon": float(item.get("lon", 0))
+                    })
+                    seen.add(d_name.lower())
+    except Exception:
+        pass
+
+    return jsonify(results[:10])
+
+@app.route("/api/reverse_geocode")
+def api_reverse_geocode():
+    lat = request.args.get("lat")
+    lon = request.args.get("lon")
+    if not lat or not lon:
+        return jsonify({"display_name": "Unknown Location"})
+    
+    try:
+        lat_f = float(lat)
+        lon_f = float(lon)
+    except ValueError:
+        return jsonify({"display_name": "Unknown Location"})
+
+    try:
+        url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat_f}&lon={lon_f}&zoom=10&addressdetails=1"
+        headers = {"User-Agent": "RavanAstroApp/1.0 (info@ravanastro.com)"}
+        resp = requests.get(url, headers=headers, timeout=2.5)
+        if resp.status_code == 200:
+            data = resp.json()
+            addr = data.get("address", {})
+            city = addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or ""
+            state = addr.get("state") or ""
+            country = addr.get("country") or ""
+            place = ", ".join([p for p in [city, state, country] if p])
+            if place:
+                return jsonify({"display_name": place, "city": city, "state": state, "country": country})
+    except Exception:
+        pass
+
+    # Fallback to closest local city or coordinates
+    best_name = f"Location ({lat_f:.2f}, {lon_f:.2f})"
+    min_dist = 999999
+    for c in LOCAL_CITIES:
+        dist = abs(c["lat"] - lat_f) + abs(c["lon"] - lon_f)
+        if dist < min_dist and dist < 0.6:
+            min_dist = dist
+            best_name = c["display_name"]
+    return jsonify({"display_name": best_name})
+
 
 @app.route("/")
 def index():
@@ -2975,20 +3119,12 @@ def daily_panchangam():
     lat = 17.3850
     lon = 78.4867
 
-    # On GET request: return empty form so JS can auto-detect location
-    if request.method == "GET":
-        return render_template(
-            "daily_panchangam.html",
-            dob=dob, tob=tob, place=place, lat=lat, lon=lon,
-            panch=None
-        )
-
-    # On POST: use submitted values
-    dob = request.form.get("dob", dob)
-    tob = request.form.get("tob", tob)
-    place = request.form.get("place", place)
-    lat_str = request.form.get("lat")
-    lon_str = request.form.get("lon")
+    # Use parameters from GET or POST, with defaults for today
+    dob = request.values.get("dob") or dob
+    tob = request.values.get("tob") or tob
+    place = request.values.get("place") or place
+    lat_str = request.values.get("lat")
+    lon_str = request.values.get("lon")
     
     lat = float(lat_str) if lat_str else 17.3850
     lon = float(lon_str) if lon_str else 78.4867

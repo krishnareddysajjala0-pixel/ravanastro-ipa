@@ -1538,16 +1538,12 @@ body {
 
                         <label><i class="fas fa-map-marker-alt"></i> {{ _('స్థలం (Place)') }}</label>
 
-                        <div class="input-container">
-
+                        <div class="input-container" style="position: relative;">
                             <i class="fas fa-map-marker-alt input-icon"></i>
-
-                            <input type="text" id="inp-place" name="place" value="{{ place }}" placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}">
-
+                            <input type="text" id="inp-place" name="place" value="{{ place }}" placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}" autocomplete="off">
+                            <div id="panch-suggestions" style="display:none; position:absolute; left:0; right:0; top:100%; z-index:99999; background:#1e1b4b; border:1px solid rgba(255,215,0,0.3); border-radius:10px; max-height:200px; overflow-y:auto; padding:6px; margin-top:4px; box-shadow:0 8px 24px rgba(0,0,0,0.5);"></div>
                         </div>
-
                         <input type="hidden" id="inp-lat" name="lat" value="{{ lat }}">
-
                         <input type="hidden" id="inp-lon" name="lon" value="{{ lon }}">
 
                         <div class="location-buttons" style="display: flex; gap: 10px; margin-top: 8px;">
@@ -2067,78 +2063,34 @@ body {
 
 
         function reverseGeocode(lat, lon, callback) {
-
-            // Use OpenStreetMap Nominatim (free, no key required)
-
-            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`;
-
-            fetch(url, { headers: { 'Accept-Language': 'en' } })
-
+            fetch(`/api/reverse_geocode?lat=${lat}&lon=${lon}`)
                 .then(r => r.json())
-
                 .then(data => {
-
-                    const a = data.address || {};
-
-                    const city    = a.city || a.town || a.village || a.county || '';
-
-                    const state   = a.state || '';
-
-                    const country = a.country || '';
-
-                    const place   = [city, state, country].filter(Boolean).join(', ');
-
-                    callback(place || 'Current Location');
-
+                    callback(data.display_name || 'Current Location');
                 })
-
                 .catch(() => callback('Current Location'));
-
         }
-
-
 
         function clearPanchLocation() {
-
             document.getElementById('inp-lat').value = '';
-
             document.getElementById('inp-lon').value = '';
-
             document.getElementById('inp-place').value = '';
-
             setGeoStatus('', '');
-
         }
-
-
 
         function handlePositionSuccess(pos) {
-
             const lat = pos.coords.latitude;
-
             const lon = pos.coords.longitude;
-
             document.getElementById('inp-lat').value = lat;
-
             document.getElementById('inp-lon').value = lon;
-
             fillCurrentDateTime();
-
             setGeoStatus('✅ స్థానం గుర్తించబడింది. లోడ్ అవుతోంది...', 'success');
-
             reverseGeocode(lat, lon, function(placeName) {
-
                 document.getElementById('inp-place').value = placeName;
-
                 showLoader();
-
                 document.getElementById('panch-form').submit();
-
             });
-
         }
-
-
 
         function tryNativePanchFallback() {
             fetch('/api/device_location')
@@ -2156,7 +2108,7 @@ body {
         }
 
         function detectLocation() {
-            setGeoStatus('📍 మీ {{ _(\'ప్రస్తుత స్థానం\') }} గుర్తిస్తోంది...', '');
+            setGeoStatus('📍 మీ {{ _("ప్రస్తుత స్థానం") }} గుర్తిస్తోంది...', '');
 
             if (!navigator.geolocation) {
                 tryNativePanchFallback();
@@ -2176,27 +2128,66 @@ body {
                 },
                 { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
             );
-        },
-
-                { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
-
-            );
-
         }
 
+        // Place input autocomplete suggestions
+        (function setupPanchSearch() {
+            const placeInput = document.getElementById('inp-place');
+            const suggestions = document.getElementById('panch-suggestions');
+            const latInput = document.getElementById('inp-lat');
+            const lonInput = document.getElementById('inp-lon');
+            if (!placeInput || !suggestions) return;
 
+            let timer = null;
+            let abortCtrl = null;
 
-        // ── Auto-detect on first visit (GET request = no panchangam data yet) ──
+            placeInput.addEventListener('input', () => {
+                const q = placeInput.value.trim();
+                if (timer) clearTimeout(timer);
+                if (q.length < 2) {
+                    suggestions.style.display = 'none';
+                    suggestions.innerHTML = '';
+                    return;
+                }
 
-        const isFirstLoad = {{ 'true' if not panch else 'false' }};
+                timer = setTimeout(async () => {
+                    if (abortCtrl) abortCtrl.abort();
+                    abortCtrl = new AbortController();
+                    try {
+                        const res = await fetch(`/api/search_place?q=${encodeURIComponent(q)}`, { signal: abortCtrl.signal });
+                        const data = await res.json();
+                        suggestions.innerHTML = '';
+                        if (!data || data.length === 0) {
+                            suggestions.innerHTML = '<div style="color:#888; padding:8px; font-style:italic;">ఫలితాలు లేవు</div>';
+                        } else {
+                            data.forEach(p => {
+                                const div = document.createElement('div');
+                                div.style.cssText = 'padding:8px 10px; cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.08);';
+                                div.innerHTML = `<div style="font-weight:600; color:#ffd700;">${p.display_name.split(',')[0]}</div><div style="font-size:11px; color:#cbd5e1;">${p.display_name.split(',').slice(1).join(',').trim()}</div>`;
+                                div.onmouseover = () => { div.style.background = 'rgba(255,215,0,0.15)'; };
+                                div.onmouseout = () => { div.style.background = 'transparent'; };
+                                div.onclick = () => {
+                                    placeInput.value = p.display_name;
+                                    latInput.value = p.lat;
+                                    lonInput.value = p.lon;
+                                    suggestions.style.display = 'none';
+                                    showLoader();
+                                    document.getElementById('panch-form').submit();
+                                };
+                                suggestions.appendChild(div);
+                            });
+                        }
+                        suggestions.style.display = 'block';
+                    } catch(e) {}
+                }, 250);
+            });
 
-        if (isFirstLoad) {
-
-            // Small delay so the page is visible first
-
-            setTimeout(detectLocation, 300);
-
-        }
+            document.addEventListener('click', (e) => {
+                if (!placeInput.contains(e.target) && !suggestions.contains(e.target)) {
+                    suggestions.style.display = 'none';
+                }
+            });
+        })();
 
     </script>
 
