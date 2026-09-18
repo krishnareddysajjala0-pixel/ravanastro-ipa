@@ -19,7 +19,6 @@ android_app/app/.cxx/
 android_app/.gradle/
 build-output/
 ios/
-www/
 node_modules/
 
 # IDE

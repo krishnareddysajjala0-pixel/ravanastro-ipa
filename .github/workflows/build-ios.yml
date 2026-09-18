@@ -26,20 +26,70 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Node & Python Dependencies
+      - name: Install Node, Ruby & Build Dependencies
         run: |
           npm install -g @capacitor/cli
           npm install
-          pip install flask swisseph timezonefinderL python-dateutil requests
+          gem install xcodeproj
 
-      - name: Prepare Assets & Capacitor iOS Project
+      - name: Prepare Capacitor iOS Project
         run: |
           mkdir -p www
-          cp templates/index.html www/index.html
-          cp -r templates static translations *.py *.json *.txt www/ 2>/dev/null || true
           npx cap init "Ravan Astro" "com.ravanastro.app" --web-dir www || true
           npx cap add ios || true
           npx cap sync ios
+
+      - name: Download and Unpack BeeWare Embedded CPython 3.11
+        run: |
+          curl -L -o Python-3.11-iOS-support.b10.tar.gz "https://github.com/beeware/Python-Apple-support/releases/download/3.11-b10/Python-3.11-iOS-support.b10.tar.gz"
+          tar -xzf Python-3.11-iOS-support.b10.tar.gz
+          mkdir -p ios/App/Frameworks
+          cp -r Python.xcframework ios/App/Frameworks/
+          mkdir -p ios/App/App/python/lib/python3.11
+          cp -r Python.xcframework/lib/python3.11/* ios/App/App/python/lib/python3.11/
+
+      - name: Bundle Python Dependencies (Flask, Jinja2, etc.)
+        run: |
+          mkdir -p ios/App/App/python/lib/python3.11/site-packages
+          python3 -m pip install --target ios/App/App/python/lib/python3.11/site-packages flask pytz astral requests
+
+      - name: Bundle Astrology Backend Code & Data
+        run: |
+          mkdir -p ios/App/App/python_app
+          cp app.py swisseph.py ios/App/App/python_app/
+          cp -r templates static translations ios/App/App/python_app/
+          cp *.json *.txt ios/App/App/python_app/ 2>/dev/null || true
+
+      - name: Compile Native Swiss Ephemeris C Engine (arm64)
+        run: |
+          xcrun --sdk iphoneos clang -shared -arch arm64 \
+            -isysroot $(xcrun --sdk iphoneos --show-sdk-path) \
+            -miphoneos-version-min=14.0 \
+            -o ios/App/App/libswisseph.dylib \
+            libswe/swecl.c \
+            libswe/swedate.c \
+            libswe/swehouse.c \
+            libswe/swemini.c \
+            libswe/swemmoon.c \
+            libswe/swemplan.c \
+            libswe/sweph.c \
+            libswe/swephlib.c \
+            libswe/swehel.c \
+            libswe/swejpl.c \
+            -Ilibswe
+          codesign --force --sign - ios/App/App/libswisseph.dylib
+
+      - name: Inject Custom Swift Bridge and Permissions
+        run: |
+          cp ios_src/AppDelegate.swift ios/App/App/AppDelegate.swift
+          cp ios_src/App-Bridging-Header.h ios/App/App/App-Bridging-Header.h
+          /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity dict" ios/App/App/Info.plist || true
+          /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity:NSAllowsArbitraryLoads bool true" ios/App/App/Info.plist || true
+          /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity:NSAllowsLocalNetworking bool true" ios/App/App/Info.plist || true
+
+      - name: Configure Xcode Project with xcodeproj
+        run: |
+          ruby ios_src/setup_xcode.rb
 
       - name: Build iOS App with Xcode
         run: |

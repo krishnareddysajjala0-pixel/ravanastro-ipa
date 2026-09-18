@@ -1,0 +1,83 @@
+import UIKit
+import Capacitor
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    var window: UIWindow?
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        print("[RavanAstro] Launching embedded offline Python engine...")
+        startEmbeddedPython()
+        waitForServer()
+        return true
+    }
+
+    private func startEmbeddedPython() {
+        guard let resourcePath = Bundle.main.resourcePath else {
+            print("[Python] Error: resourcePath is nil")
+            return
+        }
+
+        let pyHome = "\(resourcePath)/python"
+        let pyLib = "\(pyHome)/lib/python3.11"
+        let pySite = "\(pyLib)/site-packages"
+        let appDir = "\(resourcePath)/python_app"
+
+        setenv("PYTHONHOME", pyHome, 1)
+        setenv("PYTHONPATH", "\(appDir):\(pyLib):\(pySite)", 1)
+        setenv("PYTHONUNBUFFERED", "1", 1)
+        setenv("RESOURCE_PATH", resourcePath, 1)
+
+        print("[Python] Calling Py_Initialize...")
+        Py_Initialize()
+        print("[Python] Py_Initialize succeeded!")
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            print("[Python] Background runner thread launched")
+            let runnerScript = """
+import sys, os
+app_dir = os.environ.get('RESOURCE_PATH', '') + '/python_app'
+if app_dir not in sys.path:
+    sys.path.insert(0, app_dir)
+try:
+    import app
+    print('[Python] Starting Flask on 127.0.0.1:5000...', flush=True)
+    app.app.run(host='127.0.0.1', port=5000, threaded=True, use_reloader=False)
+except Exception as e:
+    print(f'[Python Flask Crash] {e}', flush=True)
+"""
+            PyRun_SimpleString(runnerScript)
+        }
+    }
+
+    private func waitForServer() {
+        var serverReady = false
+        let start = Date()
+        while !serverReady && Date().timeIntervalSince(start) < 8.0 {
+            if let url = URL(string: "http://127.0.0.1:5000/") {
+                var request = URLRequest(url: url)
+                request.timeoutInterval = 0.4
+                let sema = DispatchSemaphore(value: 0)
+                let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
+                    if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                        serverReady = true
+                    }
+                    sema.signal()
+                }
+                task.resume()
+                _ = sema.wait(timeout: .now() + 0.5)
+            }
+            if !serverReady {
+                Thread.sleep(forTimeInterval: 0.15)
+            }
+        }
+        print("[Python] Server ready: \(serverReady)")
+    }
+
+    func applicationWillResignActive(_ application: UIApplication) {}
+    func applicationDidEnterBackground(_ application: UIApplication) {}
+    func applicationWillEnterForeground(_ application: UIApplication) {}
+    func applicationDidBecomeActive(_ application: UIApplication) {}
+    func applicationWillTerminate(_ application: UIApplication) {}
+}
