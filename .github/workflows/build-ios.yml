@@ -30,6 +30,7 @@ jobs:
         run: |
           npm install -g @capacitor/cli
           npm install
+          gem install xcodeproj
 
       - name: Prepare Capacitor iOS Project
         run: |
@@ -91,39 +92,24 @@ jobs:
           cd ios/App
           pod install || true
 
-          HEADER_PATH="$(pwd)/Frameworks/Python.xcframework/ios-arm64/Python.framework/Headers"
-          FRAMEWORK_PATH="$(pwd)/Frameworks/Python.xcframework/ios-arm64"
-          BRIDGING_HEADER="$(pwd)/App/App-Bridging-Header.h"
+          # Apply build settings strictly to App target
+          ruby ../../ios_src/configure_app.rb
 
+          set -o pipefail
           xcodebuild -workspace App.xcworkspace \
                      -scheme App \
                      -sdk iphoneos \
                      -configuration Release \
                      -derivedDataPath build \
-                     SWIFT_OBJC_BRIDGING_HEADER="$BRIDGING_HEADER" \
-                     HEADER_SEARCH_PATHS="$HEADER_PATH" \
-                     FRAMEWORK_SEARCH_PATHS="$FRAMEWORK_PATH $(pwd)/Frameworks" \
-                     OTHER_LDFLAGS="-F$FRAMEWORK_PATH -framework Python" \
-                     ENABLE_BITCODE=NO \
                      CODE_SIGNING_ALLOWED=NO \
                      CODE_SIGNING_REQUIRED=NO \
                      CODE_SIGN_IDENTITY="" \
                      PROVISIONING_PROFILE_SPEC="" \
-                     build || xcodebuild -project App.xcodeproj \
-                                         -scheme App \
-                                         -sdk iphoneos \
-                                         -configuration Release \
-                                         -derivedDataPath build \
-                                         SWIFT_OBJC_BRIDGING_HEADER="$BRIDGING_HEADER" \
-                                         HEADER_SEARCH_PATHS="$HEADER_PATH" \
-                                         FRAMEWORK_SEARCH_PATHS="$FRAMEWORK_PATH $(pwd)/Frameworks" \
-                                         OTHER_LDFLAGS="-F$FRAMEWORK_PATH -framework Python" \
-                                         ENABLE_BITCODE=NO \
-                                         CODE_SIGNING_ALLOWED=NO \
-                                         CODE_SIGNING_REQUIRED=NO \
-                                         CODE_SIGN_IDENTITY="" \
-                                         PROVISIONING_PROFILE_SPEC="" \
-                                         build
+                     build 2>&1 | tee xcodebuild.log || {
+                       echo "===== XCODEBUILD LOG ERRORS ====="
+                       tail -n 120 xcodebuild.log
+                       exit 1
+                     }
 
           # Embed Python Framework, Python standard library, site-packages, backend code, and Swiss Ephemeris
           APP_PATH="build/Build/Products/Release-iphoneos/App.app"
