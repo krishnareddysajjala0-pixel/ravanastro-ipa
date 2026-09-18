@@ -110,14 +110,7 @@ jobs:
                        echo '```text' >> $GITHUB_STEP_SUMMARY
                        tail -n 120 xcodebuild.log >> $GITHUB_STEP_SUMMARY
                        echo '```' >> $GITHUB_STEP_SUMMARY
-                       python3 -c "
-with open('xcodebuild.log') as f:
-    lines = f.readlines()
-for line in lines[-60:]:
-    s = line.strip()
-    if s:
-        print('::error::' + s)
-"
+                       python3 -c "import sys; lines=open('xcodebuild.log').readlines()[-60:]; [print('::error::' + l.strip()) for l in lines if l.strip()]"
                        exit 1
                      }
 
