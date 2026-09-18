@@ -1,10 +1,10 @@
 #ifndef App_Bridging_Header_h
 #define App_Bridging_Header_h
 
-#if __has_include(<Python/Python.h>)
-#import <Python/Python.h>
-#elif __has_include(<Python.h>)
+#if __has_include(<Python.h>)
 #import <Python.h>
+#elif __has_include(<Python/Python.h>)
+#import <Python/Python.h>
 #endif
 #import <stdlib.h>
 

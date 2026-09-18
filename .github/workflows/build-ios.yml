@@ -47,6 +47,9 @@ jobs:
           cp -r Python.xcframework ios/App/Frameworks/
           # Remove standalone include directories to avoid duplicate modulemap definition with Python.framework
           rm -rf ios/App/Frameworks/Python.xcframework/*/include
+          # Also place modulemap in Modules folder of Python.framework
+          mkdir -p ios/App/Frameworks/Python.xcframework/ios-arm64/Python.framework/Modules
+          cp ios/App/Frameworks/Python.xcframework/ios-arm64/Python.framework/Headers/module.modulemap ios/App/Frameworks/Python.xcframework/ios-arm64/Python.framework/Modules/ 2>/dev/null || true
           mkdir -p ios/App/App/python/lib/python3.11
           cp -r Python.xcframework/lib/python3.11/* ios/App/App/python/lib/python3.11/
           cp -r Python.xcframework/ios-arm64/lib-arm64/python3.11/* ios/App/App/python/lib/python3.11/
