@@ -106,9 +106,18 @@ jobs:
                      CODE_SIGN_IDENTITY="" \
                      PROVISIONING_PROFILE_SPEC="" \
                      build 2>&1 | tee xcodebuild.log || {
-                       echo "::error::Xcode build failed!"
-                       grep -E "error:|fatal error:" xcodebuild.log | head -n 30 || true
-                       tail -n 80 xcodebuild.log
+                       echo "## Xcode Build Failed" >> $GITHUB_STEP_SUMMARY
+                       echo '```text' >> $GITHUB_STEP_SUMMARY
+                       tail -n 120 xcodebuild.log >> $GITHUB_STEP_SUMMARY
+                       echo '```' >> $GITHUB_STEP_SUMMARY
+                       python3 -c "
+with open('xcodebuild.log') as f:
+    lines = f.readlines()
+for line in lines[-60:]:
+    s = line.strip()
+    if s:
+        print('::error::' + s)
+"
                        exit 1
                      }
 
