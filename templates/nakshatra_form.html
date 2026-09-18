@@ -8,7 +8,7 @@
 
   <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <title>{{ _('నక్షత్ర పాద కుండలి') }}</title>
 
@@ -371,6 +371,29 @@
   -webkit-text-decoration-line: none !important;
 }
 </style>
+<style>
+/* === iOS Safe Area and Device Cutout Accommodations === */
+:root {
+  --safe-top: max(env(safe-area-inset-top, 0px), 54px);
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), 25px);
+}
+@supports (-webkit-touch-callout: none) or (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: max(env(safe-area-inset-top, 0px), 54px) !important;
+    padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px) !important;
+  }
+}
+body {
+  padding-top: max(env(safe-area-inset-top, 0px), 54px);
+  padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px);
+}
+.top-control-bar, .top-btn-row, .header-container {
+  margin-top: 6px !important;
+}
+.fixed-bottom-bar-nav, .bottom-nav, .fixed-bottom-bar {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 25px) !important;
+}
+</style>
 </head>
 
 <body>
@@ -653,6 +676,24 @@
     };
   })();
 </script>
+
+<script>
+function triggerUniversalPrint() {
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
+    window.webkit.messageHandlers.nativePrint.postMessage('print');
+  } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+    window.AndroidPrint.printPage();
+  } else {
+    window.print();
+  }
+}
+if (typeof handleMobilePrintClick === 'undefined') { function handleMobilePrintClick() { triggerUniversalPrint(); } }
+if (typeof handleChart3Print === 'undefined') { function handleChart3Print() { triggerUniversalPrint(); } }
+if (typeof handleCompareDashaPrint === 'undefined') { function handleCompareDashaPrint() { triggerUniversalPrint(); } }
+if (typeof handleComparePrint === 'undefined') { function handleComparePrint() { triggerUniversalPrint(); } }
+if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversalPrint(); } }
+</script>
+
 </body>
 
 </html>

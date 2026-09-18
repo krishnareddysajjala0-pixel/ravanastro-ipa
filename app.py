@@ -43,6 +43,13 @@ def get_translations_dict(lang):
             TRANSLATIONS_CACHE[lang] = {}
     return TRANSLATIONS_CACHE[lang]
 
+# Pre-warm all language dictionaries in memory at startup for instant language selection
+for _l in ['en', 'hi', 'kn', 'ta', 'ml', 'or']:
+    try:
+        get_translations_dict(_l)
+    except Exception:
+        pass
+
 def tr(text, lang=None):
     if not text:
         return text
@@ -1023,6 +1030,21 @@ def get_planet_icon(planet_name):
     return PLANET_ICONS.get(planet_name, "•")
 
 # ---------------- ROUTES ----------------
+@app.route("/api/device_location", methods=["GET", "POST"])
+def api_device_location():
+    lat = os.environ.get("DEVICE_LAT", "").strip()
+    lon = os.environ.get("DEVICE_LON", "").strip()
+    try:
+        lat_f = float(lat) if lat else None
+        lon_f = float(lon) if lon else None
+    except ValueError:
+        lat_f, lon_f = None, None
+    return jsonify({
+        "available": bool(lat_f is not None and lon_f is not None),
+        "latitude": lat_f,
+        "longitude": lon_f
+    })
+
 @app.route("/")
 def index():
     return render_template("index.html")

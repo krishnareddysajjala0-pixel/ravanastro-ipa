@@ -92,6 +92,9 @@ jobs:
           /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity dict" ios/App/App/Info.plist || true
           /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity:NSAllowsArbitraryLoads bool true" ios/App/App/Info.plist || true
           /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity:NSAllowsLocalNetworking bool true" ios/App/App/Info.plist || true
+          /usr/libexec/PlistBuddy -c "Add :NSLocationWhenInUseUsageDescription string 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'" ios/App/App/Info.plist || true
+          /usr/libexec/PlistBuddy -c "Add :NSLocationAlwaysAndWhenInUseUsageDescription string 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'" ios/App/App/Info.plist || true
+          /usr/libexec/PlistBuddy -c "Add :NSLocationUsageDescription string 'Ravan Astro uses your current location to calculate accurate horoscope and panchangam charts.'" ios/App/App/Info.plist || true
 
       - name: Build iOS App with Xcode
         run: |

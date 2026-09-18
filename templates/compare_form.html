@@ -12,7 +12,7 @@
 
   <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <title>Kundali Comparison</title>
 
@@ -1595,6 +1595,29 @@
   -webkit-text-decoration-line: none !important;
 }
 </style>
+<style>
+/* === iOS Safe Area and Device Cutout Accommodations === */
+:root {
+  --safe-top: max(env(safe-area-inset-top, 0px), 54px);
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), 25px);
+}
+@supports (-webkit-touch-callout: none) or (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: max(env(safe-area-inset-top, 0px), 54px) !important;
+    padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px) !important;
+  }
+}
+body {
+  padding-top: max(env(safe-area-inset-top, 0px), 54px);
+  padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px);
+}
+.top-control-bar, .top-btn-row, .header-container {
+  margin-top: 6px !important;
+}
+.fixed-bottom-bar-nav, .bottom-nav, .fixed-bottom-bar {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 25px) !important;
+}
+</style>
 </head>
 
 
@@ -2209,28 +2232,49 @@
 
 
     function getCurrentLocationFor(num) {
+        function applyCompareCoords(lat, lon) {
+            document.getElementById('lat' + num).value = lat;
+            document.getElementById('lon' + num).value = lon;
+            document.getElementById('place' + num).value = 'Location (' + Number(lat).toFixed(2) + ', ' + Number(lon).toFixed(2) + ')';
+            reverseGeocode(lat, lon, function(placeName) {
+                if (placeName) document.getElementById('place' + num).value = placeName;
+            });
+        }
 
-        if (!navigator.geolocation) return;
+        function tryCompareNativeFallback() {
+            fetch('/api/device_location')
+                .then(r => r.json())
+                .then(d => {
+                    if (d && d.available && d.latitude && d.longitude) {
+                        applyCompareCoords(d.latitude, d.longitude);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        if (!navigator.geolocation) {
+            tryCompareNativeFallback();
+            return;
+        }
 
         navigator.geolocation.getCurrentPosition(
-
             function(pos) {
-
-                const lat = pos.coords.latitude;
-
-                const lon = pos.coords.longitude;
-
-                document.getElementById('lat' + num).value = lat;
-
-                document.getElementById('lon' + num).value = lon;
-
-                reverseGeocode(lat, lon, function(placeName) {
-
-                    document.getElementById('place' + num).value = placeName;
-
-                });
-
+                applyCompareCoords(pos.coords.latitude, pos.coords.longitude);
             },
+            function(err) {
+                navigator.geolocation.getCurrentPosition(
+                    function(pos) {
+                        applyCompareCoords(pos.coords.latitude, pos.coords.longitude);
+                    },
+                    function(err2) {
+                        tryCompareNativeFallback();
+                    },
+                    { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false }
+                );
+            },
+            { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
+        );
+    },
 
             function(err) {
 
@@ -2641,6 +2685,24 @@
     };
   })();
 </script>
+
+<script>
+function triggerUniversalPrint() {
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
+    window.webkit.messageHandlers.nativePrint.postMessage('print');
+  } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+    window.AndroidPrint.printPage();
+  } else {
+    window.print();
+  }
+}
+if (typeof handleMobilePrintClick === 'undefined') { function handleMobilePrintClick() { triggerUniversalPrint(); } }
+if (typeof handleChart3Print === 'undefined') { function handleChart3Print() { triggerUniversalPrint(); } }
+if (typeof handleCompareDashaPrint === 'undefined') { function handleCompareDashaPrint() { triggerUniversalPrint(); } }
+if (typeof handleComparePrint === 'undefined') { function handleComparePrint() { triggerUniversalPrint(); } }
+if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversalPrint(); } }
+</script>
+
 </body>
 
 </html>

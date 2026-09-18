@@ -26,7 +26,7 @@
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 
 
@@ -4054,6 +4054,29 @@
 }
 
 </style>
+<style>
+/* === iOS Safe Area and Device Cutout Accommodations === */
+:root {
+  --safe-top: max(env(safe-area-inset-top, 0px), 54px);
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), 25px);
+}
+@supports (-webkit-touch-callout: none) or (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: max(env(safe-area-inset-top, 0px), 54px) !important;
+    padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px) !important;
+  }
+}
+body {
+  padding-top: max(env(safe-area-inset-top, 0px), 54px);
+  padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px);
+}
+.top-control-bar, .top-btn-row, .header-container {
+  margin-top: 6px !important;
+}
+.fixed-bottom-bar-nav, .bottom-nav, .fixed-bottom-bar {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 25px) !important;
+}
+</style>
 </head>
 
 
@@ -5572,246 +5595,94 @@
 
 
 
-    function getCurrentLocation() {
-
-
-
+    async function getCurrentLocation() {
       if (currentLocationLoading) return;
-
-
-
-
-
-
-
-      if (!navigator.geolocation) {
-
-
-
-        alert("{{ _('ఈ బ్రౌజర్ జియోలొకేషన్ మద్దతు ఇవ్వదు') }}");
-
-
-
-        return;
-
-
-
-      }
-
-
-
-
-
-
-
       currentLocationLoading = true;
-
-
-
       showLoading();
 
-
-
-
-
-
-
-      navigator.geolocation.getCurrentPosition(
-
-
-
-        async (position) => {
-
-
-
-          const lat = position.coords.latitude;
-
-
-
-          const lon = position.coords.longitude;
-
-
-
-
-
-
-
-          try {
-
-
-
-            // Reverse geocode to get location name
-
-
-
-            const response = await fetch(
-
-
-
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`
-
-
-
-            );
-
-
-
-            const data = await response.json();
-
-
-
-
-
-
-
-            if (data.display_name) {
-
-
-
-              placeInput.value = data.display_name;
-
-
-
-              latInput.value = lat;
-
-
-
-              lonInput.value = lon;
-
-
-
-            }
-
-
-
-          } catch (error) {
-
-
-
-            console.error("Error getting location:", error);
-
-
-
-            alert("{{ _('స్థానం పొందడంలో లోపం') }}");
-
-
-
-          } finally {
-
-
-
-            hideLoading();
-
-
-
-            currentLocationLoading = false;
-
-
-
-          }
-
-
-
-        },
-
-
-
-        (error) => {
-
-
-
-          console.error("Geolocation error:", error);
-
-
-
-          let message = "{{ _('స్థానం పొందడంలో లోపం') }}";
-
-
-
-          switch (error.code) {
-
-
-
-            case error.PERMISSION_DENIED:
-
-
-
-              message = "{{ _('స్థానం అనుమతి నిరాకరించబడింది') }}";
-
-
-
-              break;
-
-
-
-            case error.POSITION_UNAVAILABLE:
-
-
-
-              message = "{{ _('స్థాన సమాచారం అందుబాటులో లేదు') }}";
-
-
-
-              break;
-
-
-
-            case error.TIMEOUT:
-
-
-
-              message = "{{ _('స్థానం అభ్యర్థన సమయం ముగిసింది') }}";
-
-
-
-              break;
-
-
-
-          }
-
-
-
-          alert(message);
-
-
-
-          hideLoading();
-
-
-
-          currentLocationLoading = false;
-
-
-
-        },
-
-
-
-        {
-
-
-
-          enableHighAccuracy: true,
-
-
-
-          timeout: 10000,
-
-
-
-          maximumAge: 0
-
-
-
+      const applyCoords = async (lat, lon) => {
+        const numLat = parseFloat(lat);
+        const numLon = parseFloat(lon);
+        if (isNaN(numLat) || isNaN(numLon)) return false;
+
+        if (latInput) latInput.value = numLat.toFixed(4);
+        if (lonInput) lonInput.value = numLon.toFixed(4);
+        if (placeInput && !placeInput.value) {
+          placeInput.value = `Location (${numLat.toFixed(2)}, ${numLon.toFixed(2)})`;
         }
 
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${numLat}&lon=${numLon}&zoom=10&addressdetails=1`,
+            { headers: { 'Accept': 'application/json' } }
+          );
+          const data = await response.json();
+          if (data && data.display_name && placeInput) {
+            placeInput.value = data.display_name;
+          }
+        } catch (e) {
+          console.warn("Reverse geocoding network error, coordinates retained:", e);
+        } finally {
+          hideLoading();
+          currentLocationLoading = false;
+        }
+        return true;
+      };
 
+      const tryNativeFallback = async () => {
+        try {
+          const res = await fetch('/api/device_location');
+          const data = await res.json();
+          if (data && data.available && data.latitude && data.longitude) {
+            return await applyCoords(data.latitude, data.longitude);
+          }
+        } catch (e) {
+          console.warn("Native location endpoint error:", e);
+        }
+        return false;
+      };
 
+      if (!navigator.geolocation) {
+        const ok = await tryNativeFallback();
+        if (!ok) {
+          alert("{{ _('ఈ బ్రౌజర్ జియోలొకేషన్ మద్దతు ఇవ్వదు') }}");
+          hideLoading();
+          currentLocationLoading = false;
+        }
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          await applyCoords(position.coords.latitude, position.coords.longitude);
+        },
+        async (error) => {
+          console.warn("navigator.geolocation failed, attempting native CoreLocation fallback...", error);
+          const ok = await tryNativeFallback();
+          if (!ok) {
+            let message = "{{ _('స్థానం పొందడంలో లోపం') }}";
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                message = "{{ _('స్థానం అనుమతి నిరాకరించబడింది. దయచేసి iPhone Settings > Privacy > Location Services లో అనుమతించండి.') }}";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                message = "{{ _('స్థాన సమాచారం అందుబాటులో లేదు') }}";
+                break;
+              case error.TIMEOUT:
+                message = "{{ _('స్థానం అభ్యర్థన సమయం ముగిసింది') }}";
+                break;
+            }
+            alert(message);
+            hideLoading();
+            currentLocationLoading = false;
+          }
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 60000
+        }
       );
-
-
-
     }
 
 
@@ -6512,47 +6383,44 @@
 
 
 
-      fetch('https://ipapi.co/json/')
-
-
-
-        .then(response => response.json())
-
-
-
-        .then(data => {
-
-
-
-          // Only fill if empty to avoid overwriting user input
-
-
-
-          if (data && data.city && !placeInput.value) {
-
-
-
-            placeInput.value = `${data.city}, ${data.region}, ${data.country_name}`;
-
-
-
-            latInput.value = data.latitude;
-
-
-
-            lonInput.value = data.longitude;
-
-
-
+      fetch('/api/device_location')
+        .then(r => r.json())
+        .then(deviceLoc => {
+          if (deviceLoc && deviceLoc.available && deviceLoc.latitude && deviceLoc.longitude && !placeInput.value) {
+            latInput.value = parseFloat(deviceLoc.latitude).toFixed(4);
+            lonInput.value = parseFloat(deviceLoc.longitude).toFixed(4);
+            placeInput.value = `Location (${parseFloat(deviceLoc.latitude).toFixed(2)}, ${parseFloat(deviceLoc.longitude).toFixed(2)})`;
+            // Attempt reverse geocoding
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${deviceLoc.latitude}&lon=${deviceLoc.longitude}&zoom=10&addressdetails=1`)
+              .then(r => r.json())
+              .then(geo => { if (geo && geo.display_name) placeInput.value = geo.display_name; })
+              .catch(() => {});
+            return;
           }
-
-
-
+          // Fallback to IP geolocation
+          fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+              if (data && data.city && !placeInput.value) {
+                placeInput.value = `${data.city}, ${data.region}, ${data.country_name}`;
+                latInput.value = data.latitude;
+                lonInput.value = data.longitude;
+              }
+            })
+            .catch(error => console.log('Auto-location failed:', error));
         })
-
-
-
-        .catch(error => console.log('Auto-location failed:', error));
+        .catch(() => {
+          fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+              if (data && data.city && !placeInput.value) {
+                placeInput.value = `${data.city}, ${data.region}, ${data.country_name}`;
+                latInput.value = data.latitude;
+                lonInput.value = data.longitude;
+              }
+            })
+            .catch(error => console.log('Auto-location failed:', error));
+        });
 
 
 
@@ -7469,31 +7337,58 @@
     let editSuggestionTimeout = null;
     let editController = null;
 
-    function getEditCurrentLocation() {
-      if (!navigator.geolocation) {
-        alert("{{ _('ఈ బ్రౌజర్ జియోలొకేషన్ మద్దతు ఇవ్వదు') }}");
-        return;
-      }
+    async function getEditCurrentLocation() {
       const placeEl = document.getElementById('edit-place');
       if (placeEl) placeEl.placeholder = "{{ _('లొకేషన్ సేకరిస్తోంది...') }}";
+
+      const applyEditCoords = async (lat, lon) => {
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`);
+          const data = await response.json();
+          if (data && data.display_name && placeEl) {
+            placeEl.value = data.display_name;
+          } else if (placeEl) {
+            placeEl.value = `Location (${Number(lat).toFixed(2)}, ${Number(lon).toFixed(2)})`;
+          }
+        } catch(e) {
+          if (placeEl) placeEl.value = `Location (${Number(lat).toFixed(2)}, ${Number(lon).toFixed(2)})`;
+        }
+        if (placeEl) placeEl.placeholder = "{{ _('గ్రామం, నగరం, రాష్ట్రం') }}";
+        return true;
+      };
+
+      const tryNativeEditFallback = async () => {
+        try {
+          const res = await fetch('/api/device_location');
+          const data = await res.json();
+          if (data && data.available && data.latitude && data.longitude) {
+            return await applyEditCoords(data.latitude, data.longitude);
+          }
+        } catch(e) {}
+        return false;
+      };
+
+      if (!navigator.geolocation) {
+        const ok = await tryNativeEditFallback();
+        if (!ok) {
+          alert("{{ _('ఈ బ్రౌజర్ జియోలొకేషన్ మద్దతు ఇవ్వదు') }}");
+          if (placeEl) placeEl.placeholder = "{{ _('గ్రామం, నగరం, రాష్ట్రం') }}";
+        }
+        return;
+      }
+
       navigator.geolocation.getCurrentPosition(
         async (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          try {
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`);
-            const data = await response.json();
-            if (data.display_name && placeEl) {
-              placeEl.value = data.display_name;
-            }
-          } catch(e) {}
-          if (placeEl) placeEl.placeholder = "{{ _('గ్రామం, నగరం, రాష్ట్రం') }}";
+          await applyEditCoords(position.coords.latitude, position.coords.longitude);
         },
-        (error) => {
-          alert("{{ _('స్థానం పొందడంలో లోపం') }}");
-          if (placeEl) placeEl.placeholder = "{{ _('గ్రామం, నగరం, రాష్ట్రం') }}";
+        async (error) => {
+          const ok = await tryNativeEditFallback();
+          if (!ok) {
+            alert("{{ _('స్థానం పొందడంలో లోపం') }}");
+            if (placeEl) placeEl.placeholder = "{{ _('గ్రామం, నగరం, రాష్ట్రం') }}";
+          }
         },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
       );
     }
 
@@ -9239,6 +9134,24 @@
     };
   })();
 </script>
+
+<script>
+function triggerUniversalPrint() {
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
+    window.webkit.messageHandlers.nativePrint.postMessage('print');
+  } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+    window.AndroidPrint.printPage();
+  } else {
+    window.print();
+  }
+}
+if (typeof handleMobilePrintClick === 'undefined') { function handleMobilePrintClick() { triggerUniversalPrint(); } }
+if (typeof handleChart3Print === 'undefined') { function handleChart3Print() { triggerUniversalPrint(); } }
+if (typeof handleCompareDashaPrint === 'undefined') { function handleCompareDashaPrint() { triggerUniversalPrint(); } }
+if (typeof handleComparePrint === 'undefined') { function handleComparePrint() { triggerUniversalPrint(); } }
+if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversalPrint(); } }
+</script>
+
 </body>
 
 
