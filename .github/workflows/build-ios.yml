@@ -109,8 +109,7 @@ jobs:
                        echo "## Xcode Build Failed" >> $GITHUB_STEP_SUMMARY
                        echo '```text' >> $GITHUB_STEP_SUMMARY
                        tail -n 120 xcodebuild.log >> $GITHUB_STEP_SUMMARY
-                       echo '```' >> $GITHUB_STEP_SUMMARY
-                       python3 -c "import sys; lines=open('xcodebuild.log').readlines()[-60:]; [print('::error::' + l.strip()) for l in lines if l.strip()]"
+                       python3 -c "import re; txt=open('xcodebuild.log').read(); errs=re.findall(r'(?m)^.*(?:error:|fatal error:).*$', txt); [print('::error::' + e.strip()) for e in errs[:50]]"
                        exit 1
                      }
 

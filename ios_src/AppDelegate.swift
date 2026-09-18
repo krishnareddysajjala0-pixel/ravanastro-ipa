@@ -23,15 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let pyLib = "\(pyHome)/lib/python3.11"
         let pySite = "\(pyLib)/site-packages"
         let appDir = "\(resourcePath)/python_app"
+        let pyPath = "\(appDir):\(pyLib):\(pySite)"
 
-        setenv("PYTHONHOME", pyHome, 1)
-        setenv("PYTHONPATH", "\(appDir):\(pyLib):\(pySite)", 1)
-        setenv("PYTHONUNBUFFERED", "1", 1)
-        setenv("RESOURCE_PATH", resourcePath, 1)
-
-        print("[Python] Calling Py_Initialize...")
-        Py_Initialize()
-        print("[Python] Py_Initialize succeeded!")
+        print("[Python] Calling StartPythonEngine...")
+        StartPythonEngine(pyHome, pyPath, resourcePath)
+        print("[Python] Python engine initialized!")
 
         DispatchQueue.global(qos: .userInitiated).async {
             print("[Python] Background runner thread launched")
@@ -47,7 +43,7 @@ try:
 except Exception as e:
     print(f'[Python Flask Crash] {e}', flush=True)
 """
-            PyRun_SimpleString(runnerScript)
+            RunPythonCode(runnerScript)
         }
     }
 
