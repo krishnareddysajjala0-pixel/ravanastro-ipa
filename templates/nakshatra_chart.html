@@ -3168,69 +3168,42 @@ body {
       sendNakshatraTransitRequest(lat, lon, timezone, place);
     }
 
+    function sendNakshatraTransitRequest(lat, lon, timezone, place) {
+      const btn = document.getElementById('transit-btn');
+      const loading = document.getElementById('transit-loading');
+      const container = document.getElementById('transit-container');
 
+      const formData = new FormData();
+      formData.append('lat', lat);
+      formData.append('lon', lon);
+      formData.append('timezone', timezone);
+      formData.append('place', place);
 
-      function sendNakshatraTransitRequest(lat, lon, timezone, place) {
-
-        const formData = new FormData();
-
-        formData.append('lat', lat);
-
-        formData.append('lon', lon);
-
-        formData.append('timezone', timezone);
-
-        formData.append('place', place);
-
-
-
-        fetch('/nakshatra_transit_chart', {
-
-          method: 'POST',
-
-          body: formData
-
-        })
-
-        .then(response => response.text())
-
-        .then(html => {
-
-          if (loading) loading.style.display = 'none';
-
-          if (container) {
-
-            container.innerHTML = html;
-
-            container.style.display = 'block';
-
-          }
-
-          const toggleBar = document.getElementById('transit-toggle-bar');
-
-          if (toggleBar) toggleBar.style.display = 'block';
-
-          if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        })
-
-        .catch(error => {
-
-          console.error('Error fetching transit chart:', error);
-
-          if (loading) loading.style.display = 'none';
-
-          if (btn) btn.style.display = 'inline-flex';
-
-          alert('గ్రహ స్థితిని తీసుకురావడంలో లోపం ఏర్పడింది.');
-
-        });
-
-      }
-
+      fetch('/nakshatra_transit_chart', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
+      })
+      .then(html => {
+        if (loading) loading.style.display = 'none';
+        if (container) {
+          container.innerHTML = html;
+          container.style.display = 'block';
+        }
+        const toggleBar = document.getElementById('transit-toggle-bar');
+        if (toggleBar) toggleBar.style.display = 'block';
+        if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      })
+      .catch(error => {
+        console.error('Error fetching transit chart:', error);
+        if (loading) loading.style.display = 'none';
+        if (btn) btn.style.display = 'inline-flex';
+        alert('గ్రహ స్థితిని తీసుకురావడంలో లోపం ఏర్పడింది.');
+      });
     }
-
-
 
     function toggleTransitChart() {
 
