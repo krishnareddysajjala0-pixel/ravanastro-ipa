@@ -2083,7 +2083,13 @@ body {
 
                     const div = document.createElement("div");
 
-                    div.innerHTML = `<div style="font-weight: 600; color: #fff;">${p.display_name.split(',')[0]}</div><div style="font-size: 12px; color: #a0a0ff;">${p.display_name.split(',').slice(1).join(',').trim()}</div>`;
+                    const parts = (p.display_name || '').split(',');
+                    const mainTitle = parts[0].trim();
+                    const subTitle = parts.slice(1).join(',').trim();
+                    div.style.padding = "10px 14px";
+                    div.style.cursor = "pointer";
+                    div.style.borderBottom = "1px solid var(--card-border, rgba(0,0,0,0.08))";
+                    div.innerHTML = `<div style="font-weight: 600; color: var(--text-main, #1e293b); font-size: 14px;">${mainTitle}</div>${subTitle ? `<div style="font-size: 12px; color: var(--text-muted, #64748b); margin-top: 2px;">${subTitle}</div>` : ''}`;
 
                     div.onclick = () => {
 
@@ -2244,36 +2250,47 @@ body {
     }
 
     function detectLocation() {
-        function applyBothCoords(lat, lon) {
-            document.getElementById('lat1').value = lat;
-            document.getElementById('lon1').value = lon;
-            document.getElementById('lat2').value = lat;
-            document.getElementById('lon2').value = lon;
-            reverseGeocode(lat, lon, function(placeName) {
+        function applyBothCoords(lat, lon, placeName) {
+            const numLat = parseFloat(lat);
+            const numLon = parseFloat(lon);
+            if (isNaN(numLat) || isNaN(numLon)) return;
+            document.getElementById('lat1').value = numLat.toFixed(4);
+            document.getElementById('lon1').value = numLon.toFixed(4);
+            document.getElementById('lat2').value = numLat.toFixed(4);
+            document.getElementById('lon2').value = numLon.toFixed(4);
+            if (placeName && placeName !== 'Unknown Location') {
                 if (!document.getElementById('place1').value) document.getElementById('place1').value = placeName;
                 if (!document.getElementById('place2').value) document.getElementById('place2').value = placeName;
-            });
+            } else {
+                reverseGeocode(numLat, numLon, function(pName) {
+                    if (pName && pName !== 'Unknown Location') {
+                        if (!document.getElementById('place1').value) document.getElementById('place1').value = pName;
+                        if (!document.getElementById('place2').value) document.getElementById('place2').value = pName;
+                    }
+                });
+            }
         }
 
         fetch('/api/device_location')
             .then(r => r.json())
             .then(d => {
-                if (d && d.available && d.latitude && d.longitude) {
-                    applyBothCoords(d.latitude, d.longitude);
-                } else if (navigator.geolocation) {
+                if (d && d.available && (d.latitude || d.lat)) {
+                    applyBothCoords(d.latitude || d.lat, d.longitude || d.lon, d.display_name);
+                }
+                if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
-                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude),
+                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude, null),
                         err => {},
-                        { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
+                        { timeout: 8000, maximumAge: 300000, enableHighAccuracy: false }
                     );
                 }
             })
             .catch(() => {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
-                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude),
+                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude, null),
                         err => {},
-                        { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
+                        { timeout: 8000, maximumAge: 300000, enableHighAccuracy: false }
                     );
                 }
             });
