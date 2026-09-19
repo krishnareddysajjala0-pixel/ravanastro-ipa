@@ -1038,19 +1038,64 @@ def get_planet_icon(planet_name):
     return PLANET_ICONS.get(planet_name, "•")
 
 # ---------------- ROUTES ----------------
+IP_LOCATION_CACHE = {"data": None, "timestamp": 0}
+
+def get_server_ip_location():
+    import time
+    now = time.time()
+    if IP_LOCATION_CACHE["data"] and (now - IP_LOCATION_CACHE["timestamp"]) < 3600:
+        return IP_LOCATION_CACHE["data"]
+    try:
+        url = "https://ipapi.co/json/"
+        resp = requests.get(url, headers={"User-Agent": "RavanAstroApp/1.0"}, timeout=2.5)
+        if resp.status_code == 200:
+            d = resp.json()
+            city = d.get("city") or ""
+            region = d.get("region") or ""
+            country = d.get("country_name") or ""
+            lat = d.get("latitude")
+            lon = d.get("longitude")
+            if lat is not None and lon is not None:
+                disp = ", ".join([p for p in [city, region, country] if p]) or f"Location ({lat:.2f}, {lon:.2f})"
+                loc = {
+                    "available": True,
+                    "latitude": float(lat),
+                    "longitude": float(lon),
+                    "city": city,
+                    "region": region,
+                    "country": country,
+                    "display_name": disp
+                }
+                IP_LOCATION_CACHE["data"] = loc
+                IP_LOCATION_CACHE["timestamp"] = now
+                return loc
+    except Exception:
+        pass
+    return None
+
 @app.route("/api/device_location", methods=["GET", "POST"])
 def api_device_location():
     lat = os.environ.get("DEVICE_LAT", "").strip()
     lon = os.environ.get("DEVICE_LON", "").strip()
-    try:
-        lat_f = float(lat) if lat else None
-        lon_f = float(lon) if lon else None
-    except ValueError:
-        lat_f, lon_f = None, None
+    if lat and lon:
+        try:
+            return jsonify({
+                "available": True,
+                "latitude": float(lat),
+                "longitude": float(lon),
+                "display_name": os.environ.get("DEVICE_PLACE", "")
+            })
+        except ValueError:
+            pass
+
+    loc = get_server_ip_location()
+    if loc:
+        return jsonify(loc)
+
     return jsonify({
-        "available": bool(lat_f is not None and lon_f is not None),
-        "latitude": lat_f,
-        "longitude": lon_f
+        "available": False,
+        "latitude": None,
+        "longitude": None
     })
 
 # Local offline database of prominent cities and towns
@@ -1130,7 +1175,12 @@ def api_search_place():
     for city in LOCAL_CITIES:
         name = city["display_name"]
         if q_lower in name.lower():
-            results.append(city)
+            results.append({
+                "display_name": city["display_name"],
+                "lat": city["lat"],
+                "lon": city["lon"],
+                "type": "city"
+            })
             seen.add(name.lower())
 
     # Try external Nominatim with valid User-Agent if available
@@ -1145,7 +1195,8 @@ def api_search_place():
                     results.append({
                         "display_name": d_name,
                         "lat": float(item.get("lat", 0)),
-                        "lon": float(item.get("lon", 0))
+                        "lon": float(item.get("lon", 0)),
+                        "type": item.get("type", "city")
                     })
                     seen.add(d_name.lower())
     except Exception:
