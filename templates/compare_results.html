@@ -30,7 +30,7 @@
 
     (function () {
 
-      const savedTheme = localStorage.getItem('preferred-theme') || 'light';
+      const savedTheme = localStorage.getItem('preferred-theme') || 'cosmic';
 
       if (savedTheme !== 'default') {
 
@@ -74,13 +74,13 @@
 
     :root {
 
-      --bg-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      --bg-primary: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0b0f19 60%, #030712 100%);
 
-      --text-main: #0f172a;
+      --text-main: #f8fafc;
 
-      --text-muted: #475569;
+      --text-muted: #cbd5e1;
 
-      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-bg: rgba(15, 23, 42, 0.85);
 
       --card-border: rgba(0, 0, 0, 0.1);
 
@@ -3858,21 +3858,21 @@ body, .container, .top-control-bar, .theme-switcher, .language-switcher {
 <style>
 /* === iOS Safe Area and Device Cutout Accommodations === */
 :root {
-  --safe-top: max(env(safe-area-inset-top, 0px), 54px);
+  --safe-top: max(env(safe-area-inset-top, 0px), 18px);
   --safe-bottom: max(env(safe-area-inset-bottom, 0px), 25px);
 }
 @supports (-webkit-touch-callout: none) or (padding-top: env(safe-area-inset-top)) {
   body {
-    padding-top: max(env(safe-area-inset-top, 0px), 54px) !important;
-    padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px) !important;
+    padding-top: max(env(safe-area-inset-top, 0px), 18px) !important;
+    padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 145px) !important;
   }
 }
 body {
-  padding-top: max(env(safe-area-inset-top, 0px), 54px);
+  padding-top: max(env(safe-area-inset-top, 0px), 18px);
   padding-bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 85px);
 }
 .top-control-bar, .top-btn-row, .header-container {
-  margin-top: 6px !important;
+  margin-top: 2px !important;
 }
 .fixed-bottom-bar-nav, .bottom-nav, .fixed-bottom-bar {
   padding-bottom: max(env(safe-area-inset-bottom, 0px), 25px) !important;
@@ -4782,7 +4782,7 @@ body {
 
     <!-- Single Line Bottom Action Bar -->
 
-    <div class="no-print" id="compare-action-bar" style="position: fixed; bottom: 65px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(15, 23, 42, 0.92); border: 1.5px solid rgba(255, 255, 255, 0.2); border-radius: 35px; padding: 6px 14px; backdrop-filter: blur(10px); box-shadow: 0 8px 30px rgba(0,0,0,0.6); max-width: 95%; flex-wrap: nowrap; overflow-x: auto;">
+    <div class="no-print" id="compare-action-bar" style="position: fixed; bottom: calc(max(env(safe-area-inset-bottom, 0px), 25px) + 68px); left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(15, 23, 42, 0.92); border: 1.5px solid rgba(255, 255, 255, 0.2); border-radius: 35px; padding: 6px 14px; backdrop-filter: blur(10px); box-shadow: 0 8px 30px rgba(0,0,0,0.6); max-width: 95%; flex-wrap: nowrap; overflow-x: auto;">
     <button type="button" onclick="toggleCompareView()" id="btn-view-toggle" class="compare-tab-btn" style="white-space: nowrap; font-size: 13px; padding: 7px 14px;">
       {% if chart_type == 'nakshatra' %}
         ⚖️ {{ _('సాధారణ కుండలుల పొంతన') }}
