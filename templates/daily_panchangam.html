@@ -1503,6 +1503,7 @@ body {
             
 
             <form id="panch-form" action="/daily_panchangam" method="POST" onsubmit="showLoader()">
+                <input type="hidden" id="inp-is-post" value="{{ '1' if request.method == 'POST' else '0' }}">
 
                 <div class="form-grid">
 
@@ -2072,6 +2073,7 @@ body {
         }
 
         function clearPanchLocation() {
+            sessionStorage.removeItem('panch_auto_detected');
             document.getElementById('inp-lat').value = '';
             document.getElementById('inp-lon').value = '';
             document.getElementById('inp-place').value = '';
@@ -2134,11 +2136,23 @@ body {
             );
         }
 
-        // Auto-detect device location on load if user entered page fresh (no manual lat/place query parameters)
+        // Auto-detect device location on load ONCE (prevent reload loop)
         (function autoDetectOnPanchangamLoad() {
-            const params = new URLSearchParams(window.location.search);
-            if (!params.has('lat') && !params.has('place') && navigator.geolocation) {
-                detectLocation(true);
+            const isPost = document.getElementById('inp-is-post') && document.getElementById('inp-is-post').value === '1';
+            if (isPost || sessionStorage.getItem('panch_auto_detected') === '1') {
+                return;
+            }
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(pos) {
+                        sessionStorage.setItem('panch_auto_detected', '1');
+                        handlePositionSuccess(pos);
+                    },
+                    function(err) {
+                        console.log('Panchangam auto-location declined/unavailable:', err);
+                    },
+                    { timeout: 8000, maximumAge: 300000, enableHighAccuracy: false }
+                );
             }
         })();
 
