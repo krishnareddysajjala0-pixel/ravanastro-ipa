@@ -2244,6 +2244,87 @@ if (typeof handleComparePrint === 'undefined') { function handleComparePrint() {
 if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversalPrint(); } }
 </script>
 
+
+<script>
+// Mobile Web Audio API Unlocker & Resilient Tone Player
+(function() {
+    window._astroAudioCtx = null;
+
+    function getAstroAudioContext() {
+        if (!window._astroAudioCtx) {
+            var AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+                window._astroAudioCtx = new AudioCtx();
+            }
+        }
+        if (window._astroAudioCtx && window._astroAudioCtx.state === 'suspended') {
+            window._astroAudioCtx.resume().catch(function() {});
+        }
+        return window._astroAudioCtx;
+    }
+
+    // Proactively unlock on first user touch or click gesture
+    function unlockAudio() {
+        var ctx = getAstroAudioContext();
+        if (ctx) {
+            if (ctx.state === 'suspended') {
+                ctx.resume().catch(function() {});
+            }
+            // Play an inaudible buffer to fully wake hardware audio pipeline on iOS / Android
+            try {
+                var buffer = ctx.createBuffer(1, 1, 22050);
+                var source = ctx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(ctx.destination);
+                source.start(0);
+            } catch(e) {}
+        }
+        document.removeEventListener('touchstart', unlockAudio, true);
+        document.removeEventListener('touchend', unlockAudio, true);
+        document.removeEventListener('click', unlockAudio, true);
+    }
+
+    document.addEventListener('touchstart', unlockAudio, { once: true, passive: true, capture: true });
+    document.addEventListener('touchend', unlockAudio, { once: true, passive: true, capture: true });
+    document.addEventListener('click', unlockAudio, { once: true, passive: true, capture: true });
+
+    // Robust Global Sound Player
+    window.playLoadingSound = function() {
+        try {
+            var ctx = getAstroAudioContext();
+            if (!ctx) return;
+            if (ctx.state === 'suspended') {
+                ctx.resume().catch(function() {});
+            }
+
+            var notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 pleasant chime
+            var now = ctx.currentTime;
+
+            notes.forEach(function(freq, i) {
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                var startTime = now + (i * 0.11);
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, startTime);
+
+                gain.gain.setValueAtTime(0, startTime);
+                gain.gain.linearRampToValueAtTime(0.08, startTime + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.28);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(startTime);
+                osc.stop(startTime + 0.30);
+            });
+        } catch(e) {
+            console.warn('Audio play error:', e);
+        }
+    };
+})();
+</script>
+
 </body>
 
 </html>

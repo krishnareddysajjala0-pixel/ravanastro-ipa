@@ -4033,6 +4033,232 @@ body {
   padding-bottom: max(env(safe-area-inset-bottom, 0px), 25px) !important;
 }
 </style>
+
+<style>
+/* ==========================================================================
+   DYNAMIC THEME-SPECIFIC DISTINCT BUTTON COLORS (INDEX PAGE)
+   Every button has an entirely different gradient color, changing with each theme.
+   ========================================================================== */
+
+/* Default Bright Mode */
+.btn-save-show {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4) !important;
+}
+.btn-show {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  box-shadow: 0 4px 18px rgba(217, 119, 6, 0.5) !important;
+}
+.btn-nakshatra {
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.45) !important;
+}
+.btn-saved-data {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4) !important;
+}
+.top-btn-theme {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #fff !important;
+}
+.top-btn-lang {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+  color: #fff !important;
+}
+
+/* 1. Cosmic Mode */
+[data-theme="cosmic"] .btn-save-show {
+  background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%) !important;
+  box-shadow: 0 4px 18px rgba(6, 182, 212, 0.5) !important;
+}
+[data-theme="cosmic"] .btn-show {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+  box-shadow: 0 4px 18px rgba(251, 191, 36, 0.5) !important;
+}
+[data-theme="cosmic"] .btn-nakshatra {
+  background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%) !important;
+  box-shadow: 0 4px 18px rgba(168, 85, 247, 0.5) !important;
+}
+[data-theme="cosmic"] .btn-saved-data {
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 100%) !important;
+  box-shadow: 0 4px 18px rgba(236, 72, 153, 0.5) !important;
+}
+[data-theme="cosmic"] .top-btn-theme {
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important;
+}
+[data-theme="cosmic"] .top-btn-lang {
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+}
+
+/* 2. Sunset */
+[data-theme="sunset"] .btn-save-show {
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%) !important;
+  box-shadow: 0 4px 18px rgba(234, 179, 8, 0.5) !important;
+}
+[data-theme="sunset"] .btn-show {
+  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%) !important;
+  box-shadow: 0 4px 18px rgba(249, 115, 22, 0.5) !important;
+}
+[data-theme="sunset"] .btn-nakshatra {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+  box-shadow: 0 4px 18px rgba(220, 38, 38, 0.5) !important;
+}
+[data-theme="sunset"] .btn-saved-data {
+  background: linear-gradient(135deg, #be123c 0%, #881337 100%) !important;
+  box-shadow: 0 4px 18px rgba(190, 18, 60, 0.5) !important;
+}
+[data-theme="sunset"] .top-btn-theme {
+  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%) !important;
+}
+[data-theme="sunset"] .top-btn-lang {
+  background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important;
+}
+
+/* 3. Obsidian Gold / Luxury */
+[data-theme="luxury"] .btn-save-show {
+  background: linear-gradient(135deg, #059669 0%, #064e3b 100%) !important;
+  box-shadow: 0 4px 18px rgba(5, 150, 105, 0.45) !important;
+}
+[data-theme="luxury"] .btn-show {
+  background: linear-gradient(135deg, #d97706 0%, #92400e 100%) !important;
+  box-shadow: 0 4px 18px rgba(217, 119, 6, 0.5) !important;
+}
+[data-theme="luxury"] .btn-nakshatra {
+  background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important;
+  box-shadow: 0 4px 18px rgba(180, 83, 9, 0.5) !important;
+}
+[data-theme="luxury"] .btn-saved-data {
+  background: linear-gradient(135deg, #475569 0%, #1e293b 100%) !important;
+  box-shadow: 0 4px 18px rgba(71, 85, 105, 0.5) !important;
+}
+[data-theme="luxury"] .top-btn-theme {
+  background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%) !important;
+}
+[data-theme="luxury"] .top-btn-lang {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+}
+
+/* 4. Neo Cyber / Cyberpunk */
+[data-theme="cyberpunk"] .btn-save-show {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.5) !important;
+}
+[data-theme="cyberpunk"] .btn-show {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+  box-shadow: 0 4px 18px rgba(6, 182, 212, 0.5) !important;
+}
+[data-theme="cyberpunk"] .btn-nakshatra {
+  background: linear-gradient(135deg, #a21caf 0%, #701a75 100%) !important;
+  box-shadow: 0 4px 18px rgba(162, 28, 175, 0.5) !important;
+}
+[data-theme="cyberpunk"] .btn-saved-data {
+  background: linear-gradient(135deg, #ff007f 0%, #be123c 100%) !important;
+  box-shadow: 0 4px 18px rgba(255, 0, 127, 0.5) !important;
+}
+[data-theme="cyberpunk"] .top-btn-theme {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+[data-theme="cyberpunk"] .top-btn-lang {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%) !important;
+}
+
+/* 5. Solar Amber */
+[data-theme="solar"] .btn-save-show {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+  box-shadow: 0 4px 18px rgba(22, 163, 74, 0.5) !important;
+}
+[data-theme="solar"] .btn-show {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  box-shadow: 0 4px 18px rgba(234, 88, 12, 0.5) !important;
+}
+[data-theme="solar"] .btn-nakshatra {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  box-shadow: 0 4px 18px rgba(225, 29, 72, 0.5) !important;
+}
+[data-theme="solar"] .btn-saved-data {
+  background: linear-gradient(135deg, #ca8a04 0%, #854d0e 100%) !important;
+  box-shadow: 0 4px 18px rgba(202, 138, 4, 0.5) !important;
+}
+[data-theme="solar"] .top-btn-theme {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+[data-theme="solar"] .top-btn-lang {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+}
+
+/* 6. Royal Mandala */
+[data-theme="mandala"] .btn-save-show {
+  background: linear-gradient(135deg, #047857 0%, #064e3b 100%) !important;
+  box-shadow: 0 4px 18px rgba(4, 120, 87, 0.5) !important;
+}
+[data-theme="mandala"] .btn-show {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%) !important;
+  box-shadow: 0 4px 18px rgba(185, 28, 28, 0.5) !important;
+}
+[data-theme="mandala"] .btn-nakshatra {
+  background: linear-gradient(135deg, #d97706 0%, #92400e 100%) !important;
+  box-shadow: 0 4px 18px rgba(217, 119, 6, 0.5) !important;
+}
+[data-theme="mandala"] .btn-saved-data {
+  background: linear-gradient(135deg, #7c2d12 0%, #431407 100%) !important;
+  box-shadow: 0 4px 18px rgba(124, 45, 18, 0.5) !important;
+}
+[data-theme="mandala"] .top-btn-theme {
+  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%) !important;
+}
+[data-theme="mandala"] .top-btn-lang {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+}
+
+/* 7. Twilight Fusion */
+[data-theme="twilight"] .btn-save-show {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+  box-shadow: 0 4px 18px rgba(13, 148, 136, 0.5) !important;
+}
+[data-theme="twilight"] .btn-show {
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.5) !important;
+}
+[data-theme="twilight"] .btn-nakshatra {
+  background: linear-gradient(135deg, #c026d3 0%, #86198f 100%) !important;
+  box-shadow: 0 4px 18px rgba(192, 38, 211, 0.5) !important;
+}
+[data-theme="twilight"] .btn-saved-data {
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%) !important;
+  box-shadow: 0 4px 18px rgba(79, 70, 229, 0.5) !important;
+}
+[data-theme="twilight"] .top-btn-theme {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+}
+[data-theme="twilight"] .top-btn-lang {
+  background: linear-gradient(135deg, #06b6d4 0%, #0e7490 100%) !important;
+}
+
+/* 8. Divine Aurora */
+[data-theme="aurora"] .btn-save-show {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 0 4px 18px rgba(5, 150, 105, 0.5) !important;
+}
+[data-theme="aurora"] .btn-show {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  box-shadow: 0 4px 18px rgba(2, 132, 199, 0.5) !important;
+}
+[data-theme="aurora"] .btn-nakshatra {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.5) !important;
+}
+[data-theme="aurora"] .btn-saved-data {
+  background: linear-gradient(135deg, #0d9488 0%, #115e59 100%) !important;
+  box-shadow: 0 4px 18px rgba(13, 148, 136, 0.5) !important;
+}
+[data-theme="aurora"] .top-btn-theme {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+[data-theme="aurora"] .top-btn-lang {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+</style>
+
 </head>
 
 
@@ -4811,26 +5037,26 @@ body {
           <!-- Top Row: Button 1 (Save & Show) + Button 2 (Show Kundali) in SAME LINE -->
           <div style="display: flex; gap: 10px; width: 100%;">
             <!-- 1. Save & Show Kundali Button (FIRST) -->
-            <button type="button" onclick="saveUserProfile(true)" class="btn btn-submit btn-save-show" style="flex: 1; min-width: 0; background: linear-gradient(135deg, #059669 0%, #047857 100%); color: #ffffff; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4); font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
-              <i class="fas fa-save"></i> <span>{{ _('సేవ్ చేసి కుండలిని చూపు') }}</span>
+            <button type="button" onclick="saveUserProfile(true)" class="btn btn-submit btn-save-show" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+              <i class="fas fa-save"></i> <span>{{ _('సేవ్ & కుండలి') }}</span>
             </button>
 
             <!-- 2. Show Kundali Button (SECOND) -->
-            <button type="submit" formaction="/chart" class="btn btn-show" style="flex: 1; min-width: 0; background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #ffffff; box-shadow: 0 4px 18px rgba(217, 119, 6, 0.5); font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
-              <i class="fas fa-chart-pie"></i> <span>{{ _('కుండలి చూపండి') }}</span>
+            <button type="submit" formaction="/chart" class="btn btn-show" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+              <i class="fas fa-chart-pie"></i> <span>{{ _('కుండలి') }}</span>
             </button>
           </div>
 
           <!-- Second Row: Button 3 (Nakshatra Pada Kundali) + Button 4 (Saved Data) in SAME LINE -->
           <div style="display: flex; gap: 10px; width: 100%;">
             <!-- 3. Nakshatra Pada Kundali Button -->
-            <button type="submit" formaction="/nakshatra_chart" class="btn btn-nakshatra" style="flex: 1; min-width: 0; background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); color: #ffffff; box-shadow: 0 4px 18px rgba(124, 58, 237, 0.45); font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
-              <i class="fas fa-star"></i> <span>{{ _('నక్షత్ర పాద కుండలి') }}</span>
+            <button type="submit" formaction="/nakshatra_chart" class="btn btn-nakshatra" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+              <i class="fas fa-star"></i> <span>{{ _('నక్షత్ర కుండలి') }}</span>
             </button>
 
             <!-- 4. Saved Data Button -->
-            <button type="button" onclick="openSavedProfilesModal()" class="btn btn-saved-data" style="flex: 1; min-width: 0; background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); color: #ffffff; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4); font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
-              <i class="fas fa-folder-open"></i> <span>{{ _('సేవ్ చేసిన డేటా చూపు') }}</span> <span id="saved-profiles-count">(0)</span>
+            <button type="button" onclick="openSavedProfilesModal()" class="btn btn-saved-data" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+              <i class="fas fa-folder-open"></i> <span>{{ _('సేవ్ డేటా') }}</span> <span id="saved-profiles-count">(0)</span>
             </button>
           </div>
         </div>
@@ -8802,6 +9028,87 @@ if (typeof handleChart3Print === 'undefined') { function handleChart3Print() { t
 if (typeof handleCompareDashaPrint === 'undefined') { function handleCompareDashaPrint() { triggerUniversalPrint(); } }
 if (typeof handleComparePrint === 'undefined') { function handleComparePrint() { triggerUniversalPrint(); } }
 if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversalPrint(); } }
+</script>
+
+
+<script>
+// Mobile Web Audio API Unlocker & Resilient Tone Player
+(function() {
+    window._astroAudioCtx = null;
+
+    function getAstroAudioContext() {
+        if (!window._astroAudioCtx) {
+            var AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+                window._astroAudioCtx = new AudioCtx();
+            }
+        }
+        if (window._astroAudioCtx && window._astroAudioCtx.state === 'suspended') {
+            window._astroAudioCtx.resume().catch(function() {});
+        }
+        return window._astroAudioCtx;
+    }
+
+    // Proactively unlock on first user touch or click gesture
+    function unlockAudio() {
+        var ctx = getAstroAudioContext();
+        if (ctx) {
+            if (ctx.state === 'suspended') {
+                ctx.resume().catch(function() {});
+            }
+            // Play an inaudible buffer to fully wake hardware audio pipeline on iOS / Android
+            try {
+                var buffer = ctx.createBuffer(1, 1, 22050);
+                var source = ctx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(ctx.destination);
+                source.start(0);
+            } catch(e) {}
+        }
+        document.removeEventListener('touchstart', unlockAudio, true);
+        document.removeEventListener('touchend', unlockAudio, true);
+        document.removeEventListener('click', unlockAudio, true);
+    }
+
+    document.addEventListener('touchstart', unlockAudio, { once: true, passive: true, capture: true });
+    document.addEventListener('touchend', unlockAudio, { once: true, passive: true, capture: true });
+    document.addEventListener('click', unlockAudio, { once: true, passive: true, capture: true });
+
+    // Robust Global Sound Player
+    window.playLoadingSound = function() {
+        try {
+            var ctx = getAstroAudioContext();
+            if (!ctx) return;
+            if (ctx.state === 'suspended') {
+                ctx.resume().catch(function() {});
+            }
+
+            var notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 pleasant chime
+            var now = ctx.currentTime;
+
+            notes.forEach(function(freq, i) {
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                var startTime = now + (i * 0.11);
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, startTime);
+
+                gain.gain.setValueAtTime(0, startTime);
+                gain.gain.linearRampToValueAtTime(0.08, startTime + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.28);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(startTime);
+                osc.stop(startTime + 0.30);
+            });
+        } catch(e) {
+            console.warn('Audio play error:', e);
+        }
+    };
+})();
 </script>
 
 </body>
