@@ -1074,6 +1074,7 @@ def get_server_ip_location():
     return None
 
 @app.route("/api/device_location", methods=["GET", "POST"])
+@app.route("/api/ip_location", methods=["GET", "POST"])
 def api_device_location():
     lat = os.environ.get("DEVICE_LAT", "").strip()
     lon = os.environ.get("DEVICE_LON", "").strip()
@@ -1083,6 +1084,8 @@ def api_device_location():
                 "available": True,
                 "latitude": float(lat),
                 "longitude": float(lon),
+                "lat": float(lat),
+                "lon": float(lon),
                 "display_name": os.environ.get("DEVICE_PLACE", "")
             })
         except ValueError:
@@ -1162,6 +1165,7 @@ LOCAL_CITIES = [
 ]
 
 @app.route("/api/search_place")
+@app.route("/api/search_location")
 def api_search_place():
     q = request.args.get("q", "").strip()
     if not q or len(q) < 2:
