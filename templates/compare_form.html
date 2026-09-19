@@ -2250,7 +2250,7 @@ body {
     }
 
     function detectLocation() {
-        function applyBothCoords(lat, lon, placeName) {
+        function applyBothCoords(lat, lon, force) {
             const numLat = parseFloat(lat);
             const numLon = parseFloat(lon);
             if (isNaN(numLat) || isNaN(numLon)) return;
@@ -2258,42 +2258,41 @@ body {
             document.getElementById('lon1').value = numLon.toFixed(4);
             document.getElementById('lat2').value = numLat.toFixed(4);
             document.getElementById('lon2').value = numLon.toFixed(4);
-            if (placeName && placeName !== 'Unknown Location') {
-                if (!document.getElementById('place1').value) document.getElementById('place1').value = placeName;
-                if (!document.getElementById('place2').value) document.getElementById('place2').value = placeName;
-            } else {
-                reverseGeocode(numLat, numLon, function(pName) {
-                    if (pName && pName !== 'Unknown Location') {
-                        if (!document.getElementById('place1').value) document.getElementById('place1').value = pName;
-                        if (!document.getElementById('place2').value) document.getElementById('place2').value = pName;
-                    }
-                });
-            }
-        }
-
-        fetch('/api/device_location')
-            .then(r => r.json())
-            .then(d => {
-                if (d && d.available && (d.latitude || d.lat)) {
-                    applyBothCoords(d.latitude || d.lat, d.longitude || d.lon, d.display_name);
-                }
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude, null),
-                        err => {},
-                        { timeout: 8000, maximumAge: 300000, enableHighAccuracy: false }
-                    );
-                }
-            })
-            .catch(() => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude, null),
-                        err => {},
-                        { timeout: 8000, maximumAge: 300000, enableHighAccuracy: false }
-                    );
+            reverseGeocode(numLat, numLon, function(pName) {
+                if (pName && pName !== 'Unknown Location') {
+                    if (force || !document.getElementById('place1').value) document.getElementById('place1').value = pName;
+                    if (force || !document.getElementById('place2').value) document.getElementById('place2').value = pName;
                 }
             });
+        }
+
+        // 1. Prioritize real device GPS location directly from the phone/browser
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                pos => applyBothCoords(pos.coords.latitude, pos.coords.longitude, true),
+                err => {
+                    // Fallback to device_location endpoint if GPS is denied or unavailable
+                    fetch('/api/device_location')
+                        .then(r => r.json())
+                        .then(d => {
+                            if (d && d.available && (d.latitude || d.lat)) {
+                                applyBothCoords(d.latitude || d.lat, d.longitude || d.lon, false);
+                            }
+                        })
+                        .catch(() => {});
+                },
+                { timeout: 8000, maximumAge: 60000, enableHighAccuracy: true }
+            );
+        } else {
+            fetch('/api/device_location')
+                .then(r => r.json())
+                .then(d => {
+                    if (d && d.available && (d.latitude || d.lat)) {
+                        applyBothCoords(d.latitude || d.lat, d.longitude || d.lon, false);
+                    }
+                })
+                .catch(() => {});
+        }
     }
 
     detectLocation();

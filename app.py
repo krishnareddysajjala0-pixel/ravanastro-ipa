@@ -3170,15 +3170,9 @@ def daily_panchangam():
     today = datetime.datetime.now()
     dob = today.strftime("%Y-%m-%d")
     tob = today.strftime("%H:%M")
-    srv_loc = get_server_ip_location() if callable(globals().get('get_server_ip_location')) else None
-    if srv_loc and srv_loc.get("latitude") and srv_loc.get("longitude"):
-        place = srv_loc.get("display_name") or "Guntur, Andhra Pradesh, India"
-        lat = float(srv_loc.get("latitude"))
-        lon = float(srv_loc.get("longitude"))
-    else:
-        place = "Hyderabad, Telangana"
-        lat = 17.3850
-        lon = 78.4867
+    place = "Hyderabad, Telangana"
+    lat = 17.3850
+    lon = 78.4867
 
     # Use parameters from GET or POST, with defaults for today
     dob = request.values.get("dob") or dob

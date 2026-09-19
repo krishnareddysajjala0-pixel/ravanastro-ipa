@@ -2107,8 +2107,10 @@ body {
                 });
         }
 
-        function detectLocation() {
-            setGeoStatus('📍 మీ {{ _("ప్రస్తుత స్థానం") }} గుర్తిస్తోంది...', '');
+        function detectLocation(isAutoLoad = false) {
+            if (!isAutoLoad) {
+                setGeoStatus('📍 మీ {{ _("ప్రస్తుత స్థానం") }} గుర్తిస్తోంది...', '');
+            }
 
             if (!navigator.geolocation) {
                 tryNativePanchFallback();
@@ -2118,17 +2120,27 @@ body {
             navigator.geolocation.getCurrentPosition(
                 handlePositionSuccess,
                 function(err) {
-                    navigator.geolocation.getCurrentPosition(
-                        handlePositionSuccess,
-                        function(err2) {
-                            tryNativePanchFallback();
-                        },
-                        { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false }
-                    );
+                    if (!isAutoLoad) {
+                        navigator.geolocation.getCurrentPosition(
+                            handlePositionSuccess,
+                            function(err2) {
+                                tryNativePanchFallback();
+                            },
+                            { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false }
+                        );
+                    }
                 },
-                { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true }
+                { timeout: 8000, maximumAge: 60000, enableHighAccuracy: true }
             );
         }
+
+        // Auto-detect device location on load if user entered page fresh (no manual lat/place query parameters)
+        (function autoDetectOnPanchangamLoad() {
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('lat') && !params.has('place') && navigator.geolocation) {
+                detectLocation(true);
+            }
+        })();
 
         // Place input autocomplete suggestions
         (function setupPanchSearch() {
