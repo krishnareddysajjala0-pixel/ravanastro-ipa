@@ -2745,6 +2745,7 @@ body {
 
   <!-- Page Header -->
 
+  <div id="nakshatra-pdf-export-container">
   <div class="page-header">
 
     <div class="main-title">
@@ -3277,15 +3278,114 @@ body {
 
     };
 
+    window.triggerDirectPDFDownload = async function() {
+      const element = document.getElementById('nakshatra-pdf-export-container') || document.body;
+      let uName = "{{ name|default('') }}".trim();
+      let pTitle = "{{ _('నక్షత్ర పాద కుండలి') }}";
+      let filename = (uName ? (uName + ' ') : '') + pTitle + '.pdf';
+
+      document.body.classList.add('mobile-pdf-rendering');
+      const originalTheme = document.documentElement.getAttribute('data-theme') || 'default';
+      document.documentElement.removeAttribute('data-theme');
+
+      const printRules = [];
+      const disabledRules = [];
+
+      for (const sheet of document.styleSheets) {
+        try {
+          const rules = sheet.cssRules || sheet.rules;
+          if (!rules) continue;
+          for (const rule of rules) {
+            if (rule.media && rule.media.mediaText) {
+              const text = rule.media.mediaText;
+              if (text.indexOf('print') !== -1) {
+                printRules.push(rule);
+              } else if (text.indexOf('max-width') !== -1 || text.indexOf('768') !== -1) {
+                disabledRules.push({ rule, originalText: text });
+              }
+            }
+          }
+        } catch (e) {}
+      }
+
+      printRules.forEach(rule => { rule.media.mediaText = 'all'; });
+      disabledRules.forEach(item => { item.rule.media.mediaText = 'not all'; });
+
+      const opt = {
+        margin:       [8, 6, 8, 6],
+        filename:     filename,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false, windowWidth: 1024, width: 1024 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['css', 'legacy'] }
+      };
+
+      function restoreAfterPDF() {
+        printRules.forEach(rule => { rule.media.mediaText = 'print'; });
+        disabledRules.forEach(item => { item.rule.media.mediaText = item.originalText; });
+        document.body.classList.remove('mobile-pdf-rendering');
+        if (originalTheme !== 'default') {
+          document.documentElement.setAttribute('data-theme', originalTheme);
+        }
+      }
+
+      if (typeof html2pdf !== 'undefined') {
+        try {
+          const pdfBlob = await html2pdf().set(opt).from(element).outputPdf('blob');
+          const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+          if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+            try {
+              await navigator.share({ title: filename, files: [pdfFile] });
+              restoreAfterPDF();
+              return;
+            } catch (shareErr) {
+              if (shareErr.name === 'AbortError') { restoreAfterPDF(); return; }
+            }
+          }
+          const blobUrl = URL.createObjectURL(pdfBlob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { if (a.parentNode) a.parentNode.removeChild(a); URL.revokeObjectURL(blobUrl); }, 5000);
+          restoreAfterPDF();
+        } catch (err) {
+          console.error("PDF error:", err);
+          restoreAfterPDF();
+          if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+            window.AndroidPrint.printPage();
+          } else {
+            window.print();
+          }
+        }
+      } else {
+        restoreAfterPDF();
+        if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+          window.AndroidPrint.printPage();
+        } else {
+          window.print();
+        }
+      }
+    };
+
     window.doSharePDF = function () {
       var pTitle = "{{ _('నక్షత్ర పాద కుండలి') }}";
       if (pTitle) {
         document.title = pTitle;
       }
-      if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
-        window.AndroidPrint.printPage();
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isCapacitor = window.Capacitor !== undefined || (window.webkit && window.webkit.messageHandlers !== undefined);
+      const isMobile = isIOS || isCapacitor || /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      if (isIOS || isCapacitor || isMobile || typeof html2pdf !== 'undefined') {
+        window.triggerDirectPDFDownload();
       } else {
-        window.print();
+        if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+          window.AndroidPrint.printPage();
+        } else {
+          window.print();
+        }
       }
     };
 

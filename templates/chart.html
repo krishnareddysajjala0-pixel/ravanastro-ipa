@@ -51,6 +51,13 @@
 
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- html2pdf for Direct Designed PDF Creation -->
+  <script src="/static/js/html2pdf.bundle.min.js"></script>
+  <script>
+    if (typeof html2pdf === "undefined") {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>');
+    }
+  </script>
 
 
 
@@ -5923,6 +5930,46 @@
 
 
 
+    body.mobile-pdf-rendering {
+      background: #ffffff !important;
+      color: #000000 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 1024px !important;
+      min-width: 1024px !important;
+    }
+
+    body.mobile-pdf-rendering #chart-pdf-export-container,
+    body.mobile-pdf-rendering #print-wrapper {
+      background: #ffffff !important;
+      color: #000000 !important;
+      width: 1024px !important;
+      min-width: 1024px !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      border: none !important;
+      zoom: 1 !important;
+    }
+
+    body.mobile-pdf-rendering[data-print-mode="kundali-only"] #mahadasha-print-section {
+      display: none !important;
+    }
+
+    body.mobile-pdf-rendering[data-print-mode="kundali-and-dasha"] #mahadasha-print-section {
+      display: block !important;
+      page-break-before: always !important;
+      break-before: page !important;
+      width: 1024px !important;
+      min-width: 1024px !important;
+      background: #ffffff !important;
+      color: #000000 !important;
+      margin-top: 15px !important;
+    }
+
+    body.mobile-pdf-rendering #transit-toggle-bar,
+    body.mobile-pdf-rendering #transit-loading,
+    body.mobile-pdf-rendering #loading-overlay,
     body.mobile-pdf-rendering #mobile-print-modal {
 
 
@@ -7004,6 +7051,7 @@ body {
       </div>
     </div>
 
+  <div id="chart-pdf-export-container">
   <div id="print-wrapper">
 <div class="header">
 
@@ -8089,7 +8137,9 @@ body {
 
 
 
-    <!-- Floating Bottom Action Bar -->
+    </div><!-- end #chart-pdf-export-container -->
+
+<!-- Floating Bottom Action Bar -->
 
 
 
@@ -9636,18 +9686,163 @@ body {
 
 
 
+      window.triggerDirectPDFDownload = async function(mode) {
+        if (!mode) {
+          const selected = document.querySelector('input[name="print-mode"]:checked');
+          mode = selected ? selected.value : 'kundali-only';
+        }
+        document.body.setAttribute('data-print-mode', mode);
+
+        // Show loading overlay with clear status
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+          overlay.style.display = 'flex';
+          const tText = overlay.querySelector('.timer-text') || overlay.querySelector('div[style*="font-size: 16px"]') || overlay.querySelector('div');
+          if (tText) tText.innerHTML = "{{ _('పీడీఎఫ్ సిద్ధం అవుతోంది...') }}<br><span style='font-size:12px;opacity:0.8;'>{{ _('దయచేసి వేచి ఉండండి') }}</span>";
+        }
+
+        const element = document.getElementById('chart-pdf-export-container') || document.getElementById('print-wrapper') || document.body;
+
+        let uName = "{{ name|default('') }}".trim();
+        let pTitle = "{{ _('కుండలి') }}";
+        let filename = (uName ? (uName + ' ') : '') + pTitle + '.pdf';
+
+        document.body.classList.add('mobile-pdf-rendering');
+        const originalTheme = document.documentElement.getAttribute('data-theme') || 'default';
+        document.documentElement.removeAttribute('data-theme');
+
+        // Temporarily activate ALL @media print rules for screen context capture
+        // and disable mobile responsive rules
+        const printRules = [];
+        const disabledRules = [];
+
+        for (const sheet of document.styleSheets) {
+          try {
+            const rules = sheet.cssRules || sheet.rules;
+            if (!rules) continue;
+            for (const rule of rules) {
+              if (rule.media && rule.media.mediaText) {
+                const text = rule.media.mediaText;
+                if (text.indexOf('print') !== -1) {
+                  printRules.push(rule);
+                } else if (text.indexOf('max-width') !== -1 || text.indexOf('768') !== -1) {
+                  disabledRules.push({ rule, originalText: text });
+                }
+              }
+            }
+          } catch (e) {
+            // Ignore cross-origin style sheet errors
+          }
+        }
+
+        printRules.forEach(rule => { rule.media.mediaText = 'all'; });
+        disabledRules.forEach(item => { item.rule.media.mediaText = 'not all'; });
+
+        const opt = {
+          margin:       [8, 6, 8, 6],
+          filename:     filename,
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            windowWidth: 1024,
+            width: 1024,
+            scrollX: 0,
+            scrollY: 0
+          },
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          pagebreak:    { mode: ['css', 'legacy'], before: '#mahadasha-print-section', avoid: ['tr', '.box', '.hand'] }
+        };
+
+        function restoreAfterPDF() {
+          printRules.forEach(rule => { rule.media.mediaText = 'print'; });
+          disabledRules.forEach(item => { item.rule.media.mediaText = item.originalText; });
+          document.body.classList.remove('mobile-pdf-rendering');
+          if (originalTheme !== 'default') {
+            document.documentElement.setAttribute('data-theme', originalTheme);
+          }
+          if (overlay) overlay.style.display = 'none';
+        }
+
+        if (typeof html2pdf !== 'undefined') {
+          try {
+            const pdfBlob = await html2pdf().set(opt).from(element).outputPdf('blob');
+            const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+
+            // 1. Try Native iOS / Mobile Share Sheet (Supports AirPrint, Save to Files, WhatsApp, etc.)
+            if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+              try {
+                await navigator.share({
+                  title: filename,
+                  files: [pdfFile]
+                });
+                restoreAfterPDF();
+                return;
+              } catch (shareErr) {
+                if (shareErr.name === 'AbortError') {
+                  restoreAfterPDF();
+                  return;
+                }
+                console.warn("Share API dismissed or failed, falling back to download:", shareErr);
+              }
+            }
+
+            // 2. Fallback: Direct file download via Blob URL
+            const blobUrl = URL.createObjectURL(pdfBlob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+              if (a.parentNode) a.parentNode.removeChild(a);
+              URL.revokeObjectURL(blobUrl);
+            }, 5000);
+            restoreAfterPDF();
+          } catch (err) {
+            console.error("PDF generation error:", err);
+            restoreAfterPDF();
+            // Fallback to window.print if available
+            if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+              window.AndroidPrint.printPage();
+            } else {
+              window.print();
+            }
+          }
+        } else {
+          restoreAfterPDF();
+          if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+            window.AndroidPrint.printPage();
+          } else {
+            window.print();
+          }
+        }
+      };
+
       function doPrint() {
         const selected = document.querySelector('input[name="print-mode"]:checked');
         const mode = selected ? selected.value : 'kundali-only';
         document.body.setAttribute('data-print-mode', mode);
 
         closePrintOptions();
-        window.onbeforeprint();
 
-        if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
-          window.AndroidPrint.printPage();
+        // Check if running on iOS WKWebView / Capacitor / Mobile:
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isCapacitor = window.Capacitor !== undefined || (window.webkit && window.webkit.messageHandlers !== undefined);
+        const isMobile = isIOS || isCapacitor || /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if (isIOS || isCapacitor || isMobile || typeof html2pdf !== 'undefined') {
+          // Direct designed PDF creation in exact print format
+          window.triggerDirectPDFDownload(mode);
         } else {
-          window.print();
+          // Desktop browser print preview
+          window.onbeforeprint();
+          if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+            window.AndroidPrint.printPage();
+          } else {
+            window.print();
+          }
         }
       }
 

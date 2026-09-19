@@ -50,7 +50,12 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="/static/js/html2pdf.bundle.min.js"></script>
+  <script>
+    if (typeof html2pdf === "undefined") {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>');
+    }
+  </script>
 
 
 
@@ -9825,10 +9830,19 @@ body {
     let uName = "{{ name|default('') }}".trim();
     let pTitle = "{{ _('దశాచారం') }}";
     document.title = (uName ? (uName + ' ') : '') + pTitle;
-    if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
-        window.AndroidPrint.printPage();
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isCapacitor = window.Capacitor !== undefined || (window.webkit && window.webkit.messageHandlers !== undefined);
+    const isMobile = isIOS || isCapacitor || /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isIOS || isCapacitor || isMobile || typeof html2pdf !== 'undefined') {
+        window.triggerDirectPDFDownload('chart2');
     } else {
-        window.print();
+        if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+            window.AndroidPrint.printPage();
+        } else {
+            window.print();
+        }
     }
 };
 
@@ -10213,37 +10227,43 @@ body {
 
 
             if (typeof html2pdf !== 'undefined') {
-
-
-
-                html2pdf().set(opt).from(element).save().then(() => {
-
-
-
+                html2pdf().set(opt).from(element).outputPdf('blob').then(async (pdfBlob) => {
+                    const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+                    if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+                        try {
+                            await navigator.share({
+                                title: filename,
+                                files: [pdfFile]
+                            });
+                            restoreAfterPDF();
+                            return;
+                        } catch (shareErr) {
+                            if (shareErr.name === 'AbortError') {
+                                restoreAfterPDF();
+                                return;
+                            }
+                        }
+                    }
+                    const blobUrl = URL.createObjectURL(pdfBlob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(() => {
+                        if (a.parentNode) a.parentNode.removeChild(a);
+                        URL.revokeObjectURL(blobUrl);
+                    }, 5000);
                     restoreAfterPDF();
-
-
-
                 }).catch(err => {
-
-
-
                     console.warn("PDF generation error, falling back to print:", err);
-
-
-
                     restoreAfterPDF();
-
-
-
-                    window.handleMobilePrintClick();
-
-
-
+                    if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+                        window.AndroidPrint.printPage();
+                    } else {
+                        window.print();
+                    }
                 });
-
-
-
             } else {
 
 
