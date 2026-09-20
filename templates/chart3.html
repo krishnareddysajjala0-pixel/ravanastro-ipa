@@ -5821,7 +5821,7 @@ body {
 .top-control-bar, .top-btn-row, .header-container {
   margin-top: 2px !important;
 }
-.fixed-bottom-bar-nav, .bottom-nav, .fixed-bottom-bar {
+.fixed-bottom-bar-nav, .bottom-nav {
   padding-bottom: max(env(safe-area-inset-bottom, 0px), 25px) !important;
 }
 </style>
@@ -5932,6 +5932,136 @@ body {
 [data-theme="aurora"] .top-btn-hands { background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%) !important; color: #fff !important; }
 </style>
 
+<style>
+
+/* ============================================================
+   PERFECT UNIFIED FLOATING BOTTOM ACTION BAR & BUTTONS
+   ============================================================ */
+.fixed-bottom-bar,
+#action-bar {
+  position: fixed !important;
+  bottom: max(env(safe-area-inset-bottom, 0px), 14px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  background: rgba(15, 23, 42, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 50px !important;
+  padding: 7px 14px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 0 16px rgba(99, 102, 241, 0.22) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  z-index: 99999 !important;
+  max-width: calc(100vw - 20px) !important;
+  box-sizing: border-box !important;
+  width: max-content !important;
+  overflow: visible !important;
+}
+
+.fixed-bottom-bar .float-btn,
+.fixed-bottom-bar button {
+  flex: 0 0 auto !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  padding: 0 16px !important;
+  border-radius: 20px !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-family: 'Segoe UI', 'Noto Sans Telugu', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
+}
+
+.fixed-bottom-bar .float-btn i,
+.fixed-bottom-bar button i {
+  font-size: 14px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  display: inline-block !important;
+}
+
+.fixed-bottom-bar .float-btn:hover,
+.fixed-bottom-bar button:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  filter: brightness(1.12) !important;
+}
+
+.fixed-bottom-bar .float-btn:active,
+.fixed-bottom-bar button:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* Distinct High-Quality Color Gradients for Buttons */
+.fixed-bottom-bar .nav-home,
+.fixed-bottom-bar .btn-home {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
+}
+
+.fixed-bottom-bar .nav-kundali,
+.fixed-bottom-bar .btn-kundali {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+}
+
+.fixed-bottom-bar .nav-dasa,
+.fixed-bottom-bar .btn-dasa {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+.fixed-bottom-bar .nav-planets,
+.fixed-bottom-bar .btn-planets {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+}
+
+.fixed-bottom-bar .nav-print,
+.fixed-bottom-bar .btn-print {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .fixed-bottom-bar,
+  #action-bar {
+    bottom: max(env(safe-area-inset-bottom, 0px), 10px) !important;
+    padding: 6px 10px !important;
+    gap: 6px !important;
+    border-radius: 40px !important;
+    max-width: calc(100vw - 12px) !important;
+  }
+
+  .fixed-bottom-bar .float-btn,
+  .fixed-bottom-bar button {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 0 11px !important;
+    font-size: 12px !important;
+    gap: 5px !important;
+    border-radius: 18px !important;
+  }
+
+  .fixed-bottom-bar .float-btn i,
+  .fixed-bottom-bar button i {
+    font-size: 12px !important;
+  }
+}
+
+</style>
 </head>
 
 
@@ -8742,17 +8872,17 @@ body {
 
 
     <div class="fixed-bottom-bar" id="action-bar">
-        <button class="nav-item nav-home float-btn" onclick="window.location.href='/'">
-            <i class="fas fa-home"></i> {{ _('హోమ్') }}
+        <button class="float-btn btn-home" onclick="window.location.href='/'">
+            <i class="fas fa-home"></i> <span>{{ _('హోమ్') }}</span>
         </button>
-        <button class="nav-kundali float-btn" onclick="goToBirthChart()">
-            <i class="fas fa-arrow-left"></i> {{ _('కుండలికి') }}
+        <button class="float-btn btn-kundali" onclick="goToBirthChart()">
+            <i class="fas fa-dharmachakra"></i> <span>{{ _('కుండలి') }}</span>
         </button>
-        <button class="nav-dasa float-btn" onclick="goToDashaChart()">
-            <i class="fas fa-chart-pie"></i> {{ _('దశాచారము') }}
+        <button class="float-btn btn-dasa" onclick="goToDashaChart()">
+            <i class="fas fa-calendar-alt"></i> <span>{{ _('దశాచారము') }}</span>
         </button>
-        <button class="nav-print float-btn print-hide" onclick="handleChart3Print()">
-            <i class="fas fa-print"></i> {{ _('ప్రింట్') }}
+        <button class="float-btn btn-print print-hide" onclick="handleChart3Print()">
+            <i class="fas fa-print"></i> <span>{{ _('ప్రింట్') }}</span>
         </button>
     </div>
 
