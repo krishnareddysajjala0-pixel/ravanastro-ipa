@@ -8,9 +8,51 @@
     <title>{{ _('దశాచార పొంతన') }}</title>
     <meta name="theme-color" content="#0c0c0c">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem('preferred-theme') || 'cosmic';
+        if (savedTheme !== 'default') {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+      })();
+
+      window.handleCompareDashaPrint = function(action) {
+        if (!action) action = 'print';
+        var overlay = document.getElementById('loading-overlay');
+        if (overlay) overlay.style.display = 'none';
+
+        var pTitle = "{{ _('దశాచార పొంతన') }}";
+        if (pTitle) {
+          document.title = pTitle;
+        }
+
+        // 1. Native iOS WKWebView bridge
+        if (window.webkit && window.webkit.messageHandlers) {
+          if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
+            window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: pTitle });
+            return;
+          }
+          if (window.webkit.messageHandlers.nativePrint) {
+            window.webkit.messageHandlers.nativePrint.postMessage({ title: pTitle });
+            return;
+          }
+        }
+
+        // 2. Android App
+        if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+          window.AndroidPrint.printPage();
+          return;
+        }
+
+        // 3. Desktop / Safari
+        window.print();
+      };
+      window.triggerUniversalPrint = window.handleCompareDashaPrint;
+    </script>
     <style>
         html {
             background-color: #0c0c0c !important;
+            background: var(--bg-primary, #0c0c0c) !important;
         }
         :root {
             --bg-primary: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0b0f19 60%, #030712 100%);
@@ -430,8 +472,31 @@
 
         @media print {
             .print-hide, .theme-switcher, .fixed-bottom-bar-nav, .top-nav { display: none !important; }
-            body { background: white !important; color: black !important; }
-            .person-column { border: 1px solid #ccc !important; min-width: 48% !important; flex: 0 0 48% !important; }
+            html, body { background: #ffffff !important; color: #000000 !important; }
+            :root,
+            html,
+            html[data-theme],
+            body,
+            body[data-theme],
+            [data-theme],
+            [data-theme] * {
+                --bg-primary: #ffffff !important;
+                --bg-secondary: #ffffff !important;
+                --card-bg: #ffffff !important;
+                --card-border: #475569 !important;
+                --text-main: #000000 !important;
+                --text-bright: #000000 !important;
+                --text-muted: #334155 !important;
+                --border-color: #cbd5e1 !important;
+                --card-border: #cbd5e1 !important;
+                --table-header-bg: #f1f5f9 !important;
+                --table-row-bg: #ffffff !important;
+                --table-row-alt-bg: #f8fafc !important;
+                --table-border: #cbd5e1 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .person-column { border: 1px solid #ccc !important; min-width: 48% !important; flex: 0 0 48% !important; background: #ffffff !important; color: #000000 !important; }
             .compare-wrapper { flex-wrap: wrap !important; }
             .antharas-table { display: table !important; }
         }
@@ -1455,7 +1520,8 @@ body {
     setTheme(savedTheme);
   });
 
-  function triggerUniversalPrint() {
+  function triggerUniversalPrint(action) {
+    if (!action) action = 'print';
     var overlay = document.getElementById('loading-overlay');
     if (overlay) overlay.style.display = 'none';
 
@@ -1464,43 +1530,34 @@ body {
       document.title = pTitle;
     }
 
-    // 1. Ensure all themes revert to clean designed default theme in print
-    var prevTheme = document.documentElement.getAttribute('data-theme') || '';
-    document.documentElement.removeAttribute('data-theme');
-    document.body.removeAttribute('data-theme');
-    document.body.style.background = '#ffffff';
-    document.body.style.color = '#000000';
-
-    var restored = false;
-    function restoreTheme() {
-      if (restored) return;
-      restored = true;
-      if (prevTheme) {
-        document.documentElement.setAttribute('data-theme', prevTheme);
+    // 1. Native iOS WKWebView bridge
+    if (window.webkit && window.webkit.messageHandlers) {
+      if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
+        window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: pTitle });
+        return;
       }
-      document.body.style.background = '';
-      document.body.style.color = '';
-      window.removeEventListener('afterprint', restoreTheme);
+      if (window.webkit.messageHandlers.nativePrint) {
+        window.webkit.messageHandlers.nativePrint.postMessage({ title: pTitle });
+        return;
+      }
     }
 
-    window.addEventListener('afterprint', restoreTheme);
-    window.addEventListener('focus', function onFocus() {
-      setTimeout(restoreTheme, 500);
-      window.removeEventListener('focus', onFocus);
-    });
-    setTimeout(restoreTheme, 60000);
-
-    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
-      window.webkit.messageHandlers.nativePrint.postMessage('print');
-    } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+    // 2. Android App
+    if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
       window.AndroidPrint.printPage();
-    } else {
-      window.print();
+      return;
     }
+
+    // 3. Desktop / Safari
+    window.print();
   }
 
-  window.handleCompareDashaPrint = function() {
-    triggerUniversalPrint();
+  window.handleCompareDashaPrint = function(action) {
+    triggerUniversalPrint(action || 'print');
+  };
+
+  window.triggerDirectPDFDownload = function() {
+    triggerUniversalPrint('pdf');
   };
 </script>
 

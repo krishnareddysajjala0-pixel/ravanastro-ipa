@@ -23,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WKScriptMessageHandler {
             if let rootVC = self.window?.rootViewController {
                 if let wv = self.findWebView(in: rootVC.view) {
                     self.webView = wv
+                    wv.isOpaque = false
+                    wv.backgroundColor = UIColor(red: 12.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0)
+                    wv.scrollView.backgroundColor = UIColor(red: 12.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0)
                     let ucc = wv.configuration.userContentController
                     ucc.removeScriptMessageHandler(forName: "nativePrint")
                     ucc.add(self, name: "nativePrint")

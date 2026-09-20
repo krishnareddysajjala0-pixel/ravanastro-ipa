@@ -40,6 +40,39 @@
 
     })();
 
+    window.handleComparePrint = function(action) {
+      if (!action) action = 'print';
+      var overlay = document.getElementById('loading-overlay');
+      if (overlay) overlay.style.display = 'none';
+
+      var pTitle = "{{ _('జాతకము పొంతన') }}";
+      if (pTitle) {
+        document.title = pTitle;
+      }
+
+      // 1. Native iOS WKWebView bridge
+      if (window.webkit && window.webkit.messageHandlers) {
+        if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
+          window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: pTitle });
+          return;
+        }
+        if (window.webkit.messageHandlers.nativePrint) {
+          window.webkit.messageHandlers.nativePrint.postMessage({ title: pTitle });
+          return;
+        }
+      }
+
+      // 2. Android App
+      if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+        window.AndroidPrint.printPage();
+        return;
+      }
+
+      // 3. Desktop / Safari
+      window.print();
+    };
+    window.triggerUniversalPrint = window.handleComparePrint;
+
   </script>
 
   <style>
@@ -260,51 +293,51 @@
 
     }
 
-    /* ☀️ Solar Amber — Warm sunlit papyrus glow */
+    /* ☀️ Solar Amber — Warm dark amber & golden glow */
 
     [data-theme="solar"] {
 
-      --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
+      --bg-primary: radial-gradient(ellipse at 50% 20%, #2a1803 0%, #130a01 60%, #080400 100%);
 
-      --text-main: #451a03;
+      --text-main: #fef3c7;
 
-      --text-muted: #92400e;
+      --text-muted: #fbbf24;
 
-      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-bg: rgba(28, 18, 5, 0.94);
 
-      --card-border: rgba(217, 119, 6, 0.32);
+      --card-border: rgba(217, 119, 6, 0.4);
 
-      --input-bg: #ffffff;
+      --input-bg: rgba(20, 10, 2, 0.92);
 
       --input-border: rgba(217, 119, 6, 0.4);
 
-      --input-focus-border: #d97706;
+      --input-focus-border: #f59e0b;
 
-      --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
+      --input-focus-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
 
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
 
       --btn-show-text: #ffffff;
 
-      --shadow-color: rgba(120, 53, 15, 0.12);
+      --shadow-color: rgba(0, 0, 0, 0.85);
 
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
+      --header-bg: linear-gradient(45deg, #fef3c7, #f59e0b);
 
-      --label-bg: rgba(254, 243, 199, 0.8);
+      --label-bg: rgba(45, 25, 5, 0.85);
 
-      --label-text: #78350f;
+      --label-text: #fef3c7;
 
       --house-no-bg: rgba(245, 158, 11, 0.22);
 
-      --house-no-text: #451a03;
+      --house-no-text: #fbbf24;
 
-      --box-border: rgba(217, 119, 6, 0.28);
+      --box-border: rgba(217, 119, 6, 0.35);
 
-      --box-border-hover: #b45309;
+      --box-border-hover: #f59e0b;
 
-      --color-pos: #059669;
+      --color-pos: #10b981;
 
-      --color-neg: #dc2626;
+      --color-neg: #f43f5e;
 
     }
 
@@ -360,17 +393,17 @@
 
     }
 
-    /* 🌆 Twilight Fusion — Pastel dusk sky with deep violet cards */
+    /* 🌆 Twilight Fusion — Deep mystic violet and starlight glow */
 
     [data-theme="twilight"] {
 
-      --bg-primary: linear-gradient(160deg, #fde68a 0%, #fca5a5 35%, #c4b5fd 70%, #a5b4fc 100%);
+      --bg-primary: linear-gradient(160deg, #1d1135 0%, #120924 50%, #080312 100%);
 
       --text-main: #f0eeff;
 
       --text-muted: #ddd6fe;
 
-      --card-bg: rgba(17, 12, 46, 0.93);
+      --card-bg: rgba(17, 12, 46, 0.94);
 
       --card-border: rgba(196, 181, 253, 0.45);
 
@@ -386,9 +419,9 @@
 
       --btn-show-text: #ffffff;
 
-      --shadow-color: rgba(30, 27, 75, 0.25);
+      --shadow-color: rgba(0, 0, 0, 0.85);
 
-      --header-bg: linear-gradient(45deg, #1e1b4b, #7c3aed, #c4b5fd);
+      --header-bg: linear-gradient(45deg, #f0eeff, #c4b5fd, #7c3aed);
 
       --label-bg: rgba(10, 8, 30, 0.85);
 
@@ -5343,7 +5376,9 @@ body {
 
     html {
 
-      background-color: transparent;
+      background-color: #0c0c0c !important;
+
+      background: var(--bg-primary, #0c0c0c) !important;
 
     }
 
@@ -6765,6 +6800,29 @@ body {
 
       }
 
+      :root,
+      html,
+      html[data-theme],
+      body,
+      body[data-theme],
+      [data-theme],
+      [data-theme] * {
+        --bg-primary: #ffffff !important;
+        --bg-secondary: #ffffff !important;
+        --card-bg: #ffffff !important;
+        --card-border: #475569 !important;
+        --text-main: #000000 !important;
+        --text-bright: #000000 !important;
+        --text-muted: #334155 !important;
+        --border-color: #cbd5e1 !important;
+        --table-header-bg: #f1f5f9 !important;
+        --table-row-bg: #ffffff !important;
+        --table-row-alt-bg: #f8fafc !important;
+        --table-border: #cbd5e1 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
       .top-action-bar, .no-print, .fixed-bottom-bar-nav, #transit-toggle-bar, #transit-btn, #transit-loading, .location-buttons {
 
         display: none !important;
@@ -7801,7 +7859,8 @@ body {
     setTheme(savedTheme);
   });
 
-  function triggerUniversalPrint() {
+  function triggerUniversalPrint(action) {
+    if (!action) action = 'print';
     var overlay = document.getElementById('loading-overlay');
     if (overlay) overlay.style.display = 'none';
 
@@ -7810,43 +7869,34 @@ body {
       document.title = pTitle;
     }
 
-    // 1. Ensure all themes revert to clean designed default theme in print
-    var prevTheme = document.documentElement.getAttribute('data-theme') || '';
-    document.documentElement.removeAttribute('data-theme');
-    document.body.removeAttribute('data-theme');
-    document.body.style.background = '#ffffff';
-    document.body.style.color = '#000000';
-
-    var restored = false;
-    function restoreTheme() {
-      if (restored) return;
-      restored = true;
-      if (prevTheme) {
-        document.documentElement.setAttribute('data-theme', prevTheme);
+    // 1. Native iOS WKWebView bridge
+    if (window.webkit && window.webkit.messageHandlers) {
+      if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
+        window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: pTitle });
+        return;
       }
-      document.body.style.background = '';
-      document.body.style.color = '';
-      window.removeEventListener('afterprint', restoreTheme);
+      if (window.webkit.messageHandlers.nativePrint) {
+        window.webkit.messageHandlers.nativePrint.postMessage({ title: pTitle });
+        return;
+      }
     }
 
-    window.addEventListener('afterprint', restoreTheme);
-    window.addEventListener('focus', function onFocus() {
-      setTimeout(restoreTheme, 500);
-      window.removeEventListener('focus', onFocus);
-    });
-    setTimeout(restoreTheme, 60000);
-
-    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
-      window.webkit.messageHandlers.nativePrint.postMessage('print');
-    } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+    // 2. Android App
+    if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
       window.AndroidPrint.printPage();
-    } else {
-      window.print();
+      return;
     }
+
+    // 3. Desktop / Safari
+    window.print();
   }
 
-  window.handleComparePrint = function() {
-    triggerUniversalPrint();
+  window.handleComparePrint = function(action) {
+    triggerUniversalPrint(action || 'print');
+  };
+
+  window.triggerDirectPDFDownload = function() {
+    triggerUniversalPrint('pdf');
   };
 </script>
 
