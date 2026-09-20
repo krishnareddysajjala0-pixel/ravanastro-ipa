@@ -18,7 +18,7 @@
 
   <link rel="icon" type="image/png" href="/static/favicon.png">
 
-  <meta name="theme-color" content="#FFD700">
+  <meta name="theme-color" content="#0c0c0c">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -38,7 +38,7 @@
 
     html {
 
-      background-color: #0c0c0c;
+      background-color: #0c0c0c !important;
 
     }
 
@@ -46,31 +46,31 @@
 
     :root {
 
-      --bg-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      --bg-primary: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0b0f19 60%, #030712 100%);
 
-      --text-main: #1e293b;
+      --text-main: #f8fafc;
 
-      --text-muted: #475569;
+      --text-muted: #cbd5e1;
 
-      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-bg: rgba(15, 23, 42, 0.92);
 
-      --card-border: rgba(0, 0, 0, 0.1);
+      --card-border: rgba(255, 255, 255, 0.15);
 
-      --input-bg: rgba(248, 250, 252, 0.8);
+      --input-bg: rgba(15, 23, 42, 0.8);
 
-      --input-border: rgba(148, 163, 184, 0.4);
+      --input-border: rgba(148, 163, 184, 0.35);
 
       --input-focus-border: #3b82f6;
 
-      --input-focus-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+      --input-focus-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
 
       --btn-show-bg: linear-gradient(135deg, #3b82f6, #2563eb);
 
       --btn-show-text: #ffffff;
 
-      --shadow-color: rgba(0, 0, 0, 0.1);
+      --shadow-color: rgba(0, 0, 0, 0.6);
 
-      --header-bg: linear-gradient(45deg, #0f172a, #3b82f6);
+      --header-bg: linear-gradient(45deg, #ffffff, #60a5fa);
 
     }
 
@@ -241,51 +241,28 @@
     }
 
     /* ☀️ Solar Amber — Warm sunlit papyrus glow */
-
     [data-theme="solar"] {
-
-      --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
-
-      --text-main: #451a03;
-
-      --text-muted: #92400e;
-
-      --card-bg: rgba(255, 255, 255, 0.92);
-
-      --card-border: rgba(217, 119, 6, 0.32);
-
-      --input-bg: #ffffff;
-
+      --bg-primary: radial-gradient(ellipse at 50% 20%, #2a1803 0%, #130a01 60%, #080400 100%);
+      --text-main: #fef3c7;
+      --text-muted: #fbbf24;
+      --card-bg: rgba(28, 18, 5, 0.94);
+      --card-border: rgba(217, 119, 6, 0.4);
+      --input-bg: rgba(20, 10, 2, 0.92);
       --input-border: rgba(217, 119, 6, 0.4);
-
-      --input-focus-border: #d97706;
-
-      --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
-
+      --input-focus-border: #f59e0b;
+      --input-focus-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
-
       --btn-show-text: #ffffff;
-
-      --shadow-color: rgba(120, 53, 15, 0.12);
-
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
-
-      --label-bg: rgba(254, 243, 199, 0.8);
-
-      --label-text: #78350f;
-
+      --shadow-color: rgba(0, 0, 0, 0.85);
+      --header-bg: linear-gradient(45deg, #fef3c7, #f59e0b);
+      --label-bg: rgba(45, 25, 5, 0.85);
+      --label-text: #fef3c7;
       --house-no-bg: rgba(245, 158, 11, 0.22);
-
-      --house-no-text: #451a03;
-
-      --box-border: rgba(217, 119, 6, 0.28);
-
-      --box-border-hover: #b45309;
-
-      --color-pos: #059669;
-
-      --color-neg: #dc2626;
-
+      --house-no-text: #fbbf24;
+      --box-border: rgba(217, 119, 6, 0.35);
+      --box-border-hover: #f59e0b;
+      --color-pos: #10b981;
+      --color-neg: #f43f5e;
     }
 
     /* 🪔 Royal Mandala — Indian heritage: saffron, crimson & gold */
@@ -341,51 +318,28 @@
     }
 
     /* 🌆 Twilight Fusion — Pastel dusk sky with deep violet cards */
-
     [data-theme="twilight"] {
-
-      --bg-primary: linear-gradient(160deg, #fde68a 0%, #fca5a5 35%, #c4b5fd 70%, #a5b4fc 100%);
-
+      --bg-primary: linear-gradient(160deg, #1d1135 0%, #120924 50%, #080312 100%);
       --text-main: #f0eeff;
-
       --text-muted: #ddd6fe;
-
-      --card-bg: rgba(17, 12, 46, 0.93);
-
+      --card-bg: rgba(17, 12, 46, 0.94);
       --card-border: rgba(196, 181, 253, 0.45);
-
       --input-bg: rgba(10, 8, 30, 0.96);
-
       --input-border: rgba(196, 181, 253, 0.5);
-
       --input-focus-border: #c4b5fd;
-
       --input-focus-shadow: 0 0 18px rgba(196, 181, 253, 0.55);
-
       --btn-show-bg: linear-gradient(135deg, #7c3aed, #c4b5fd);
-
       --btn-show-text: #ffffff;
-
-      --shadow-color: rgba(30, 27, 75, 0.25);
-
-      --header-bg: linear-gradient(45deg, #1e1b4b, #7c3aed, #c4b5fd);
-
+      --shadow-color: rgba(0, 0, 0, 0.85);
+      --header-bg: linear-gradient(45deg, #f0eeff, #c4b5fd, #7c3aed);
       --label-bg: rgba(10, 8, 30, 0.85);
-
       --label-text: #ddd6fe;
-
       --house-no-bg: rgba(196, 181, 253, 0.2);
-
       --house-no-text: #f0eeff;
-
       --box-border: rgba(196, 181, 253, 0.35);
-
       --box-border-hover: #a78bfa;
-
       --color-pos: #10b981;
-
       --color-neg: #f43f5e;
-
     }
 
     /* 🌌 Divine Aurora — Spectacular animated aurora borealis on deep space */
@@ -486,9 +440,9 @@
 
       font-family: inherit;
 
-      background-color: #0c0c0c;
+      background-color: #0c0c0c !important;
 
-      background: var(--bg-primary);
+      background: var(--bg-primary, #0c0c0c) !important;
 
       min-height: 100vh;
 
@@ -498,7 +452,7 @@
 
       justify-content: center;
 
-      color: var(--text-main);
+      color: var(--text-main, #f8fafc) !important;
 
       position: relative;
 

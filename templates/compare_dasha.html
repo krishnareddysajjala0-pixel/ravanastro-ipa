@@ -6,17 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>{{ _('దశాచార పొంతన') }}</title>
+    <meta name="theme-color" content="#0c0c0c">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        html {
+            background-color: #0c0c0c !important;
+        }
         :root {
-            --bg-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --card-border: rgba(0, 0, 0, 0.1);
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --color-pos: #15803d;
-            --color-neg: #b91c1c;
+            --bg-primary: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0b0f19 60%, #030712 100%);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-bg: rgba(15, 23, 42, 0.92);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --color-pos: #22c55e;
+            --color-neg: #ef4444;
         }
 
         /* Cosmic Mode (Original Dark) */
@@ -90,27 +94,27 @@
     }
     /* ☀️ Solar Amber — Warm sunlit papyrus glow */
     [data-theme="solar"] {
-      --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
-      --text-main: #451a03;
-      --text-muted: #92400e;
-      --card-bg: rgba(255, 255, 255, 0.92);
-      --card-border: rgba(217, 119, 6, 0.32);
-      --input-bg: #ffffff;
+      --bg-primary: radial-gradient(ellipse at 50% 20%, #2a1803 0%, #130a01 60%, #080400 100%);
+      --text-main: #fef3c7;
+      --text-muted: #fbbf24;
+      --card-bg: rgba(28, 18, 5, 0.94);
+      --card-border: rgba(217, 119, 6, 0.4);
+      --input-bg: rgba(20, 10, 2, 0.92);
       --input-border: rgba(217, 119, 6, 0.4);
-      --input-focus-border: #d97706;
-      --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
+      --input-focus-border: #f59e0b;
+      --input-focus-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
       --btn-show-text: #ffffff;
-      --shadow-color: rgba(120, 53, 15, 0.12);
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
-      --label-bg: rgba(254, 243, 199, 0.8);
-      --label-text: #78350f;
+      --shadow-color: rgba(0, 0, 0, 0.85);
+      --header-bg: linear-gradient(45deg, #fef3c7, #f59e0b);
+      --label-bg: rgba(45, 25, 5, 0.85);
+      --label-text: #fef3c7;
       --house-no-bg: rgba(245, 158, 11, 0.22);
-      --house-no-text: #451a03;
-      --box-border: rgba(217, 119, 6, 0.28);
-      --box-border-hover: #b45309;
-      --color-pos: #059669;
-      --color-neg: #dc2626;
+      --house-no-text: #fbbf24;
+      --box-border: rgba(217, 119, 6, 0.35);
+      --box-border-hover: #f59e0b;
+      --color-pos: #10b981;
+      --color-neg: #f43f5e;
     }
     /* 🪔 Royal Mandala — Indian heritage: saffron, crimson & gold */
     [data-theme="mandala"] {
@@ -140,10 +144,10 @@
     }
     /* 🌆 Twilight Fusion — Pastel dusk sky with deep violet cards */
     [data-theme="twilight"] {
-      --bg-primary: linear-gradient(160deg, #fde68a 0%, #fca5a5 35%, #c4b5fd 70%, #a5b4fc 100%);
+      --bg-primary: linear-gradient(160deg, #1d1135 0%, #120924 50%, #080312 100%);
       --text-main: #f0eeff;
       --text-muted: #ddd6fe;
-      --card-bg: rgba(17, 12, 46, 0.93);
+      --card-bg: rgba(17, 12, 46, 0.94);
       --card-border: rgba(196, 181, 253, 0.45);
       --input-bg: rgba(10, 8, 30, 0.96);
       --input-border: rgba(196, 181, 253, 0.5);
@@ -151,8 +155,8 @@
       --input-focus-shadow: 0 0 18px rgba(196, 181, 253, 0.55);
       --btn-show-bg: linear-gradient(135deg, #7c3aed, #c4b5fd);
       --btn-show-text: #ffffff;
-      --shadow-color: rgba(30, 27, 75, 0.25);
-      --header-bg: linear-gradient(45deg, #1e1b4b, #7c3aed, #c4b5fd);
+      --shadow-color: rgba(0, 0, 0, 0.85);
+      --header-bg: linear-gradient(45deg, #f0eeff, #c4b5fd, #7c3aed);
       --label-bg: rgba(10, 8, 30, 0.85);
       --label-text: #ddd6fe;
       --house-no-bg: rgba(196, 181, 253, 0.2);
@@ -216,9 +220,9 @@
         }
         
         body {
-            background-color: #0c0c0c;
-            background: var(--bg-primary);
-            color: var(--text-main);
+            background-color: #0c0c0c !important;
+            background: var(--bg-primary, #0c0c0c) !important;
+            color: var(--text-main, #f8fafc) !important;
             font-family: 'Segoe UI', 'Noto Serif Telugu', serif;
             min-height: 100vh;
             padding-bottom: 100px;
@@ -1451,7 +1455,7 @@ body {
     setTheme(savedTheme);
   });
 
-  window.handleCompareDashaPrint = function() {
+  function triggerUniversalPrint() {
     var overlay = document.getElementById('loading-overlay');
     if (overlay) overlay.style.display = 'none';
 
@@ -1460,25 +1464,47 @@ body {
       document.title = pTitle;
     }
 
-    if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+    // 1. Ensure all themes revert to clean designed default theme in print
+    var prevTheme = document.documentElement.getAttribute('data-theme') || '';
+    document.documentElement.removeAttribute('data-theme');
+    document.body.removeAttribute('data-theme');
+    document.body.style.background = '#ffffff';
+    document.body.style.color = '#000000';
+
+    var restored = false;
+    function restoreTheme() {
+      if (restored) return;
+      restored = true;
+      if (prevTheme) {
+        document.documentElement.setAttribute('data-theme', prevTheme);
+      }
+      document.body.style.background = '';
+      document.body.style.color = '';
+      window.removeEventListener('afterprint', restoreTheme);
+    }
+
+    window.addEventListener('afterprint', restoreTheme);
+    window.addEventListener('focus', function onFocus() {
+      setTimeout(restoreTheme, 500);
+      window.removeEventListener('focus', onFocus);
+    });
+    setTimeout(restoreTheme, 60000);
+
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
+      window.webkit.messageHandlers.nativePrint.postMessage('print');
+    } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
       window.AndroidPrint.printPage();
     } else {
       window.print();
     }
+  }
+
+  window.handleCompareDashaPrint = function() {
+    triggerUniversalPrint();
   };
 </script>
 
-
 <script>
-function triggerUniversalPrint() {
-  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
-    window.webkit.messageHandlers.nativePrint.postMessage('print');
-  } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
-    window.AndroidPrint.printPage();
-  } else {
-    window.print();
-  }
-}
 if (typeof handleMobilePrintClick === 'undefined') { function handleMobilePrintClick() { triggerUniversalPrint(); } }
 if (typeof handleChart3Print === 'undefined') { function handleChart3Print() { triggerUniversalPrint(); } }
 if (typeof handleCompareDashaPrint === 'undefined') { function handleCompareDashaPrint() { triggerUniversalPrint(); } }
