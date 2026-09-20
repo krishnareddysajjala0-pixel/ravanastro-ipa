@@ -5150,26 +5150,40 @@
         }
 
         /* ===== PRINT OPTIMIZATIONS ===== */
-        @media print {
+                @media print {
   @page {
     size: A4 portrait;
-    margin: 5mm 6mm;
+    margin: 4mm 5mm;
+  }
+
+  /* Force clean light/white print backgrounds across all themes */
+  :root,
+  [data-theme],
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   html, body {
     background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #000000 !important;
-    font-size: 10.5pt !important;
+    font-size: 13pt !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
     height: auto !important;
     overflow: visible !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
   }
 
-  body::before { display: none !important; }
+  body::before, body::after, .background-overlay, .cosmic-bg {
+    display: none !important;
+  }
 
   .container, #chart3-pdf-export-container {
     max-width: 100% !important;
@@ -5177,6 +5191,8 @@
     min-width: unset !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     zoom: 1 !important;
   }
 
@@ -5189,10 +5205,11 @@
     display: block !important;
     box-sizing: border-box !important;
     width: 100% !important;
-    max-height: 284mm !important;
+    max-height: 286mm !important;
     overflow: hidden !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: #ffffff !important;
   }
 
   .print-page-break {
@@ -5205,79 +5222,139 @@
   .print-page-container:last-child {
     page-break-after: avoid !important;
     break-after: avoid !important;
-    max-height: 284mm !important;
+    max-height: 286mm !important;
     overflow: hidden !important;
   }
 
   /* Page 1: Header & 2 Category Tables */
   #chart3-page-1 .header {
-    padding: 1px 4px !important;
+    background: #ffffff !important;
+    border: 1.5px solid #0f172a !important;
+    padding: 2px 4px !important;
     margin-bottom: 2px !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
   }
   #chart3-page-1 .header h1 {
-    font-size: 15.5pt !important;
+    font-size: 19pt !important;
+    font-weight: 800 !important;
     margin-bottom: 0 !important;
+    color: #0f172a !important;
+    background: none !important;
+    -webkit-text-fill-color: #0f172a !important;
   }
   #chart3-page-1 .header-subtitle {
-    font-size: 10pt !important;
+    font-size: 12.5pt !important;
+    color: #334155 !important;
+    margin-top: 1px !important;
+    font-weight: 600 !important;
   }
 
   #chart3-page-1 .party-info-box {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #0f172a !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
     margin-bottom: 3px !important;
-    padding: 2px 6px !important;
+    padding: 3px 6px !important;
+    text-align: center !important;
   }
   #chart3-page-1 .party-info-box p,
   #chart3-page-1 .party-info-box strong {
-    font-size: 10pt !important;
+    font-size: 12.5pt !important;
+    color: #0f172a !important;
+    line-height: 1.35 !important;
+    text-shadow: none !important;
     margin: 0 !important;
   }
 
   #chart3-page-1 .section-header {
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
     margin: 2px 0 1px !important;
-    padding: 1px 3px !important;
+    padding: 1px 2px !important;
   }
   #chart3-page-1 .section-title {
-    font-size: 12pt !important;
-    margin: 2px 0 2px 0 !important;
+    font-size: 15pt !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    background: none !important;
+    -webkit-text-fill-color: #0f172a !important;
+    margin: 1px 0 !important;
     padding-left: 5px !important;
-    border-left: 3px solid #000000 !important;
+    border-left: 4px solid #0f172a !important;
+    text-shadow: none !important;
   }
   #chart3-page-1 .section-subtitle {
-    font-size: 9.5pt !important;
+    font-size: 12pt !important;
+    color: #475569 !important;
+    margin: 0 !important;
   }
 
   #chart3-page-1 .table-container {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
     padding: 0 !important;
-    margin-bottom: 3px !important;
+    margin-bottom: 2px !important;
   }
 
   #chart3-page-1 .data-table {
-    font-size: 9pt !important;
+    font-size: 11pt !important;
     table-layout: fixed !important;
     width: 100% !important;
+    border-collapse: collapse !important;
+    background: #ffffff !important;
   }
   #chart3-page-1 .data-table th {
-    font-size: 9.5pt !important;
-    padding: 2px 2px !important;
+    font-size: 12pt !important;
+    padding: 2.5px 3px !important;
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #94a3b8 !important;
+    font-weight: 800 !important;
   }
   #chart3-page-1 .data-table td {
-    padding: 1.5px 2px !important;
-    font-size: 8.8pt !important;
+    padding: 2px 3px !important;
+    font-size: 11pt !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #cbd5e1 !important;
+    line-height: 1.25 !important;
+  }
+  #chart3-page-1 .data-table td:first-child {
+    background: #f8fafc !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
   }
 
+  #chart3-page-1 .disease-list {
+    background: #ffffff !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
   #chart3-page-1 .disease-list li {
-    font-size: 8.5pt !important;
+    font-size: 10.5pt !important;
     padding: 0.5px 0 !important;
+    color: #000000 !important;
+    line-height: 1.2 !important;
   }
 
   /* Page 2 & 3: Friendly (Mitra) & Enemy (Satru) 6 Planets Grids (3x2) */
-  .party-info {
+  .party-info,
+  .party-info.guru-bg,
+  .party-info.shani-bg {
     background: #ffffff !important;
-    border: 1px solid #000000 !important;
+    border: 1.5px solid #0f172a !important;
     color: #000000 !important;
-    margin: 2px 0 4px 0 !important;
+    margin: 1px 0 3px 0 !important;
     padding: 3px 6px !important;
-    border-radius: 4px !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
     text-align: center !important;
   }
   .party-info * {
@@ -5286,22 +5363,29 @@
   .party-badge {
     display: inline-block !important;
     background: #f1f5f9 !important;
-    color: #000000 !important;
-    border: 1px solid #000000 !important;
-    font-size: 11.5pt !important;
-    padding: 1px 8px !important;
+    color: #0f172a !important;
+    border: 1.5px solid #0f172a !important;
+    font-size: 14.5pt !important;
+    padding: 1px 10px !important;
     border-radius: 8px !important;
-    font-weight: bold !important;
+    font-weight: 800 !important;
   }
-  .party-info div[style*="font-size: 14px"] {
-    font-size: 10pt !important;
+  .party-info div[style*="font-size: 14px"],
+  .party-info div {
+    font-size: 12.5pt !important;
     margin-top: 1px !important;
+    color: #0f172a !important;
   }
 
   .section-title {
-    font-size: 12.5pt !important;
-    margin: 2px 0 3px 0 !important;
+    font-size: 15.5pt !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    background: none !important;
+    -webkit-text-fill-color: #0f172a !important;
+    margin: 1px 0 2px 0 !important;
     padding-left: 5px !important;
+    text-shadow: none !important;
   }
 
   .results-grid {
@@ -5314,11 +5398,11 @@
 
   .result-card {
     background: #ffffff !important;
-    border: 1px solid #334155 !important;
+    border: 1.5px solid #475569 !important;
     color: #000000 !important;
     box-shadow: none !important;
-    padding: 2.5px 4px !important;
-    border-radius: 4px !important;
+    padding: 3px 5px !important;
+    border-radius: 5px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     display: flex !important;
@@ -5331,26 +5415,26 @@
   }
 
   .result-card.is-own-house {
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #0f172a !important;
     background: #ffffff !important;
   }
 
   .own-house-badge {
-    border: 1px solid #000000 !important;
-    background: #f1f5f9 !important;
-    color: #000000 !important;
-    font-weight: bold !important;
-    font-size: 8pt !important;
-    padding: 1px 2px !important;
-    border-radius: 2px !important;
+    border: 1px solid #15803d !important;
+    background: #dcfce7 !important;
+    color: #14532d !important;
+    font-weight: 800 !important;
+    font-size: 10pt !important;
+    padding: 1px 4px !important;
+    border-radius: 3px !important;
   }
 
   .planet-name {
-    font-size: 10.5pt !important;
+    font-size: 13pt !important;
     padding-bottom: 1px !important;
     margin-bottom: 1px !important;
-    font-weight: bold !important;
-    color: #000000 !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
   }
 
   .info-body {
@@ -5358,35 +5442,39 @@
   }
   .info-row {
     margin-bottom: 1px !important;
-    font-size: 8.5pt !important;
-    line-height: 1.2 !important;
+    font-size: 10.5pt !important;
+    line-height: 1.22 !important;
   }
   .info-row .label {
     color: #334155 !important;
-    font-size: 8.5pt !important;
+    font-size: 10.5pt !important;
+    font-weight: 600 !important;
   }
   .info-row .val {
     color: #000000 !important;
-    font-size: 8.5pt !important;
+    font-size: 10.5pt !important;
+    font-weight: 700 !important;
   }
   .info-row .val[style*="font-size: 12px"] {
-    font-size: 8pt !important;
+    font-size: 10pt !important;
     color: #000000 !important;
-    line-height: 1.15 !important;
+    line-height: 1.18 !important;
     margin-top: 1px !important;
     display: block !important;
+    font-weight: normal !important;
   }
   .info-row .val.own-val {
     color: #92400e !important;
-    font-weight: bold !important;
+    font-weight: 800 !important;
   }
 
   .card-footer {
     margin-top: 1px !important;
   }
   .status-msg {
-    font-size: 7.8pt !important;
+    font-size: 9.8pt !important;
     padding-top: 1px !important;
+    font-weight: 700 !important;
   }
   .status-msg.msg-positive {
     color: #15803d !important;
@@ -5395,13 +5483,14 @@
     color: #475569 !important;
   }
   .bitter-enemy-alert {
-    font-size: 7.8pt !important;
+    font-size: 9.8pt !important;
     margin-top: 1px !important;
-    padding: 1px 2px !important;
-    border-radius: 2px !important;
+    padding: 1px 3px !important;
+    border-radius: 3px !important;
     background: #fef2f2 !important;
     border: 1px solid #fca5a5 !important;
     color: #991b1b !important;
+    font-weight: 700 !important;
   }
   .bitter-enemy-alert * {
     color: #991b1b !important;
@@ -5411,17 +5500,26 @@
   #chart3-page-3 .footer {
     margin-top: 2px !important;
     padding: 1px 0 !important;
+    background: #ffffff !important;
   }
   #chart3-page-3 .footer p {
-    font-size: 8pt !important;
+    font-size: 10pt !important;
     margin: 1px 0 !important;
-    color: #475569 !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
   }
   #chart3-page-3 .disclaimer {
-    font-size: 7.2pt !important;
-    padding: 1px 3px !important;
+    font-size: 9pt !important;
+    padding: 2px 4px !important;
     margin-top: 1px !important;
-    line-height: 1.15 !important;
+    line-height: 1.2 !important;
+    background: #f8fafc !important;
+    color: #1e293b !important;
+    border-left: 3px solid #64748b !important;
+    border-radius: 3px !important;
+  }
+  #chart3-page-3 .disclaimer strong {
+    color: #0f172a !important;
   }
 
   .fixed-bottom-bar, .scrolling-footer, .theme-switcher, .float-btn, .print-hide, .fixed-bottom-bar-nav, #action-bar, #loading-overlay {
