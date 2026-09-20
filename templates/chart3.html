@@ -5150,16 +5150,29 @@
         }
 
         /* ===== PRINT OPTIMIZATIONS ===== */
-                @media print {
+        @media print {
   @page {
     size: A4 portrait;
-    margin: 4mm 5mm;
+    margin: 5mm 5mm 5mm 5mm;
   }
 
   /* Force clean light/white print backgrounds across all themes */
   :root,
+  html,
+  body,
+  body[data-theme],
   [data-theme],
-  *, *::before, *::after {
+  [data-theme] * {
+    --bg-primary: #ffffff !important;
+    --card-bg: #ffffff !important;
+    --text-main: #000000 !important;
+    --text-bright: #000000 !important;
+    --text-muted: #334155 !important;
+    --border-color: #cbd5e1 !important;
+    --card-border: #cbd5e1 !important;
+    --table-header-bg: #f1f5f9 !important;
+    --table-row-bg: #ffffff !important;
+    --table-row-alt-bg: #f8fafc !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     text-shadow: none !important;
@@ -5173,7 +5186,7 @@
     background: #ffffff !important;
     background-color: #ffffff !important;
     color: #000000 !important;
-    font-size: 13pt !important;
+    font-size: 10pt !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
@@ -5198,45 +5211,68 @@
 
   /* Exactly 3 Pages Containers */
   .print-page-container {
-    page-break-after: always !important;
-    break-after: page !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
     display: block !important;
     box-sizing: border-box !important;
     width: 100% !important;
-    max-height: 286mm !important;
-    overflow: hidden !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #ffffff !important;
   }
 
-  .print-page-break {
+  #chart3-page-1 {
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  #chart3-page-2 {
     page-break-before: always !important;
     break-before: page !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   /* Page 3 MUST be the final page - strictly forbid any page 4 */
   #chart3-page-3,
   .print-page-container:last-child {
+    page-break-before: always !important;
+    break-before: page !important;
     page-break-after: avoid !important;
     break-after: avoid !important;
-    max-height: 286mm !important;
-    overflow: hidden !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Fix for Flexbox in iOS WebKit Print */
+  .dynamic-tables-container,
+  #chart3-page-1 div[style*="display: flex"] {
+    display: block !important;
+    width: 100% !important;
+  }
+  .table-varga-wrapper,
+  #chart3-page-1 div[style*="display: flex"] > div {
+    display: block !important;
+    width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   /* Page 1: Header & 2 Category Tables */
   #chart3-page-1 .header {
     background: #ffffff !important;
-    border: 1.5px solid #0f172a !important;
-    padding: 2px 4px !important;
+    border: 1px solid #0f172a !important;
+    padding: 1px 4px !important;
     margin-bottom: 2px !important;
-    border-radius: 6px !important;
+    border-radius: 4px !important;
     box-shadow: none !important;
   }
   #chart3-page-1 .header h1 {
-    font-size: 19pt !important;
+    font-size: 14pt !important;
     font-weight: 800 !important;
     margin-bottom: 0 !important;
     color: #0f172a !important;
@@ -5244,7 +5280,7 @@
     -webkit-text-fill-color: #0f172a !important;
   }
   #chart3-page-1 .header-subtitle {
-    font-size: 12.5pt !important;
+    font-size: 9pt !important;
     color: #334155 !important;
     margin-top: 1px !important;
     font-weight: 600 !important;
@@ -5253,18 +5289,18 @@
   #chart3-page-1 .party-info-box {
     background: #ffffff !important;
     background-color: #ffffff !important;
-    border: 1.5px solid #0f172a !important;
-    border-radius: 6px !important;
+    border: 1px solid #0f172a !important;
+    border-radius: 4px !important;
     box-shadow: none !important;
-    margin-bottom: 3px !important;
-    padding: 3px 6px !important;
+    margin-bottom: 2px !important;
+    padding: 2px 5px !important;
     text-align: center !important;
   }
   #chart3-page-1 .party-info-box p,
   #chart3-page-1 .party-info-box strong {
-    font-size: 12.5pt !important;
+    font-size: 8.8pt !important;
     color: #0f172a !important;
-    line-height: 1.35 !important;
+    line-height: 1.2 !important;
     text-shadow: none !important;
     margin: 0 !important;
   }
@@ -5273,22 +5309,22 @@
     background: #ffffff !important;
     border: none !important;
     box-shadow: none !important;
-    margin: 2px 0 1px !important;
-    padding: 1px 2px !important;
+    margin: 1px 0 1px !important;
+    padding: 0 2px !important;
   }
   #chart3-page-1 .section-title {
-    font-size: 15pt !important;
+    font-size: 10.5pt !important;
     font-weight: 800 !important;
     color: #0f172a !important;
     background: none !important;
     -webkit-text-fill-color: #0f172a !important;
     margin: 1px 0 !important;
-    padding-left: 5px !important;
-    border-left: 4px solid #0f172a !important;
+    padding-left: 4px !important;
+    border-left: 3px solid #0f172a !important;
     text-shadow: none !important;
   }
   #chart3-page-1 .section-subtitle {
-    font-size: 12pt !important;
+    font-size: 8.2pt !important;
     color: #475569 !important;
     margin: 0 !important;
   }
@@ -5296,34 +5332,34 @@
   #chart3-page-1 .table-container {
     background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
-    border-radius: 4px !important;
+    border-radius: 3px !important;
     box-shadow: none !important;
     padding: 0 !important;
     margin-bottom: 2px !important;
   }
 
   #chart3-page-1 .data-table {
-    font-size: 11pt !important;
+    font-size: 8pt !important;
     table-layout: fixed !important;
     width: 100% !important;
     border-collapse: collapse !important;
     background: #ffffff !important;
   }
   #chart3-page-1 .data-table th {
-    font-size: 12pt !important;
-    padding: 2.5px 3px !important;
+    font-size: 8.5pt !important;
+    padding: 1.2px 2px !important;
     background: #f1f5f9 !important;
     color: #0f172a !important;
     border: 1px solid #94a3b8 !important;
     font-weight: 800 !important;
   }
   #chart3-page-1 .data-table td {
-    padding: 2px 3px !important;
-    font-size: 11pt !important;
+    padding: 1px 2px !important;
+    font-size: 7.8pt !important;
     background: #ffffff !important;
     color: #000000 !important;
     border: 1px solid #cbd5e1 !important;
-    line-height: 1.25 !important;
+    line-height: 1.12 !important;
   }
   #chart3-page-1 .data-table td:first-child {
     background: #f8fafc !important;
@@ -5338,10 +5374,10 @@
     margin: 0 !important;
   }
   #chart3-page-1 .disease-list li {
-    font-size: 10.5pt !important;
-    padding: 0.5px 0 !important;
+    font-size: 7.5pt !important;
+    padding: 0.2px 0 !important;
     color: #000000 !important;
-    line-height: 1.2 !important;
+    line-height: 1.08 !important;
   }
 
   /* Page 2 & 3: Friendly (Mitra) & Enemy (Satru) 6 Planets Grids (3x2) */
@@ -5349,11 +5385,11 @@
   .party-info.guru-bg,
   .party-info.shani-bg {
     background: #ffffff !important;
-    border: 1.5px solid #0f172a !important;
+    border: 1px solid #0f172a !important;
     color: #000000 !important;
-    margin: 1px 0 3px 0 !important;
-    padding: 3px 6px !important;
-    border-radius: 6px !important;
+    margin: 1px 0 2px 0 !important;
+    padding: 1.5px 5px !important;
+    border-radius: 4px !important;
     box-shadow: none !important;
     text-align: center !important;
   }
@@ -5364,45 +5400,45 @@
     display: inline-block !important;
     background: #f1f5f9 !important;
     color: #0f172a !important;
-    border: 1.5px solid #0f172a !important;
-    font-size: 14.5pt !important;
-    padding: 1px 10px !important;
-    border-radius: 8px !important;
+    border: 1px solid #0f172a !important;
+    font-size: 10.5pt !important;
+    padding: 0.5px 8px !important;
+    border-radius: 6px !important;
     font-weight: 800 !important;
   }
   .party-info div[style*="font-size: 14px"],
   .party-info div {
-    font-size: 12.5pt !important;
-    margin-top: 1px !important;
+    font-size: 8.8pt !important;
+    margin-top: 0 !important;
     color: #0f172a !important;
   }
 
   .section-title {
-    font-size: 15.5pt !important;
+    font-size: 11pt !important;
     font-weight: 800 !important;
     color: #0f172a !important;
     background: none !important;
     -webkit-text-fill-color: #0f172a !important;
     margin: 1px 0 2px 0 !important;
-    padding-left: 5px !important;
+    padding-left: 4px !important;
     text-shadow: none !important;
   }
 
   .results-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 3px 5px !important;
-    margin-top: 2px !important;
+    gap: 2px 3.5px !important;
+    margin-top: 1px !important;
     justify-content: center !important;
   }
 
   .result-card {
     background: #ffffff !important;
-    border: 1.5px solid #475569 !important;
+    border: 1px solid #475569 !important;
     color: #000000 !important;
     box-shadow: none !important;
-    padding: 3px 5px !important;
-    border-radius: 5px !important;
+    padding: 1.5px 3.5px !important;
+    border-radius: 4px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     display: flex !important;
@@ -5415,7 +5451,7 @@
   }
 
   .result-card.is-own-house {
-    border: 2px solid #0f172a !important;
+    border: 1.5px solid #0f172a !important;
     background: #ffffff !important;
   }
 
@@ -5424,42 +5460,42 @@
     background: #dcfce7 !important;
     color: #14532d !important;
     font-weight: 800 !important;
-    font-size: 10pt !important;
-    padding: 1px 4px !important;
-    border-radius: 3px !important;
+    font-size: 7.2pt !important;
+    padding: 0.5px 2px !important;
+    border-radius: 2px !important;
   }
 
   .planet-name {
-    font-size: 13pt !important;
-    padding-bottom: 1px !important;
-    margin-bottom: 1px !important;
+    font-size: 9.5pt !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
     font-weight: 800 !important;
     color: #0f172a !important;
   }
 
   .info-body {
-    margin-bottom: 1px !important;
+    margin-bottom: 0 !important;
   }
   .info-row {
-    margin-bottom: 1px !important;
-    font-size: 10.5pt !important;
-    line-height: 1.22 !important;
+    margin-bottom: 0.5px !important;
+    font-size: 7.8pt !important;
+    line-height: 1.14 !important;
   }
   .info-row .label {
     color: #334155 !important;
-    font-size: 10.5pt !important;
+    font-size: 7.8pt !important;
     font-weight: 600 !important;
   }
   .info-row .val {
     color: #000000 !important;
-    font-size: 10.5pt !important;
+    font-size: 7.8pt !important;
     font-weight: 700 !important;
   }
   .info-row .val[style*="font-size: 12px"] {
-    font-size: 10pt !important;
+    font-size: 7.2pt !important;
     color: #000000 !important;
-    line-height: 1.18 !important;
-    margin-top: 1px !important;
+    line-height: 1.1 !important;
+    margin-top: 0.5px !important;
     display: block !important;
     font-weight: normal !important;
   }
@@ -5469,11 +5505,11 @@
   }
 
   .card-footer {
-    margin-top: 1px !important;
+    margin-top: 0.5px !important;
   }
   .status-msg {
-    font-size: 9.8pt !important;
-    padding-top: 1px !important;
+    font-size: 7.2pt !important;
+    padding-top: 0.5px !important;
     font-weight: 700 !important;
   }
   .status-msg.msg-positive {
@@ -5483,10 +5519,10 @@
     color: #475569 !important;
   }
   .bitter-enemy-alert {
-    font-size: 9.8pt !important;
-    margin-top: 1px !important;
-    padding: 1px 3px !important;
-    border-radius: 3px !important;
+    font-size: 7.2pt !important;
+    margin-top: 0.5px !important;
+    padding: 0.5px 2px !important;
+    border-radius: 2px !important;
     background: #fef2f2 !important;
     border: 1px solid #fca5a5 !important;
     color: #991b1b !important;
@@ -5498,25 +5534,25 @@
 
   /* Page 3 Footer Compact */
   #chart3-page-3 .footer {
-    margin-top: 2px !important;
-    padding: 1px 0 !important;
+    margin-top: 1px !important;
+    padding: 0 !important;
     background: #ffffff !important;
   }
   #chart3-page-3 .footer p {
-    font-size: 10pt !important;
-    margin: 1px 0 !important;
+    font-size: 7.8pt !important;
+    margin: 0 !important;
     color: #334155 !important;
     font-weight: 600 !important;
   }
   #chart3-page-3 .disclaimer {
-    font-size: 9pt !important;
-    padding: 2px 4px !important;
+    font-size: 6.8pt !important;
+    padding: 1px 3px !important;
     margin-top: 1px !important;
-    line-height: 1.2 !important;
+    line-height: 1.1 !important;
     background: #f8fafc !important;
     color: #1e293b !important;
-    border-left: 3px solid #64748b !important;
-    border-radius: 3px !important;
+    border-left: 2px solid #64748b !important;
+    border-radius: 2px !important;
   }
   #chart3-page-3 .disclaimer strong {
     color: #0f172a !important;
@@ -6471,19 +6507,9 @@ body {
 
 
 
-        <div style="display: flex; flex-direction: column; width: 100%;">
-
-
-
-
-
+        <div class="dynamic-tables-container" style="display: flex; flex-direction: column; width: 100%;">
             <!-- Guru wrapper -->
-
-
-
-
-
-            <div style="order: {{ 1 if is_guru_party else 2 }}; width: 100%;">
+            <div class="table-varga-wrapper guru-varga-wrapper" style="order: {{ 1 if is_guru_party else 2 }}; width: 100%;">
 
 
 
@@ -7318,12 +7344,7 @@ body {
 
 
             <!-- Shani Wrapper -->
-
-
-
-
-
-            <div style="order: {{ 2 if is_guru_party else 1 }}; width: 100%;">
+            <div class="table-varga-wrapper shani-varga-wrapper" style="order: {{ 2 if is_guru_party else 1 }}; width: 100%;">
 
 
 
@@ -10771,6 +10792,24 @@ body {
 
 <script>
 function triggerUniversalPrint() {
+  // 1. Ensure all themes revert to clean designed white background in print
+  var prevTheme = document.documentElement.getAttribute('data-theme') || '';
+  document.documentElement.removeAttribute('data-theme');
+  document.body.style.background = '#ffffff';
+  document.body.style.color = '#000000';
+
+  function restoreTheme() {
+    if (prevTheme) {
+      document.documentElement.setAttribute('data-theme', prevTheme);
+    }
+    document.body.style.background = '';
+    document.body.style.color = '';
+    window.removeEventListener('afterprint', restoreTheme);
+  }
+
+  window.addEventListener('afterprint', restoreTheme);
+  setTimeout(restoreTheme, 4000);
+
   if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
     window.webkit.messageHandlers.nativePrint.postMessage('print');
   } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
