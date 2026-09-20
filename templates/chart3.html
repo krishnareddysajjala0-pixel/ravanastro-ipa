@@ -5156,15 +5156,18 @@
     margin: 5mm 5mm 5mm 5mm;
   }
 
-  /* Force clean light/white print backgrounds across all themes */
+  /* Force clean light/white print backgrounds across ALL themes (100% Theme Immunity) */
   :root,
   html,
+  html[data-theme],
   body,
   body[data-theme],
   [data-theme],
   [data-theme] * {
     --bg-primary: #ffffff !important;
+    --bg-secondary: #ffffff !important;
     --card-bg: #ffffff !important;
+    --card-border: #475569 !important;
     --text-main: #000000 !important;
     --text-bright: #000000 !important;
     --text-muted: #334155 !important;
@@ -5173,6 +5176,7 @@
     --table-header-bg: #f1f5f9 !important;
     --table-row-bg: #ffffff !important;
     --table-row-alt-bg: #f8fafc !important;
+    --table-border: #cbd5e1 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     text-shadow: none !important;
@@ -5180,6 +5184,53 @@
     animation: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+  }
+
+  /* Neutralize all theme specific styling in print */
+  [data-theme] body,
+  [data-theme] .container,
+  [data-theme] #chart3-pdf-export-container,
+  [data-theme] .print-page-container,
+  [data-theme] .result-card,
+  [data-theme] .party-info,
+  [data-theme] .party-info-box,
+  [data-theme] .table-container,
+  [data-theme] .data-table,
+  [data-theme] .data-table td,
+  [data-theme] .data-table th,
+  [data-theme] .header,
+  [data-theme] .section-header,
+  [data-theme] .footer,
+  [data-theme] .disclaimer {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  [data-theme] .result-card * {
+    color: #000000 !important;
+    text-shadow: none !important;
+  }
+
+  [data-theme] .data-table td {
+    color: #000000 !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  [data-theme] .data-table th {
+    color: #0f172a !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #94a3b8 !important;
+  }
+
+  [data-theme] .party-info-box p,
+  [data-theme] .party-info-box strong {
+    color: #0f172a !important;
   }
 
   html, body {
@@ -5209,7 +5260,7 @@
     zoom: 1 !important;
   }
 
-  /* Exactly 3 Pages Containers */
+  /* Exactly 3 Pages Containers - Strictly ONE break between pages, NO double breaks */
   .print-page-container {
     display: block !important;
     box-sizing: border-box !important;
@@ -5229,8 +5280,8 @@
   }
 
   #chart3-page-2 {
-    page-break-before: always !important;
-    break-before: page !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
     page-break-after: always !important;
     break-after: page !important;
     page-break-inside: avoid !important;
@@ -5240,8 +5291,8 @@
   /* Page 3 MUST be the final page - strictly forbid any page 4 */
   #chart3-page-3,
   .print-page-container:last-child {
-    page-break-before: always !important;
-    break-before: page !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
     page-break-after: avoid !important;
     break-after: avoid !important;
     page-break-inside: avoid !important;
@@ -8202,7 +8253,7 @@ body {
 
 
 
-        <div class="print-page-container print-page-break" id="chart3-page-2">
+        <div class="print-page-container" id="chart3-page-2">
 
 
 
@@ -8556,7 +8607,7 @@ body {
 
 
 
-        <div class="print-page-container print-page-break" id="chart3-page-3">
+        <div class="print-page-container" id="chart3-page-3">
 
 
 
@@ -10792,13 +10843,17 @@ body {
 
 <script>
 function triggerUniversalPrint() {
-  // 1. Ensure all themes revert to clean designed white background in print
+  // 1. Ensure all themes revert to clean designed default theme in print
   var prevTheme = document.documentElement.getAttribute('data-theme') || '';
   document.documentElement.removeAttribute('data-theme');
+  document.body.removeAttribute('data-theme');
   document.body.style.background = '#ffffff';
   document.body.style.color = '#000000';
 
+  var restored = false;
   function restoreTheme() {
+    if (restored) return;
+    restored = true;
     if (prevTheme) {
       document.documentElement.setAttribute('data-theme', prevTheme);
     }
@@ -10808,7 +10863,11 @@ function triggerUniversalPrint() {
   }
 
   window.addEventListener('afterprint', restoreTheme);
-  setTimeout(restoreTheme, 4000);
+  window.addEventListener('focus', function onFocus() {
+    setTimeout(restoreTheme, 500);
+    window.removeEventListener('focus', onFocus);
+  });
+  setTimeout(restoreTheme, 60000);
 
   if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
     window.webkit.messageHandlers.nativePrint.postMessage('print');
