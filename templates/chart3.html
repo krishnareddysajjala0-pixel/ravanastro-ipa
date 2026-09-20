@@ -77,12 +77,7 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="/static/js/html2pdf.bundle.min.js"></script>
-  <script>
-    if (typeof html2pdf === "undefined") {
-      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>');
-    }
-  </script>
+  
 
 
 
@@ -10477,118 +10472,40 @@ body {
   })();
 </script>
 <script>
-  window.triggerDirectPDFDownload = async function() {
+    window.handleChart3Print = function(action) {
+    if (!action) action = 'print';
     var overlay = document.getElementById('loading-overlay');
     if (overlay) overlay.style.display = 'none';
 
-    const element = document.getElementById('chart3-pdf-export-container') || document.body;
     var uName = "{{ name|default('') }}".trim();
     var pTitle = "{{ title if title else _('ద్వాదశ గ్రహములు') }}";
-    let filename = (uName ? (uName + ' ') : '') + pTitle + '.pdf';
+    let title = (uName && pTitle.indexOf(uName) === -1) ? (uName + ' ' + pTitle) : pTitle;
+    document.title = title;
 
-    document.body.classList.add('mobile-pdf-rendering');
-    const originalTheme = document.documentElement.getAttribute('data-theme') || 'default';
-    document.documentElement.removeAttribute('data-theme');
-
-    const printRules = [];
-    const disabledRules = [];
-
-    for (const sheet of document.styleSheets) {
-      try {
-        const rules = sheet.cssRules || sheet.rules;
-        if (!rules) continue;
-        for (const rule of rules) {
-          if (rule.media && rule.media.mediaText) {
-            const text = rule.media.mediaText;
-            if (text.indexOf('print') !== -1) {
-              printRules.push(rule);
-            } else if (text.indexOf('max-width') !== -1 || text.indexOf('768') !== -1) {
-              disabledRules.push({ rule, originalText: text });
-            }
-          }
-        }
-      } catch (e) {}
-    }
-
-    printRules.forEach(rule => { rule.media.mediaText = 'all'; });
-    disabledRules.forEach(item => { item.rule.media.mediaText = 'not all'; });
-
-    const opt = {
-      margin:       [8, 6, 8, 6],
-      filename:     filename,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true, logging: false, windowWidth: 1024, width: 1024 },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak:    { mode: ['css', 'legacy'], avoid: 'tr' }
-    };
-
-    function restoreAfterPDF() {
-      printRules.forEach(rule => { rule.media.mediaText = 'print'; });
-      disabledRules.forEach(item => { item.rule.media.mediaText = item.originalText; });
-      document.body.classList.remove('mobile-pdf-rendering');
-      if (originalTheme !== 'default') {
-        document.documentElement.setAttribute('data-theme', originalTheme);
+    // 1. Native iOS WKWebView bridge
+    if (window.webkit && window.webkit.messageHandlers) {
+      if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
+        window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: title });
+        return;
+      }
+      if (window.webkit.messageHandlers.nativePrint) {
+        window.webkit.messageHandlers.nativePrint.postMessage({ title: title });
+        return;
       }
     }
 
-    if (typeof html2pdf !== 'undefined') {
-      try {
-        const pdfBlob = await html2pdf().set(opt).from(element).outputPdf('blob');
-        const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
-        if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
-          try {
-            await navigator.share({ title: filename, files: [pdfFile] });
-            restoreAfterPDF();
-            return;
-          } catch (shareErr) {
-            if (shareErr.name === 'AbortError') { restoreAfterPDF(); return; }
-          }
-        }
-        const blobUrl = URL.createObjectURL(pdfBlob);
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => { if (a.parentNode) a.parentNode.removeChild(a); URL.revokeObjectURL(blobUrl); }, 5000);
-        restoreAfterPDF();
-      } catch (err) {
-        console.error('PDF error:', err);
-        restoreAfterPDF();
-        if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
-          window.AndroidPrint.printPage();
-        } else {
-          window.print();
-        }
-      }
-    } else {
-      restoreAfterPDF();
-      if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
-        window.AndroidPrint.printPage();
-      } else {
-        window.print();
-      }
+    // 2. Android App
+    if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
+      window.AndroidPrint.printPage();
+      return;
     }
+
+    // 3. Desktop / Safari
+    window.print();
   };
 
-  window.handleChart3Print = function() {
-    var uName = "{{ name|default('') }}".trim();
-    var pTitle = "{{ title if title else _('ద్వాదశ గ్రహములు') }}";
-    document.title = (uName && pTitle.indexOf(uName) === -1) ? (uName + ' ' + pTitle) : pTitle;
-
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const isCapacitor = window.Capacitor !== undefined || (window.webkit && window.webkit.messageHandlers !== undefined);
-    const isMobile = isIOS || isCapacitor || /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-    if (isIOS || isCapacitor || isMobile || typeof html2pdf !== 'undefined') {
-      window.triggerDirectPDFDownload();
-    } else {
-      if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
-        window.AndroidPrint.printPage();
-      } else {
-        window.print();
-      }
-    }
+  window.triggerDirectPDFDownload = function() {
+    window.handleChart3Print('pdf');
   };
 
   function doAfterPrintChart3() {

@@ -1,16 +1,146 @@
 import UIKit
 import Capacitor
+import WebKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WKScriptMessageHandler {
 
     var window: UIWindow?
+    private var webView: WKWebView?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("[RavanAstro] Launching embedded offline Python engine...")
         startEmbeddedPython()
         waitForServer()
+        setupNativePrintBridge()
         return true
+    }
+
+    private func setupNativePrintBridge() {
+        var attempts = 0
+        func tryAttach() {
+            attempts += 1
+            if let rootVC = self.window?.rootViewController {
+                if let wv = self.findWebView(in: rootVC.view) {
+                    self.webView = wv
+                    let ucc = wv.configuration.userContentController
+                    ucc.removeScriptMessageHandler(forName: "nativePrint")
+                    ucc.add(self, name: "nativePrint")
+                    ucc.removeScriptMessageHandler(forName: "nativeSavePDF")
+                    ucc.add(self, name: "nativeSavePDF")
+
+                    print("[RavanAstro] Successfully registered nativePrint & nativeSavePDF on WKWebView!")
+                    return
+                }
+            }
+            if attempts < 25 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    tryAttach()
+                }
+            }
+        }
+        DispatchQueue.main.async {
+            tryAttach()
+        }
+    }
+
+    private func findWebView(in view: UIView) -> WKWebView? {
+        if let wv = view as? WKWebView {
+            return wv
+        }
+        for subview in view.subviews {
+            if let found = findWebView(in: subview) {
+                return found
+            }
+        }
+        return nil
+    }
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard let wv = self.webView ?? message.webView ?? self.findWebView(in: self.window?.rootViewController?.view ?? UIView()) else {
+            print("[RavanAstro] Error: WKWebView not found for message \(message.name)")
+            return
+        }
+
+        var title = "RavanAstro_Kundali"
+        if let dict = message.body as? [String: Any], let t = dict["title"] as? String, !t.isEmpty {
+            title = t
+        } else if let s = message.body as? String, !s.isEmpty {
+            title = s
+        }
+
+        if message.name == "nativePrint" {
+            DispatchQueue.main.async {
+                let printController = UIPrintInteractionController.shared
+                let printInfo = UIPrintInfo(dictionary: nil)
+                printInfo.outputType = .general
+                printInfo.jobName = title
+                printController.printInfo = printInfo
+                printController.printFormatter = wv.viewPrintFormatter()
+                printController.showsNumberOfCopies = true
+                printController.showsPageRange = true
+
+                if let rootVC = self.window?.rootViewController {
+                    if let popover = printController.popoverPresentationController {
+                        popover.sourceView = rootVC.view
+                        popover.sourceRect = CGRect(x: rootVC.view.bounds.midX, y: rootVC.view.bounds.midY, width: 0, height: 0)
+                        popover.permittedArrowDirections = []
+                    }
+                    printController.present(animated: true) { (controller, completed, error) in
+                        if let error = error {
+                            print("[RavanAstro] Print error: \(error)")
+                        } else {
+                            print("[RavanAstro] Print completed: \(completed)")
+                        }
+                    }
+                }
+            }
+        } else if message.name == "nativeSavePDF" {
+            DispatchQueue.main.async {
+                self.exportNativePDF(from: wv, title: title)
+            }
+        }
+    }
+
+    private func exportNativePDF(from wv: WKWebView, title: String) {
+        let printPageRenderer = UIPrintPageRenderer()
+        printPageRenderer.addPrintFormatter(wv.viewPrintFormatter(), startingAtPageAt: 0)
+
+        // Standard A4 Paper: 595.2 x 841.8 points (210mm x 297mm)
+        let paperRect = CGRect(x: 0, y: 0, width: 595.2, height: 841.8)
+        let printableRect = CGRect(x: 12.0, y: 12.0, width: 571.2, height: 817.8)
+        printPageRenderer.setValue(NSValue(cgRect: paperRect), forKey: "paperRect")
+        printPageRenderer.setValue(NSValue(cgRect: printableRect), forKey: "printableRect")
+
+        let pdfData = NSMutableData()
+        UIGraphicsBeginPDFContextToData(pdfData, paperRect, nil)
+        for i in 0..<printPageRenderer.numberOfPages {
+            UIGraphicsBeginPDFPage()
+            printPageRenderer.drawPage(at: i, in: UIGraphicsGetPDFContextBounds())
+        }
+        UIGraphicsEndPDFContext()
+
+        let safeTitle = title.replacingOccurrences(of: "/", with: "_")
+                             .replacingOccurrences(of: ":", with: "_")
+                             .replacingOccurrences(of: " ", with: "_")
+                             .trimmingCharacters(in: .whitespacesAndNewlines)
+        let filename = (safeTitle.isEmpty ? "RavanAstro_Kundali" : safeTitle) + ".pdf"
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+
+        do {
+            try pdfData.write(to: tempURL)
+            let activityVC = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
+            if let rootVC = self.window?.rootViewController {
+                if let popover = activityVC.popoverPresentationController {
+                    popover.sourceView = rootVC.view
+                    popover.sourceRect = CGRect(x: rootVC.view.bounds.midX, y: rootVC.view.bounds.midY, width: 0, height: 0)
+                    popover.permittedArrowDirections = []
+                }
+                rootVC.present(activityVC, animated: true, completion: nil)
+            }
+        } catch {
+            print("[RavanAstro] Error writing PDF: \(error)")
+        }
     }
 
     private func startEmbeddedPython() {
