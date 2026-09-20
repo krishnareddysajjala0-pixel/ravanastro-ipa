@@ -81,17 +81,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WKScriptMessageHandler {
                 printController.showsPageRange = true
 
                 if let rootVC = self.window?.rootViewController {
-                    if let popover = printController.popoverPresentationController {
-                        popover.sourceView = rootVC.view
-                        popover.sourceRect = CGRect(x: rootVC.view.bounds.midX, y: rootVC.view.bounds.midY, width: 0, height: 0)
-                        popover.permittedArrowDirections = []
-                    }
-                    printController.present(animated: true) { (controller, completed, error) in
+                    let completionHandler: UIPrintInteractionController.CompletionHandler = { (controller, completed, error) in
                         if let error = error {
                             print("[RavanAstro] Print error: \(error)")
                         } else {
                             print("[RavanAstro] Print completed: \(completed)")
                         }
+                    }
+
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        let sourceRect = CGRect(x: rootVC.view.bounds.midX, y: rootVC.view.bounds.midY, width: 0, height: 0)
+                        printController.present(from: sourceRect, in: rootVC.view, animated: true, completionHandler: completionHandler)
+                    } else {
+                        printController.present(animated: true, completionHandler: completionHandler)
                     }
                 }
             }
