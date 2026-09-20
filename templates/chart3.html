@@ -5151,43 +5151,27 @@
 
         /* ===== PRINT OPTIMIZATIONS ===== */
         @media print {
-  :root, [data-theme] {
-    --bg-primary: #ffffff !important;
-    --text-main: #000000 !important;
-    --text-bright: #000000 !important;
-    --text-muted: #333333 !important;
-    --card-bg: #ffffff !important;
-    --card-border: #000000 !important;
-    --table-row-bg: #ffffff !important;
-    --table-row-alt-bg: #f8fafc !important;
-    --table-header-bg: #f1f5f9 !important;
-  }
-
   @page {
     size: A4 portrait;
     margin: 5mm 6mm;
   }
 
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
-    animation: none !important;
-  }
-
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
-    font-size: 11.3pt !important;
+    font-size: 10.5pt !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   body::before { display: none !important; }
 
-  .container {
+  .container, #chart3-pdf-export-container {
     max-width: 100% !important;
     width: 100% !important;
     min-width: unset !important;
@@ -5196,6 +5180,7 @@
     zoom: 1 !important;
   }
 
+  /* Exactly 3 Pages Containers */
   .print-page-container {
     page-break-after: always !important;
     break-after: page !important;
@@ -5204,7 +5189,8 @@
     display: block !important;
     box-sizing: border-box !important;
     width: 100% !important;
-    overflow: visible !important;
+    max-height: 284mm !important;
+    overflow: hidden !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -5214,79 +5200,84 @@
     break-before: page !important;
   }
 
-  #chart3-page-3, .print-page-container:last-child {
+  /* Page 3 MUST be the final page - strictly forbid any page 4 */
+  #chart3-page-3,
+  .print-page-container:last-child {
     page-break-after: avoid !important;
     break-after: avoid !important;
+    max-height: 284mm !important;
+    overflow: hidden !important;
   }
 
-  /* Page 1 Header & Tables */
-  .header {
-    padding: 2px 4px !important;
-    margin-bottom: 4px !important;
+  /* Page 1: Header & 2 Category Tables */
+  #chart3-page-1 .header {
+    padding: 1px 4px !important;
+    margin-bottom: 2px !important;
   }
-  .header h1 {
-    font-size: 16.3pt !important;
+  #chart3-page-1 .header h1 {
+    font-size: 15.5pt !important;
     margin-bottom: 0 !important;
   }
-  .header-subtitle {
-    font-size: 11.3pt !important;
+  #chart3-page-1 .header-subtitle {
+    font-size: 10pt !important;
   }
 
-  .party-info-box {
-    margin-bottom: 4px !important;
-    padding: 3px 8px !important;
+  #chart3-page-1 .party-info-box {
+    margin-bottom: 3px !important;
+    padding: 2px 6px !important;
   }
-  .party-info-box p, .party-info-box strong {
-    font-size: 11.3pt !important;
+  #chart3-page-1 .party-info-box p,
+  #chart3-page-1 .party-info-box strong {
+    font-size: 10pt !important;
     margin: 0 !important;
   }
 
-  .section-header {
-    margin: 3px 0 2px !important;
-    padding: 2px 4px !important;
+  #chart3-page-1 .section-header {
+    margin: 2px 0 1px !important;
+    padding: 1px 3px !important;
   }
-  .section-title {
-    font-size: 13.8pt !important;
-    margin: 4px 0 4px 0 !important;
-    padding-left: 6px !important;
-    border-left: 4px solid #000000 !important;
+  #chart3-page-1 .section-title {
+    font-size: 12pt !important;
+    margin: 2px 0 2px 0 !important;
+    padding-left: 5px !important;
+    border-left: 3px solid #000000 !important;
   }
-  .section-subtitle {
-    font-size: 10.7pt !important;
+  #chart3-page-1 .section-subtitle {
+    font-size: 9.5pt !important;
   }
 
-  .table-container {
+  #chart3-page-1 .table-container {
     padding: 0 !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 3px !important;
   }
 
-  .data-table {
-    font-size: 10.7pt !important;
+  #chart3-page-1 .data-table {
+    font-size: 9pt !important;
     table-layout: fixed !important;
     width: 100% !important;
   }
-  .data-table th {
-    font-size: 11.3pt !important;
-    padding: 3px 2px !important;
-  }
-  .data-table td {
+  #chart3-page-1 .data-table th {
+    font-size: 9.5pt !important;
     padding: 2px 2px !important;
-    font-size: 10.1pt !important;
+  }
+  #chart3-page-1 .data-table td {
+    padding: 1.5px 2px !important;
+    font-size: 8.8pt !important;
   }
 
-  .disease-list li {
-    font-size: 10.1pt !important;
-    padding: 1px 0 !important;
+  #chart3-page-1 .disease-list li {
+    font-size: 8.5pt !important;
+    padding: 0.5px 0 !important;
   }
 
-  /* Page 2 & Page 3 Party Badges & Planet Grids */
+  /* Page 2 & 3: Friendly (Mitra) & Enemy (Satru) 6 Planets Grids (3x2) */
   .party-info {
     background: #ffffff !important;
-    border: 1.5px solid #000000 !important;
+    border: 1px solid #000000 !important;
     color: #000000 !important;
-    margin: 4px 0 6px 0 !important;
-    padding: 5px 8px !important;
-    border-radius: 6px !important;
+    margin: 2px 0 4px 0 !important;
+    padding: 3px 6px !important;
+    border-radius: 4px !important;
     text-align: center !important;
   }
   .party-info * {
@@ -5296,32 +5287,38 @@
     display: inline-block !important;
     background: #f1f5f9 !important;
     color: #000000 !important;
-    border: 1.5px solid #000000 !important;
-    font-size: 13.3pt !important;
-    padding: 2px 10px !important;
-    border-radius: 10px !important;
+    border: 1px solid #000000 !important;
+    font-size: 11.5pt !important;
+    padding: 1px 8px !important;
+    border-radius: 8px !important;
     font-weight: bold !important;
   }
   .party-info div[style*="font-size: 14px"] {
-    font-size: 11.3pt !important;
-    margin-top: 2px !important;
+    font-size: 10pt !important;
+    margin-top: 1px !important;
+  }
+
+  .section-title {
+    font-size: 12.5pt !important;
+    margin: 2px 0 3px 0 !important;
+    padding-left: 5px !important;
   }
 
   .results-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 4px 6px !important;
+    gap: 3px 5px !important;
     margin-top: 2px !important;
     justify-content: center !important;
   }
 
   .result-card {
     background: #ffffff !important;
-    border: 1.5px solid #000000 !important;
+    border: 1px solid #334155 !important;
     color: #000000 !important;
     box-shadow: none !important;
-    padding: 4px 5px !important;
-    border-radius: 5px !important;
+    padding: 2.5px 4px !important;
+    border-radius: 4px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     display: flex !important;
@@ -5334,7 +5331,7 @@
   }
 
   .result-card.is-own-house {
-    border: 2px solid #000000 !important;
+    border: 1.5px solid #000000 !important;
     background: #ffffff !important;
   }
 
@@ -5343,37 +5340,40 @@
     background: #f1f5f9 !important;
     color: #000000 !important;
     font-weight: bold !important;
-    font-size: 9.5pt !important;
-    padding: 1px 3px !important;
-    border-radius: 3px !important;
+    font-size: 8pt !important;
+    padding: 1px 2px !important;
+    border-radius: 2px !important;
   }
 
   .planet-name {
-    font-size: 12.6pt !important;
-    padding-bottom: 2px !important;
-    margin-bottom: 3px !important;
+    font-size: 10.5pt !important;
+    padding-bottom: 1px !important;
+    margin-bottom: 1px !important;
     font-weight: bold !important;
     color: #000000 !important;
   }
 
   .info-body {
-    margin-bottom: 2px !important;
+    margin-bottom: 1px !important;
   }
   .info-row {
-    margin-bottom: 1.5px !important;
-    font-size: 10.1pt !important;
+    margin-bottom: 1px !important;
+    font-size: 8.5pt !important;
+    line-height: 1.2 !important;
   }
   .info-row .label {
     color: #334155 !important;
+    font-size: 8.5pt !important;
   }
   .info-row .val {
     color: #000000 !important;
+    font-size: 8.5pt !important;
   }
   .info-row .val[style*="font-size: 12px"] {
-    font-size: 9.5pt !important;
+    font-size: 8pt !important;
     color: #000000 !important;
-    line-height: 1.25 !important;
-    margin-top: 2px !important;
+    line-height: 1.15 !important;
+    margin-top: 1px !important;
     display: block !important;
   }
   .info-row .val.own-val {
@@ -5382,11 +5382,11 @@
   }
 
   .card-footer {
-    margin-top: 3px !important;
+    margin-top: 1px !important;
   }
   .status-msg {
-    font-size: 10.1pt !important;
-    padding-top: 2px !important;
+    font-size: 7.8pt !important;
+    padding-top: 1px !important;
   }
   .status-msg.msg-positive {
     color: #15803d !important;
@@ -5395,10 +5395,10 @@
     color: #475569 !important;
   }
   .bitter-enemy-alert {
-    font-size: 9.5pt !important;
-    margin-top: 2px !important;
-    padding: 1.5px 3px !important;
-    border-radius: 3px !important;
+    font-size: 7.8pt !important;
+    margin-top: 1px !important;
+    padding: 1px 2px !important;
+    border-radius: 2px !important;
     background: #fef2f2 !important;
     border: 1px solid #fca5a5 !important;
     color: #991b1b !important;
@@ -5407,10 +5407,21 @@
     color: #991b1b !important;
   }
 
-  .disclaimer {
-    font-size: 9.5pt !important;
-    padding: 2px 4px !important;
+  /* Page 3 Footer Compact */
+  #chart3-page-3 .footer {
     margin-top: 2px !important;
+    padding: 1px 0 !important;
+  }
+  #chart3-page-3 .footer p {
+    font-size: 8pt !important;
+    margin: 1px 0 !important;
+    color: #475569 !important;
+  }
+  #chart3-page-3 .disclaimer {
+    font-size: 7.2pt !important;
+    padding: 1px 3px !important;
+    margin-top: 1px !important;
+    line-height: 1.15 !important;
   }
 
   .fixed-bottom-bar, .scrolling-footer, .theme-switcher, .float-btn, .print-hide, .fixed-bottom-bar-nav, #action-bar, #loading-overlay {
