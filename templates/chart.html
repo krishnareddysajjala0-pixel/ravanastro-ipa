@@ -3547,7 +3547,7 @@
 
 
 
-        border: 2px solid #000 !important;
+        border: 3px solid #000000 !important;
 
 
 
@@ -4511,6 +4511,23 @@
 
 
 
+            /* All rows of anukulam in green, all rows of pratikulam in red */
+      .maha-print-table tr.row-anukulam td,
+      .maha-print-table tr.row-anukulam td * {
+        color: #008000 !important;
+        font-weight: 700 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .maha-print-table tr.row-pratikulam td,
+      .maha-print-table tr.row-pratikulam td * {
+        color: #dc2626 !important;
+        font-weight: 700 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
       .maha-current-row td {
 
 
@@ -4567,7 +4584,7 @@
 
 
 
-        border: 1px solid #000 !important;
+        border: 3px solid #000000 !important;
 
 
 
@@ -4695,7 +4712,7 @@
 
 
 
-        border: 1px solid #000 !important;
+        border: 3px solid #000000 !important;
 
 
 
@@ -8193,7 +8210,7 @@ body {
 
 
 
-        <tr{% if dasa.is_current %} class="maha-current-row"{% endif %}>
+        <tr class="{{ 'row-anukulam' if dasa.is_favorable else 'row-pratikulam' }}{% if dasa.is_current %} maha-current-row{% endif %}">
 
 
 
