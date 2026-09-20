@@ -593,9 +593,11 @@
 
       text-align: center;
 
-      margin-bottom: 12px ;
+      margin-top: 2px !important;
 
-      padding-bottom: 20px;
+      margin-bottom: 2px !important;
+
+      padding-bottom: 2px !important;
 
       position: relative;
 
@@ -605,21 +607,7 @@
 
     .header::after {
 
-      content: '';
-
-      position: absolute;
-
-      bottom: 0;
-
-      left: 25%;
-
-      width: 50%;
-
-      height: 3px;
-
-      background: linear-gradient(90deg, transparent, gold, transparent);
-
-      border-radius: 3px;
+      display: none !important;
 
     }
 
@@ -649,7 +637,7 @@
 
     .page-title {
 
-      font-size: 36px;
+      font-size: 20px !important;
 
       color: var(--text-main);
 
@@ -657,7 +645,9 @@
 
       text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
 
-      margin-bottom: 1.5em;
+      margin-top: 2px !important;
+
+      margin-bottom: 2px !important;
 
     }
 
@@ -823,19 +813,19 @@
 
       max-width: 900px;
 
-      margin: 0 auto 20px;
+      margin: 2px auto 4px !important;
 
-      padding: 20px;
+      padding: 8px 6px !important;
 
       background: var(--card-bg);
 
       backdrop-filter: blur(10px);
 
-      border-radius: 20px;
+      border-radius: 16px;
 
       border: 1px solid var(--card-border);
 
-      box-shadow: 0 20px 40px var(--shadow-color);
+      box-shadow: 0 10px 25px var(--shadow-color);
 
       display: flex;
 
@@ -2529,7 +2519,7 @@
 
         flex-direction: column;
 
-        gap: 20px;
+        gap: 4px !important;
 
         width: 100%;
 
@@ -2537,7 +2527,7 @@
 
         margin: 0 auto;
 
-        padding: 0 20px;
+        padding: 0 4px !important;
 
     }
 
@@ -2579,17 +2569,19 @@
 
         color: #ffd700;
 
-        font-size: 24px;
+        font-size: 19px !important;
 
         font-weight: bold;
 
-        margin-bottom: 20px;
+        margin-top: 2px !important;
+
+        margin-bottom: 2px !important;
 
         text-shadow: 0 2px 5px rgba(255, 215, 0, 0.4);
 
-        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        border-bottom: none !important;
 
-        padding-bottom: 10px;
+        padding-bottom: 2px !important;
 
     }
 
@@ -2811,7 +2803,7 @@
 
   <style>
 
-    .nak-grid-wrapper { display: flex !important; flex-direction: column !important; gap: 35px; width: 100%; max-width: 1100px; margin: 0 auto; }
+    .nak-grid-wrapper { display: flex !important; flex-direction: column !important; gap: 8px !important; width: 100%; max-width: 1100px; margin: 2px auto !important; }
 
     @media print {
 
@@ -4083,15 +4075,15 @@ body {
         </div>
       </div>
     </div>
-<div class="header" style="margin-top: 20px;">
+<div class="header" style="margin-top: 4px !important; margin-bottom: 2px !important; padding-bottom: 2px !important;">
 
-    <h2 class="page-title" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <h2 class="page-title" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 !important; font-size: 19px !important;">
 
-      <img src="/static/images/brand_logo.png" alt="Logo" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
+      <img src="/static/images/brand_logo.png" alt="Logo" style="height: 20px; width: auto; object-fit: contain; vertical-align: middle;">
 
-      {{ _('జాఫతకము పొంతన') }}
+      {{ _('జాతకము పొంతన') }}
 
-      <img src="/static/images/brand_logo.png" alt="Logo" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
+      <img src="/static/images/brand_logo.png" alt="Logo" style="height: 20px; width: auto; object-fit: contain; vertical-align: middle;">
 
     </h2>
 
