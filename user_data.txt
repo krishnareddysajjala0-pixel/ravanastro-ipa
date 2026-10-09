@@ -1617,3 +1617,7 @@
 1616. [19-Sep-2026 15:58:48] Name: gopal reddy, DOB: 2026-09-19, TOB: 15:58, Place: Kandukur, Andhra Pradesh, India
 1617. [19-Sep-2026 15:59:14] Name: gopal reddy, DOB: 2026-09-19, TOB: 15:58, Place: Kandukur, Andhra Pradesh, India
 1618. [19-Sep-2026 16:00:56] Name: gopal reddy, DOB: 2026-09-19, TOB: 15:59, Place: Kandukur, Andhra Pradesh, India
+1619. [20-Sep-2026 16:13:00] Name: ik (Compare 1), DOB: 2026-09-20, TOB: 16:12, Place: Kandukur, Andhra Pradesh, India
+1620. [20-Sep-2026 16:13:00] Name: uuuu (Compare 2), DOB: 2026-09-20, TOB: 16:12, Place: Kandukur, Andhra Pradesh, India
+1621. [20-Sep-2026 16:13:25] Name: ik (Compare 1), DOB: 2026-09-20, TOB: 16:12, Place: Kandukur, Andhra Pradesh, India
+1622. [20-Sep-2026 16:13:25] Name: uuuu (Compare 2), DOB: 2026-09-20, TOB: 16:12, Place: Kandukur, Andhra Pradesh, India
