@@ -492,7 +492,7 @@ button, input, select, textarea, h1, h2, h3, h4, h5, h6, table, th, td {
   justify-content: flex-start !important;
   gap: 10px !important;
   padding: 6px 12px !important;
-  border-radius: 8px !important;
+  border-radius: 12px !important;
   cursor: pointer !important;
   font-size: 13px !important;
   font-weight: 600 !important;
@@ -1281,8 +1281,10 @@ body.mobile-pdf-rendering #loading-overlay {
 
 
 
-/* ===== UNIFIED FLOATING GOLDEN BOTTOM NAVIGATION BAR (6 PILLS) ===== */
-.fixed-bottom-bar-nav {
+/* ===== UNIFIED FLOATING GOLDEN BOTTOM NAVIGATION BAR (6 PILLS & 4 PILLS) ===== */
+.fixed-bottom-bar-nav,
+.fixed-bottom-bar,
+#action-bar {
   position: fixed !important;
   bottom: max(env(safe-area-inset-bottom, 0px), 12px) !important;
   left: 50% !important;
@@ -1307,12 +1309,15 @@ body.mobile-pdf-rendering #loading-overlay {
   overflow: visible !important;
 }
 
-.fixed-bottom-bar-nav .nav-item {
+.fixed-bottom-bar-nav .nav-item,
+.fixed-bottom-bar .float-btn,
+.fixed-bottom-bar button,
+.float-btn {
   flex: 0 0 auto !important;
   height: 40px !important;
   min-height: 40px !important;
   max-height: 40px !important;
-  min-width: 95px !important;
+  min-width: 80px !important;
   padding: 0 12px !important;
   border-radius: 12px !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
@@ -1466,14 +1471,19 @@ body.mobile-pdf-rendering #loading-overlay {
 }
 
 @media screen and (min-width: 601px) and (max-width: 768px) {
-  .fixed-bottom-bar-nav {
+  .fixed-bottom-bar-nav,
+  .fixed-bottom-bar,
+  #action-bar {
     bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
     padding: 5px 8px !important;
     gap: 5px !important;
     max-width: calc(100vw - 8px) !important;
     border-radius: 18px !important;
   }
-  .fixed-bottom-bar-nav .nav-item {
+  .fixed-bottom-bar-nav .nav-item,
+  .fixed-bottom-bar .float-btn,
+  .fixed-bottom-bar button,
+  .float-btn {
     height: 38px !important;
     min-height: 38px !important;
     max-height: 38px !important;
@@ -1623,6 +1633,17 @@ body.mobile-pdf-rendering #loading-overlay {
   .fixed-bottom-bar-nav > :first-child .nav-item,
   .fixed-bottom-bar-nav > :last-child.nav-item,
   .fixed-bottom-bar-nav > :last-child .nav-item {
+    border-radius: 10px !important;
+  }
+
+  .fixed-bottom-bar,
+  #action-bar {
+    border-radius: 14px !important;
+  }
+
+  .fixed-bottom-bar .float-btn,
+  .fixed-bottom-bar button,
+  .float-btn {
     border-radius: 10px !important;
   }
 
