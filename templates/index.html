@@ -8134,44 +8134,43 @@ body {
         margin-right: auto !important;
         transform: none !important;
         bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
-        padding: 4px 6px !important;
-        gap: 3px !important;
+        padding: 4px 5px !important;
+        gap: 2.5px !important;
         border-radius: 28px !important;
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: stretch !important;
-        justify-content: space-between !important;
+        display: grid !important;
+        grid-auto-flow: column !important;
+        grid-auto-columns: 1fr !important;
+        align-items: center !important;
         box-sizing: border-box !important;
         z-index: 99999 !important;
         overflow: visible !important;
       }
 
       .fixed-bottom-bar-nav > * {
-        flex: 1 1 0% !important;
+        width: 100% !important;
         min-width: 0 !important;
         max-width: 100% !important;
-        width: 0 !important;
+        height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
         display: flex !important;
+        flex: none !important;
       }
 
       .fixed-bottom-bar-nav .nav-dropdown-wrapper {
-        flex: 1 1 0% !important;
+        position: relative !important;
+        width: 100% !important;
         min-width: 0 !important;
         max-width: 100% !important;
-        width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        position: relative !important;
+        height: 100% !important;
         display: flex !important;
         box-sizing: border-box !important;
+        flex: none !important;
       }
 
       .fixed-bottom-bar-nav .nav-item,
       .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item {
-        flex: 1 1 100% !important;
         width: 100% !important;
         min-width: 0 !important;
         max-width: 100% !important;
@@ -8180,13 +8179,16 @@ body {
         max-height: 48px !important;
         padding: 4px 1px !important;
         margin: 0 !important;
+        flex: 1 1 100% !important;
+        display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
         gap: 2px !important;
-        border-radius: 18px !important;
+        border-radius: 16px !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
+        text-decoration: none !important;
       }
 
       /* End pills match container rounded curve */
@@ -8224,11 +8226,14 @@ body {
       .fixed-bottom-bar-nav .drop-up-popup,
       .fixed-bottom-bar-nav .theme-options,
       .fixed-bottom-bar-nav .lang-options {
+        position: absolute !important;
+        bottom: calc(100% + 10px) !important;
         right: 0 !important;
         left: auto !important;
         max-width: calc(100vw - 20px) !important;
-        bottom: calc(100% + 10px) !important;
+        min-width: 175px !important;
         box-sizing: border-box !important;
+        z-index: 100000 !important;
       }
     }
 
@@ -8236,7 +8241,7 @@ body {
       .fixed-bottom-bar-nav {
         left: 4px !important;
         right: 4px !important;
-        padding: 3px 4px !important;
+        padding: 3px 3px !important;
         gap: 2px !important;
       }
 
@@ -8267,7 +8272,7 @@ body {
       }
 
       .fixed-bottom-bar-nav .nav-item span {
-        font-size: 9px !important;
+        font-size: 8.5px !important;
       }
     }
 
