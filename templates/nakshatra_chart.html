@@ -1157,6 +1157,15 @@
 
     }
 
+    .planet-deg-suffix {
+      font-size: 8.5px;
+      opacity: 0.88;
+      margin-left: 2px;
+      font-weight: 700;
+      display: inline-block;
+      vertical-align: baseline;
+    }
+
 
 
     .lagna-occupant {
@@ -2814,15 +2823,15 @@ body {
 
                   {% if occ.is_lagna %}
 
-                    <span class="occupant-pill lagna-occupant">🚩 {{ _("లగ్నం") }}</span>
+                    <span class="occupant-pill lagna-occupant">🚩 {{ _("లగ్నం") }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
 
                   {% elif occ.is_hand %}
 
-                    <span class="occupant-pill aspect-hand" style="color: {{ occ.color }};">👉 {{ _(occ.name) }}</span>
+                    <span class="occupant-pill aspect-hand" style="color: {{ occ.color }};">👉 {{ _(occ.name) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
 
                   {% else %}
 
-                    <span class="occupant-pill planet-name-pill" style="color: {{ occ.color }};">{{ _(occ.name) }}</span>
+                    <span class="occupant-pill planet-name-pill" style="color: {{ occ.color }};">{{ _(occ.name) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
 
                   {% endif %}
 

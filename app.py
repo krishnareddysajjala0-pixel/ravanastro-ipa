@@ -3771,6 +3771,19 @@ def build_nakshatra_pada_boxes(data):
     lagna_deg_str = data.get('lagna_deg', '')
     houses = data.get('houses', {})
 
+    def extract_deg_only(deg_val):
+        if not deg_val:
+            return ""
+        try:
+            deg_str = str(deg_val).strip()
+            if '°' in deg_str:
+                num_part = deg_str.split('°')[0].strip()
+            else:
+                num_part = deg_str.split()[0].strip()
+            return f"{int(float(num_part))}°"
+        except Exception:
+            return ""
+
     lagna_pada_in_rashi = None
     if lagna_deg_str:
         try:
@@ -3810,6 +3823,7 @@ def build_nakshatra_pada_boxes(data):
                     occupants.append({
                         "name": "లగ్నం",
                         "degree": lagna_deg_str,
+                        "deg_only": extract_deg_only(lagna_deg_str),
                         "is_lagna": True,
                         "is_hand": False,
                         "color": "gold"
@@ -3831,6 +3845,7 @@ def build_nakshatra_pada_boxes(data):
                             occupants.append({
                                 "name": p["name"],
                                 "degree": p["degree"],
+                                "deg_only": extract_deg_only(p.get("degree", "")),
                                 "is_lagna": False,
                                 "is_hand": p.get("is_hand", False),
                                 "color": p.get("color", "#38bdf8")
