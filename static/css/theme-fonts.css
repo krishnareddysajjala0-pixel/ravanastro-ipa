@@ -1292,8 +1292,8 @@ body.mobile-pdf-rendering #loading-overlay {
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
   border: 1.5px solid rgba(251, 191, 36, 0.7) !important;
-  border-radius: 50px !important;
-  padding: 6px 12px !important;
+  border-radius: 18px !important;
+  padding: 6px 10px !important;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75), 0 0 18px rgba(251, 191, 36, 0.3) !important;
   display: flex !important;
   flex-direction: row !important;
@@ -1314,7 +1314,7 @@ body.mobile-pdf-rendering #loading-overlay {
   max-height: 40px !important;
   min-width: 95px !important;
   padding: 0 12px !important;
-  border-radius: 20px !important;
+  border-radius: 12px !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   cursor: pointer !important;
   font-family: inherit !important;
@@ -1443,7 +1443,7 @@ body.mobile-pdf-rendering #loading-overlay {
   height: 36px !important;
   min-height: 36px !important;
   max-height: 36px !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -1471,16 +1471,17 @@ body.mobile-pdf-rendering #loading-overlay {
     padding: 5px 8px !important;
     gap: 5px !important;
     max-width: calc(100vw - 8px) !important;
-    border-radius: 35px !important;
+    border-radius: 18px !important;
   }
   .fixed-bottom-bar-nav .nav-item {
     height: 38px !important;
     min-height: 38px !important;
     max-height: 38px !important;
+    min-width: 82px !important;
     padding: 0 9px !important;
     font-size: 11.5px !important;
     gap: 4px !important;
-    border-radius: 19px !important;
+    border-radius: 12px !important;
   }
   .fixed-bottom-bar-nav .nav-item i {
     font-size: 12px !important;
@@ -1503,7 +1504,7 @@ body.mobile-pdf-rendering #loading-overlay {
     bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
     padding: 4px 5px !important;
     gap: 3px !important;
-    border-radius: 20px !important;
+    border-radius: 18px !important;
     display: grid !important;
     grid-auto-flow: column !important;
     grid-auto-columns: 1fr !important;
@@ -1552,7 +1553,7 @@ body.mobile-pdf-rendering #loading-overlay {
     justify-content: center !important;
     align-items: center !important;
     gap: 2px !important;
-    border-radius: 14px !important;
+    border-radius: 12px !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
     text-decoration: none !important;
@@ -1563,7 +1564,7 @@ body.mobile-pdf-rendering #loading-overlay {
   .fixed-bottom-bar-nav > :first-child .nav-item,
   .fixed-bottom-bar-nav > :last-child.nav-item,
   .fixed-bottom-bar-nav > :last-child .nav-item {
-    border-radius: 14px !important;
+    border-radius: 12px !important;
   }
 
   .fixed-bottom-bar-nav .nav-item i {
@@ -1605,7 +1606,7 @@ body.mobile-pdf-rendering #loading-overlay {
     right: 4px !important;
     padding: 3px 3px !important;
     gap: 2px !important;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
   }
 
   .fixed-bottom-bar-nav .nav-item,
@@ -1615,14 +1616,14 @@ body.mobile-pdf-rendering #loading-overlay {
     max-height: 44px !important;
     padding: 3px 1px !important;
     gap: 1px !important;
-    border-radius: 11px !important;
+    border-radius: 10px !important;
   }
 
   .fixed-bottom-bar-nav > :first-child.nav-item,
   .fixed-bottom-bar-nav > :first-child .nav-item,
   .fixed-bottom-bar-nav > :last-child.nav-item,
   .fixed-bottom-bar-nav > :last-child .nav-item {
-    border-radius: 11px !important;
+    border-radius: 10px !important;
   }
 
   .fixed-bottom-bar-nav .nav-item i {
@@ -1684,7 +1685,7 @@ body.mobile-pdf-rendering #loading-overlay {
 
 .custom-dialog-btn {
   padding: 10px 22px !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   font-size: 14.5px !important;
   font-weight: 700 !important;
   border: none !important;

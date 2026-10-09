@@ -7926,8 +7926,8 @@ body {
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
       border: 1.5px solid rgba(251, 191, 36, 0.7) !important;
-      border-radius: 50px !important;
-      padding: 6px 12px !important;
+      border-radius: 18px !important;
+      padding: 6px 10px !important;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75), 0 0 18px rgba(251, 191, 36, 0.3) !important;
       display: flex !important;
       flex-direction: row !important;
@@ -7948,7 +7948,7 @@ body {
       max-height: 40px !important;
       min-width: 95px !important;
       padding: 0 12px !important;
-      border-radius: 20px !important;
+      border-radius: 12px !important;
       border: 1px solid rgba(255, 255, 255, 0.18) !important;
       cursor: pointer !important;
       font-family: inherit !important;
@@ -8077,7 +8077,7 @@ body {
       height: 36px !important;
       min-height: 36px !important;
       max-height: 36px !important;
-      border-radius: 10px !important;
+      border-radius: 12px !important;
       display: flex !important;
       flex-direction: row !important;
       align-items: center !important;
@@ -8105,16 +8105,17 @@ body {
         padding: 5px 8px !important;
         gap: 5px !important;
         max-width: calc(100vw - 8px) !important;
-        border-radius: 35px !important;
+        border-radius: 18px !important;
       }
       .fixed-bottom-bar-nav .nav-item {
         height: 38px !important;
         min-height: 38px !important;
         max-height: 38px !important;
+        min-width: 82px !important;
         padding: 0 9px !important;
         font-size: 11.5px !important;
         gap: 4px !important;
-        border-radius: 19px !important;
+        border-radius: 12px !important;
       }
       .fixed-bottom-bar-nav .nav-item i {
         font-size: 12px !important;
@@ -8137,7 +8138,7 @@ body {
         bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
         padding: 4px 5px !important;
         gap: 3px !important;
-        border-radius: 20px !important;
+        border-radius: 18px !important;
         display: grid !important;
         grid-auto-flow: column !important;
         grid-auto-columns: 1fr !important;
@@ -8186,7 +8187,7 @@ body {
         justify-content: center !important;
         align-items: center !important;
         gap: 2px !important;
-        border-radius: 14px !important;
+        border-radius: 12px !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
         text-decoration: none !important;
@@ -8197,7 +8198,7 @@ body {
       .fixed-bottom-bar-nav > :first-child .nav-item,
       .fixed-bottom-bar-nav > :last-child.nav-item,
       .fixed-bottom-bar-nav > :last-child .nav-item {
-        border-radius: 14px !important;
+        border-radius: 12px !important;
       }
 
       .fixed-bottom-bar-nav .nav-item i {
@@ -8239,7 +8240,7 @@ body {
         right: 4px !important;
         padding: 3px 3px !important;
         gap: 2px !important;
-        border-radius: 16px !important;
+        border-radius: 14px !important;
       }
 
       .fixed-bottom-bar-nav .nav-item,
@@ -8249,14 +8250,14 @@ body {
         max-height: 44px !important;
         padding: 3px 1px !important;
         gap: 1px !important;
-        border-radius: 11px !important;
+        border-radius: 10px !important;
       }
 
       .fixed-bottom-bar-nav > :first-child.nav-item,
       .fixed-bottom-bar-nav > :first-child .nav-item,
       .fixed-bottom-bar-nav > :last-child.nav-item,
       .fixed-bottom-bar-nav > :last-child .nav-item {
-        border-radius: 11px !important;
+        border-radius: 10px !important;
       }
 
       .fixed-bottom-bar-nav .nav-item i {
@@ -9187,8 +9188,8 @@ body {
           <div style="background:linear-gradient(135deg,#1e1b4b 0%,#0f172a 100%); border:2px solid #ffd700; border-radius:18px; padding:24px 28px; max-width:420px; width:92%; box-shadow:0 12px 40px rgba(0,0,0,0.85); text-align:center; color:#ffffff; font-family:inherit; box-sizing:border-box;">
             <div id="custom-astro-dialog-msg" style="font-size:16px; font-weight:700; line-height:1.5; margin-bottom:22px; color:#ffffff; word-break:break-word;"></div>
             <div style="display:flex; gap:12px; justify-content:center; align-items:center;">
-              <button id="custom-astro-dialog-cancel" style="display:none; padding:10px 22px; border-radius:10px; font-size:14.5px; font-weight:700; border:none; cursor:pointer; min-width:90px; background:linear-gradient(135deg,#475569 0%,#334155 100%); color:#ffffff; box-shadow:0 4px 12px rgba(0,0,0,0.3);">{{ _('రద్దు') }}</button>
-              <button id="custom-astro-dialog-ok" style="padding:10px 22px; border-radius:10px; font-size:14.5px; font-weight:700; border:none; cursor:pointer; min-width:90px; background:linear-gradient(135deg,#059669 0%,#047857 100%); color:#ffffff; box-shadow:0 4px 12px rgba(5,150,105,0.4);">OK</button>
+              <button id="custom-astro-dialog-cancel" style="display:none; padding:10px 22px; border-radius:12px; font-size:14.5px; font-weight:700; border:none; cursor:pointer; min-width:90px; background:linear-gradient(135deg,#475569 0%,#334155 100%); color:#ffffff; box-shadow:0 4px 12px rgba(0,0,0,0.3);">{{ _('రద్దు') }}</button>
+              <button id="custom-astro-dialog-ok" style="padding:10px 22px; border-radius:12px; font-size:14.5px; font-weight:700; border:none; cursor:pointer; min-width:90px; background:linear-gradient(135deg,#059669 0%,#047857 100%); color:#ffffff; box-shadow:0 4px 12px rgba(5,150,105,0.4);">OK</button>
             </div>
           </div>
         `;
