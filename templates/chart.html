@@ -6008,28 +6008,6 @@
   gap: 6px !important;
   width: 100% !important;
   max-width: 100% !important;
-  padding: 8px 10px !important;
-  box-sizing: border-box !important;
-  position: relative !important;
-  z-index: 1000 !important;
-  margin-bottom: 8px !important;
-}
-
-.top-control-bar > *,
-.top-control-bar .theme-switcher,
-.top-control-bar .language-switcher {
-  flex: 1 1 0% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  width: 100% !important;
-}
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 6px !important;
-  width: 100% !important;
-  max-width: 100% !important;
   padding: 8px 6px !important;
   box-sizing: border-box !important;
   position: relative !important;
@@ -6051,6 +6029,7 @@
 }
 
 .top-control-bar .ctrl-btn,
+.top-control-bar .top-btn-nakshatra,
 .top-control-bar #karmaBtn,
 .top-control-bar #chupuluBtn,
 .top-control-bar .top-btn-theme,
@@ -6104,6 +6083,7 @@
   }
 
   .top-control-bar .ctrl-btn,
+  .top-control-bar .top-btn-nakshatra,
   .top-control-bar #karmaBtn,
   .top-control-bar #chupuluBtn,
   .top-control-bar .top-btn-theme,
@@ -6116,7 +6096,7 @@
     right: auto !important;
     bottom: auto !important;
     padding: 6px 2px !important;
-    font-size: 22.7px !important;
+    font-size: 11px !important;
     border-radius: 14px !important;
     height: 32px !important;
     width: 100% !important;
@@ -6128,12 +6108,13 @@
 
 @media screen and (max-width: 380px) {
   .top-control-bar .ctrl-btn,
+  .top-control-bar .top-btn-nakshatra,
   .top-control-bar #karmaBtn,
   .top-control-bar #chupuluBtn,
   .top-control-bar .top-btn-theme,
   .top-control-bar .top-btn-lang {
     padding: 5px 2px !important;
-    font-size: 10px !important;
+    font-size: 9.5px !important;
     height: 30px !important;
   }
 }
@@ -6348,6 +6329,21 @@ body, .container, .top-control-bar, .theme-switcher, .language-switcher {
   border: 1px solid rgba(45, 212, 191, 0.6) !important;
   color: #ffffff !important;
 }
+
+.top-btn-nakshatra {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.6) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+[data-theme="sunset"] .top-btn-nakshatra { background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important; border: 1px solid rgba(253, 164, 175, 0.7) !important; color: #ffffff !important; }
+[data-theme="luxury"] .top-btn-nakshatra { background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important; border: 1px solid rgba(251, 191, 36, 0.7) !important; color: #ffffff !important; }
+[data-theme="cyberpunk"] .top-btn-nakshatra { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important; border: 1px solid #38bdf8 !important; color: #ffffff !important; }
+[data-theme="solar"] .top-btn-nakshatra { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important; border: 1px solid rgba(254, 215, 170, 0.7) !important; color: #ffffff !important; }
+[data-theme="mandala"] .top-btn-nakshatra { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important; border: 1px solid rgba(186, 230, 253, 0.7) !important; color: #ffffff !important; }
+[data-theme="twilight"] .top-btn-nakshatra { background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important; border: 1px solid rgba(221, 214, 254, 0.7) !important; color: #ffffff !important; }
+[data-theme="aurora"] .top-btn-nakshatra { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important; border: 1px solid rgba(186, 230, 253, 0.7) !important; color: #ffffff !important; }
+[data-theme="cosmic"] .top-btn-nakshatra { background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important; border: 1px solid rgba(165, 180, 252, 0.7) !important; color: #ffffff !important; }
 
 .top-btn-back {
   background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%) !important;
@@ -7154,9 +7150,11 @@ body {
         </div>
       </div>
 
-      
-
-      
+      <!-- 2. Nakshatra Kundali Button -->
+      <a href="/nakshatra_chart" class="ctrl-btn top-btn-nakshatra" title="{{ _('నక్షత్ర కుండలి') }}">
+        <i class="fas fa-star"></i>
+        <span>{{ _('నక్షత్ర కుండలి') }}</span>
+      </a>
 
       <!-- 4. Karma Button -->
       <button class="top-btn-karma ctrl-btn" id="karmaBtn" onclick="toggleKarma()" title="Toggle Karma">
