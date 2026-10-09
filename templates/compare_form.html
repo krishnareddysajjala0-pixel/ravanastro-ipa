@@ -1681,7 +1681,8 @@ body {
   height: 40px !important;
   min-height: 40px !important;
   max-height: 40px !important;
-  padding: 0 14px !important;
+  min-width: 95px !important;
+  padding: 0 12px !important;
   border-radius: 20px !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   cursor: pointer !important;
@@ -1870,8 +1871,8 @@ body {
     transform: none !important;
     bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
     padding: 4px 5px !important;
-    gap: 2.5px !important;
-    border-radius: 28px !important;
+    gap: 3px !important;
+    border-radius: 20px !important;
     display: grid !important;
     grid-auto-flow: column !important;
     grid-auto-columns: 1fr !important;
@@ -1920,23 +1921,18 @@ body {
     justify-content: center !important;
     align-items: center !important;
     gap: 2px !important;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
     text-decoration: none !important;
   }
 
-  /* End pills match container rounded curve */
+  /* All 6 buttons strictly uniform in shape - no asymmetrical end corners */
   .fixed-bottom-bar-nav > :first-child.nav-item,
-  .fixed-bottom-bar-nav > :first-child .nav-item {
-    border-top-left-radius: 22px !important;
-    border-bottom-left-radius: 22px !important;
-  }
-
+  .fixed-bottom-bar-nav > :first-child .nav-item,
   .fixed-bottom-bar-nav > :last-child.nav-item,
   .fixed-bottom-bar-nav > :last-child .nav-item {
-    border-top-right-radius: 22px !important;
-    border-bottom-right-radius: 22px !important;
+    border-radius: 14px !important;
   }
 
   .fixed-bottom-bar-nav .nav-item i {
@@ -1978,6 +1974,7 @@ body {
     right: 4px !important;
     padding: 3px 3px !important;
     gap: 2px !important;
+    border-radius: 16px !important;
   }
 
   .fixed-bottom-bar-nav .nav-item,
@@ -1987,19 +1984,14 @@ body {
     max-height: 44px !important;
     padding: 3px 1px !important;
     gap: 1px !important;
-    border-radius: 14px !important;
+    border-radius: 11px !important;
   }
 
   .fixed-bottom-bar-nav > :first-child.nav-item,
-  .fixed-bottom-bar-nav > :first-child .nav-item {
-    border-top-left-radius: 18px !important;
-    border-bottom-left-radius: 18px !important;
-  }
-
+  .fixed-bottom-bar-nav > :first-child .nav-item,
   .fixed-bottom-bar-nav > :last-child.nav-item,
   .fixed-bottom-bar-nav > :last-child .nav-item {
-    border-top-right-radius: 18px !important;
-    border-bottom-right-radius: 18px !important;
+    border-radius: 11px !important;
   }
 
   .fixed-bottom-bar-nav .nav-item i {
