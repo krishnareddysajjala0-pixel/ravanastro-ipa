@@ -858,10 +858,26 @@
 
         }
 
-        .lagna-c { 
-
+        .box-c.house-green,
+        .house-green {
+            border: 2.5px solid #10b981 !important;
+        }
+        .box-c.house-red,
+        .house-red {
+            border: 2.5px solid #ef4444 !important;
+        }
+        .box-c.house-mixed,
+        .house-mixed {
+            border-top: 2.5px solid #10b981 !important;
+            border-left: 2.5px solid #10b981 !important;
+            border-right: 2.5px solid #ef4444 !important;
+            border-bottom: 2.5px solid #ef4444 !important;
+        }
+        .lagna-c,
+        .box-c.lagna-c { 
             background: rgba(255, 215, 0, 0.1); 
-
+            border: 2.5px solid #10b981 !important;
+            box-shadow: 0 0 18px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important;
         }
 
         .section-title {
@@ -2231,7 +2247,7 @@ body {
 
                         {% set hno = panch.houses.get(lagna, "") if panch.houses else "" %}
 
-                        <div class="box-c {% if panch.lagna == _(lagna) %}lagna-c{% endif %}">
+                        <div class="box-c {% if hno in [1, 5, 9] %}house-green{% elif hno in [3, 7, 11] %}house-red{% elif hno %}house-mixed{% endif %} {% if panch.lagna == _(lagna) %}lagna-c{% endif %}">
 
                             {% if hno %}<span class="house-no-c">{{ hno }}</span>{% endif %}
 

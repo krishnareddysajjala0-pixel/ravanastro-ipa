@@ -2011,86 +2011,33 @@
 
 
 
-    .house-green {
-
-
-
+    .house-green,
+    .box.house-green {
       background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.15));
-
-
-
-      border-left: 4px solid rgba(34, 197, 94, 0.6);
-
-
-
+      border: 2.5px solid #10b981 !important;
     }
 
-
-
-
-
-
-
-    .house-red {
-
-
-
+    .house-red,
+    .box.house-red {
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.15));
-
-
-
-      border-left: 4px solid rgba(239, 68, 68, 0.6);
-
-
-
+      border: 2.5px solid #ef4444 !important;
     }
 
-
-
-
-
-
-
-    .house-mixed {
-
-
-
+    .house-mixed,
+    .box.house-mixed {
       background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(239, 68, 68, 0.15));
-
-
-
-      border-left: 4px solid rgba(148, 163, 184, 0.6);
-
-
-
+      border-top: 2.5px solid #10b981 !important;
+      border-left: 2.5px solid #10b981 !important;
+      border-right: 2.5px solid #ef4444 !important;
+      border-bottom: 2.5px solid #ef4444 !important;
     }
-
-
-
-
-
-
 
     /* ===== LAGNA ===== */
-
-
-
-    .lagna {
-
-
-
-      border: 3px solid gold;
-
-
-
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-
-
-
+    .lagna,
+    .box.lagna {
+      border: 2.5px solid #10b981 !important;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important;
       position: relative;
-
-
-
     }
 
 
@@ -4844,12 +4791,34 @@
 
 
 
+      .box.house-green,
+      .house-green {
+        border: 2.5px solid #10b981 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .box.house-red,
+      .house-red {
+        border: 2.5px solid #ef4444 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .box.house-mixed,
+      .house-mixed {
+        border-top: 2.5px solid #10b981 !important;
+        border-left: 2.5px solid #10b981 !important;
+        border-right: 2.5px solid #ef4444 !important;
+        border-bottom: 2.5px solid #ef4444 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
       .box.lagna, .lagna {
-        border: 8px double #000000 !important;
-        background: 
-          linear-gradient(#ffffff, #ffffff) padding-box,
-          linear-gradient(#006400, #006400) border-box !important;
-        box-shadow: none !important;
+        border: 2.5px solid #10b981 !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }

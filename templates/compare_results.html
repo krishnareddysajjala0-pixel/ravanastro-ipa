@@ -893,46 +893,33 @@
 
     /* ===== HOUSE BACKGROUND COLORS ===== */
 
-    .house-green {
-
+    .house-green,
+    .box.house-green {
       background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.15));
-
-      border-left: 4px solid rgba(34, 197, 94, 0.6);
-
+      border: 2.5px solid #10b981 !important;
     }
 
-
-
-    .house-red {
-
+    .house-red,
+    .box.house-red {
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.15));
-
-      border-left: 4px solid rgba(239, 68, 68, 0.6);
-
+      border: 2.5px solid #ef4444 !important;
     }
 
-
-
-    .house-mixed {
-
+    .house-mixed,
+    .box.house-mixed {
       background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(239, 68, 68, 0.15));
-
-      border-left: 4px solid rgba(148, 163, 184, 0.6);
-
+      border-top: 2.5px solid #10b981 !important;
+      border-left: 2.5px solid #10b981 !important;
+      border-right: 2.5px solid #ef4444 !important;
+      border-bottom: 2.5px solid #ef4444 !important;
     }
-
-
 
     /* ===== LAGNA ===== */
-
-    .lagna {
-
-      border: 3px solid gold;
-
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-
+    .lagna,
+    .box.lagna {
+      border: 2.5px solid #10b981 !important;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important;
       position: relative;
-
     }
 
 
@@ -1973,12 +1960,34 @@
 
 
 
+      .box.house-green,
+      .house-green {
+        border: 2.5px solid #10b981 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .box.house-red,
+      .house-red {
+        border: 2.5px solid #ef4444 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .box.house-mixed,
+      .house-mixed {
+        border-top: 2.5px solid #10b981 !important;
+        border-left: 2.5px solid #10b981 !important;
+        border-right: 2.5px solid #ef4444 !important;
+        border-bottom: 2.5px solid #ef4444 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
       .box.lagna, .lagna {
-        border: 8px double #000000 !important;
-        background: 
-          linear-gradient(#ffffff, #ffffff) padding-box,
-          linear-gradient(#006400, #006400) border-box !important;
-        box-shadow: none !important;
+        border: 2.5px solid #10b981 !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -2817,13 +2826,13 @@
 
     .nak-box { border: 1.5px solid var(--box-border, #334155); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: flex; flex-direction: column; overflow: hidden; min-height: 185px; }
 
-    .house-green { border: 1.8px solid #059669 !important; border-top: 4px solid #059669 !important; }
+    .house-green { border: 2.5px solid #10b981 !important; }
 
-    .house-red { border: 1.8px solid #dc2626 !important; border-top: 4px solid #dc2626 !important; }
+    .house-red { border: 2.5px solid #ef4444 !important; }
 
-    .house-mixed { border: 1.8px solid #ca8a04 !important; border-top: 4px solid #ca8a04 !important; }
+    .house-mixed { border-top: 2.5px solid #10b981 !important; border-left: 2.5px solid #10b981 !important; border-right: 2.5px solid #ef4444 !important; border-bottom: 2.5px solid #ef4444 !important; }
 
-    .nak-box.lagna-box { border: 3.5px solid #fbbf24 !important; box-shadow: 0 0 18px rgba(251, 191, 36, 0.45) !important; }
+    .nak-box.lagna-box { border: 2.5px solid #10b981 !important; box-shadow: 0 0 18px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important; }
 
     .nak-box-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: rgba(120, 120, 120, 0.1); border-bottom: 1px solid var(--box-border, #334155); }
 
@@ -6083,93 +6092,55 @@ body {
 
 
     /* Punyam, Papam, Mixed, Lagna styles */
-
     .house-green {
-
-      border: 1.8px solid #059669 !important;
-
-      border-top: 4px solid #059669 !important;
-
+      border: 2.5px solid #10b981 !important;
     }
 
     .house-green .nak-box-header {
-
       background: rgba(16, 185, 129, 0.15) !important;
-
     }
 
     .house-green .karma-badge-small {
-
       background: rgba(16, 185, 129, 0.25) !important;
-
       color: #10b981 !important;
-
       border: 1px solid #10b981 !important;
-
     }
 
-
-
     .house-red {
-
-      border: 1.8px solid #dc2626 !important;
-
-      border-top: 4px solid #dc2626 !important;
-
+      border: 2.5px solid #ef4444 !important;
     }
 
     .house-red .nak-box-header {
-
       background: rgba(239, 68, 68, 0.15) !important;
-
     }
 
     .house-red .karma-badge-small {
-
       background: rgba(239, 68, 68, 0.25) !important;
-
       color: #ef4444 !important;
-
       border: 1px solid #ef4444 !important;
-
     }
 
-
-
     .house-mixed {
-
-      border: 1.8px solid #ca8a04 !important;
-
-      border-top: 4px solid #ca8a04 !important;
-
+      border-top: 2.5px solid #10b981 !important;
+      border-left: 2.5px solid #10b981 !important;
+      border-right: 2.5px solid #ef4444 !important;
+      border-bottom: 2.5px solid #ef4444 !important;
     }
 
     .house-mixed .nak-box-header {
-
       background: linear-gradient(90deg, rgba(16, 185, 129, 0.14) 0%, rgba(239, 68, 68, 0.14) 100%) !important;
-
     }
 
     .house-mixed .karma-badge-small {
-
       background: linear-gradient(90deg, rgba(16, 185, 129, 0.3) 0%, rgba(239, 68, 68, 0.3) 100%) !important;
-
       color: var(--text-main) !important;
-
       border: 1px solid #ca8a04 !important;
-
     }
 
-
-
-    /* Lagna Box: Distinct Color & Thick Border */
-
+    /* Lagna Box: Green Outer Border & Gold Glow */
     .nak-box.lagna-box {
-
-      border: 3.5px solid #fbbf24 !important;
-
-      box-shadow: 0 0 18px rgba(251, 191, 36, 0.45) !important;
-
+      border: 2.5px solid #10b981 !important;
+      box-shadow: 0 0 18px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important;
     }
 
     .nak-box.lagna-box .nak-box-header {
@@ -7114,114 +7085,66 @@ body {
 
 
 
-      /* Print Colors: Punyam (Green), Papam (Red), Mixed (Green+Red), Lagna (Gold + Thick Border) */
-
+      /* Print Colors: Punyam (Green), Papam (Red), Mixed (Top/Left Green + Right/Bottom Red), Lagna (Green Border + Gold Glow) */
       .house-green {
-
-        border: 1.5px solid #059669 !important;
-
-        border-top: 4.5px solid #059669 !important;
-
+        border: 2.5px solid #10b981 !important;
         background: #f0fdf4 !important;
-
       }
 
       .house-green .nak-box-header {
-
         background: #dcfce7 !important;
-
         border-bottom: 1.5px solid #059669 !important;
-
       }
 
       .house-green .karma-badge-small {
-
         color: #047857 !important;
-
         background: #bbf7d0 !important;
-
         border: 1px solid #86efac !important;
-
         font-weight: 800 !important;
-
       }
 
-
-
       .house-red {
-
-        border: 1.5px solid #dc2626 !important;
-
-        border-top: 4.5px solid #dc2626 !important;
-
+        border: 2.5px solid #ef4444 !important;
         background: #fef2f2 !important;
-
       }
 
       .house-red .nak-box-header {
-
         background: #fee2e2 !important;
-
         border-bottom: 1.5px solid #dc2626 !important;
-
       }
 
       .house-red .karma-badge-small {
-
         color: #b91c1c !important;
-
         background: #fecaca !important;
-
         border: 1px solid #fca5a5 !important;
-
         font-weight: 800 !important;
-
       }
 
-
-
       .house-mixed {
-
-        border: 1.5px solid #d97706 !important;
-
-        border-top: 4.5px solid #ca8a04 !important;
-
+        border-top: 2.5px solid #10b981 !important;
+        border-left: 2.5px solid #10b981 !important;
+        border-right: 2.5px solid #ef4444 !important;
+        border-bottom: 2.5px solid #ef4444 !important;
         background: #ffffff !important;
-
       }
 
       .house-mixed .nak-box-header {
-
         background: linear-gradient(90deg, #dcfce7 0%, #fee2e2 100%) !important;
-
         border-bottom: 1.5px solid #d97706 !important;
-
       }
 
       .house-mixed .karma-badge-small {
-
         background: linear-gradient(90deg, #bbf7d0 0%, #fecaca 100%) !important;
-
         color: #0f172a !important;
-
         border: 1px solid #d97706 !important;
-
         font-weight: 800 !important;
-
       }
 
-
-
-      /* Lagnam Box: Thick Border & Golden Highlight */
-
+      /* Lagnam Box: Green Outer Border & Gold Glow */
       .nak-box.lagna-box {
-
-        border: 3.5px solid #b45309 !important;
-
+        border: 2.5px solid #10b981 !important;
         background: #fffbeb !important;
-
-        box-shadow: none !important;
-
+        box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
       }
 
       .nak-box.lagna-box .nak-box-header {

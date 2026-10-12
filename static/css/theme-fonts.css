@@ -1844,3 +1844,123 @@ body.mobile-pdf-rendering #loading-overlay {
   outline: none !important;
 }
 
+/* ===== KUNDALI HOUSE BOX OUTER BORDERS (SCREEN & PRINT/PDF) ===== */
+/* 1. కేవలం పాపం (Only Papam - 3, 7, 11 భావాలు) -> All 4 sides Red */
+.house-red,
+.box.house-red,
+.nak-box.house-red,
+.box-c.house-red {
+  border: 2.5px solid #ef4444 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* 2. పుణ్యం (Only Punyam - 1, 5, 9 భావాలు) -> All 4 sides Green */
+.house-green,
+.box.house-green,
+.nak-box.house-green,
+.box-c.house-green {
+  border: 2.5px solid #10b981 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* లగ్నం (Lagna Box) -> All 4 sides Green + Gold Glow */
+.lagna,
+.box.lagna,
+.nak-box.lagna-box,
+.box-c.lagna-c {
+  border: 2.5px solid #10b981 !important;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* 3. పాపం + పుణ్యం (Papam + Punyam - 2, 4, 6, 8, 10, 12 భావాలు) -> Top & Left Green, Right & Bottom Red */
+.house-mixed,
+.box.house-mixed,
+.nak-box.house-mixed,
+.box-c.house-mixed {
+  border-top: 2.5px solid #10b981 !important;
+  border-left: 2.5px solid #10b981 !important;
+  border-right: 2.5px solid #ef4444 !important;
+  border-bottom: 2.5px solid #ef4444 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+@media print {
+  .house-red,
+  .box.house-red,
+  .nak-box.house-red,
+  .box-c.house-red {
+    border: 2.5px solid #ef4444 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .house-green,
+  .box.house-green,
+  .nak-box.house-green,
+  .box-c.house-green {
+    border: 2.5px solid #10b981 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .lagna,
+  .box.lagna,
+  .nak-box.lagna-box,
+  .box-c.lagna-c {
+    border: 2.5px solid #10b981 !important;
+    box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .house-mixed,
+  .box.house-mixed,
+  .nak-box.house-mixed,
+  .box-c.house-mixed {
+    border-top: 2.5px solid #10b981 !important;
+    border-left: 2.5px solid #10b981 !important;
+    border-right: 2.5px solid #ef4444 !important;
+    border-bottom: 2.5px solid #ef4444 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+body.mobile-pdf-rendering .house-red,
+body.mobile-pdf-rendering .box.house-red,
+body.mobile-pdf-rendering .nak-box.house-red,
+body.mobile-pdf-rendering .box-c.house-red {
+  border: 2.5px solid #ef4444 !important;
+}
+
+body.mobile-pdf-rendering .house-green,
+body.mobile-pdf-rendering .box.house-green,
+body.mobile-pdf-rendering .nak-box.house-green,
+body.mobile-pdf-rendering .box-c.house-green {
+  border: 2.5px solid #10b981 !important;
+}
+
+body.mobile-pdf-rendering .lagna,
+body.mobile-pdf-rendering .box.lagna,
+body.mobile-pdf-rendering .nak-box.lagna-box,
+body.mobile-pdf-rendering .box-c.lagna-c {
+  border: 2.5px solid #10b981 !important;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
+}
+
+body.mobile-pdf-rendering .house-mixed,
+body.mobile-pdf-rendering .box.house-mixed,
+body.mobile-pdf-rendering .nak-box.house-mixed,
+body.mobile-pdf-rendering .box-c.house-mixed {
+  border-top: 2.5px solid #10b981 !important;
+  border-left: 2.5px solid #10b981 !important;
+  border-right: 2.5px solid #ef4444 !important;
+  border-bottom: 2.5px solid #ef4444 !important;
+}
+
+
