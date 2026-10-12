@@ -1875,119 +1875,79 @@
 
 
       .chart {
-
-        gap: 2px !important;
-
+        gap: 8px !important;
         width: 100% !important;
-
+        padding: 4px !important;
       }
-
-
 
       .box {
-
         background: #ffffff !important;
-
-        border: 1px solid #000 !important;
-
+        border: 3.5px solid #000 !important;
+        border-radius: 10px !important;
         padding: 3px !important;
-
         min-height: 75px !important;
-
         font-size: 20.0px !important; /* 10% larger than previous (18.2px) */
-
         line-height: 1.2 !important;
-
         display: flex !important;
-
         flex-direction: column !important;
-
         justify-content: center !important;
-
         align-items: center !important; /* Center alignment */
-
         text-align: center !important;
-
       }
-
-
 
       .box br {
-
         display: none !important;
-
       }
-
-
 
       .center {
-
         padding: 8px !important;
-
         font-size: 20.7px !important; /* Increased by 10% from 18.8px */
-
-        border: 1px solid #000 !important;
-
+        border: 3px solid #000 !important;
+        border-radius: 10px !important;
       }
-
-      
 
       .center table {
-
         font-size: 18.6px !important; /* Increased by 10% from 16.9px */
-
         font-weight: bold !important;
-
         border-spacing: 0 1px !important; /* More compact spacing for print layout */
-
       }
-
-
 
       .pos {
-
         color: #006400 !important;
-
       }
-
-
 
       .neg {
-
         color: #8b0000 !important;
-
       }
-
-
 
       .box.house-green,
       .house-green {
-        border: 2.5px solid #10b981 !important;
+        border: 4px solid #006400 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
       .box.house-red,
       .house-red {
-        border: 2.5px solid #ef4444 !important;
+        border: 4px solid #990000 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
       .box.house-mixed,
       .house-mixed {
-        border-top: 2.5px solid #10b981 !important;
-        border-left: 2.5px solid #10b981 !important;
-        border-right: 2.5px solid #ef4444 !important;
-        border-bottom: 2.5px solid #ef4444 !important;
+        border-top: 4px solid #006400 !important;
+        border-left: 4px solid #006400 !important;
+        border-right: 4px solid #990000 !important;
+        border-bottom: 4px solid #990000 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
       .box.lagna, .lagna {
-        border: 2.5px solid #10b981 !important;
-        background: #ffffff !important;
-        box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
+        border: 4px solid #006400 !important;
+        background: #fffbeb !important;
+        box-shadow: 0 0 14px rgba(217, 119, 6, 0.75), inset 0 0 8px rgba(251, 191, 36, 0.45) !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -7085,66 +7045,66 @@ body {
 
 
 
-      /* Print Colors: Punyam (Green), Papam (Red), Mixed (Top/Left Green + Right/Bottom Red), Lagna (Green Border + Gold Glow) */
+      /* Print Colors: Punyam (Dark Green), Papam (Dark Red), Mixed (Top/Left Dark Green + Right/Bottom Dark Red), Lagna (Dark Green Border + Gold Glow) */
       .house-green {
-        border: 2.5px solid #10b981 !important;
+        border: 3.5px solid #006400 !important;
         background: #f0fdf4 !important;
       }
 
       .house-green .nak-box-header {
         background: #dcfce7 !important;
-        border-bottom: 1.5px solid #059669 !important;
+        border-bottom: 2px solid #006400 !important;
       }
 
       .house-green .karma-badge-small {
-        color: #047857 !important;
+        color: #006400 !important;
         background: #bbf7d0 !important;
-        border: 1px solid #86efac !important;
+        border: 1.5px solid #006400 !important;
         font-weight: 800 !important;
       }
 
       .house-red {
-        border: 2.5px solid #ef4444 !important;
+        border: 3.5px solid #990000 !important;
         background: #fef2f2 !important;
       }
 
       .house-red .nak-box-header {
         background: #fee2e2 !important;
-        border-bottom: 1.5px solid #dc2626 !important;
+        border-bottom: 2px solid #990000 !important;
       }
 
       .house-red .karma-badge-small {
-        color: #b91c1c !important;
+        color: #990000 !important;
         background: #fecaca !important;
-        border: 1px solid #fca5a5 !important;
+        border: 1.5px solid #990000 !important;
         font-weight: 800 !important;
       }
 
       .house-mixed {
-        border-top: 2.5px solid #10b981 !important;
-        border-left: 2.5px solid #10b981 !important;
-        border-right: 2.5px solid #ef4444 !important;
-        border-bottom: 2.5px solid #ef4444 !important;
+        border-top: 3.5px solid #006400 !important;
+        border-left: 3.5px solid #006400 !important;
+        border-right: 3.5px solid #990000 !important;
+        border-bottom: 3.5px solid #990000 !important;
         background: #ffffff !important;
       }
 
       .house-mixed .nak-box-header {
         background: linear-gradient(90deg, #dcfce7 0%, #fee2e2 100%) !important;
-        border-bottom: 1.5px solid #d97706 !important;
+        border-bottom: 2px solid #b45309 !important;
       }
 
       .house-mixed .karma-badge-small {
         background: linear-gradient(90deg, #bbf7d0 0%, #fecaca 100%) !important;
         color: #0f172a !important;
-        border: 1px solid #d97706 !important;
+        border: 1.5px solid #b45309 !important;
         font-weight: 800 !important;
       }
 
-      /* Lagnam Box: Green Outer Border & Gold Glow */
+      /* Lagnam Box: Thick Dark Green Outer Border & Gold Glow */
       .nak-box.lagna-box {
-        border: 2.5px solid #10b981 !important;
+        border: 3.5px solid #006400 !important;
         background: #fffbeb !important;
-        box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
+        box-shadow: 0 0 14px rgba(217, 119, 6, 0.75), inset 0 0 8px rgba(251, 191, 36, 0.45) !important;
       }
 
       .nak-box.lagna-box .nak-box-header {

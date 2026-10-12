@@ -1890,11 +1890,23 @@ body.mobile-pdf-rendering #loading-overlay {
 }
 
 @media print {
+  .chart,
+  .chart-grid,
+  .nak-chart-grid,
+  .chart-c {
+    gap: 10px !important;
+    padding: 4px !important;
+  }
+
+  .box {
+    border-radius: 10px !important;
+  }
+
   .house-red,
   .box.house-red,
   .nak-box.house-red,
   .box-c.house-red {
-    border: 2.5px solid #ef4444 !important;
+    border: 4px solid #990000 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -1903,7 +1915,7 @@ body.mobile-pdf-rendering #loading-overlay {
   .box.house-green,
   .nak-box.house-green,
   .box-c.house-green {
-    border: 2.5px solid #10b981 !important;
+    border: 4px solid #006400 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -1912,8 +1924,8 @@ body.mobile-pdf-rendering #loading-overlay {
   .box.lagna,
   .nak-box.lagna-box,
   .box-c.lagna-c {
-    border: 2.5px solid #10b981 !important;
-    box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
+    border: 4px solid #006400 !important;
+    box-shadow: 0 0 14px rgba(217, 119, 6, 0.75), inset 0 0 8px rgba(251, 191, 36, 0.45) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -1922,45 +1934,57 @@ body.mobile-pdf-rendering #loading-overlay {
   .box.house-mixed,
   .nak-box.house-mixed,
   .box-c.house-mixed {
-    border-top: 2.5px solid #10b981 !important;
-    border-left: 2.5px solid #10b981 !important;
-    border-right: 2.5px solid #ef4444 !important;
-    border-bottom: 2.5px solid #ef4444 !important;
+    border-top: 4px solid #006400 !important;
+    border-left: 4px solid #006400 !important;
+    border-right: 4px solid #990000 !important;
+    border-bottom: 4px solid #990000 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+}
+
+body.mobile-pdf-rendering .chart,
+body.mobile-pdf-rendering .chart-grid,
+body.mobile-pdf-rendering .nak-chart-grid,
+body.mobile-pdf-rendering .chart-c {
+  gap: 10px !important;
+  padding: 4px !important;
+}
+
+body.mobile-pdf-rendering .box {
+  border-radius: 10px !important;
 }
 
 body.mobile-pdf-rendering .house-red,
 body.mobile-pdf-rendering .box.house-red,
 body.mobile-pdf-rendering .nak-box.house-red,
 body.mobile-pdf-rendering .box-c.house-red {
-  border: 2.5px solid #ef4444 !important;
+  border: 4px solid #990000 !important;
 }
 
 body.mobile-pdf-rendering .house-green,
 body.mobile-pdf-rendering .box.house-green,
 body.mobile-pdf-rendering .nak-box.house-green,
 body.mobile-pdf-rendering .box-c.house-green {
-  border: 2.5px solid #10b981 !important;
+  border: 4px solid #006400 !important;
 }
 
 body.mobile-pdf-rendering .lagna,
 body.mobile-pdf-rendering .box.lagna,
 body.mobile-pdf-rendering .nak-box.lagna-box,
 body.mobile-pdf-rendering .box-c.lagna-c {
-  border: 2.5px solid #10b981 !important;
-  box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), inset 0 0 8px rgba(255, 215, 0, 0.35) !important;
+  border: 4px solid #006400 !important;
+  box-shadow: 0 0 14px rgba(217, 119, 6, 0.75), inset 0 0 8px rgba(251, 191, 36, 0.45) !important;
 }
 
 body.mobile-pdf-rendering .house-mixed,
 body.mobile-pdf-rendering .box.house-mixed,
 body.mobile-pdf-rendering .nak-box.house-mixed,
 body.mobile-pdf-rendering .box-c.house-mixed {
-  border-top: 2.5px solid #10b981 !important;
-  border-left: 2.5px solid #10b981 !important;
-  border-right: 2.5px solid #ef4444 !important;
-  border-bottom: 2.5px solid #ef4444 !important;
+  border-top: 4px solid #006400 !important;
+  border-left: 4px solid #006400 !important;
+  border-right: 4px solid #990000 !important;
+  border-bottom: 4px solid #990000 !important;
 }
 
 
