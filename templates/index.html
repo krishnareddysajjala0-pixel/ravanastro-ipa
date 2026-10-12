@@ -7932,21 +7932,29 @@ body {
       display: flex !important;
       flex-direction: row !important;
       align-items: center !important;
-      justify-content: center !important;
+      justify-content: space-between !important;
       gap: 8px !important;
       z-index: 99999 !important;
-      max-width: calc(100vw - 16px) !important;
+      width: calc(100vw - 40px) !important;
+      max-width: 860px !important;
       box-sizing: border-box !important;
-      width: max-content !important;
       overflow: visible !important;
     }
 
-    .fixed-bottom-bar-nav .nav-item {
-      flex: 0 0 auto !important;
+    .fixed-bottom-bar-nav > *,
+    .fixed-bottom-bar-nav .nav-dropdown-wrapper {
+      flex: 1 1 0% !important;
+      min-width: 0 !important;
+    }
+
+    .fixed-bottom-bar-nav .nav-item,
+    .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item {
+      flex: 1 1 0% !important;
+      width: 100% !important;
       height: 40px !important;
       min-height: 40px !important;
       max-height: 40px !important;
-      min-width: 95px !important;
+      min-width: 0 !important;
       padding: 0 12px !important;
       border-radius: 12px !important;
       border: 1px solid rgba(255, 255, 255, 0.18) !important;
@@ -8104,15 +8112,17 @@ body {
         bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
         padding: 5px 8px !important;
         gap: 5px !important;
-        max-width: calc(100vw - 8px) !important;
+        width: calc(100vw - 30px) !important;
+        max-width: 860px !important;
         border-radius: 18px !important;
       }
-      .fixed-bottom-bar-nav .nav-item {
+      .fixed-bottom-bar-nav .nav-item,
+      .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item {
         height: 38px !important;
         min-height: 38px !important;
         max-height: 38px !important;
-        min-width: 82px !important;
-        padding: 0 9px !important;
+        min-width: 0 !important;
+        padding: 0 6px !important;
         font-size: 11.5px !important;
         gap: 4px !important;
         border-radius: 12px !important;
@@ -8131,7 +8141,7 @@ body {
         left: 8px !important;
         right: 8px !important;
         width: auto !important;
-        max-width: 480px !important;
+        max-width: calc(100vw - 16px) !important;
         margin-left: auto !important;
         margin-right: auto !important;
         transform: none !important;

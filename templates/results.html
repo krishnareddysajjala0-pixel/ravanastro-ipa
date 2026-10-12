@@ -1410,6 +1410,8 @@
 
             display: flex;
 
+            justify-content: space-between;
+
             gap: 12px;
 
             overflow-x: auto;
@@ -1418,7 +1420,11 @@
 
             z-index: 9999;
 
-            max-width: 95vw;
+            width: calc(100vw - 24px);
+
+            max-width: 900px;
+
+            box-sizing: border-box;
 
         }
 
@@ -1434,7 +1440,9 @@
 
         .float-btn {
 
-            flex: 0 0 auto;
+            flex: 1 1 0%;
+
+            min-width: 0;
 
             padding: 10px 18px;
 
