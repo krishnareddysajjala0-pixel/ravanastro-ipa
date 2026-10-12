@@ -1894,8 +1894,8 @@ body.mobile-pdf-rendering #loading-overlay {
   .chart-grid,
   .nak-chart-grid,
   .chart-c {
-    gap: 10px !important;
-    padding: 4px !important;
+    gap: 5px !important;
+    padding: 2px !important;
   }
 
   .box {
@@ -1947,8 +1947,8 @@ body.mobile-pdf-rendering .chart,
 body.mobile-pdf-rendering .chart-grid,
 body.mobile-pdf-rendering .nak-chart-grid,
 body.mobile-pdf-rendering .chart-c {
-  gap: 10px !important;
-  padding: 4px !important;
+  gap: 5px !important;
+  padding: 2px !important;
 }
 
 body.mobile-pdf-rendering .box {
