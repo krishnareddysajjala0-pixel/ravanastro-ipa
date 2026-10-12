@@ -811,10 +811,22 @@
       border: 1px solid #ca8a04 !important;
     }
 
-    /* Lagna Box: Green Outer Border & Gold Glow */
+    /* Lagna Box: Yellow Outer Border + Yellow Tint + Green Inner Line */
     .nak-box.lagna-box {
+      border: 3.5px solid #facc15 !important;
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.22), rgba(234, 179, 8, 0.12)) !important;
+      box-shadow: 0 0 18px rgba(250, 204, 21, 0.55) !important;
+      position: relative !important;
+    }
+
+    .nak-box.lagna-box::after {
+      content: "" !important;
+      position: absolute !important;
+      inset: 2px !important;
       border: 2.5px solid #10b981 !important;
-      box-shadow: 0 0 18px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important;
+      border-radius: 7px !important;
+      pointer-events: none !important;
+      z-index: 2 !important;
     }
 
     .nak-box.lagna-box .nak-box-header {
@@ -1846,11 +1858,21 @@
         font-weight: 800 !important;
       }
 
-      /* Lagnam Box: Thick Dark Green Outer Border & Gold Glow */
+      /* Lagnam Box: Yellow Outer Border + Yellow Background + Green Inner Line */
       .nak-box.lagna-box {
-        border: 3.5px solid #006400 !important;
-        background: #fffbeb !important;
-        box-shadow: 0 0 14px rgba(217, 119, 6, 0.75), inset 0 0 8px rgba(251, 191, 36, 0.45) !important;
+        border: 3.5px solid #eab308 !important;
+        background: #fef9c3 !important;
+        position: relative !important;
+      }
+
+      .nak-box.lagna-box::after {
+        content: "" !important;
+        position: absolute !important;
+        inset: 2px !important;
+        border: 2.5px solid #006400 !important;
+        border-radius: 6px !important;
+        pointer-events: none !important;
+        z-index: 2 !important;
       }
 
       .nak-box.lagna-box .nak-box-header {

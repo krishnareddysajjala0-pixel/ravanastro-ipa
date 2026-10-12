@@ -1865,13 +1865,30 @@ body.mobile-pdf-rendering #loading-overlay {
   print-color-adjust: exact !important;
 }
 
-/* లగ్నం (Lagna Box) -> All 4 sides Green + Gold Glow */
+/* లగ్నం (Lagna Box) -> Yellow Box & Outer Line + Green Inner Line */
 .lagna,
 .box.lagna,
 .nak-box.lagna-box,
 .box-c.lagna-c {
+  border: 3.5px solid #facc15 !important;
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.28), rgba(234, 179, 8, 0.18)) !important;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.6) !important;
+  position: relative !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.lagna::after,
+.box.lagna::after,
+.nak-box.lagna-box::after,
+.box-c.lagna-c::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 2px !important;
   border: 2.5px solid #10b981 !important;
-  box-shadow: 0 0 18px rgba(255, 215, 0, 0.65), inset 0 0 10px rgba(255, 215, 0, 0.25) !important;
+  border-radius: 7px !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact !important;
 }
@@ -1924,8 +1941,24 @@ body.mobile-pdf-rendering #loading-overlay {
   .box.lagna,
   .nak-box.lagna-box,
   .box-c.lagna-c {
-    border: 4px solid #006400 !important;
-    box-shadow: 0 0 14px rgba(217, 119, 6, 0.75), inset 0 0 8px rgba(251, 191, 36, 0.45) !important;
+    border: 4px solid #eab308 !important;
+    background: #fef08a !important;
+    position: relative !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .lagna::after,
+  .box.lagna::after,
+  .nak-box.lagna-box::after,
+  .box-c.lagna-c::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 2px !important;
+    border: 3px solid #006400 !important;
+    border-radius: 6px !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -1973,8 +2006,22 @@ body.mobile-pdf-rendering .lagna,
 body.mobile-pdf-rendering .box.lagna,
 body.mobile-pdf-rendering .nak-box.lagna-box,
 body.mobile-pdf-rendering .box-c.lagna-c {
-  border: 4px solid #006400 !important;
-  box-shadow: 0 0 14px rgba(217, 119, 6, 0.75), inset 0 0 8px rgba(251, 191, 36, 0.45) !important;
+  border: 4px solid #eab308 !important;
+  background: #fef08a !important;
+  position: relative !important;
+}
+
+body.mobile-pdf-rendering .lagna::after,
+body.mobile-pdf-rendering .box.lagna::after,
+body.mobile-pdf-rendering .nak-box.lagna-box::after,
+body.mobile-pdf-rendering .box-c.lagna-c::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 2px !important;
+  border: 3px solid #006400 !important;
+  border-radius: 6px !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
 }
 
 body.mobile-pdf-rendering .house-mixed,
