@@ -1020,9 +1020,9 @@
 
         .theme-switcher.expanded 
 
-        .theme-btn { background: transparent; border: none; font-size: 16px; color: white; cursor: pointer; opacity: 0.6; }
+        .theme-btn { background: transparent; border: none; font-size: 16px; color: white; cursor: pointer; opacity: 1 !important; }
 
-        .theme-btn:hover { opacity: 1; transform: scale(1.1); }
+        .theme-btn:hover { opacity: 1 !important; transform: scale(1.05); }
 
         @media print {
 
@@ -1094,131 +1094,176 @@
 
 <style>
 /* ===== DISTINCT INDIVIDUAL COLORS FOR THEME LIST ITEMS ===== */
+.theme-options .theme-btn,
+.theme-options .theme-btn *,
+.lang-options .lang-btn,
+.lang-options .lang-btn *,
+.drop-up-popup .theme-btn,
+.drop-up-popup .theme-btn *,
+.drop-up-popup .lang-btn,
+.drop-up-popup .lang-btn * {
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75) !important;
+}
+.theme-options .theme-btn,
+.lang-options .lang-btn,
+.drop-up-popup .theme-btn,
+.drop-up-popup .lang-btn {
+  filter: brightness(1.08) saturate(1.15) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.55) !important;
+}
+.theme-options .theme-btn,
+.theme-options .theme-btn *,
+.lang-options .lang-btn,
+.lang-options .lang-btn * {
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75) !important;
+}
 .theme-options .theme-btn[data-theme-btn="default"],
 .theme-options .theme-btn[onclick*="'default'"] {
-  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%) !important;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(254, 240, 138, 0.4) !important;
+  border: 1.5px solid rgba(254, 240, 138, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="cosmic"],
 .theme-options .theme-btn[onclick*="'cosmic'"] {
-  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(199, 210, 254, 0.4) !important;
+  border: 1.5px solid rgba(191, 219, 254, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="sunset"],
 .theme-options .theme-btn[onclick*="'sunset'"] {
   background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(254, 205, 211, 0.4) !important;
+  border: 1.5px solid rgba(254, 205, 211, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="luxury"],
 .theme-options .theme-btn[onclick*="'luxury'"] {
-  background: linear-gradient(135deg, #d97706 0%, #92400e 100%) !important;
+  background: linear-gradient(135deg, #ca8a04 0%, #854d0e 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(253, 230, 138, 0.4) !important;
+  border: 1.5px solid rgba(253, 230, 138, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="cyberpunk"],
 .theme-options .theme-btn[onclick*="'cyberpunk'"] {
-  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%) !important;
+  background: linear-gradient(135deg, #ec4899 0%, #7c3aed 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(240, 230, 254, 0.4) !important;
+  border: 1.5px solid rgba(245, 208, 254, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="solar"],
 .theme-options .theme-btn[onclick*="'solar'"] {
-  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%) !important;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(253, 230, 138, 0.4) !important;
+  border: 1.5px solid rgba(254, 215, 170, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="mandala"],
 .theme-options .theme-btn[onclick*="'mandala'"] {
-  background: linear-gradient(135deg, #ea580c 0%, #991b1b 100%) !important;
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(254, 215, 170, 0.4) !important;
+  border: 1.5px solid rgba(254, 202, 202, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="twilight"],
 .theme-options .theme-btn[onclick*="'twilight'"] {
-  background: linear-gradient(135deg, #a855f7 0%, #6b21a8 100%) !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #5b21b6 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(233, 213, 255, 0.4) !important;
+  border: 1.5px solid rgba(221, 214, 254, 0.65) !important;
+  opacity: 1 !important;
 }
 .theme-options .theme-btn[data-theme-btn="aurora"],
 .theme-options .theme-btn[onclick*="'aurora'"] {
-  background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%) !important;
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(153, 246, 228, 0.4) !important;
+  border: 1.5px solid rgba(167, 243, 208, 0.65) !important;
+  opacity: 1 !important;
 }
 
 /* ===== DISTINCT INDIVIDUAL COLORS FOR LANGUAGE LIST ITEMS ===== */
 .lang-options a.lang-btn[href*="/set_lang/te"],
 .lang-options .lang-btn[data-lang="te"],
 .lang-options .lang-btn[onclick*="'te'"] {
-  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(254, 202, 202, 0.4) !important;
+  border: 1.5px solid rgba(254, 202, 202, 0.65) !important;
   text-decoration: none !important;
   text-decoration-line: none !important;
   -webkit-text-decoration-line: none !important;
+  opacity: 1 !important;
 }
 .lang-options a.lang-btn[href*="/set_lang/en"],
 .lang-options .lang-btn[data-lang="en"],
 .lang-options .lang-btn[onclick*="'en'"] {
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%) !important;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(191, 219, 254, 0.4) !important;
+  border: 1.5px solid rgba(191, 219, 254, 0.65) !important;
   text-decoration: none !important;
   text-decoration-line: none !important;
   -webkit-text-decoration-line: none !important;
+  opacity: 1 !important;
 }
 .lang-options a.lang-btn[href*="/set_lang/kn"],
 .lang-options .lang-btn[data-lang="kn"],
 .lang-options .lang-btn[onclick*="'kn'"] {
-  background: linear-gradient(135deg, #d97706 0%, #92400e 100%) !important;
+  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(253, 230, 138, 0.4) !important;
+  border: 1.5px solid rgba(253, 230, 138, 0.65) !important;
   text-decoration: none !important;
   text-decoration-line: none !important;
   -webkit-text-decoration-line: none !important;
+  opacity: 1 !important;
 }
 .lang-options a.lang-btn[href*="/set_lang/hi"],
 .lang-options .lang-btn[data-lang="hi"],
 .lang-options .lang-btn[onclick*="'hi'"] {
-  background: linear-gradient(135deg, #059669 0%, #065f46 100%) !important;
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(167, 243, 208, 0.4) !important;
+  border: 1.5px solid rgba(167, 243, 208, 0.65) !important;
   text-decoration: none !important;
   text-decoration-line: none !important;
   -webkit-text-decoration-line: none !important;
+  opacity: 1 !important;
 }
 .lang-options a.lang-btn[href*="/set_lang/ta"],
 .lang-options .lang-btn[data-lang="ta"],
 .lang-options .lang-btn[onclick*="'ta'"] {
-  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #5b21b6 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(221, 214, 254, 0.4) !important;
+  border: 1.5px solid rgba(221, 214, 254, 0.65) !important;
   text-decoration: none !important;
   text-decoration-line: none !important;
   -webkit-text-decoration-line: none !important;
+  opacity: 1 !important;
 }
 .lang-options a.lang-btn[href*="/set_lang/ml"],
 .lang-options .lang-btn[data-lang="ml"],
 .lang-options .lang-btn[onclick*="'ml'"] {
-  background: linear-gradient(135deg, #0891b2 0%, #155e75 100%) !important;
+  background: linear-gradient(135deg, #06b6d4 0%, #0e7490 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(165, 243, 252, 0.4) !important;
+  border: 1.5px solid rgba(165, 243, 252, 0.65) !important;
   text-decoration: none !important;
   text-decoration-line: none !important;
   -webkit-text-decoration-line: none !important;
+  opacity: 1 !important;
 }
 .lang-options a.lang-btn[href*="/set_lang/or"],
 .lang-options .lang-btn[data-lang="or"],
 .lang-options .lang-btn[onclick*="'or'"] {
-  background: linear-gradient(135deg, #db2777 0%, #9d174d 100%) !important;
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(251, 207, 232, 0.4) !important;
+  border: 1.5px solid rgba(251, 207, 232, 0.65) !important;
   text-decoration: none !important;
   text-decoration-line: none !important;
   -webkit-text-decoration-line: none !important;
+  opacity: 1 !important;
 }
 </style>
 <style>

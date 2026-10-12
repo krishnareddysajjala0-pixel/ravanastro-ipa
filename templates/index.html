@@ -3867,6 +3867,26 @@
 <style>
 
 /* ===== DISTINCT INDIVIDUAL COLORS FOR THEME LIST ITEMS ===== */
+.theme-options .theme-btn,
+.theme-options .theme-btn *,
+.lang-options .lang-btn,
+.lang-options .lang-btn *,
+.drop-up-popup .theme-btn,
+.drop-up-popup .theme-btn *,
+.drop-up-popup .lang-btn,
+.drop-up-popup .lang-btn * {
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75) !important;
+}
+.theme-options .theme-btn,
+.lang-options .lang-btn,
+.drop-up-popup .theme-btn,
+.drop-up-popup .lang-btn {
+  filter: brightness(1.08) saturate(1.15) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.55) !important;
+}
 .theme-options .theme-btn[data-theme-btn="default"],
 .theme-options .theme-btn[onclick*="'default'"] {
   background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%) !important;
