@@ -2085,6 +2085,74 @@ def get_dasha_info(birth_info):
     today = datetime.datetime.now(local_tz)
     today_str = today.strftime("%d-%m-%Y")
     
+    # Planetary positions and hands lookup for Kundali houses
+    planet_positions = birth_info.get('planet_positions')
+    houses = birth_info.get('houses')
+    if not planet_positions or not houses:
+        try:
+            kd = get_kundali_data(
+                name, dob, tob, place,
+                birth_info.get('lat', 17.3850),
+                birth_info.get('lon', 78.4867)
+            )
+            planet_positions = kd.get('planet_positions', [])
+            houses = kd.get('houses', {})
+        except Exception:
+            planet_positions = []
+            houses = {}
+
+    dasa_planet_map = {
+        "సూర్య": "సూర్యుడు",
+        "చంద్ర": "చంద్రుడు",
+        "కుజ": "కుజుడు",
+        "బుధ": "బుధుడు",
+        "శుక్ర": "శుక్రుడు",
+        "గురు": "గురు",
+        "శని": "శని",
+        "రాహు": "రాహు",
+        "కేతు": "కేతు",
+        "భూమి": "భూమి",
+        "మిత్ర": "మిత్ర",
+        "చిత్ర": "చిత్ర"
+    }
+
+    dasa_positions_lookup = {}
+    for d_name, p_name in dasa_planet_map.items():
+        main_p = next((p for p in planet_positions if p.get('name') == p_name and not p.get('is_hand')), None)
+        hand_ps = [p for p in planet_positions if p.get('name') == p_name and p.get('is_hand')]
+        
+        main_house = houses.get(main_p['lagna']) if (main_p and houses) else None
+        main_rasi = main_p['lagna'] if main_p else ""
+        main_deg = main_p.get('degree', '') if main_p else ""
+        
+        hand_positions = []
+        for hp in hand_ps:
+            h_rasi = hp.get('lagna', '')
+            h_house = houses.get(h_rasi) if houses else None
+            h_deg = hp.get('degree', '')
+            if h_house is not None:
+                hand_positions.append({
+                    'house': h_house,
+                    'rasi': h_rasi,
+                    'degree': h_deg
+                })
+        hand_positions.sort(key=lambda x: x['house'])
+        
+        pos_text = ""
+        if main_house:
+            pos_text = f"కుండలి స్థానం: {main_house}వ స్థానం ({main_rasi})"
+            if hand_positions:
+                hands_text = ", ".join(f"{h['house']}వ స్థానం ({h['rasi']})" for h in hand_positions)
+                pos_text += f" | చేతులు 👉: {hands_text}"
+        
+        dasa_positions_lookup[d_name] = {
+            'planet_house': main_house,
+            'planet_rasi': main_rasi,
+            'planet_deg': main_deg,
+            'hand_positions': hand_positions,
+            'kundali_position_text': pos_text
+        }
+
     # 5. Calculate ALL 12 Mahadashas in sequence (120 years)
     all_dasas = []
     start_date = birth_dasa_start
@@ -2161,6 +2229,14 @@ def get_dasha_info(birth_info):
 
         disp_start_str = start_str
 
+        # Kundali position and hands
+        pos_info = dasa_positions_lookup.get(dasa_name, {})
+        planet_house = pos_info.get('planet_house')
+        planet_rasi = pos_info.get('planet_rasi', '')
+        planet_deg = pos_info.get('planet_deg', '')
+        hand_positions = pos_info.get('hand_positions', [])
+        kundali_pos_text = pos_info.get('kundali_position_text', '')
+
         # Add this Mahadasha to list
         all_dasas.append({
             "maha": dasa_name,
@@ -2175,7 +2251,12 @@ def get_dasha_info(birth_info):
             "is_favorable": is_maha_favorable,
             "age_start": age_start_str,
             "age_end": age_end_str,
-            "stiti": stiti
+            "stiti": stiti,
+            "planet_house": planet_house,
+            "planet_rasi": planet_rasi,
+            "planet_deg": planet_deg,
+            "hand_positions": hand_positions,
+            "kundali_position_text": kundali_pos_text
         })
         
         # If this is current dasa, store its info
@@ -2244,14 +2325,15 @@ def get_dasha_info(birth_info):
     # 10. Get planet colors and icons for current dasa
     current_dasa_color = PLANET_COLORS.get(current_maha_name, "#FFD700")
     current_dasa_icon = PLANET_ICONS.get(current_maha_name, "☉")
+    current_maha_pos = dasa_positions_lookup.get(current_maha_name, {})
 
-   
     return {
         "maha": current_maha_name,
         "maha_start": current_maha_start,
         "maha_end": current_maha_end,
         "maha_age_start": current_maha_age_start,
         "maha_age_end": current_maha_age_end,
+        "current_maha_pos": current_maha_pos,
         "total_years": current_maha_years,
         "completed_years": round(elapsed_years_current, 2),
         "remaining_years": round(remaining_years_current, 2),

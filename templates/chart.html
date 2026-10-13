@@ -8167,7 +8167,14 @@ body {
 
 
 
-          <td class="{{ 'maha-planet-favorable' if dasa.is_favorable else 'maha-planet-unfavorable' }}">{{ dasa.icon }} {{ dasa.maha }}</td>
+          <td class="{{ 'maha-planet-favorable' if dasa.is_favorable else 'maha-planet-unfavorable' }}">
+            {{ dasa.icon }} {{ dasa.maha }}
+            {% if dasa.planet_house %}
+            <div style="font-size: 11px; margin-top: 2px; font-weight: normal; opacity: 0.95;">
+              📍 {{ _('స్థానం') }}: {{ dasa.planet_house }}{{ _('వ') }} ({{ _(dasa.planet_rasi) }}){% if dasa.hand_positions %} | {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}{{ h.house }}{{ _('వ') }} ({{ _(h.rasi) }}){% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
+            </div>
+            {% endif %}
+          </td>
 
 
 

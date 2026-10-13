@@ -1181,6 +1181,14 @@ body {
                         <div class="maha-icon {{ 'pos' if dasa.is_favorable else 'neg' }}">{{ dasa.icon }}</div>
                         <div class="maha-info">
                             <div class="maha-name {{ 'pos' if dasa.is_favorable else 'neg' }}">{{ dasa.maha }} {{ _('మహాదశ') }}</div>
+                            {% if dasa.planet_house %}
+                            <div class="maha-dasa-position" style="font-size: 12.5px; margin: 3px 0; font-weight: 600; line-height: 1.4;">
+                                <span class="pos-main">📍 {{ _('కుండలి స్థానం') }}: {{ dasa.planet_house }}{{ _('వ స్థానం') }} ({{ _(dasa.planet_rasi) }})</span>
+                                {% if dasa.hand_positions %}
+                                <span class="pos-hands"> | {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}{{ h.house }}{{ _('వ స్థానం') }} ({{ _(h.rasi) }}){% if not loop.last %}, {% endif %}{% endfor %}</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
                             <div class="maha-period">{{ dasa.start }} {{ _('నుండి') }} {{ dasa.end }}</div>
                             <div class="maha-age">{{ _('వయసు') }}: {{ dasa.age_start }} - {{ dasa.age_end }}</div>
                         </div>
@@ -1227,6 +1235,14 @@ body {
                         <div class="maha-icon {{ 'pos' if dasa.is_favorable else 'neg' }}">{{ dasa.icon }}</div>
                         <div class="maha-info">
                             <div class="maha-name {{ 'pos' if dasa.is_favorable else 'neg' }}">{{ dasa.maha }} {{ _('మహాదశ') }}</div>
+                            {% if dasa.planet_house %}
+                            <div class="maha-dasa-position" style="font-size: 12.5px; margin: 3px 0; font-weight: 600; line-height: 1.4;">
+                                <span class="pos-main">📍 {{ _('కుండలి స్థానం') }}: {{ dasa.planet_house }}{{ _('వ స్థానం') }} ({{ _(dasa.planet_rasi) }})</span>
+                                {% if dasa.hand_positions %}
+                                <span class="pos-hands"> | {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}{{ h.house }}{{ _('వ స్థానం') }} ({{ _(h.rasi) }}){% if not loop.last %}, {% endif %}{% endfor %}</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
                             <div class="maha-period">{{ dasa.start }} {{ _('నుండి') }} {{ dasa.end }}</div>
                             <div class="maha-age">{{ _('వయసు') }}: {{ dasa.age_start }} - {{ dasa.age_end }}</div>
                         </div>
