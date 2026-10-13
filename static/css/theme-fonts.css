@@ -2032,6 +2032,15 @@ body.mobile-pdf-rendering .box-c.house-mixed {
 }
 
 /* =========================================================================
+   MAHA DASA CARDS: ROUNDED BORDER ON ALL CARDS
+   ========================================================================= */
+.maha-dasa-card {
+  border: 2px solid #2196F3 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.15) !important;
+}
+
+/* =========================================================================
    DASA & ANTHARA DASA: ANUKULAM (ENTIRE TEXT GREEN) & PRATIKULAM (ENTIRE TEXT RED)
    ========================================================================= */
 .current-dasa-inline.dasa-anukulam,
