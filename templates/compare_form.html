@@ -110,6 +110,20 @@
 
 
 
+    
+    [data-theme="default"], html:not([data-theme]) {
+      --bg-primary: radial-gradient(circle at 15% 15%, rgba(254, 240, 138, 0.45) 0%, transparent 45%),
+                    radial-gradient(circle at 85% 20%, rgba(253, 186, 116, 0.35) 0%, transparent 40%),
+                    radial-gradient(circle at 50% 85%, rgba(254, 215, 170, 0.30) 0%, transparent 50%),
+                    linear-gradient(135deg, #fffdf8 0%, #fefcf3 25%, #fef9c3 65%, #fef08a 100%) !important;
+      --text-main: #1c1917 !important;
+      --text-muted: #854d0e !important;
+      --card-bg: rgba(255, 255, 255, 0.94) !important;
+      --card-border: rgba(217, 119, 6, 0.38) !important;
+      --input-bg: rgba(255, 255, 255, 0.96) !important;
+      --input-border: rgba(217, 119, 6, 0.38) !important;
+    }
+
     [data-theme="light"] {
 
         /* Redundant but kept for compatibility */
