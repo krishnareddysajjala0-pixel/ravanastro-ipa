@@ -397,6 +397,31 @@
         .anthara-name.pos { color: var(--color-pos); }
         .anthara-name.neg { color: var(--color-neg); }
 
+        /* Full text coloring for Dasa & Anthara Dasa */
+        .maha-dasa-card.dasa-anukulam .maha-info,
+        .maha-dasa-card.dasa-anukulam .maha-info *,
+        .maha-dasa-card.dasa-anukulam .maha-period,
+        .maha-dasa-card.dasa-anukulam .maha-age {
+            color: #10b981 !important;
+        }
+
+        .maha-dasa-card.dasa-pratikulam .maha-info,
+        .maha-dasa-card.dasa-pratikulam .maha-info *,
+        .maha-dasa-card.dasa-pratikulam .maha-period,
+        .maha-dasa-card.dasa-pratikulam .maha-age {
+            color: #ef4444 !important;
+        }
+
+        .antharas-table tr.row-anukulam td,
+        .antharas-table tr.row-anukulam td * {
+            color: #10b981 !important;
+        }
+
+        .antharas-table tr.row-pratikulam td,
+        .antharas-table tr.row-pratikulam td * {
+            color: #ef4444 !important;
+        }
+
         .status-badge {
             padding: 4px 10px;
             border-radius: 12px;
@@ -1151,7 +1176,7 @@ body {
             <div class="section-title">✨ {{ dasha1.total_cycle_years }} సంవత్సరాల చక్రం ✨</div>
             <div class="dasa-section">
                 {% for dasa in dasha1.all_dasas %}
-                <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %}" onclick="this.classList.toggle('expanded')">
+                <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %} {{ 'dasa-anukulam' if dasa.is_favorable else 'dasa-pratikulam' }}" onclick="this.classList.toggle('expanded')">
                     <div class="maha-header">
                         <div class="maha-icon {{ 'pos' if dasa.is_favorable else 'neg' }}">{{ dasa.icon }}</div>
                         <div class="maha-info">
@@ -1177,8 +1202,8 @@ body {
                         </thead>
                         <tbody>
                             {% for a in dasa.antharas %}
-                            <tr class="{% if a.is_current %}anthara-current{% endif %}">
-                                <td style="color: {{ a.color }}">{{ a.icon }} {{ a.anthara }}</td>
+                            <tr class="{% if a.is_current %}anthara-current{% endif %} {{ 'row-anukulam' if a.is_favorable else 'row-pratikulam' }}">
+                                <td>{{ a.icon }} {{ a.anthara }}</td>
                                 <td>{{ a.start }}</td>
                                 <td>{{ a.end }}</td>
                             </tr>
@@ -1197,7 +1222,7 @@ body {
             <div class="section-title">✨ {{ dasha2.total_cycle_years }} సంవత్సరాల చక్రం ✨</div>
             <div class="dasa-section">
                 {% for dasa in dasha2.all_dasas %}
-                <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %}" onclick="this.classList.toggle('expanded')">
+                <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %} {{ 'dasa-anukulam' if dasa.is_favorable else 'dasa-pratikulam' }}" onclick="this.classList.toggle('expanded')">
                     <div class="maha-header">
                         <div class="maha-icon {{ 'pos' if dasa.is_favorable else 'neg' }}">{{ dasa.icon }}</div>
                         <div class="maha-info">
@@ -1223,8 +1248,8 @@ body {
                         </thead>
                         <tbody>
                             {% for a in dasa.antharas %}
-                            <tr class="{% if a.is_current %}anthara-current{% endif %}">
-                                <td style="color: {{ a.color }}">{{ a.icon }} {{ a.anthara }}</td>
+                            <tr class="{% if a.is_current %}anthara-current{% endif %} {{ 'row-anukulam' if a.is_favorable else 'row-pratikulam' }}">
+                                <td>{{ a.icon }} {{ a.anthara }}</td>
                                 <td>{{ a.start }}</td>
                                 <td>{{ a.end }}</td>
                             </tr>

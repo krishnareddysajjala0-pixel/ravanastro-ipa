@@ -1,49 +1,15 @@
 /* Google Fonts Import for Anu Fonts (Telugu) and Multi-Language Theme Font Styles */
-@import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;600;700;800&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=Dhurjati&family=Gidugu&family=Gurajada&family=Kalam:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Mallanna&family=Mandali&family=Merriweather:ital,wght@0,400;0,700;1,400&family=NTR&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Malayalam:wght@400;600&family=Noto+Sans+Oriya:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700&family=Noto+Serif+Kannada:wght@400;700&family=Noto+Serif+Malayalam:wght@400;700&family=Noto+Serif+Oriya:wght@400;700&family=Noto+Serif+Tamil:wght@400;700&family=Noto+Serif+Telugu:wght@400;700&family=Orbitron:wght@600;800&family=Outfit:wght@400;600;700&family=Peddana&family=Philosopher:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Poppins:wght@400;600&family=Rajdhani:wght@500;700&family=Ramabhadra&family=Rozha+One&family=Sree+Krushnadevaraya&family=Suranna&family=Syne:wght@600;800&family=Teko:wght@500;700&family=Tenali+Ramakrishna&family=Timmana&family=Tiro+Devanagari+Hindi&family=Tiro+Kannada&family=Tiro+Malayalam&family=Tiro+Tamil&family=Yatra+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;600;700;800&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=Dhurjati&family=Gidugu&family=Gurajada&family=Kalam:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Mallanna&family=Mandali&family=Merriweather:ital,wght@0,400;0,700;1,400&family=NTR&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Malayalam:wght@400;600&family=Noto+Sans+Oriya:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700&family=Noto+Serif+Kannada:wght@400;700&family=Noto+Serif+Malayalam:wght@400;700&family=Noto+Serif+Oriya:wght@400;700&family=Noto+Serif+Tamil:wght@400;700&family=Noto+Serif+Telugu:wght@400;700&family=Orbitron:wght@600;800&family=Outfit:wght@400;600;700&family=Peddana&family=Philosopher:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Poppins:wght@400;600&family=Rajdhani:wght@500;700&family=Ramabhadra&family=Rozha+One&family=Sree+Krushnadevaraya&family=Suranna&family=Suravaram&family=Syne:wght@600;800&family=Teko:wght@500;700&family=Tenali+Ramakrishna&family=Timmana&family=Tiro+Devanagari+Hindi&family=Tiro+Kannada&family=Tiro+Malayalam&family=Tiro+Tamil&family=Yatra+One&display=swap');
 
 /* Default Theme (Bright Mode / Standard) */
 :root, [data-theme="default"], html[data-theme="default"], body[data-theme="default"] {
-  --font-te: 'Ramabhadra', 'Anek Telugu', 'Noto Serif Telugu', 'Peddana', 'Noto Serif Kannada', 'Tiro Devanagari Hindi', 'Tiro Tamil', 'Tiro Malayalam', 'Noto Serif Oriya', serif !important;
-  --font-en: 'Cinzel', 'Playfair Display', 'Georgia', serif !important;
+  --font-te: 'Ramabhadra', 'Noto Serif Telugu', 'Noto Serif Kannada', 'Tiro Devanagari Hindi', 'Tiro Tamil', 'Tiro Malayalam', 'Noto Serif Oriya', serif !important;
+  --font-en: 'Cinzel', 'Georgia', serif !important;
   --font-hi: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif !important;
   --font-kn: 'Tiro Kannada', 'Noto Serif Kannada', serif !important;
   --font-ta: 'Tiro Tamil', 'Noto Serif Tamil', serif !important;
   --font-ml: 'Tiro Malayalam', 'Noto Serif Malayalam', serif !important;
   --font-or: 'Noto Serif Oriya', serif !important;
-}
-
-/* Glorious Bright / Default Theme (Crystal Radiant Pearl & Royal Sapphire) */
-:root:not([data-theme]),
-[data-theme="default"] {
-  --bg-primary: radial-gradient(circle at 10% 12%, rgba(219, 234, 254, 0.65) 0%, transparent 40%),
-                radial-gradient(circle at 90% 18%, rgba(237, 233, 254, 0.55) 0%, transparent 40%),
-                radial-gradient(circle at 50% 88%, rgba(224, 242, 254, 0.50) 0%, transparent 45%),
-                linear-gradient(135deg, #ffffff 0%, #f8faff 40%, #f0f4ff 75%, #ffffff 100%) !important;
-  --text-main: #0f172a !important;
-  --text-muted: #334155 !important;
-  --card-bg: rgba(255, 255, 255, 0.96) !important;
-  --card-border: rgba(99, 102, 241, 0.22) !important;
-  --input-bg: #ffffff !important;
-  --input-border: rgba(148, 163, 184, 0.45) !important;
-  --input-focus-border: #2563eb !important;
-  --input-focus-shadow: 0 0 16px rgba(37, 99, 235, 0.25) !important;
-  --shadow-color: rgba(15, 23, 42, 0.08) !important;
-  --header-bg: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #0284c7 100%) !important;
-  --header-bg-top: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%) !important;
-  --box-border: rgba(148, 163, 184, 0.5) !important;
-  --box-border-hover: #2563eb !important;
-  --box-bg: #ffffff !important;
-  --label-bg: rgba(241, 245, 249, 0.9) !important;
-  --label-text: #0f172a !important;
-  --house-no-bg: rgba(37, 99, 235, 0.1) !important;
-  --house-no-text: #1d4ed8 !important;
-}
-
-:root:not([data-theme]) body,
-[data-theme="default"] body,
-body:not([data-theme]) {
-  background: var(--bg-primary) !important;
-  color: var(--text-main) !important;
 }
 
 /* Cosmic Mode (Premium Dark) */
@@ -88,7 +54,7 @@ body:not([data-theme]) {
 
 /* Royal Mandala Theme */
 [data-theme="mandala"], html[data-theme="mandala"], body[data-theme="mandala"] {
-  --font-te: 'Dhurjati', 'Ramabhadra', 'Peddana', 'Noto Serif Telugu', 'Tiro Kannada', 'Rozha One', serif !important;
+  --font-te: 'Suravaram', 'Dhurjati', 'Ramabhadra', 'Noto Serif Telugu', 'Tiro Kannada', 'Rozha One', serif !important;
   --font-en: 'Playfair Display', 'Cinzel', serif !important;
   --font-hi: 'Rozha One', 'Tiro Devanagari Hindi', serif !important;
   --font-kn: 'Tiro Kannada', serif !important;
@@ -246,10 +212,10 @@ html, body, p, span, div, td, th, label, button, input, select, textarea, li, a,
 /* Specific Theme Font Targets for Calendar Elements */
 [data-theme="luxury"] .cal-cell *, [data-theme="luxury"] .date-number, [data-theme="luxury"] .tithi-text, [data-theme="luxury"] .nakshatra-text, [data-theme="luxury"] .header-masam { font-family: 'Sree Krushnadevaraya', 'Ramabhadra', 'Noto Serif Telugu', serif !important; }
 [data-theme="cosmic"] .cal-cell *, [data-theme="cosmic"] .date-number, [data-theme="cosmic"] .tithi-text, [data-theme="cosmic"] .nakshatra-text, [data-theme="cosmic"] .header-masam { font-family: 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif !important; }
-[data-theme="sunset"] .cal-cell *, [data-theme="sunset"] .date-number, [data-theme="sunset"] .tithi-text, [data-theme="sunset"] .nakshatra-text, [data-theme="sunset"] .header-masam { font-family: 'Peddana', 'Noto Serif Telugu', 'Ramabhadra', serif !important; }
+[data-theme="sunset"] .cal-cell *, [data-theme="sunset"] .date-number, [data-theme="sunset"] .tithi-text, [data-theme="sunset"] .nakshatra-text, [data-theme="sunset"] .header-masam { font-family: 'Peddana', 'Suravaram', 'Noto Serif Telugu', serif !important; }
 [data-theme="cyberpunk"] .cal-cell *, [data-theme="cyberpunk"] .date-number, [data-theme="cyberpunk"] .tithi-text, [data-theme="cyberpunk"] .nakshatra-text, [data-theme="cyberpunk"] .header-masam { font-family: 'Mandali', 'Noto Sans Telugu', sans-serif !important; }
 [data-theme="solar"] .cal-cell *, [data-theme="solar"] .date-number, [data-theme="solar"] .tithi-text, [data-theme="solar"] .nakshatra-text, [data-theme="solar"] .header-masam { font-family: 'Tenali Ramakrishna', 'Noto Sans Telugu', sans-serif !important; }
-[data-theme="mandala"] .cal-cell *, [data-theme="mandala"] .date-number, [data-theme="mandala"] .tithi-text, [data-theme="mandala"] .nakshatra-text, [data-theme="mandala"] .header-masam { font-family: 'Dhurjati', 'Ramabhadra', 'Peddana', 'Noto Serif Telugu', serif !important; }
+[data-theme="mandala"] .cal-cell *, [data-theme="mandala"] .date-number, [data-theme="mandala"] .tithi-text, [data-theme="mandala"] .nakshatra-text, [data-theme="mandala"] .header-masam { font-family: 'Suravaram', 'Dhurjati', 'Ramabhadra', 'Noto Serif Telugu', serif !important; }
 [data-theme="twilight"] .cal-cell *, [data-theme="twilight"] .date-number, [data-theme="twilight"] .tithi-text, [data-theme="twilight"] .nakshatra-text, [data-theme="twilight"] .header-masam { font-family: 'NTR', 'Timmana', 'Anek Telugu', 'Noto Sans Telugu', sans-serif !important; }
 [data-theme="aurora"] .cal-cell *, [data-theme="aurora"] .date-number, [data-theme="aurora"] .tithi-text, [data-theme="aurora"] .nakshatra-text, [data-theme="aurora"] .header-masam { font-family: 'Mallanna', 'Ramabhadra', 'Noto Serif Telugu', serif !important; }
 
@@ -709,11 +675,10 @@ button, input, select, textarea, h1, h2, h3, h4, h5, h6, table, th, td {
 
 /* ===== DYNAMIC THEME-SPECIFIC BUTTON BACKGROUND PALETTES (4 DISTINCT COLORS PER THEME) ===== */
 
-/* 1. Default / Bright Mode (Surya Tejas / Golden Sun Radiance) */
+/* 1. Default / Bright Mode */
 :root .top-btn-theme, [data-theme="default"] .top-btn-theme {
-  background: linear-gradient(135deg, #0284c7 0%, #2563eb 60%, #1d4ed8 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(191, 219, 254, 0.6) !important;
-  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35) !important;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(191, 219, 254, 0.4) !important;
 }
 :root #karmaBtn, [data-theme="default"] #karmaBtn, :root .top-btn-karma, [data-theme="default"] .top-btn-karma {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
@@ -876,33 +841,32 @@ button, input, select, textarea, h1, h2, h3, h4, h5, h6, table, th, td {
 
 /* --- 1. Default / Bright Theme --- */
 :root .btn-submit, :root .btn-show, :root #mainForm button[type="submit"], [data-theme="default"] .btn-submit, [data-theme="default"] .btn-show {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(191, 219, 254, 0.6) !important;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(191, 219, 254, 0.4) !important;
 }
 :root .btn-location, :root #btn-get-location, [data-theme="default"] .btn-location, [data-theme="default"] #btn-get-location {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(167, 243, 208, 0.5) !important;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(153, 246, 228, 0.4) !important;
 }
 :root .btn-clear, :root #btn-clear, [data-theme="default"] .btn-clear, [data-theme="default"] #btn-clear {
   background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%) !important;
   color: #ffffff !important; border: 1px solid rgba(254, 205, 211, 0.4) !important;
 }
 :root .expand-all-btn, [data-theme="default"] .expand-all-btn {
-  background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(254, 240, 138, 0.45) !important;
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(199, 210, 254, 0.4) !important;
 }
 :root .nav-item:nth-child(1), [data-theme="default"] .nav-item:nth-child(1) {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important; color: #ffffff !important;
 }
 :root .nav-item:nth-child(2), [data-theme="default"] .nav-item:nth-child(2) {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important; color: #ffffff !important;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important; color: #ffffff !important;
 }
 :root .nav-item:nth-child(3), [data-theme="default"] .nav-item:nth-child(3) {
   background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important; color: #ffffff !important;
 }
 :root .nav-item:nth-child(4), [data-theme="default"] .nav-item:nth-child(4) {
-  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important; color: #ffffff !important;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important; color: #ffffff !important;
 }
 
 /* --- 2. Cosmic Theme --- */
@@ -1251,13 +1215,13 @@ body.mobile-pdf-rendering #loading-overlay {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
 }
 :root .nav-compare, :root .nav-item:nth-child(2), [data-theme="default"] .nav-compare, [data-theme="default"] .nav-item:nth-child(2) {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
 }
 :root .nav-panch, :root .nav-item:nth-child(3), [data-theme="default"] .nav-panch, [data-theme="default"] .nav-item:nth-child(3) {
-  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
 }
 :root .nav-cal, :root .nav-dasa, :root .nav-item:nth-child(4), [data-theme="default"] .nav-cal, [data-theme="default"] .nav-dasa, [data-theme="default"] .nav-item:nth-child(4) {
-  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
 }
 
 /* 2. Cosmic Mode */
@@ -2065,6 +2029,163 @@ body.mobile-pdf-rendering .box-c.house-mixed {
   border-left: 4px solid #006400 !important;
   border-right: 4px solid #990000 !important;
   border-bottom: 4px solid #990000 !important;
+}
+
+/* =========================================================================
+   DASA & ANTHARA DASA: ANUKULAM (ENTIRE TEXT GREEN) & PRATIKULAM (ENTIRE TEXT RED)
+   ========================================================================= */
+.current-dasa-inline.dasa-anukulam,
+.current-dasa-inline.dasa-anukulam *,
+.current-dasa-inline.dasa-anukulam .highlight,
+.current-dasa-inline.dasa-anukulam span,
+.maha-dasa-card.dasa-anukulam .maha-dasa-info,
+.maha-dasa-card.dasa-anukulam .maha-dasa-info *,
+.maha-dasa-card.dasa-anukulam .maha-dasa-name,
+.maha-dasa-card.dasa-anukulam .maha-dasa-name *,
+.maha-dasa-card.dasa-anukulam .maha-dasa-period,
+.maha-dasa-card.dasa-anukulam .maha-dasa-period *,
+.maha-dasa-card.dasa-anukulam .maha-info,
+.maha-dasa-card.dasa-anukulam .maha-info *,
+.maha-dasa-card.dasa-anukulam .maha-period,
+.maha-dasa-card.dasa-anukulam .maha-age,
+.maha-dasa-card.dasa-anukulam .maha-accordion-toggle i,
+.anthara-table tr.row-anukulam td,
+.anthara-table tr.row-anukulam td *,
+.anthara-table tr.row-anukulam .date-cell,
+.anthara-table tr.row-anukulam .age-cell,
+.anthara-table tr.row-anukulam .anthara-name,
+.anthara-table tr.row-anukulam .favorable,
+.antharas-table tr.row-anukulam td,
+.antharas-table tr.row-anukulam td *,
+.maha-print-table tr.row-anukulam td,
+.maha-print-table tr.row-anukulam td *,
+.maha-table tr.row-anukulam td,
+.maha-table tr.row-anukulam td *,
+.print-summary-section tr.row-anukulam td,
+.print-summary-section tr.row-anukulam td * {
+  color: #10b981 !important;
+}
+
+.current-dasa-inline.dasa-pratikulam,
+.current-dasa-inline.dasa-pratikulam *,
+.current-dasa-inline.dasa-pratikulam .highlight,
+.current-dasa-inline.dasa-pratikulam span,
+.maha-dasa-card.dasa-pratikulam .maha-dasa-info,
+.maha-dasa-card.dasa-pratikulam .maha-dasa-info *,
+.maha-dasa-card.dasa-pratikulam .maha-dasa-name,
+.maha-dasa-card.dasa-pratikulam .maha-dasa-name *,
+.maha-dasa-card.dasa-pratikulam .maha-dasa-period,
+.maha-dasa-card.dasa-pratikulam .maha-dasa-period *,
+.maha-dasa-card.dasa-pratikulam .maha-info,
+.maha-dasa-card.dasa-pratikulam .maha-info *,
+.maha-dasa-card.dasa-pratikulam .maha-period,
+.maha-dasa-card.dasa-pratikulam .maha-age,
+.maha-dasa-card.dasa-pratikulam .maha-accordion-toggle i,
+.anthara-table tr.row-pratikulam td,
+.anthara-table tr.row-pratikulam td *,
+.anthara-table tr.row-pratikulam .date-cell,
+.anthara-table tr.row-pratikulam .age-cell,
+.anthara-table tr.row-pratikulam .anthara-name,
+.anthara-table tr.row-pratikulam .unfavorable,
+.antharas-table tr.row-pratikulam td,
+.antharas-table tr.row-pratikulam td *,
+.maha-print-table tr.row-pratikulam td,
+.maha-print-table tr.row-pratikulam td *,
+.maha-table tr.row-pratikulam td,
+.maha-table tr.row-pratikulam td *,
+.print-summary-section tr.row-pratikulam td,
+.print-summary-section tr.row-pratikulam td * {
+  color: #ef4444 !important;
+}
+
+@media print {
+  .current-dasa-inline.dasa-anukulam,
+  .current-dasa-inline.dasa-anukulam *,
+  .maha-dasa-card.dasa-anukulam .maha-dasa-info,
+  .maha-dasa-card.dasa-anukulam .maha-dasa-info *,
+  .maha-dasa-card.dasa-anukulam .maha-dasa-name,
+  .maha-dasa-card.dasa-anukulam .maha-dasa-name *,
+  .maha-dasa-card.dasa-anukulam .maha-dasa-period,
+  .maha-dasa-card.dasa-anukulam .maha-dasa-period *,
+  .maha-dasa-card.dasa-anukulam .maha-info,
+  .maha-dasa-card.dasa-anukulam .maha-info *,
+  .maha-dasa-card.dasa-anukulam .maha-period,
+  .maha-dasa-card.dasa-anukulam .maha-age,
+  .anthara-table tr.row-anukulam td,
+  .anthara-table tr.row-anukulam td *,
+  .antharas-table tr.row-anukulam td,
+  .antharas-table tr.row-anukulam td *,
+  .maha-print-table tr.row-anukulam td,
+  .maha-print-table tr.row-anukulam td *,
+  .print-summary-section tr.row-anukulam td,
+  .print-summary-section tr.row-anukulam td * {
+    color: #008000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .current-dasa-inline.dasa-pratikulam,
+  .current-dasa-inline.dasa-pratikulam *,
+  .maha-dasa-card.dasa-pratikulam .maha-dasa-info,
+  .maha-dasa-card.dasa-pratikulam .maha-dasa-info *,
+  .maha-dasa-card.dasa-pratikulam .maha-dasa-name,
+  .maha-dasa-card.dasa-pratikulam .maha-dasa-name *,
+  .maha-dasa-card.dasa-pratikulam .maha-dasa-period,
+  .maha-dasa-card.dasa-pratikulam .maha-dasa-period *,
+  .maha-dasa-card.dasa-pratikulam .maha-info,
+  .maha-dasa-card.dasa-pratikulam .maha-info *,
+  .maha-dasa-card.dasa-pratikulam .maha-period,
+  .maha-dasa-card.dasa-pratikulam .maha-age,
+  .anthara-table tr.row-pratikulam td,
+  .anthara-table tr.row-pratikulam td *,
+  .antharas-table tr.row-pratikulam td,
+  .antharas-table tr.row-pratikulam td *,
+  .maha-print-table tr.row-pratikulam td,
+  .maha-print-table tr.row-pratikulam td *,
+  .print-summary-section tr.row-pratikulam td,
+  .print-summary-section tr.row-pratikulam td * {
+    color: #dc2626 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+body.mobile-pdf-rendering .current-dasa-inline.dasa-anukulam,
+body.mobile-pdf-rendering .current-dasa-inline.dasa-anukulam *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-info,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-info *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-name,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-name *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-period,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-period *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-info,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-info *,
+body.mobile-pdf-rendering .anthara-table tr.row-anukulam td,
+body.mobile-pdf-rendering .anthara-table tr.row-anukulam td *,
+body.mobile-pdf-rendering .antharas-table tr.row-anukulam td,
+body.mobile-pdf-rendering .antharas-table tr.row-anukulam td *,
+body.mobile-pdf-rendering .print-summary-section tr.row-anukulam td,
+body.mobile-pdf-rendering .print-summary-section tr.row-anukulam td * {
+  color: #008000 !important;
+}
+
+body.mobile-pdf-rendering .current-dasa-inline.dasa-pratikulam,
+body.mobile-pdf-rendering .current-dasa-inline.dasa-pratikulam *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-info,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-info *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-name,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-name *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-period,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-period *,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-info,
+body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-info *,
+body.mobile-pdf-rendering .anthara-table tr.row-pratikulam td,
+body.mobile-pdf-rendering .anthara-table tr.row-pratikulam td *,
+body.mobile-pdf-rendering .antharas-table tr.row-pratikulam td,
+body.mobile-pdf-rendering .antharas-table tr.row-pratikulam td *,
+body.mobile-pdf-rendering .print-summary-section tr.row-pratikulam td,
+body.mobile-pdf-rendering .print-summary-section tr.row-pratikulam td * {
+  color: #dc2626 !important;
 }
 
 

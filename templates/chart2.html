@@ -3086,29 +3086,81 @@
 
 
         .text-favorable {
-
-
-
             color: var(--color-pos);
-
-
-
         }
 
-
-
-
-
-
-
         .text-unfavorable {
-
-
-
             color: var(--color-neg);
+        }
 
+        /* ===== FULL COLORING FOR DASA & ANTHARA DASA: ANUKULAM (GREEN) & PRATIKULAM (RED) ===== */
+        .current-dasa-inline.dasa-anukulam,
+        .current-dasa-inline.dasa-anukulam *,
+        .current-dasa-inline.dasa-anukulam .highlight,
+        .current-dasa-inline.dasa-anukulam span {
+            color: #10b981 !important;
+        }
 
+        .current-dasa-inline.dasa-pratikulam,
+        .current-dasa-inline.dasa-pratikulam *,
+        .current-dasa-inline.dasa-pratikulam .highlight,
+        .current-dasa-inline.dasa-pratikulam span {
+            color: #ef4444 !important;
+        }
 
+        .maha-dasa-card.dasa-anukulam .maha-dasa-info,
+        .maha-dasa-card.dasa-anukulam .maha-dasa-info *,
+        .maha-dasa-card.dasa-anukulam .maha-dasa-name,
+        .maha-dasa-card.dasa-anukulam .maha-dasa-name *,
+        .maha-dasa-card.dasa-anukulam .maha-dasa-period,
+        .maha-dasa-card.dasa-anukulam .maha-dasa-period *,
+        .maha-dasa-card.dasa-anukulam .maha-accordion-toggle i {
+            color: #10b981 !important;
+        }
+
+        .maha-dasa-card.dasa-pratikulam .maha-dasa-info,
+        .maha-dasa-card.dasa-pratikulam .maha-dasa-info *,
+        .maha-dasa-card.dasa-pratikulam .maha-dasa-name,
+        .maha-dasa-card.dasa-pratikulam .maha-dasa-name *,
+        .maha-dasa-card.dasa-pratikulam .maha-dasa-period,
+        .maha-dasa-card.dasa-pratikulam .maha-dasa-period *,
+        .maha-dasa-card.dasa-pratikulam .maha-accordion-toggle i {
+            color: #ef4444 !important;
+        }
+
+        .anthara-table tr.row-anukulam td,
+        .anthara-table tr.row-anukulam td *,
+        .anthara-table tr.row-anukulam .date-cell,
+        .anthara-table tr.row-anukulam .age-cell,
+        .anthara-table tr.row-anukulam .anthara-name,
+        .anthara-table tr.row-anukulam .favorable {
+            color: #10b981 !important;
+        }
+
+        .anthara-table tr.row-pratikulam td,
+        .anthara-table tr.row-pratikulam td *,
+        .anthara-table tr.row-pratikulam .date-cell,
+        .anthara-table tr.row-pratikulam .age-cell,
+        .anthara-table tr.row-pratikulam .anthara-name,
+        .anthara-table tr.row-pratikulam .unfavorable {
+            color: #ef4444 !important;
+        }
+
+        .anthara-table tr .table-icon,
+        .anthara-table tr .table-icon * {
+            color: #ffffff !important;
+        }
+        .anthara-table tr .status-badge {
+            color: #ffffff !important;
+        }
+
+        .print-summary-section tr.row-anukulam td,
+        .print-summary-section tr.row-anukulam td * {
+            color: #10b981 !important;
+        }
+        .print-summary-section tr.row-pratikulam td,
+        .print-summary-section tr.row-pratikulam td * {
+            color: #ef4444 !important;
         }
 
 
@@ -4678,18 +4730,52 @@
 
 
             .text-favorable   { color: #006400 !important; }
-
-
-
-            .text-unfavorable { color: #b22222 !important; }
-
-
-
+            .text-unfavorable { color: #dc2626 !important; }
             .favorable   { color: #006400 !important; font-size: 11pt !important; }
+            .unfavorable { color: #dc2626 !important; font-size: 11pt !important; }
 
+            /* Print Entire text coloring for Dasa & Anthara Dasa */
+            .current-dasa-inline.dasa-anukulam,
+            .current-dasa-inline.dasa-anukulam *,
+            .maha-dasa-card.dasa-anukulam .maha-dasa-info,
+            .maha-dasa-card.dasa-anukulam .maha-dasa-info *,
+            .maha-dasa-card.dasa-anukulam .maha-dasa-name,
+            .maha-dasa-card.dasa-anukulam .maha-dasa-name *,
+            .maha-dasa-card.dasa-anukulam .maha-dasa-period,
+            .maha-dasa-card.dasa-anukulam .maha-dasa-period *,
+            .anthara-table tr.row-anukulam td,
+            .anthara-table tr.row-anukulam td *,
+            .anthara-table tr.row-anukulam .date-cell,
+            .anthara-table tr.row-anukulam .age-cell,
+            .anthara-table tr.row-anukulam .anthara-name,
+            .anthara-table tr.row-anukulam .favorable,
+            .print-summary-section tr.row-anukulam td,
+            .print-summary-section tr.row-anukulam td * {
+                color: #006400 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
 
-
-            .unfavorable { color: #b22222 !important; font-size: 11pt !important; }
+            .current-dasa-inline.dasa-pratikulam,
+            .current-dasa-inline.dasa-pratikulam *,
+            .maha-dasa-card.dasa-pratikulam .maha-dasa-info,
+            .maha-dasa-card.dasa-pratikulam .maha-dasa-info *,
+            .maha-dasa-card.dasa-pratikulam .maha-dasa-name,
+            .maha-dasa-card.dasa-pratikulam .maha-dasa-name *,
+            .maha-dasa-card.dasa-pratikulam .maha-dasa-period,
+            .maha-dasa-card.dasa-pratikulam .maha-dasa-period *,
+            .anthara-table tr.row-pratikulam td,
+            .anthara-table tr.row-pratikulam td *,
+            .anthara-table tr.row-pratikulam .date-cell,
+            .anthara-table tr.row-pratikulam .age-cell,
+            .anthara-table tr.row-pratikulam .anthara-name,
+            .anthara-table tr.row-pratikulam .unfavorable,
+            .print-summary-section tr.row-pratikulam td,
+            .print-summary-section tr.row-pratikulam td * {
+                color: #dc2626 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
 
 
 
@@ -6161,18 +6247,42 @@
 
 
 
-        body.mobile-pdf-rendering .text-favorable,
+        body.mobile-pdf-rendering .current-dasa-inline.dasa-anukulam,
+        body.mobile-pdf-rendering .current-dasa-inline.dasa-anukulam *,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-info,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-info *,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-name,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-name *,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-period,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-anukulam .maha-dasa-period *,
+        body.mobile-pdf-rendering .anthara-table tr.row-anukulam td,
+        body.mobile-pdf-rendering .anthara-table tr.row-anukulam td *,
+        body.mobile-pdf-rendering .anthara-table tr.row-anukulam .date-cell,
+        body.mobile-pdf-rendering .anthara-table tr.row-anukulam .age-cell,
+        body.mobile-pdf-rendering .anthara-table tr.row-anukulam .anthara-name,
+        body.mobile-pdf-rendering .anthara-table tr.row-anukulam .favorable,
+        body.mobile-pdf-rendering .print-summary-section tr.row-anukulam td,
+        body.mobile-pdf-rendering .print-summary-section tr.row-anukulam td * {
+            color: #008000 !important;
+        }
 
-
-
-        body.mobile-pdf-rendering .text-unfavorable {
-
-
-
-            color: #000000 !important;
-
-
-
+        body.mobile-pdf-rendering .current-dasa-inline.dasa-pratikulam,
+        body.mobile-pdf-rendering .current-dasa-inline.dasa-pratikulam *,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-info,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-info *,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-name,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-name *,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-period,
+        body.mobile-pdf-rendering .maha-dasa-card.dasa-pratikulam .maha-dasa-period *,
+        body.mobile-pdf-rendering .anthara-table tr.row-pratikulam td,
+        body.mobile-pdf-rendering .anthara-table tr.row-pratikulam td *,
+        body.mobile-pdf-rendering .anthara-table tr.row-pratikulam .date-cell,
+        body.mobile-pdf-rendering .anthara-table tr.row-pratikulam .age-cell,
+        body.mobile-pdf-rendering .anthara-table tr.row-pratikulam .anthara-name,
+        body.mobile-pdf-rendering .anthara-table tr.row-pratikulam .unfavorable,
+        body.mobile-pdf-rendering .print-summary-section tr.row-pratikulam td,
+        body.mobile-pdf-rendering .print-summary-section tr.row-pratikulam td * {
+            color: #dc2626 !important;
         }
 
 
@@ -7740,78 +7850,24 @@ body {
 
 
 
-            <div class="current-dasa-inline" style="margin-bottom: 8px; font-size: 16px;">
-
-
-
+            <div class="current-dasa-inline {{ 'dasa-anukulam' if current_dasa_favorable else 'dasa-pratikulam' }}" style="margin-bottom: 8px; font-size: 16px;">
                 <span class="planet-icon" style="font-size: 20px;">{{ current_dasa_icon }}</span>
-
-
-
                 <span>{{ _('ప్రస్తుత') }} {{ _('మహాదశ') }}:
-
-
-
                     {% if current_dasa_favorable %}
-
-
-
                     <span class="highlight text-favorable" style="font-size: 16px;">{{ maha }}</span></span> - <span
-
-
-
                     class="favorable">{{ _('అనుకూలము') }}</span> |
-
-
-
                 {% else %}
-
-
-
                 <span class="highlight text-unfavorable" style="font-size: 16px;">{{ maha }}</span></span> - <span
-
-
-
                     class="unfavorable">{{ _('ప్రతికూలము') }}</span> |
-
-
-
                 {% endif %}
-
-
-
                 <br>
-
-
-
-                <span class="highlight" style="color: #ffd700; font-size: 14px;">{{ maha_start }} {{ _('నుండి') }} {{ maha_end }} {{ _('వరకు') }}</span>
-
-
-
+                <span class="highlight" style="font-size: 14px;">{{ maha_start }} {{ _('నుండి') }} {{ maha_end }} {{ _('వరకు') }}</span>
                 {% if maha_age_start and maha_age_end %}
-
-
-
                 <br>
-
-
-
-                <span style="font-size: 14px; color: #a0a0ff;">
-
-
-
+                <span style="font-size: 14px;">
                     ({{ _('వయసు') }}: {{ maha_age_start }} {{ _('నుండి') }} {{ maha_age_end }} {{ _('వరకు') }})
-
-
-
                 </span>
-
-
-
                 {% endif %}
-
-
-
             </div>
 
 
@@ -7953,29 +8009,11 @@ body {
 
 
                     {% for dasa in all_dasas %}
-
-
-
-                    <tr>
-
-
-
+                    <tr class="{{ 'row-anukulam' if dasa.is_favorable else 'row-pratikulam' }}">
                         <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: bold;">{{ loop.index }}</td>
-
-
-
                         <td style="border: 1px solid #000; padding: 10px;">{{ dasa.icon }} {{ dasa.maha }}</td>
-
-
-
-                        <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: bold; color: {% if dasa.is_favorable %}#006400{% else %}#b22222{% endif %};">
-
-
-
+                        <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: bold;">
                             {% if dasa.is_favorable %}{{ _('అనుకూలము') }}{% else %}{{ _('ప్రతికూలము') }}{% endif %}
-
-
-
                         </td>
 
 
@@ -8061,106 +8099,31 @@ body {
 
 
 
-            <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %} {% if dasa.is_birth_dasa %}birth{% endif %}"
-
-
-
+            <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %} {% if dasa.is_birth_dasa %}birth{% endif %} {{ 'dasa-anukulam' if dasa.is_favorable else 'dasa-pratikulam' }}"
                 onclick="toggleAnthara(this)">
-
-
-
                 <div class="maha-dasa-header">
-
-
-
                     <div class="maha-dasa-number"
-
-
-
                         style="background: linear-gradient(45deg, {{ dasa.color }}, {{ dasa.color }}80);">
-
-
-
                         {{ loop.index }}
-
-
-
                     </div>
-
-
-
                     <div class="maha-dasa-info">
-
-
-
                         <div class="maha-dasa-name">
-
-
-
                             <span style="color: {{ dasa.color }}; margin-right: 8px;">{{ dasa.icon }}</span>
-
-
-
                             {% if dasa.is_favorable %}
-
-
-
                             <span class="text-favorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
-
-
-
                             <span class="favorable">{{ _('అనుకూలము') }}</span>
-
-
-
                             {% else %}
-
-
-
                             <span class="text-unfavorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
-
-
-
                             <span class="unfavorable">{{ _('ప్రతికూలము') }}</span>
-
-
-
                             {% endif %}
-
-
-
                         </div>
-
-
-
                         <div class="maha-dasa-period">
-
-
-
                             {{ dasa.start }} {{ _('నుండి') }} {{ dasa.end }} {{ _('వరకు') }}
-
-
-
                             <br>
-
-
-
-                            <span style="font-size: 13px; color: var(--text-muted); opacity: 0.95;">
-
-
-
+                            <span class="maha-dasa-age" style="font-size: 13px; opacity: 0.95;">
                                 ({{ _('వయసు') }}: {{ dasa.age_start }} {{ _('నుండి') }} {{ dasa.age_end }} {{ _('వరకు') }})
-
-
-
                             </span>
-
-
-
                         </div>
-
-
-
                     </div>
 
 
@@ -8366,10 +8329,7 @@ body {
 
 
                                         status='గతం' %} {% set badge_class='past-badge' %} {% endif %} <tr
-
-
-
-                                        class="{% if badge_class == 'current-badge' %}current{% endif %}">
+                                        class="{% if badge_class == 'current-badge' %}current{% endif %} {{ 'row-anukulam' if a.is_favorable else 'row-pratikulam' }}">
 
 
 
