@@ -2494,70 +2494,53 @@
 
 
 
-        .maha-dasa-info {
-
-
-
+                .maha-dasa-info {
             flex: 1;
-
-
-
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            min-width: 0;
         }
 
+        .maha-dasa-left-part {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
 
+        .maha-dasa-right-part {
+            flex: 0 1 auto;
+            border-left: 1.5px solid var(--card-border, rgba(255, 255, 255, 0.25));
+            padding-left: 14px;
+            font-size: 13.5px;
+            line-height: 1.35;
+            text-align: left;
+            white-space: nowrap;
+        }
 
+        .maha-dasa-right-part .pos-main {
+            font-weight: 700;
+        }
 
-
-
+        .maha-dasa-right-part .pos-hands {
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0.95;
+            margin-top: 2px;
+        }
 
         .maha-dasa-name {
-
-
-
             font-size: 16px;
-
-
-
             font-weight: bold;
-
-
-
             color: var(--text-main);
-
-
-
-            margin-bottom: 5px;
-
-
-
+            margin-bottom: 3px;
         }
 
-
-
-
-
-
-
         .maha-dasa-period {
-
-
-
-            font-size: 16px;
-
-
-
+            font-size: 14px;
             color: var(--text-muted);
-
-
-
-            margin-top: 4px;
-
-
-
+            margin-top: 2px;
             font-weight: 600;
-
-
-
         }
 
 
@@ -3674,1070 +3657,323 @@
 
 
 
-        /* ===== PRINT / PDF OPTIMIZATIONS ===== */
-
-
-
-        /* Single unified @media print block — ensures each Mahadasa
-
-
-
-           (header + all Antharadasa rows) occupies exactly one A4 page */
-
-
-
+        /* ===== PRINT / PDF OPTIMIZATIONS (STRICTLY 4 PAGES) ===== */
         @media print {
-
-
-
             @page {
-
-
-
                 size: A4 portrait;
-
-
-
-                margin: 2mm !important;
-
-
-
+                margin: 4mm 6mm !important;
             }
-
-
-
-
-
-
 
             /* Reset all decorative effects */
-
-
-
             *, *::before, *::after {
-
-
-
                 -webkit-print-color-adjust: exact !important;
-
-
-
                 print-color-adjust: exact !important;
-
-
-
                 box-shadow: none !important;
-
-
-
                 text-shadow: none !important;
-
-
-
                 backdrop-filter: none !important;
-
-
-
                 filter: none !important;
-
-
-
                 animation: none !important;
-
-
-
                 transition: none !important;
-
-
-
             }
-
-
-
-
-
-
 
             /* Remove animated pseudo-elements */
-
-
-
             body::before, body::after,
-
-
-
             .progress-bar::before, .progress-fill::after,
-
-
-
             .cosmic-header::before, .nakshatra-box::before,
-
-
-
             .current-dasa-box::before {
-
-
-
                 display: none !important;
-
-
-
             }
-
-
-
-
-
-
 
             html, body {
-
-
-
                 background: #fff !important;
-
-
-
                 color: #000 !important;
-
-
-
                 padding: 0 !important;
-
-
-
                 margin: 0 auto !important;
-
-
-
-                width: 1024px !important; /* Force same desktop width for BOTH Mobile and Web PDF */
-
-
-
-                min-width: 1024px !important;
-
-
-
+                width: 100% !important;
+                min-width: 0 !important;
                 height: auto !important;
-
-
-
                 overflow: visible !important;
-
-
-
                 font-family: 'Noto Sans Telugu', Arial, sans-serif !important;
-
-
-
                 -webkit-print-color-adjust: exact;
-
-
-
                 opacity: 1 !important;
-
-
-
             }
-
-
-
-
-
-
 
             .container {
-
-
-
-                width: 840px !important;
-
-
-
-                min-width: 840px !important;
-
-
-
+                width: 100% !important;
+                min-width: 0 !important;
                 margin: 0 auto !important;
-
-
-
                 padding: 0 !important;
-
-
-
-                zoom: 0.92 !important;
-
-
-
+                zoom: 0.95 !important;
             }
-
-
-
-
-
-
 
             /* ── Hide all navigation / UI chrome ── */
-
-
-
             .print-button, .nav-buttons, .scrolling-footer,
-
-
-
             .theme-switcher, .fixed-bottom-bar, #action-bar,
-
-
-
             .float-btn, .print-hide, .maha-accordion-toggle,
-
-
-
             #transit-btn, #transit-loading, .dasa-section .section-title,
-
-
-
             #loading-overlay {
-
-
-
                 display: none !important;
-
-
-
             }
-
-
-
-
-
-
 
             /* ── Glow container: remove decorative chrome ── */
-
-
-
             .glow-container {
-
-
-
                 background: #fff !important;
-
-
-
                 border: none !important;
-
-
-
                 padding: 0 !important;
-
-
-
             }
 
-
-
-
-
-
-
-            /* ── Cosmic header (name / birth details) ── */
-
-
-
+            /* ── Cosmic header (name / birth details - Page 1) ── */
             .cosmic-header {
-
-
-
                 background: #f5f5f5 !important;
-
-
-
                 border: 1px solid #333 !important;
-
-
-
                 border-radius: 4px !important;
-
-
-
-                padding: 10px 12px !important;
-
-
-
-                margin: 0 auto 15px auto !important;
-
-
-
-                width: 80% !important;
-
-
-
+                padding: 5px 8px !important;
+                margin: 0 auto 6px auto !important;
+                width: 98% !important;
                 page-break-inside: avoid !important;
-
-
-
                 break-inside: avoid !important;
-
-
-
             }
-
-
-
             .cosmic-header * { color: #000 !important; }
-
-
-
-            .party-name { color: #8B0000 !important; font-weight: bold !important; font-size: 15.5pt !important; }
-
-
-
-            .person-name { font-size: 17.5pt !important; font-weight: bold !important; color: #000080 !important; }
-
-
-
+            .party-name { color: #8B0000 !important; font-weight: bold !important; font-size: 11pt !important; margin-bottom: 3px !important; }
+            .person-name { font-size: 13pt !important; font-weight: bold !important; color: #000080 !important; margin-bottom: 3px !important; }
             .info-row {
-
-
-
-                display: inline-flex !important;
-
-
-
-                flex-direction: column !important;
-
-
-
-                align-items: flex-start !important;
-
-
-
-                gap: 5px !important;
-
-
-
-                font-size: 11pt !important;
-
-
-
-                margin: 10px auto 0 auto !important;
-
-
-
-                text-align: left !important;
-
-
-
-            }
-
-
-
-            .info-item {
-
-
-
                 display: flex !important;
-
-
-
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 12px !important;
+                font-size: 8.5pt !important;
+                margin: 2px auto 0 auto !important;
+                text-align: left !important;
+            }
+            .info-item {
+                display: flex !important;
                 align-items: center !important;
-
-
-
-                gap: 6px !important;
-
-
-
+                gap: 4px !important;
                 border: none !important;
-
-
-
                 background: transparent !important;
-
-
-
                 padding: 0 !important;
-
-
-
             }
-
-
-
             .info-label {
-
-
-
                 font-weight: bold !important;
-
-
-
                 color: #000 !important;
-
-
-
                 margin-right: 2px !important;
-
-
-
             }
-
-
-
-
-
-
 
             /* ── Nakshatra box ── */
-
-
-
             .nakshatra-box {
-
-
-
                 background: #f9f9f9 !important;
-
-
-
                 border: 1px solid #333 !important;
-
-
-
-                padding: 6px 10px !important;
-
-
-
-                margin: 0 auto 15px auto !important;
-
-
-
-                width: 80% !important;
-
-
-
+                padding: 4px 8px !important;
+                margin: 0 auto 6px auto !important;
+                width: 98% !important;
                 page-break-inside: avoid !important;
-
-
-
                 break-inside: avoid !important;
-
-
-
             }
-
-
-
             .nakshatra-box * { color: #000 !important; }
+            .nakshatra-name { font-size: 10pt !important; }
+            .time-label { color: #555 !important; font-size: 8.5pt !important; }
+            .time-value { color: #b22222 !important; font-weight: bold !important; font-size: 10pt !important; }
 
-
-
-            .nakshatra-name { font-size: 13pt !important; }
-
-
-
-            .time-label { color: #555 !important; font-size: 11pt !important; }
-
-
-
-            .time-value { color: #b22222 !important; font-weight: bold !important; font-size: 13pt !important; }
-
-
-
-
-
-
-
-            /* ── Current Dasa box ── */
-
-
-
+            /* ── Current Dasa box (Page 1) ── */
             .current-dasa-box {
-
-
-
                 background: #f9f9f9 !important;
-
-
-
-                border: 2px solid #333 !important;
-
-
-
-                padding: 8px 10px !important;
-
-
-
-                margin: 0 auto 15px auto !important;
-
-
-
-                width: 80% !important;
-
-
-
+                border: 1.5px solid #333 !important;
+                padding: 4px 8px !important;
+                margin: 0 auto 6px auto !important;
+                width: 98% !important;
                 page-break-inside: avoid !important;
-
-
-
                 break-inside: avoid !important;
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 9pt !important;
             }
-
-
-
             .current-dasa-box * { color: #000 !important; }
-
-
-
-            .current-dasa-title { color: #d2691e !important; font-size: 16pt !important; }
-
-
-
-            .highlight.text-favorable { color: #006400 !important; }
-
-
-
-            .highlight.text-unfavorable { color: #b22222 !important; }
-
-
-
+            .current-dasa-inline {
+                font-size: 9.5pt !important;
+                margin-bottom: 2px !important;
+            }
+            .current-dasa-inline span {
+                font-size: 9.5pt !important;
+            }
+            .current-dasa-title { color: #d2691e !important; font-size: 11pt !important; }
             .progress-container { display: none !important; }
 
-
-
-
-
-
-
-            /* ── Print Summary Table (show it, keep on page 1 — no forced break) ── */
-
-
-
+            /* ── Print Summary Table (End of Page 1 -> Breaks to Page 2) ── */
             .print-summary-section {
-
-
-
                 display: block !important;
-
-
-
-                page-break-before: avoid !important;
-
-
-
-                break-before: avoid !important;
-
-
-
-                margin-top: 20px !important;
-
-
-
-                margin-bottom: 25px !important;
-
-
-
+                margin-top: 6px !important;
+                margin-bottom: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
             }
-
-
-
-            .print-summary-section table {
-
-
-
-                font-size: 11pt !important;
-
-
-
-                width: 80% !important;
-
-
-
-                margin: 0 auto !important;
-
-
-
-                border-collapse: collapse !important;
-
-
-
-            }
-
-
-
-            .print-summary-section th, .print-summary-section td {
-
-
-
-                border: 1px solid #333 !important;
-
-
-
-                padding: 5px 8px !important;
-
-
-
-                color: #000 !important;
-
-
-
-            }
-
-
-
             .print-summary-section div[style*="font-size: 20px"] {
-
-
-
-                font-size: 14pt !important;
-
-
-
-                margin-bottom: 10px !important;
-
-
-
+                font-size: 11pt !important;
+                margin-bottom: 4px !important;
             }
-
-
-
-
-
-
+            .print-summary-section table {
+                width: 98% !important;
+                margin: 0 auto !important;
+                border-collapse: collapse !important;
+                font-size: 8pt !important;
+            }
+            .print-summary-section th, .print-summary-section td {
+                border: 1px solid #333 !important;
+                padding: 2px 4px !important;
+                font-size: 8pt !important;
+                color: #000 !important;
+            }
+            .print-summary-section td div {
+                font-size: 7.5pt !important;
+            }
 
             /* ────────────────────────────────────────────
-
-
-
-               CORE FIX: TWO Mahadasa cards per A4 page
-
-
-
+               PAGES 2, 3, 4: 12 MAHADASHAS (STRICTLY 4 CARDS PER PAGE)
             ─────────────────────────────────────────────*/
-
-
-
             .dasa-section {
-
-
-
                 width: 100% !important;
-
-
-
                 min-width: 0 !important;
-
-
-
                 margin: 0 !important;
-
-
-
                 padding: 0 !important;
-
-
-
-                zoom: 1 !important; /* Inherit from container */
-
-
-
-                page-break-before: avoid !important;
-
-
-
-                break-before: avoid !important;
-
-
-
+                zoom: 0.88 !important;
+                page-break-before: always !important;
+                break-before: page !important;
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
             }
 
+            .dasa-section .maha-dasa-card:last-child {
+                margin-bottom: 0 !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
 
-
-
-
-
+            .glow-container, .container, body, html {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
 
             .maha-dasa-card {
-
-
-
                 background: #fff !important;
-
-
-
-                border: 1.5px solid #333 !important;
-
-
-
-                border-radius: 3px !important;
-
-
-
-                padding: 3px 5px !important;
-
-
-
+                border: 2px solid #2196F3 !important;
+                border-radius: 12px !important;
+                padding: 2px 5px !important;
                 margin: 0 auto 3px auto !important;
-
-
-
-                width: 80% !important;
-
-
-
+                width: 98% !important;
                 box-sizing: border-box !important;
-
-
-
-                /* Allow the card to split so 2nd card can always follow 1st on same page */
-
-
-
-                page-break-inside: auto !important;
-
-
-
-                break-inside: auto !important;
-
-
-
-            }
-
-
-
-
-
-
-
-            /* Pack exactly 2 cards per page.
-
-
-
-               Since .section-title is child 1:
-
-
-
-               Card 1 = child 2
-
-
-
-               Card 2 = child 3
-
-
-
-               Card 3 = child 4
-
-
-
-               Card 4 = child 5
-
-
-
-               We want to break on Card 3 (child 4), Card 5 (child 6), etc. -> even children!
-
-
-
-               But NOT Card 1 (child 2)! */
-
-
-
-            
-
-
-
-            .dasa-section .maha-dasa-card {
-
-
-
-                page-break-before: avoid !important;
-
-
-
-                break-before: avoid !important;
-
-
-
                 page-break-inside: avoid !important;
-
-
-
                 break-inside: avoid !important;
-
-
-
+                page-break-after: avoid !important;
+                break-after: avoid !important;
             }
 
-
-
-
-
-
-
-            .dasa-section .maha-dasa-card:nth-child(3n) {
-
-
-
+            /* Explicit page break starts before card 5 (Page 3) and card 9 (Page 4) */
+            .print-break-before {
                 page-break-before: always !important;
-
-
-
                 break-before: page !important;
-
-
-
             }
 
-
-
-
-
-
-
-            .dasa-section .maha-dasa-card:nth-child(2) {
-
-
-
-                page-break-before: avoid !important;
-
-
-
-                break-before: avoid !important;
-
-
-
+            .dasa-section .maha-dasa-card:last-child {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
             }
 
-
-
-
-
-
-
-            /* Mahadasa header row */
-
-
-
+            /* Mahadasa header row - 2 Part Vertical Division */
             .maha-dasa-header {
-
-
-
                 display: flex !important;
-
-
-
-                align-items: flex-start !important;
-
-
-
+                align-items: center !important;
+                justify-content: space-between !important;
                 gap: 6px !important;
-
-
-
-                margin: 0 0 3px 0 !important;
-
-
-
+                margin: 0 0 2px 0 !important;
                 width: 100% !important;
-
-
-
-                flex-wrap: wrap !important;
-
-
-
+                flex-wrap: nowrap !important;
             }
-
-
-
-
-
-
 
             .maha-dasa-number {
-
-
-
                 background: transparent !important;
-
-
-
                 border: 1px solid #333 !important;
-
-
-
                 color: #000080 !important;
-
-
-
-                padding: 2px 5px !important;
-
-
-
+                padding: 1px 4px !important;
                 border-radius: 8px !important;
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 9pt !important;
                 font-weight: bold !important;
-
-
-
-                min-width: 20px !important;
-
-
-
+                min-width: 18px !important;
+                text-align: center !important;
             }
 
+            .maha-dasa-info {
+                flex: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 10px !important;
+                min-width: 0 !important;
+            }
 
+            .maha-dasa-left-part {
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+            }
 
+            .maha-dasa-right-part {
+                flex: 0 1 auto !important;
+                border-left: 1.5px solid #333 !important;
+                padding-left: 8px !important;
+                font-size: 8pt !important;
+                line-height: 1.2 !important;
+                text-align: left !important;
+                white-space: nowrap !important;
+            }
 
+            .maha-dasa-right-part .pos-main {
+                font-weight: 700 !important;
+            }
 
-
+            .maha-dasa-right-part .pos-hands {
+                font-size: 7.5pt !important;
+                font-weight: 600 !important;
+                opacity: 0.95 !important;
+            }
 
             .maha-dasa-name {
-
-
-
-                font-size: 13pt !important;
-
-
-
+                font-size: 9.5pt !important;
                 font-weight: bold !important;
-
-
-
                 color: #000 !important;
-
-
-
-                margin-bottom: 1px !important;
-
-
-
+                margin-bottom: 0 !important;
+                line-height: 1.2 !important;
             }
-
-
-
-
-
-
 
             .maha-dasa-period {
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 8pt !important;
                 color: #8B4513 !important;
-
-
-
                 font-weight: 600 !important;
-
-
-
+                margin-top: 1px !important;
+                line-height: 1.2 !important;
             }
-
-
-
-
-
-
 
             .maha-dasa-period br { display: none !important; }
 
-
-
-            .maha-dasa-period span { display: none !important; }
-
-
-
-
-
-
-
             .maha-dasa-badges {
-
-
-
                 display: flex !important;
-
-
-
                 gap: 3px !important;
-
-
-
-                margin-top: 1px !important;
-
-
-
+                margin-top: 0 !important;
             }
-
-
-
-
-
-
 
             .status-badge {
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 8pt !important;
                 padding: 1px 4px !important;
-
-
-
                 border-radius: 6px !important;
-
-
-
             }
 
-
-
             .current-badge { border: 1px solid #006400 !important; color: #006400 !important; background: transparent !important; }
-
-
-
             .past-badge    { border: 1px solid #555 !important;    color: #555 !important;    background: transparent !important; }
-
-
-
             .future-badge  { border: 1px solid #000080 !important; color: #000080 !important; background: transparent !important; }
-
-
-
             .birth-badge   { border: 1px solid #8B4513 !important; color: #8B4513 !important; background: transparent !important; }
-
-
-
-
-
-
 
             .text-favorable   { color: #006400 !important; }
             .text-unfavorable { color: #dc2626 !important; }
-            .favorable   { color: #006400 !important; font-size: 11pt !important; }
-            .unfavorable { color: #dc2626 !important; font-size: 11pt !important; }
+            .favorable   { color: #006400 !important; font-size: 9pt !important; }
+            .unfavorable { color: #dc2626 !important; font-size: 9pt !important; }
 
             /* Print Entire text coloring for Dasa & Anthara Dasa */
             .current-dasa-inline.dasa-anukulam,
@@ -4782,384 +4018,98 @@
                 print-color-adjust: exact !important;
             }
 
-
-
-
-
-
-
-            /* ── Anthara wrapper: show collapsed drawers ── */
-
-
-
+            /* ── Anthara wrapper & tables ── */
             .anthara-wrapper {
-
-
-
                 display: block !important;
-
-
-
                 max-height: none !important;
-
-
-
                 height: auto !important;
-
-
-
                 overflow: visible !important;
-
-
-
                 opacity: 1 !important;
-
-
-
                 visibility: visible !important;
-
-
-
-                margin-top: 4px !important;
-
-
-
+                margin-top: 2px !important;
             }
-
-
-
-
-
-
-
-            /* ── Anthara container & table ── */
-
-
 
             .anthara-container {
-
-
-
                 background: #fafafa !important;
-
-
-
                 border: 1px solid #ccc !important;
-
-
-
                 border-radius: 3px !important;
-
-
-
-                padding: 2px 4px !important;
-
-
-
+                padding: 1px 3px !important;
                 width: 100% !important;
-
-
-
                 margin: 0 !important;
-
-
-
             }
-
-
-
-
-
-
 
             .anthara-container > div:first-child {
-
-
-
-                font-size: 8.5pt !important;
-
-
-
-                margin-bottom: 2px !important;
-
-
-
+                font-size: 7.2pt !important;
+                margin-bottom: 1px !important;
             }
-
-
-
-
-
-
 
             .anthara-table {
-
-
-
                 width: 100% !important;
-
-
-
                 border-collapse: collapse !important;
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 7.2pt !important;
                 background: #fff !important;
-
-
-
                 page-break-inside: auto !important;
-
-
-
                 break-inside: auto !important;
-
-
-
             }
-
-
-
-
-
-
 
             .anthara-table th {
-
-
-
                 background: #e8e8e8 !important;
-
-
-
                 color: #000 !important;
-
-
-
                 border: 1px solid #999 !important;
-
-
-
-                padding: 2px 4px !important;
-
-
-
-                font-size: 11.5pt !important;
-
-
-
+                padding: 1px 3px !important;
+                font-size: 7.5pt !important;
                 text-align: left !important;
-
-
-
             }
-
-
-
-
-
-
 
             .anthara-table td {
-
-
-
                 color: #000 !important;
-
-
-
                 border: 1px solid #ccc !important;
-
-
-
-                padding: 1.5px 3px !important;
-
-
-
+                padding: 0.8px 3px !important;
+                font-size: 7.2pt !important;
                 vertical-align: middle !important;
-
-
-
+                line-height: 1.12 !important;
             }
-
-
-
-
-
-
 
             .anthara-table tr.current td {
-
-
-
                 background: #e6ffe6 !important;
-
-
-
             }
-
-
-
-
-
-
 
             .anthara-table .planet-cell {
-
-
-
                 display: flex !important;
-
-
-
                 align-items: center !important;
-
-
-
-                gap: 3px !important;
-
-
-
+                gap: 2px !important;
                 color: #8B0000 !important;
-
-
-
                 font-weight: bold !important;
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 7.2pt !important;
             }
-
-
-
-
-
-
 
             .table-icon {
-
-
-
-                width: 14px !important;
-
-
-
-                height: 14px !important;
-
-
-
-                font-size: 11.5px !important;
-
-
-
+                width: 10px !important;
+                height: 10px !important;
+                font-size: 8px !important;
                 border-radius: 50% !important;
-
-
-
                 border: 1px solid #555 !important;
-
-
-
                 background: transparent !important;
-
-
-
                 display: flex !important;
-
-
-
                 align-items: center !important;
-
-
-
                 justify-content: center !important;
-
-
-
             }
-
-
-
-
-
-
-
-            /* Date cells in anthara table (Start and End dates) */
-
-
 
             .anthara-table td.date-cell {
-
-
-
                 color: #8B4513 !important;
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 7.2pt !important;
                 font-weight: bold !important;
-
-
-
                 white-space: nowrap;
-
-
-
             }
-
-
-
-
-
-
-
-            /* Age cells in anthara table */
-
-
 
             .anthara-table td.age-cell {
-
-
-
                 color: #555 !important;
-
-
-
-                font-size: 11pt !important;
-
-
-
+                font-size: 7.2pt !important;
                 font-weight: bold !important;
-
-
-
                 white-space: nowrap;
-
-
-
             }
-
-
-
         }
-
-
-
-
-
-
-
+        
         /* Scrolling Footer */
 
 
@@ -6300,19 +5250,7 @@
 
 
 
-        @page {
-
-
-
-            size: A4 portrait;
-
-
-
-            margin: 8mm 10mm 8mm 10mm;
-
-
-
-        }
+        @page { size: A4 portrait; margin: 4mm 6mm !important; }
 
 
 
@@ -6341,29 +5279,32 @@
 
 
                 .maha-dasa-header {
-
-
-
                     flex-direction: row;
-
-
-
                     flex-wrap: wrap;
-
-
-
                     align-items: center;
-
-
-
                     gap: 6px;
-
-
-
                     margin-bottom: 5px;
+                }
 
+                .maha-dasa-info {
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
 
+                .maha-dasa-left-part {
+                    flex: 1 1 auto;
+                }
 
+                .maha-dasa-right-part {
+                    flex: 1 1 100%;
+                    border-left: none;
+                    border-top: 1px dashed var(--card-border, rgba(255, 255, 255, 0.2));
+                    padding-left: 0;
+                    padding-top: 4px;
+                    margin-top: 2px;
+                    white-space: normal;
+                    font-size: 12px;
                 }
 
 
@@ -7200,6 +6141,36 @@ body {
   }
 }
 
+</style>
+
+<style>
+/* ===== STRICT 4-PAGE PRINT & PDF ENFORCEMENT ===== */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 4mm 6mm !important;
+    }
+    .print-break-before {
+        page-break-before: always !important;
+        break-before: page !important;
+    }
+    .dasa-section {
+        zoom: 0.88 !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+    .dasa-section .maha-dasa-card:last-child {
+        margin-bottom: 0 !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+    .glow-container, .container, body, html {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
 </style>
 </head>
 
@@ -8116,7 +7087,7 @@ body {
 
 
 
-            <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %} {% if dasa.is_birth_dasa %}birth{% endif %} {{ 'dasa-anukulam' if dasa.is_favorable else 'dasa-pratikulam' }}"
+            <div class="maha-dasa-card {% if dasa.is_current %}current{% endif %} {% if dasa.is_birth_dasa %}birth{% endif %} {{ 'dasa-anukulam' if dasa.is_favorable else 'dasa-pratikulam' }} {% if loop.index in [5, 9] %}print-break-before{% endif %}"
                 onclick="toggleAnthara(this)">
                 <div class="maha-dasa-header">
                     <div class="maha-dasa-number"
@@ -8124,31 +7095,38 @@ body {
                         {{ loop.index }}
                     </div>
                     <div class="maha-dasa-info">
-                        <div class="maha-dasa-name">
-                            <span style="color: {{ dasa.color }}; margin-right: 8px;">{{ dasa.icon }}</span>
-                            {% if dasa.is_favorable %}
-                            <span class="text-favorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
-                            <span class="favorable">{{ _('అనుకూలము') }}</span>
-                            {% else %}
-                            <span class="text-unfavorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
-                            <span class="unfavorable">{{ _('ప్రతికూలము') }}</span>
-                            {% endif %}
-                            {% if dasa.planet_house %}
-                            <span class="maha-dasa-position-inline" style="font-size: 14px; font-weight: 600; margin-left: 6px;">
-                                - <span class="pos-main">📍 {{ _('కుండలి స్థానం') }}: {{ dasa.planet_house }}{{ _('వ స్థానం') }} ({{ _(dasa.planet_rasi) }})</span>{% if dasa.hand_positions %}<span class="pos-hands"> | {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}{{ h.house }}{{ _('వ స్థానం') }} ({{ _(h.rasi) }}){% if not loop.last %}, {% endif %}{% endfor %}</span>{% endif %}
-                            </span>
+                        <div class="maha-dasa-left-part">
+                            <div class="maha-dasa-name">
+                                <span style="color: {{ dasa.color }}; margin-right: 6px;">{{ dasa.icon }}</span>
+                                {% if dasa.is_favorable %}
+                                <span class="text-favorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
+                                <span class="favorable">{{ _('అనుకూలము') }}</span>
+                                {% else %}
+                                <span class="text-unfavorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
+                                <span class="unfavorable">{{ _('ప్రతికూలము') }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="maha-dasa-period">
+                                {{ dasa.start }} {{ _('నుండి') }} {{ dasa.end }} {{ _('వరకు') }}
+                                <span class="maha-dasa-age" style="font-size: 12.5px; opacity: 0.95; margin-left: 6px;">
+                                    ({{ _('వయసు') }}: {{ dasa.age_start }} {{ _('నుండి') }} {{ dasa.age_end }} {{ _('వరకు') }})
+                                </span>
+                            </div>
+                        </div>
+
+                        {% if dasa.planet_house %}
+                        <div class="maha-dasa-right-part">
+                            <div class="pos-main">
+                                📍 {{ _('కుండలి స్థానం') }}: <strong>{{ dasa.planet_house }}{{ _('వ స్థానం') }} ({{ _(dasa.planet_rasi) }})</strong>
+                            </div>
+                            {% if dasa.hand_positions %}
+                            <div class="pos-hands">
+                                {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}<strong>{{ h.house }}{{ _('వ స్థానం') }} ({{ _(h.rasi) }})</strong>{% if not loop.last %}, {% endif %}{% endfor %}
+                            </div>
                             {% endif %}
                         </div>
-                        <div class="maha-dasa-period">
-                            {{ dasa.start }} {{ _('నుండి') }} {{ dasa.end }} {{ _('వరకు') }}
-                            <br>
-                            <span class="maha-dasa-age" style="font-size: 13px; opacity: 0.95;">
-                                ({{ _('వయసు') }}: {{ dasa.age_start }} {{ _('నుండి') }} {{ dasa.age_end }} {{ _('వరకు') }})
-                            </span>
-                        </div>
+                        {% endif %}
                     </div>
-
-
 
                     <div class="maha-dasa-badges">
 
