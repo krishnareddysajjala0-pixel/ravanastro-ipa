@@ -1484,7 +1484,7 @@
 
       }
 
-      .top-action-bar, .no-print, .fixed-bottom-bar-nav, #transit-toggle-bar, #transit-btn, #transit-loading, .location-buttons {
+      .top-action-bar, .top-control-bar, .print-hide, .fixed-bottom-bar, #action-bar, .float-btn, .no-print, .fixed-bottom-bar-nav, #transit-toggle-bar, #transit-btn, #transit-loading, .location-buttons {
 
         display: none !important;
 
@@ -2037,13 +2037,185 @@
 </style>
 
 <style>
-/* Position Floating Bottom Bar Downside Close to Bottom Edge */
-.fixed-bottom-bar {
-  bottom: 12px !important;
+/* ============================================================
+   PERFECT UNIFIED FLOATING BOTTOM ACTION BAR & BUTTONS
+   ============================================================ */
+.fixed-bottom-bar,
+#action-bar {
+  position: fixed !important;
+  bottom: max(env(safe-area-inset-bottom, 0px), 14px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  background: rgba(15, 23, 42, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 18px !important;
+  padding: 7px 14px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 0 16px rgba(99, 102, 241, 0.22) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  z-index: 99999 !important;
+  width: calc(100vw - 24px) !important;
+  max-width: 900px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
 }
+
+.fixed-bottom-bar .float-btn,
+.fixed-bottom-bar button {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  padding: 0 12px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-family: 'Segoe UI', 'Noto Sans Telugu', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+  transition: transform 0.2s ease, filter 0.2s ease !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
+}
+
+.fixed-bottom-bar .float-btn span,
+.fixed-bottom-bar button span {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.fixed-bottom-bar .float-btn i,
+.fixed-bottom-bar button i {
+  font-size: 14px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+.fixed-bottom-bar .float-btn:hover,
+.fixed-bottom-bar button:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  filter: brightness(1.12) !important;
+}
+
+.fixed-bottom-bar .float-btn:active,
+.fixed-bottom-bar button:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* Distinct High-Quality Color Gradients for Buttons */
+.fixed-bottom-bar .nav-home,
+.fixed-bottom-bar .btn-home {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
+}
+
+.fixed-bottom-bar .nav-kundali,
+.fixed-bottom-bar .btn-kundali {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+}
+
+.fixed-bottom-bar .nav-dasa,
+.fixed-bottom-bar .btn-dasa {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+.fixed-bottom-bar .nav-planets,
+.fixed-bottom-bar .btn-planets {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+}
+
+.fixed-bottom-bar .nav-print,
+.fixed-bottom-bar .btn-print {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+}
+
 @media screen and (max-width: 768px) {
-  .fixed-bottom-bar {
-    bottom: 10px !important;
+  .fixed-bottom-bar,
+  #action-bar {
+    bottom: max(env(safe-area-inset-bottom, 0px), 10px) !important;
+    padding: 6px 8px !important;
+    gap: 5px !important;
+    border-radius: 16px !important;
+    width: calc(100vw - 16px) !important;
+    max-width: 900px !important;
+  }
+
+  .fixed-bottom-bar .float-btn,
+  .fixed-bottom-bar button {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    min-width: 0 !important;
+    padding: 0 6px !important;
+    font-size: 11.5px !important;
+    gap: 4px !important;
+    border-radius: 12px !important;
+  }
+
+  .fixed-bottom-bar .float-btn i,
+  .fixed-bottom-bar button i {
+    font-size: 12px !important;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .fixed-bottom-bar,
+  #action-bar {
+    bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
+    padding: 5px 4px !important;
+    gap: 3px !important;
+    width: calc(100vw - 8px) !important;
+    border-radius: 14px !important;
+  }
+
+  .fixed-bottom-bar .float-btn,
+  .fixed-bottom-bar button {
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    padding: 0 3px !important;
+    font-size: 10px !important;
+    gap: 2px !important;
+    border-radius: 8px !important;
+  }
+
+  .fixed-bottom-bar .float-btn i,
+  .fixed-bottom-bar button i {
+    font-size: 10px !important;
+  }
+}
+
+@media print {
+  .fixed-bottom-bar,
+  .fixed-bottom-bar *,
+  #action-bar,
+  .float-btn,
+  .print-hide {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    opacity: 0 !important;
   }
 }
 </style>
@@ -3256,6 +3428,25 @@ body {
   </script>
 
 </div>
+
+    <!-- Floating Bottom Action Bar -->
+    <div class="fixed-bottom-bar print-hide" id="action-bar">
+      <button class="float-btn btn-home" onclick="window.location.href='/'">
+        <i class="fas fa-home"></i> <span>{{ _('హోమ్') }}</span>
+      </button>
+      <button class="float-btn btn-kundali" onclick="window.location.href='/go-to-birth-chart'">
+        <i class="fas fa-dharmachakra"></i> <span>{{ _('కుండలి') }}</span>
+      </button>
+      <button class="float-btn btn-dasa" onclick="window.location.href='/go-to-dasha-chart'">
+        <i class="fas fa-calendar-alt"></i> <span>{{ _('దశాచారము') }}</span>
+      </button>
+      <button class="float-btn btn-planets" onclick="window.location.href='/chart3'">
+        <i class="fas fa-star"></i> <span>{{ _('ద్వాదశ గ్రహములు') }}</span>
+      </button>
+      <button class="float-btn btn-print print-hide" onclick="doSharePDF()">
+        <i class="fas fa-print"></i> <span>{{ _('ప్రింట్') }}</span>
+      </button>
+    </div>
 
 <script>
   let themeTimeout = null;
