@@ -4419,6 +4419,20 @@
             margin-bottom: 6px;
             font-size: 13.5px;
         }
+        .info-row-inline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 13.5px;
+        }
+        .info-col {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
         .info-row .label {
             color: var(--text-muted, #a5b4fc);
             font-weight: 600;
@@ -4847,6 +4861,21 @@
     margin-bottom: 0.5px !important;
     font-size: 8.8pt !important;
     line-height: 1.14 !important;
+  }
+  .info-row-inline {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 4px !important;
+    margin-bottom: 0.5px !important;
+    font-size: 8.4pt !important;
+    line-height: 1.14 !important;
+  }
+  .info-col {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    white-space: nowrap !important;
   }
   .info-row .label {
     color: #334155 !important;
@@ -7643,48 +7672,15 @@ body {
 
 
 
-                    <div class="info-row">
-
-
-
-
-
-                        <span class="label">{{ _('ప్రస్తుత స్థానము:') }}</span>
-
-
-
-
-
-                        <span class="val">{{ r.current_lagna }}</span>
-
-
-
-
-
-                    </div>
-
-
-
-
-
-                    <div class="info-row">
-
-
-
-
-
-                        <span class="label">{{ _('స్వంత ఇల్లు:') }}</span>
-
-
-
-
-
-                        <span class="val own-val">{{ r.own_house }}</span>
-
-
-
-
-
+                    <div class="info-row info-row-inline">
+                        <div class="info-col">
+                            <span class="label">{{ _('ప్రస్తుత స్థానము:') }}</span>
+                            <span class="val">{{ r.current_lagna }}</span>
+                        </div>
+                        <div class="info-col">
+                            <span class="label">{{ _('స్వంత ఇల్లు:') }}</span>
+                            <span class="val own-val">{{ r.own_house }}</span>
+                        </div>
                     </div>
 
 
@@ -7949,48 +7945,15 @@ body {
 
 
 
-                    <div class="info-row">
-
-
-
-
-
-                        <span class="label">{{ _('ప్రస్తుత స్థానము:') }}</span>
-
-
-
-
-
-                        <span class="val">{{ r.current_lagna }}</span>
-
-
-
-
-
-                    </div>
-
-
-
-
-
-                    <div class="info-row">
-
-
-
-
-
-                        <span class="label">{{ _('స్వంత ఇల్లు:') }}</span>
-
-
-
-
-
-                        <span class="val own-val">{{ r.own_house }}</span>
-
-
-
-
-
+                    <div class="info-row info-row-inline">
+                        <div class="info-col">
+                            <span class="label">{{ _('ప్రస్తుత స్థానము:') }}</span>
+                            <span class="val">{{ r.current_lagna }}</span>
+                        </div>
+                        <div class="info-col">
+                            <span class="label">{{ _('స్వంత ఇల్లు:') }}</span>
+                            <span class="val own-val">{{ r.own_house }}</span>
+                        </div>
                     </div>
 
 
