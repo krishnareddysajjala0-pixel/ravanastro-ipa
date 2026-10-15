@@ -218,7 +218,7 @@
 
 
 
-        :root {
+        :root, [data-theme="default"] {
             --bg-primary: radial-gradient(circle at 10% 12%, rgba(219, 234, 254, 0.65) 0%, transparent 40%),
                           radial-gradient(circle at 90% 18%, rgba(237, 233, 254, 0.55) 0%, transparent 40%),
                           radial-gradient(circle at 50% 88%, rgba(224, 242, 254, 0.50) 0%, transparent 45%),
@@ -229,7 +229,28 @@
             --card-border: rgba(99, 102, 241, 0.22);
             --shadow-color: rgba(15, 23, 42, 0.08);
             --header-bg: linear-gradient(135deg, #1e3a8a, #2563eb, #0284c7);
-            --dasa-card-bg: rgba(255, 255, 255, 0.98);
+            --dasa-card-bg: #ffffff;
+            --dasa-card-border: #3b82f6;
+            --dasa-card-shadow: 0 4px 15px rgba(59, 130, 246, 0.12);
+            --dasa-divider-color: #cbd5e1;
+            --anthara-box-bg: #f8fafc;
+            --anthara-box-border: #cbd5e1;
+            --anthara-title-color: #1e40af;
+            --anthara-table-bg: #ffffff;
+            --anthara-th-bg: #e2e8f0;
+            --anthara-th-text: #0f172a;
+            --anthara-th-border: #cbd5e1;
+            --anthara-td-border: #e2e8f0;
+            --anthara-row-hover: #f1f5f9;
+            --anthara-age-color: #334155;
+            --anthara-date-color: #1e3a8a;
+            --dasa-text-favorable: #047857;
+            --dasa-text-unfavorable: #b91c1c;
+            --current-dasa-bg: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+            --current-dasa-border: #3b82f6;
+            --current-dasa-title-color: #1d4ed8;
+            --color-pos: #047857;
+            --color-neg: #b91c1c;
         }
 
 
@@ -240,51 +261,46 @@
 
         /* Cosmic Mode (Premium Dark) */
 
-
-
         [data-theme="cosmic"] {
-
-
 
             --bg-primary: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.25) 0%, transparent 60%), radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.2) 0%, transparent 60%), linear-gradient(135deg, #020617 0%, #1e1b4b 50%, #020617 100%);
 
-
-
             --text-main: #ffffff;
-
-
 
             --text-muted: #c7d2fe;
 
-
-
             --card-bg: rgba(15, 23, 42, 0.9);
-
-
 
             --card-border: rgba(99, 102, 241, 0.2);
 
-
-
             --shadow-color: rgba(0, 0, 0, 0.6);
-
-
 
             --header-bg: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
 
+            --dasa-card-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 27, 75, 0.94) 100%);
+            --dasa-card-border: #6366f1;
+            --dasa-card-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+            --dasa-divider-color: rgba(99, 102, 241, 0.35);
+            --anthara-box-bg: #090d1a;
+            --anthara-box-border: rgba(99, 102, 241, 0.35);
+            --anthara-title-color: #a5b4fc;
+            --anthara-table-bg: #0d1224;
+            --anthara-th-bg: #1e1b4b;
+            --anthara-th-text: #c7d2fe;
+            --anthara-th-border: rgba(99, 102, 241, 0.3);
+            --anthara-td-border: rgba(255, 255, 255, 0.08);
+            --anthara-row-hover: rgba(99, 102, 241, 0.15);
+            --anthara-age-color: #cbd5e1;
+            --anthara-date-color: #fbbf24;
+            --dasa-text-favorable: #34d399;
+            --dasa-text-unfavorable: #f87171;
+            --current-dasa-bg: linear-gradient(135deg, rgba(30, 27, 75, 0.92) 0%, rgba(15, 23, 42, 0.95) 100%);
+            --current-dasa-border: #6366f1;
+            --current-dasa-title-color: #818cf8;
 
+            --color-pos: #34d399;
 
-            --dasa-card-bg: rgba(30, 41, 59, 0.8);
-
-
-
-            --color-pos: #10b981;
-
-
-
-            --color-neg: #f43f5e;
-
-
+            --color-neg: #f87171;
 
         }
 
@@ -308,39 +324,42 @@
 
     [data-theme="sunset"] {
 
-
-
             --bg-primary: linear-gradient(to top, #450a0a 0%, #991b1b 50%, #f97316 100%);
-
-
 
             --text-main: #ffffff;
 
-
-
-            --text-muted: #c7d2fe;
-
-
+            --text-muted: #fed7aa;
 
             --card-bg: rgba(69, 10, 10, 0.9);
 
-
-
             --card-border: rgba(255, 255, 255, 0.25);
-
-
 
             --shadow-color: rgba(0, 0, 0, 0.7);
 
-
-
             --header-bg: linear-gradient(135deg, #991b1b 0%, #450a0a 100%);
 
-
-
-            --dasa-card-bg: rgba(45, 10, 10, 0.95);
-
-
+            --dasa-card-bg: linear-gradient(135deg, rgba(45, 10, 10, 0.96) 0%, rgba(69, 10, 10, 0.94) 100%);
+            --dasa-card-border: #ef4444;
+            --dasa-card-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
+            --dasa-divider-color: rgba(239, 68, 68, 0.35);
+            --anthara-box-bg: #1a0505;
+            --anthara-box-border: rgba(239, 68, 68, 0.35);
+            --anthara-title-color: #fca5a5;
+            --anthara-table-bg: #240707;
+            --anthara-th-bg: #3b0b0b;
+            --anthara-th-text: #fed7aa;
+            --anthara-th-border: rgba(239, 68, 68, 0.3);
+            --anthara-td-border: rgba(255, 255, 255, 0.08);
+            --anthara-row-hover: rgba(239, 68, 68, 0.15);
+            --anthara-age-color: #fecaca;
+            --anthara-date-color: #fbbf24;
+            --dasa-text-favorable: #34d399;
+            --dasa-text-unfavorable: #fca5a5;
+            --current-dasa-bg: linear-gradient(135deg, rgba(69, 10, 10, 0.95) 0%, rgba(30, 5, 5, 0.95) 100%);
+            --current-dasa-border: #f97316;
+            --current-dasa-title-color: #fb923c;
+            --color-pos: #34d399;
+            --color-neg: #fca5a5;
 
         }
 
@@ -430,13 +449,30 @@
 
 
 
-      --color-pos: #10b981;
+      --color-pos: #4ade80;
 
+      --color-neg: #f87171;
 
-
-      --color-neg: #f43f5e;
-
-
+      --dasa-card-bg: linear-gradient(135deg, rgba(20, 18, 14, 0.98) 0%, rgba(28, 25, 23, 0.96) 100%);
+      --dasa-card-border: #f59e0b;
+      --dasa-card-shadow: 0 6px 20px rgba(245, 158, 11, 0.2);
+      --dasa-divider-color: rgba(245, 158, 11, 0.35);
+      --anthara-box-bg: #0a0907;
+      --anthara-box-border: rgba(245, 158, 11, 0.35);
+      --anthara-title-color: #fbbf24;
+      --anthara-table-bg: #12100d;
+      --anthara-th-bg: #261e0e;
+      --anthara-th-text: #fde68a;
+      --anthara-th-border: rgba(245, 158, 11, 0.3);
+      --anthara-td-border: rgba(245, 158, 11, 0.15);
+      --anthara-row-hover: rgba(245, 158, 11, 0.12);
+      --anthara-age-color: #d6d3d1;
+      --anthara-date-color: #fbbf24;
+      --dasa-text-favorable: #4ade80;
+      --dasa-text-unfavorable: #f87171;
+      --current-dasa-bg: linear-gradient(135deg, rgba(28, 25, 23, 0.98) 0%, rgba(12, 10, 9, 0.98) 100%);
+      --current-dasa-border: #f59e0b;
+      --current-dasa-title-color: #fbbf24;
 
     }
 
@@ -526,13 +562,30 @@
 
 
 
-      --color-pos: #10b981;
+      --color-pos: #00ffcc;
 
+      --color-neg: #ff3377;
 
-
-      --color-neg: #f43f5e;
-
-
+      --dasa-card-bg: linear-gradient(135deg, rgba(8, 14, 26, 0.98) 0%, rgba(12, 18, 36, 0.96) 100%);
+      --dasa-card-border: #00ffcc;
+      --dasa-card-shadow: 0 0 20px rgba(0, 255, 204, 0.25);
+      --dasa-divider-color: rgba(0, 255, 204, 0.35);
+      --anthara-box-bg: #03070f;
+      --anthara-box-border: rgba(0, 255, 204, 0.35);
+      --anthara-title-color: #00ffcc;
+      --anthara-table-bg: #060b16;
+      --anthara-th-bg: #0d1b2a;
+      --anthara-th-text: #00ffcc;
+      --anthara-th-border: rgba(0, 255, 204, 0.3);
+      --anthara-td-border: rgba(0, 255, 204, 0.15);
+      --anthara-row-hover: rgba(0, 255, 204, 0.1);
+      --anthara-age-color: #94a3b8;
+      --anthara-date-color: #38bdf8;
+      --dasa-text-favorable: #00ffcc;
+      --dasa-text-unfavorable: #ff3377;
+      --current-dasa-bg: linear-gradient(135deg, rgba(8, 14, 26, 0.98) 0%, rgba(4, 8, 15, 0.98) 100%);
+      --current-dasa-border: #00ffcc;
+      --current-dasa-title-color: #00ffcc;
 
     }
 
@@ -622,13 +675,30 @@
 
 
 
-      --color-pos: #059669;
+      --color-pos: #065f46;
 
+      --color-neg: #b91c1c;
 
-
-      --color-neg: #dc2626;
-
-
+      --dasa-card-bg: #ffffff;
+      --dasa-card-border: #d97706;
+      --dasa-card-shadow: 0 4px 15px rgba(217, 119, 6, 0.15);
+      --dasa-divider-color: #fde68a;
+      --anthara-box-bg: #fffbeb;
+      --anthara-box-border: #fcd34d;
+      --anthara-title-color: #92400e;
+      --anthara-table-bg: #ffffff;
+      --anthara-th-bg: #fef3c7;
+      --anthara-th-text: #78350f;
+      --anthara-th-border: #fde68a;
+      --anthara-td-border: #fef3c7;
+      --anthara-row-hover: #fffbeb;
+      --anthara-age-color: #78350f;
+      --anthara-date-color: #b45309;
+      --dasa-text-favorable: #065f46;
+      --dasa-text-unfavorable: #b91c1c;
+      --current-dasa-bg: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      --current-dasa-border: #d97706;
+      --current-dasa-title-color: #92400e;
 
     }
 
@@ -726,13 +796,30 @@
 
 
 
-      --color-pos: #10b981;
+      --color-pos: #34d399;
 
+      --color-neg: #f87171;
 
-
-      --color-neg: #f43f5e;
-
-
+      --dasa-card-bg: linear-gradient(135deg, rgba(32, 12, 2, 0.98) 0%, rgba(45, 15, 0, 0.96) 100%);
+      --dasa-card-border: #ea580c;
+      --dasa-card-shadow: 0 6px 20px rgba(234, 88, 12, 0.25);
+      --dasa-divider-color: rgba(234, 88, 12, 0.35);
+      --anthara-box-bg: #100500;
+      --anthara-box-border: rgba(234, 88, 12, 0.35);
+      --anthara-title-color: #fde047;
+      --anthara-table-bg: #170801;
+      --anthara-th-bg: #2e0f00;
+      --anthara-th-text: #fde047;
+      --anthara-th-border: rgba(234, 88, 12, 0.3);
+      --anthara-td-border: rgba(234, 88, 12, 0.15);
+      --anthara-row-hover: rgba(234, 88, 12, 0.12);
+      --anthara-age-color: #fed7aa;
+      --anthara-date-color: #fbbf24;
+      --dasa-text-favorable: #34d399;
+      --dasa-text-unfavorable: #f87171;
+      --current-dasa-bg: linear-gradient(135deg, rgba(45, 15, 0, 0.98) 0%, rgba(20, 5, 0, 0.98) 100%);
+      --current-dasa-border: #ea580c;
+      --current-dasa-title-color: #fbbf24;
 
     }
 
@@ -822,13 +909,30 @@
 
 
 
-      --color-pos: #10b981;
+      --color-pos: #4ade80;
 
+      --color-neg: #f87171;
 
-
-      --color-neg: #f43f5e;
-
-
+      --dasa-card-bg: linear-gradient(135deg, rgba(20, 14, 46, 0.98) 0%, rgba(30, 20, 65, 0.96) 100%);
+      --dasa-card-border: #8b5cf6;
+      --dasa-card-shadow: 0 6px 20px rgba(139, 92, 246, 0.25);
+      --dasa-divider-color: rgba(139, 92, 246, 0.35);
+      --anthara-box-bg: #0d0822;
+      --anthara-box-border: rgba(139, 92, 246, 0.35);
+      --anthara-title-color: #c4b5fd;
+      --anthara-table-bg: #130c30;
+      --anthara-th-bg: #231554;
+      --anthara-th-text: #ddd6fe;
+      --anthara-th-border: rgba(139, 92, 246, 0.3);
+      --anthara-td-border: rgba(139, 92, 246, 0.15);
+      --anthara-row-hover: rgba(139, 92, 246, 0.12);
+      --anthara-age-color: #e2e8f0;
+      --anthara-date-color: #fbbf24;
+      --dasa-text-favorable: #4ade80;
+      --dasa-text-unfavorable: #f87171;
+      --current-dasa-bg: linear-gradient(135deg, rgba(30, 20, 65, 0.98) 0%, rgba(15, 10, 35, 0.98) 100%);
+      --current-dasa-border: #8b5cf6;
+      --current-dasa-title-color: #c4b5fd;
 
     }
 
@@ -918,13 +1022,30 @@
 
 
 
-      --color-pos: #10b981;
+      --color-pos: #34d399;
 
+      --color-neg: #f87171;
 
-
-      --color-neg: #f43f5e;
-
-
+      --dasa-card-bg: linear-gradient(135deg, rgba(3, 14, 24, 0.98) 0%, rgba(6, 24, 38, 0.96) 100%);
+      --dasa-card-border: #10b981;
+      --dasa-card-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+      --dasa-divider-color: rgba(16, 185, 129, 0.35);
+      --anthara-box-bg: #010b12;
+      --anthara-box-border: rgba(16, 185, 129, 0.35);
+      --anthara-title-color: #6ee7b7;
+      --anthara-table-bg: #03131e;
+      --anthara-th-bg: #082736;
+      --anthara-th-text: #6ee7b7;
+      --anthara-th-border: rgba(16, 185, 129, 0.3);
+      --anthara-td-border: rgba(16, 185, 129, 0.15);
+      --anthara-row-hover: rgba(16, 185, 129, 0.12);
+      --anthara-age-color: #cbd5e1;
+      --anthara-date-color: #38bdf8;
+      --dasa-text-favorable: #34d399;
+      --dasa-text-unfavorable: #f87171;
+      --current-dasa-bg: linear-gradient(135deg, rgba(6, 24, 38, 0.98) 0%, rgba(2, 10, 18, 0.98) 100%);
+      --current-dasa-border: #10b981;
+      --current-dasa-title-color: #34d399;
 
     }
 
@@ -1680,51 +1801,25 @@
 
         .current-dasa-box {
 
-
-
             width: 100%;
-
-
 
             text-align: center;
 
-
-
-            background: linear-gradient(135deg,
-
-
-
-                    rgba(30, 30, 60, 0.9),
-
-
-
-                    rgba(20, 20, 40, 0.9));
-
-
+            background: var(--current-dasa-bg, linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%));
 
             border-radius: 12px;
 
-
-
             padding: 12px;
-
-
 
             margin: 12px 0;
 
+            border: 2px solid var(--current-dasa-border, #3b82f6);
 
-
-            border: 1px solid rgba(255, 152, 0, 0.3);
-
-
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
             position: relative;
 
-
-
             overflow: hidden;
-
-
 
         }
 
@@ -1788,27 +1883,15 @@
 
         .current-dasa-title {
 
-
-
             font-size: 22px;
 
-
-
-            color: #ff9800;
-
-
+            color: var(--current-dasa-title-color, #1d4ed8);
 
             margin-bottom: 10px;
 
-
-
             font-weight: 700;
 
-
-
-            text-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
-
-
+            text-shadow: none;
 
         }
 
@@ -2312,107 +2395,55 @@
 
         .maha-dasa-card {
 
-
-
-            background: var(--dasa-card-bg, rgba(255, 255, 255, 0.98));
-
-
+            background: var(--dasa-card-bg, #ffffff);
 
             border-radius: 12px;
 
-
-
             padding: 15px;
-
-
 
             margin: 15px 0;
 
+            border: 2px solid var(--dasa-card-border, #3b82f6);
 
-
-            border: 2px solid #2196F3;
-
-
-
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.15);
-
-
+            box-shadow: var(--dasa-card-shadow, 0 4px 15px rgba(59, 130, 246, 0.15));
 
             transition: all 0.3s ease;
 
-
-
             position: relative;
-
-
 
             overflow: hidden;
 
-
-
         }
-
-
-
-
 
 
 
         .maha-dasa-card:hover {
 
-
-
             transform: translateY(-3px);
 
+            box-shadow: var(--dasa-card-shadow, 0 8px 25px rgba(0, 0, 0, 0.25));
 
-
-            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.25);
-
-
-
-            border-color: #1976D2;
-
-
+            border-color: var(--dasa-card-border, #1976D2);
 
         }
-
-
-
-
 
 
 
         .maha-dasa-card.current {
 
+            border: 2px solid var(--dasa-card-border, #3b82f6);
 
-
-            border: 2px solid #2196F3;
-
-
-
-            box-shadow: 0 0 20px rgba(33, 150, 243, 0.35);
-
-
+            box-shadow: 0 0 20px var(--dasa-card-border, rgba(59, 130, 246, 0.35));
 
         }
 
 
 
-
-
-
-
         .maha-dasa-card.birth {
 
+            border: 2px solid var(--dasa-card-border, #3b82f6);
 
-
-            border: 2px solid #2196F3;
-
-
-
-            box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
-
-
+            box-shadow: 0 0 20px var(--dasa-card-border, rgba(59, 130, 246, 0.3));
 
         }
 
@@ -2510,7 +2541,7 @@
 
         .maha-dasa-right-part {
             flex: 0 1 auto;
-            border-left: 1.5px solid var(--card-border, rgba(255, 255, 255, 0.25));
+            border-left: 1.5px solid var(--dasa-divider-color, rgba(150, 150, 150, 0.35));
             padding-left: 14px;
             font-size: 13.5px;
             line-height: 1.35;
@@ -2703,231 +2734,119 @@
 
         .anthara-container {
 
-
-
-            background: rgba(30, 30, 50, 0.7);
-
-
+            background: var(--anthara-box-bg, #f8fafc);
 
             border-radius: 10px;
 
-
-
             padding: 15px;
-
-
 
             margin-top: 10px;
 
-
-
-            border: 1px solid rgba(255, 255, 255, 0.05);
-
-
+            border: 1.5px solid var(--anthara-box-border, #cbd5e1);
 
         }
-
-
-
-
 
 
 
         /* Table Styles for Anthara */
 
-
-
         .anthara-table {
-
-
 
             width: 100%;
 
-
-
             border-collapse: collapse;
-
-
 
             margin-top: 10px;
 
-
-
             font-size: 13px;
 
-
-
-            background: rgba(40, 40, 70, 0.5);
-
-
+            background: var(--anthara-table-bg, #ffffff);
 
             border-radius: 8px;
 
-
-
             overflow: hidden;
 
-
-
         }
-
-
-
-
 
 
 
         .anthara-table th,
 
-
-
         .anthara-table td {
-
-
 
             padding: 8px 12px;
 
-
-
             text-align: left;
 
-
-
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-
+            border-bottom: 1px solid var(--anthara-td-border, rgba(0, 0, 0, 0.08));
 
         }
-
-
-
-
 
 
 
         .anthara-table th {
 
+            background: var(--anthara-th-bg, #e2e8f0);
 
+            color: var(--anthara-th-text, #0f172a);
 
-            background: rgba(30, 30, 50, 0.8);
-
-
-
-            color: #a0a0ff;
-
-
-
-            font-weight: 600;
-
-
+            font-weight: 700;
 
             text-transform: uppercase;
 
+            font-size: 11.5px;
 
+            letter-spacing: 0.8px;
 
-            font-size: 11px;
-
-
-
-            letter-spacing: 1px;
-
-
+            border-bottom: 1.5px solid var(--anthara-th-border, #cbd5e1);
 
         }
-
-
-
-
 
 
 
         .anthara-table tr:last-child td {
 
-
-
             border-bottom: none;
 
-
-
         }
-
-
-
-
 
 
 
         .anthara-table tr:hover {
 
-
-
-            background: rgba(255, 255, 255, 0.05);
-
-
+            background: var(--anthara-row-hover, rgba(0, 0, 0, 0.04));
 
         }
-
-
-
-
 
 
 
         .anthara-table tr.current {
 
-
-
-            background: rgba(76, 175, 80, 0.1);
-
-
+            background: rgba(16, 185, 129, 0.15);
 
         }
-
-
-
-
 
 
 
         .anthara-table td.date-cell {
 
+            color: var(--anthara-date-color, #1e3a8a);
 
+            font-weight: 700;
 
-            color: #ffd700;
-
-
-
-            font-weight: bold;
-
-
-
-            font-size: 14px;
-
-
+            font-size: 13.5px;
 
         }
 
 
 
-
-
-
-
         .anthara-table td.age-cell {
 
+            color: var(--anthara-age-color, #334155);
 
-
-            color: var(--text-muted);
-
-
-
-            font-weight: normal;
-
-
+            font-weight: 600;
 
             font-size: 13px;
-
-
 
         }
 
@@ -3086,14 +3005,14 @@
         .current-dasa-inline.dasa-anukulam *,
         .current-dasa-inline.dasa-anukulam .highlight,
         .current-dasa-inline.dasa-anukulam span {
-            color: #10b981 !important;
+            color: var(--dasa-text-favorable, #047857) !important;
         }
 
         .current-dasa-inline.dasa-pratikulam,
         .current-dasa-inline.dasa-pratikulam *,
         .current-dasa-inline.dasa-pratikulam .highlight,
         .current-dasa-inline.dasa-pratikulam span {
-            color: #ef4444 !important;
+            color: var(--dasa-text-unfavorable, #b91c1c) !important;
         }
 
         .maha-dasa-card.dasa-anukulam .maha-dasa-info,
@@ -3103,7 +3022,7 @@
         .maha-dasa-card.dasa-anukulam .maha-dasa-period,
         .maha-dasa-card.dasa-anukulam .maha-dasa-period *,
         .maha-dasa-card.dasa-anukulam .maha-accordion-toggle i {
-            color: #10b981 !important;
+            color: var(--dasa-text-favorable, #047857) !important;
         }
 
         .maha-dasa-card.dasa-pratikulam .maha-dasa-info,
@@ -3113,7 +3032,7 @@
         .maha-dasa-card.dasa-pratikulam .maha-dasa-period,
         .maha-dasa-card.dasa-pratikulam .maha-dasa-period *,
         .maha-dasa-card.dasa-pratikulam .maha-accordion-toggle i {
-            color: #ef4444 !important;
+            color: var(--dasa-text-unfavorable, #b91c1c) !important;
         }
 
         .anthara-table tr.row-anukulam td,
@@ -3122,7 +3041,7 @@
         .anthara-table tr.row-anukulam .age-cell,
         .anthara-table tr.row-anukulam .anthara-name,
         .anthara-table tr.row-anukulam .favorable {
-            color: #10b981 !important;
+            color: var(--dasa-text-favorable, #047857) !important;
         }
 
         .anthara-table tr.row-pratikulam td,
@@ -3131,15 +3050,19 @@
         .anthara-table tr.row-pratikulam .age-cell,
         .anthara-table tr.row-pratikulam .anthara-name,
         .anthara-table tr.row-pratikulam .unfavorable {
-            color: #ef4444 !important;
+            color: var(--dasa-text-unfavorable, #b91c1c) !important;
         }
 
         .anthara-table tr .table-icon,
         .anthara-table tr .table-icon * {
             color: #ffffff !important;
         }
-        .anthara-table tr .status-badge {
+        .anthara-table tr .status-badge,
+        .anthara-table tr td .status-badge,
+        .anthara-table tr.row-anukulam td .status-badge,
+        .anthara-table tr.row-pratikulam td .status-badge {
             color: #ffffff !important;
+            font-weight: 700 !important;
         }
 
         .print-summary-section tr.row-anukulam td,
@@ -7192,7 +7115,7 @@ body {
 
 
 
-                        <div style="font-size: 12px; color: #a0a0ff; margin-bottom: 10px; font-weight: bold;">
+                        <div class="anthara-title" style="font-size: 13px; color: var(--anthara-title-color, var(--text-muted)); margin-bottom: 10px; font-weight: bold;">
 
 
 
