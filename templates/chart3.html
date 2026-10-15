@@ -215,12 +215,34 @@
                     radial-gradient(circle at 50% 88%, rgba(224, 242, 254, 0.50) 0%, transparent 45%),
                     linear-gradient(135deg, #ffffff 0%, #f8faff 40%, #f0f4ff 75%, #ffffff 100%);
       --text-main: #0f172a;
+      --text-bright: #0f172a;
       --text-muted: #334155;
       --card-bg: rgba(255, 255, 255, 0.96);
       --card-border: rgba(99, 102, 241, 0.22);
       --shadow-color: rgba(15, 23, 42, 0.08);
       --header-bg: linear-gradient(135deg, #1e3a8a, #2563eb, #0284c7);
+      --header-card-bg: rgba(255, 255, 255, 0.96);
+      --header-subtitle-color: #334155;
       --title-bg: linear-gradient(135deg, #0284c7, #059669);
+      --val-own-color: #b45309;
+      --disease-text: #991b1b;
+      --disease-bg: rgba(239, 68, 68, 0.08);
+      --disease-border: #dc2626;
+      --gender-male: #0284c7;
+      --gender-female: #be123c;
+      --gender-neutral: #6d28d9;
+      --direction-color: #0369a1;
+      --status-neutral: #475569;
+      --bitter-enemy-text: #991b1b;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.1);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.3);
+      --disclaimer-text: #991b1b;
+      --disclaimer-bg: rgba(239, 68, 68, 0.08);
+      --disclaimer-border: #dc2626;
+      --table-row-bg: rgba(255, 255, 255, 0.8);
+      --table-row-alt-bg: rgba(248, 250, 252, 0.8);
+      --table-hover-bg: rgba(241, 245, 249, 0.9);
+      --accent-glow: 0 0 15px rgba(99, 102, 241, 0.2);
     }
 
 
@@ -240,89 +262,37 @@
 
 
     [data-theme="cosmic"] {
-
-
-
-
-
       --bg-primary: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.25) 0%, transparent 60%), radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.2) 0%, transparent 60%), linear-gradient(135deg, #020617 0%, #1e1b4b 50%, #020617 100%);
-
-
-
-
-
       --text-main: #ffffff;
-
-
-
-
-
+      --text-bright: #ffffff;
       --text-muted: #c7d2fe;
-
-
-
-
-
       --card-bg: rgba(15, 23, 42, 0.9);
-
-
-
-
-
       --card-border: rgba(99, 102, 241, 0.25);
-
-
-
-
-
       --shadow-color: rgba(0, 0, 0, 0.6);
-
-
-
-
-
       --header-bg: linear-gradient(135deg, #fbbf24, #f59e0b);
-
-
-
-
-
+      --header-card-bg: rgba(15, 23, 42, 0.9);
+      --header-subtitle-color: #c7d2fe;
       --title-bg: linear-gradient(135deg, #6366f1, #ec4899);
-
-
-
-
-
       --table-header-bg: linear-gradient(135deg, #312e81, #1e1b4b);
-
-
-
-
-
       --table-row-bg: rgba(255, 255, 255, 0.05);
-
-
-
-
-
       --table-row-alt-bg: rgba(255, 255, 255, 0.02);
-
-
-
-
-
       --table-hover-bg: rgba(255, 255, 255, 0.12);
-
-
-
-
-
       --accent-glow: 0 0 15px rgba(99, 102, 241, 0.3);
-
-
-
-
-
+      --val-own-color: #fbbf24;
+      --disease-text: #fca5a5;
+      --disease-bg: rgba(255, 99, 132, 0.12);
+      --disease-border: #ff6b6b;
+      --gender-male: #38bdf8;
+      --gender-female: #f472b6;
+      --gender-neutral: #c084fc;
+      --direction-color: #00d2ff;
+      --status-neutral: #94a3b8;
+      --bitter-enemy-text: #fca5a5;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.2);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.4);
+      --disclaimer-text: #fca5a5;
+      --disclaimer-bg: rgba(244, 67, 54, 0.15);
+      --disclaimer-border: #f87171;
     }
 
 
@@ -354,90 +324,38 @@
 
 
     [data-theme="sunset"] {
-
-
-
-
-
-            --bg-primary: linear-gradient(to top, #450a0a 0%, #991b1b 50%, #f97316 100%);
-
-
-
-
-
-            --text-main: #ffffff;
-
-
-
-
-
-            --text-muted: #c7d2fe;
-
-
-
-
-
-            --card-bg: rgba(69, 10, 10, 0.9);
-
-
-
-
-
-            --card-border: rgba(255, 255, 255, 0.25);
-
-
-
-
-
-            --shadow-color: rgba(0, 0, 0, 0.7);
-
-
-
-
-
-            --header-bg: linear-gradient(135deg, #fbbf24, #f97316);
-
-
-
-
-
-            --title-bg: linear-gradient(135deg, #fffbeb, #ffffff);
-
-
-
-
-
-            --table-header-bg: linear-gradient(135deg, #991b1b, #7f1d1d);
-
-
-
-
-
-            --table-row-bg: rgba(255, 255, 255, 0.06);
-
-
-
-
-
-            --table-row-alt-bg: rgba(255, 255, 255, 0.03);
-
-
-
-
-
-            --table-hover-bg: rgba(249, 115, 22, 0.2);
-
-
-
-
-
-            --accent-glow: 0 0 15px rgba(249, 115, 22, 0.3);
-
-
-
-
-
-        }
+      --bg-primary: linear-gradient(to top, #450a0a 0%, #991b1b 50%, #f97316 100%);
+      --text-main: #ffffff;
+      --text-bright: #ffffff;
+      --text-muted: #c7d2fe;
+      --card-bg: rgba(69, 10, 10, 0.9);
+      --card-border: rgba(255, 255, 255, 0.25);
+      --shadow-color: rgba(0, 0, 0, 0.7);
+      --header-bg: linear-gradient(135deg, #fbbf24, #f97316);
+      --header-card-bg: rgba(69, 10, 10, 0.9);
+      --header-subtitle-color: #fef08a;
+      --title-bg: linear-gradient(135deg, #fffbeb, #ffffff);
+      --table-header-bg: linear-gradient(135deg, #991b1b, #7f1d1d);
+      --table-row-bg: rgba(255, 255, 255, 0.06);
+      --table-row-alt-bg: rgba(255, 255, 255, 0.03);
+      --table-hover-bg: rgba(249, 115, 22, 0.2);
+      --accent-glow: 0 0 15px rgba(249, 115, 22, 0.3);
+      --val-own-color: #fbbf24;
+      --disease-text: #fca5a5;
+      --disease-bg: rgba(255, 99, 132, 0.12);
+      --disease-border: #f97316;
+      --gender-male: #38bdf8;
+      --gender-female: #f472b6;
+      --gender-neutral: #c084fc;
+      --direction-color: #00d2ff;
+      --status-neutral: #cbd5e1;
+      --bitter-enemy-text: #fca5a5;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.2);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.4);
+      --disclaimer-text: #fca5a5;
+      --disclaimer-bg: rgba(244, 67, 54, 0.15);
+      --disclaimer-border: #f87171;
+    }
 
 
 
@@ -450,137 +368,48 @@
 
 
     [data-theme="luxury"] {
-
-
-
-
-
       --bg-primary: radial-gradient(ellipse at 30% 20%, #2a1f00 0%, #0a0908 60%, #1a0f00 100%);
-
-
-
-
-
       --text-main: #f5f5f4;
-
-
-
-
-
+      --text-bright: #f5f5f4;
       --text-muted: #d97706;
-
-
-
-
-
       --card-bg: rgba(28, 25, 23, 0.96);
-
-
-
-
-
       --card-border: rgba(217, 119, 6, 0.45);
-
-
-
-
-
       --input-bg: rgba(12, 10, 9, 0.92);
-
-
-
-
-
       --input-border: rgba(217, 119, 6, 0.35);
-
-
-
-
-
       --input-focus-border: #fbbf24;
-
-
-
-
-
       --input-focus-shadow: 0 0 22px rgba(251, 191, 36, 0.55);
-
-
-
-
-
       --btn-show-bg: linear-gradient(135deg, #b45309, #fbbf24);
-
-
-
-
-
       --btn-show-text: #1c1917;
-
-
-
-
-
       --shadow-color: rgba(0, 0, 0, 0.92);
-
-
-
-
-
       --header-bg: linear-gradient(45deg, #f5f5f4, #fbbf24, #d97706);
-
-
-
-
-
+      --header-card-bg: rgba(28, 25, 23, 0.96);
+      --header-subtitle-color: #fbbf24;
+      --title-bg: linear-gradient(135deg, #fbbf24, #f59e0b);
       --label-bg: rgba(12, 10, 9, 0.82);
-
-
-
-
-
       --label-text: #fbbf24;
-
-
-
-
-
       --house-no-bg: rgba(217, 119, 6, 0.18);
-
-
-
-
-
       --house-no-text: #fbbf24;
-
-
-
-
-
       --box-border: rgba(217, 119, 6, 0.42);
-
-
-
-
-
       --box-border-hover: #fbbf24;
-
-
-
-
-
       --color-pos: #10b981;
-
-
-
-
-
       --color-neg: #f43f5e;
-
-
-
-
-
+      --val-own-color: #fbbf24;
+      --disease-text: #fca5a5;
+      --disease-bg: rgba(255, 99, 132, 0.12);
+      --disease-border: #fbbf24;
+      --gender-male: #38bdf8;
+      --gender-female: #f472b6;
+      --gender-neutral: #c084fc;
+      --direction-color: #38bdf8;
+      --status-neutral: #d6d3d1;
+      --bitter-enemy-text: #fca5a5;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.2);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.4);
+      --disclaimer-text: #fca5a5;
+      --disclaimer-bg: rgba(244, 67, 54, 0.15);
+      --disclaimer-border: #f87171;
+      --table-row-bg: rgba(255, 255, 255, 0.05);
+      --table-hover-bg: rgba(217, 119, 6, 0.2);
     }
 
 
@@ -594,137 +423,48 @@
 
 
     [data-theme="cyberpunk"] {
-
-
-
-
-
       --bg-primary: linear-gradient(170deg, #04080f 0%, #090d18 60%, #0a0512 100%);
-
-
-
-
-
       --text-main: #f0fdfa;
-
-
-
-
-
+      --text-bright: #f0fdfa;
       --text-muted: #ff007f;
-
-
-
-
-
       --card-bg: rgba(8, 12, 22, 0.97);
-
-
-
-
-
       --card-border: rgba(255, 0, 127, 0.55);
-
-
-
-
-
       --input-bg: rgba(4, 8, 15, 0.95);
-
-
-
-
-
       --input-border: rgba(0, 255, 204, 0.5);
-
-
-
-
-
       --input-focus-border: #ff007f;
-
-
-
-
-
       --input-focus-shadow: 0 0 18px rgba(255, 0, 127, 0.75);
-
-
-
-
-
       --btn-show-bg: linear-gradient(135deg, #ff007f, #00ffcc);
-
-
-
-
-
       --btn-show-text: #04080f;
-
-
-
-
-
       --shadow-color: rgba(0, 0, 0, 0.88);
-
-
-
-
-
       --header-bg: linear-gradient(45deg, #00ffcc, #ff007f);
-
-
-
-
-
+      --header-card-bg: rgba(8, 12, 22, 0.97);
+      --header-subtitle-color: #00ffcc;
+      --title-bg: linear-gradient(135deg, #00ffcc, #ff007f);
       --label-bg: rgba(4, 8, 15, 0.85);
-
-
-
-
-
       --label-text: #00ffcc;
-
-
-
-
-
       --house-no-bg: rgba(255, 0, 127, 0.18);
-
-
-
-
-
       --house-no-text: #ff007f;
-
-
-
-
-
       --box-border: rgba(0, 255, 204, 0.42);
-
-
-
-
-
       --box-border-hover: #ff007f;
-
-
-
-
-
       --color-pos: #10b981;
-
-
-
-
-
       --color-neg: #f43f5e;
-
-
-
-
-
+      --val-own-color: #00ffcc;
+      --disease-text: #ff6b8b;
+      --disease-bg: rgba(255, 0, 127, 0.15);
+      --disease-border: #ff007f;
+      --gender-male: #00e5ff;
+      --gender-female: #ff007f;
+      --gender-neutral: #d946ef;
+      --direction-color: #00ffcc;
+      --status-neutral: #94a3b8;
+      --bitter-enemy-text: #ff6b8b;
+      --bitter-enemy-bg: rgba(255, 0, 127, 0.2);
+      --bitter-enemy-border: rgba(255, 0, 127, 0.5);
+      --disclaimer-text: #ff6b8b;
+      --disclaimer-bg: rgba(255, 0, 127, 0.15);
+      --disclaimer-border: #ff007f;
+      --table-row-bg: rgba(255, 255, 255, 0.05);
+      --table-hover-bg: rgba(0, 255, 204, 0.15);
     }
 
 
@@ -738,137 +478,49 @@
 
 
     [data-theme="solar"] {
-
-
-
-
-
       --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
-
-
-
-
-
       --text-main: #451a03;
-
-
-
-
-
+      --text-bright: #451a03;
       --text-muted: #92400e;
-
-
-
-
-
       --card-bg: rgba(255, 255, 255, 0.92);
-
-
-
-
-
       --card-border: rgba(217, 119, 6, 0.32);
-
-
-
-
-
       --input-bg: #ffffff;
-
-
-
-
-
       --input-border: rgba(217, 119, 6, 0.4);
-
-
-
-
-
       --input-focus-border: #d97706;
-
-
-
-
-
       --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
-
-
-
-
-
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
-
-
-
-
-
       --btn-show-text: #ffffff;
-
-
-
-
-
       --shadow-color: rgba(120, 53, 15, 0.12);
-
-
-
-
-
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
-
-
-
-
-
+      --header-bg: linear-gradient(45deg, #78350f, #b45309);
+      --header-card-bg: rgba(255, 255, 255, 0.92);
+      --header-subtitle-color: #92400e;
+      --title-bg: linear-gradient(135deg, #78350f, #b45309);
       --label-bg: rgba(254, 243, 199, 0.8);
-
-
-
-
-
       --label-text: #78350f;
-
-
-
-
-
       --house-no-bg: rgba(245, 158, 11, 0.22);
-
-
-
-
-
       --house-no-text: #451a03;
-
-
-
-
-
       --box-border: rgba(217, 119, 6, 0.28);
-
-
-
-
-
       --box-border-hover: #b45309;
-
-
-
-
-
       --color-pos: #059669;
-
-
-
-
-
       --color-neg: #dc2626;
-
-
-
-
-
+      --val-own-color: #92400e;
+      --disease-text: #991b1b;
+      --disease-bg: rgba(239, 68, 68, 0.08);
+      --disease-border: #dc2626;
+      --gender-male: #0369a1;
+      --gender-female: #be123c;
+      --gender-neutral: #6d28d9;
+      --direction-color: #0369a1;
+      --status-neutral: #78350f;
+      --bitter-enemy-text: #991b1b;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.1);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.3);
+      --disclaimer-text: #991b1b;
+      --disclaimer-bg: rgba(239, 68, 68, 0.08);
+      --disclaimer-border: #dc2626;
+      --table-row-bg: rgba(255, 255, 255, 0.7);
+      --table-row-alt-bg: rgba(254, 243, 199, 0.5);
+      --table-hover-bg: rgba(254, 243, 199, 0.8);
     }
 
 
@@ -882,149 +534,50 @@
 
 
     [data-theme="mandala"] {
-
-
-
-
-
       --bg-primary: radial-gradient(circle at 50% 0%, rgba(220, 38, 38, 0.22) 0%, transparent 55%),
-
-
-
-
-
                     radial-gradient(circle at 20% 80%, rgba(217, 119, 6, 0.18) 0%, transparent 50%),
-
-
-
-
-
                     linear-gradient(160deg, #1a0800 0%, #2d0f00 40%, #1a0005 100%);
-
-
-
-
-
       --text-main: #fef3c7;
-
-
-
-
-
+      --text-bright: #fef3c7;
       --text-muted: #fca5a5;
-
-
-
-
-
       --card-bg: rgba(30, 10, 0, 0.92);
-
-
-
-
-
       --card-border: rgba(220, 38, 38, 0.4);
-
-
-
-
-
       --input-bg: rgba(20, 5, 0, 0.88);
-
-
-
-
-
       --input-border: rgba(251, 191, 36, 0.35);
-
-
-
-
-
       --input-focus-border: #fbbf24;
-
-
-
-
-
       --input-focus-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
-
-
-
-
-
       --btn-show-bg: linear-gradient(135deg, #dc2626, #fbbf24);
-
-
-
-
-
       --btn-show-text: #1a0800;
-
-
-
-
-
       --shadow-color: rgba(0, 0, 0, 0.9);
-
-
-
-
-
       --header-bg: linear-gradient(45deg, #fef3c7, #f97316, #dc2626);
-
-
-
-
-
+      --header-card-bg: rgba(30, 10, 0, 0.92);
+      --header-subtitle-color: #fef3c7;
+      --title-bg: linear-gradient(135deg, #fbbf24, #ef4444);
       --label-bg: rgba(20, 5, 0, 0.8);
-
-
-
-
-
       --label-text: #fbbf24;
-
-
-
-
-
       --house-no-bg: rgba(220, 38, 38, 0.2);
-
-
-
-
-
       --house-no-text: #fef3c7;
-
-
-
-
-
       --box-border: rgba(251, 191, 36, 0.32);
-
-
-
-
-
       --box-border-hover: #fbbf24;
-
-
-
-
-
       --color-pos: #10b981;
-
-
-
-
-
       --color-neg: #f43f5e;
-
-
-
-
-
+      --val-own-color: #fbbf24;
+      --disease-text: #fca5a5;
+      --disease-bg: rgba(220, 38, 38, 0.15);
+      --disease-border: #dc2626;
+      --gender-male: #38bdf8;
+      --gender-female: #f472b6;
+      --gender-neutral: #c084fc;
+      --direction-color: #38bdf8;
+      --status-neutral: #fde68a;
+      --bitter-enemy-text: #fca5a5;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.2);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.4);
+      --disclaimer-text: #fca5a5;
+      --disclaimer-bg: rgba(244, 67, 54, 0.15);
+      --disclaimer-border: #f87171;
+      --table-row-bg: rgba(255, 255, 255, 0.05);
+      --table-hover-bg: rgba(220, 38, 38, 0.2);
     }
 
 
@@ -1038,138 +591,66 @@
 
 
     [data-theme="twilight"] {
-
-
-
-
-
       --bg-primary: linear-gradient(160deg, #fde68a 0%, #fca5a5 35%, #c4b5fd 70%, #a5b4fc 100%);
-
-
-
-
-
       --text-main: #f0eeff;
-
-
-
-
-
+      --text-bright: #f0eeff;
       --text-muted: #ddd6fe;
-
-
-
-
-
       --card-bg: rgba(17, 12, 46, 0.93);
-
-
-
-
-
       --card-border: rgba(196, 181, 253, 0.45);
-
-
-
-
-
       --input-bg: rgba(10, 8, 30, 0.96);
-
-
-
-
-
       --input-border: rgba(196, 181, 253, 0.5);
-
-
-
-
-
       --input-focus-border: #c4b5fd;
-
-
-
-
-
       --input-focus-shadow: 0 0 18px rgba(196, 181, 253, 0.55);
-
-
-
-
-
       --btn-show-bg: linear-gradient(135deg, #7c3aed, #c4b5fd);
-
-
-
-
-
       --btn-show-text: #ffffff;
-
-
-
-
-
       --shadow-color: rgba(30, 27, 75, 0.25);
-
-
-
-
-
-      --header-bg: linear-gradient(45deg, #1e1b4b, #7c3aed, #c4b5fd);
-
-
-
-
-
+      --header-bg: linear-gradient(45deg, #c4b5fd, #a78bfa, #f472b6);
+      --header-card-bg: rgba(17, 12, 46, 0.93);
+      --header-subtitle-color: #ddd6fe;
+      --title-bg: linear-gradient(135deg, #c4b5fd, #f472b6);
       --label-bg: rgba(10, 8, 30, 0.85);
-
-
-
-
-
       --label-text: #ddd6fe;
-
-
-
-
-
       --house-no-bg: rgba(196, 181, 253, 0.2);
-
-
-
-
-
       --house-no-text: #f0eeff;
-
-
-
-
-
       --box-border: rgba(196, 181, 253, 0.35);
-
-
-
-
-
       --box-border-hover: #a78bfa;
-
-
-
-
-
       --color-pos: #10b981;
-
-
-
-
-
       --color-neg: #f43f5e;
-
-
-
-
-
+      --val-own-color: #fbbf24;
+      --disease-text: #fca5a5;
+      --disease-bg: rgba(255, 99, 132, 0.12);
+      --disease-border: #c4b5fd;
+      --gender-male: #38bdf8;
+      --gender-female: #f472b6;
+      --gender-neutral: #c4b5fd;
+      --direction-color: #38bdf8;
+      --status-neutral: #ddd6fe;
+      --bitter-enemy-text: #fca5a5;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.2);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.4);
+      --disclaimer-text: #fca5a5;
+      --disclaimer-bg: rgba(244, 67, 54, 0.15);
+      --disclaimer-border: #c4b5fd;
+      --table-row-bg: rgba(255, 255, 255, 0.05);
+      --table-hover-bg: rgba(124, 58, 237, 0.2);
     }
+
+    /* Twilight Theme Specific Overrides for high contrast on pastel background */
+    [data-theme="twilight"] .party-info {
+      background: var(--card-bg) !important;
+      border: 1px solid var(--card-border) !important;
+      color: var(--text-bright) !important;
+    }
+    [data-theme="twilight"] .party-badge {
+      background: rgba(196, 181, 253, 0.25) !important;
+      color: #c4b5fd !important;
+    }
+    [data-theme="twilight"] .print-page-container > h3.section-title {
+      background: linear-gradient(135deg, #1e1b4b, #3b0764, #581c87) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+
 
 
 
@@ -1182,137 +663,48 @@
 
 
     [data-theme="aurora"] {
-
-
-
-
-
       --bg-primary: linear-gradient(135deg, #020617 0%, #0f172a 100%);
-
-
-
-
-
       --text-main: #f0fdf4;
-
-
-
-
-
+      --text-bright: #f0fdf4;
       --text-muted: #34d399;
-
-
-
-
-
       --card-bg: rgba(2, 6, 23, 0.82);
-
-
-
-
-
       --card-border: rgba(52, 211, 153, 0.35);
-
-
-
-
-
       --input-bg: rgba(2, 6, 23, 0.9);
-
-
-
-
-
       --input-border: rgba(52, 211, 153, 0.4);
-
-
-
-
-
       --input-focus-border: #34d399;
-
-
-
-
-
       --input-focus-shadow: 0 0 22px rgba(52, 211, 153, 0.55);
-
-
-
-
-
       --btn-show-bg: linear-gradient(135deg, #059669, #34d399, #38bdf8);
-
-
-
-
-
       --btn-show-text: #020617;
-
-
-
-
-
       --shadow-color: rgba(0, 0, 0, 0.9);
-
-
-
-
-
       --header-bg: linear-gradient(45deg, #34d399, #38bdf8, #818cf8);
-
-
-
-
-
+      --header-card-bg: rgba(2, 6, 23, 0.82);
+      --header-subtitle-color: #a7f3d0;
+      --title-bg: linear-gradient(135deg, #34d399, #38bdf8);
       --label-bg: rgba(2, 6, 23, 0.82);
-
-
-
-
-
       --label-text: #34d399;
-
-
-
-
-
       --house-no-bg: rgba(52, 211, 153, 0.14);
-
-
-
-
-
       --house-no-text: #34d399;
-
-
-
-
-
       --box-border: rgba(52, 211, 153, 0.3);
-
-
-
-
-
       --box-border-hover: #34d399;
-
-
-
-
-
       --color-pos: #10b981;
-
-
-
-
-
       --color-neg: #f43f5e;
-
-
-
-
-
+      --val-own-color: #34d399;
+      --disease-text: #fca5a5;
+      --disease-bg: rgba(255, 99, 132, 0.12);
+      --disease-border: #34d399;
+      --gender-male: #38bdf8;
+      --gender-female: #f472b6;
+      --gender-neutral: #c084fc;
+      --direction-color: #34d399;
+      --status-neutral: #a7f3d0;
+      --bitter-enemy-text: #fca5a5;
+      --bitter-enemy-bg: rgba(239, 68, 68, 0.2);
+      --bitter-enemy-border: rgba(239, 68, 68, 0.4);
+      --disclaimer-text: #fca5a5;
+      --disclaimer-bg: rgba(244, 67, 54, 0.15);
+      --disclaimer-border: #34d399;
+      --table-row-bg: rgba(255, 255, 255, 0.05);
+      --table-hover-bg: rgba(52, 211, 153, 0.2);
     }
 
 
@@ -1817,7 +1209,7 @@
 
 
 
-            background: linear-gradient(135deg, rgba(25, 30, 45, 0.8), rgba(15, 20, 30, 0.9));
+            background: var(--header-card-bg, var(--card-bg));
 
 
 
@@ -1847,7 +1239,7 @@
 
 
 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 40px var(--shadow-color);
 
 
 
@@ -2111,7 +1503,8 @@
 
 
 
-            color: var(--text-muted);
+            color: var(--header-subtitle-color, var(--text-muted));
+            font-weight: 600;
 
 
 
@@ -2495,7 +1888,7 @@
 
 
 
-            background: linear-gradient(135deg, rgba(30, 30, 50, 0.8), rgba(20, 20, 35, 0.9));
+            background: var(--header-card-bg, var(--card-bg));
 
 
 
@@ -2525,7 +1918,7 @@
 
 
 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px var(--shadow-color);
 
 
 
@@ -2735,7 +2128,8 @@
 
 
 
-            color: var(--text-muted);
+            color: var(--header-subtitle-color, var(--text-muted));
+            font-weight: 600;
 
 
 
@@ -3761,7 +3155,8 @@
 
 
 
-            color: #00d2ff;
+            color: var(--direction-color, #00d2ff);
+            font-weight: 700;
 
 
 
@@ -3881,13 +3276,13 @@
 
 
 
-            background: rgba(255, 99, 132, 0.05);
+            background: var(--disease-bg);
 
 
 
 
 
-            border-left: 2px solid #ff6b6b;
+            border-left: 2px solid var(--disease-border);
 
 
 
@@ -3929,7 +3324,8 @@
 
 
 
-            color: #ff9999;
+            color: var(--disease-text);
+            font-weight: 600;
 
 
 
@@ -4002,12 +3398,7 @@
 
 
         .gender-cell.male {
-
-
-
-
-
-            color: #00e5ff;
+            color: var(--gender-male) !important;
 
 
 
@@ -4038,12 +3429,7 @@
 
 
         .gender-cell.female {
-
-
-
-
-
-            color: #ff7eb3;
+            color: var(--gender-female) !important;
 
 
 
@@ -4074,12 +3460,7 @@
 
 
         .gender-cell.neutral {
-
-
-
-
-
-            color: #b388ff;
+            color: var(--gender-neutral) !important;
 
 
 
@@ -4481,19 +3862,21 @@
 
 
 
+        .disclaimer strong { color: var(--disclaimer-text); font-weight: 800; }
         .disclaimer {
 
 
 
 
 
-            background: linear-gradient(135deg, rgba(244, 67, 54, 0.2), rgba(244, 67, 54, 0.1));
+            background: var(--disclaimer-bg);
 
 
 
 
 
-            color: #ff9999;
+            color: var(--disclaimer-text);
+            font-weight: 600;
 
 
 
@@ -4523,7 +3906,7 @@
 
 
 
-            border-left: 4px solid #f44336;
+            border-left: 4px solid var(--disclaimer-border);
 
 
 
@@ -5038,18 +4421,20 @@
         }
         .info-row .label {
             color: var(--text-muted, #a5b4fc);
+            font-weight: 600;
         }
         .info-row .val {
             font-weight: 600;
-            color: var(--text-bright, #ffffff);
+            color: var(--text-bright, #0f172a);
         }
         .info-row .val.own-val {
-            color: #ffd700;
+            color: var(--val-own-color, #b45309);
+            font-weight: 800;
         }
         .card-footer {
             margin-top: 10px;
             padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
         }
         .status-msg {
             font-size: 13px;
@@ -5062,13 +4447,15 @@
             color: #22c55e;
         }
         .msg-neutral {
-            color: #94a3b8;
+            color: var(--status-neutral, #475569);
+            font-weight: 600;
         }
         .bitter-enemy-alert {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            color: #f87171;
+            background: var(--bitter-enemy-bg, rgba(239, 68, 68, 0.15));
+            border: 1px solid var(--bitter-enemy-border, rgba(239, 68, 68, 0.4));
+            color: var(--bitter-enemy-text, #f87171);
             font-size: 12px;
+            font-weight: 700;
             padding: 4px 8px;
             border-radius: 6px;
             margin-top: 6px;
@@ -5129,7 +4516,8 @@
   [data-theme] .header,
   [data-theme] .section-header,
   [data-theme] .footer,
-  [data-theme] .disclaimer {
+  [data-theme] .disclaimer strong { color: var(--disclaimer-text); font-weight: 800; }
+        .disclaimer {
     background: #ffffff !important;
     background-color: #ffffff !important;
     color: #000000 !important;
@@ -5523,7 +4911,8 @@
     color: #334155 !important;
     font-weight: 600 !important;
   }
-  #chart3-page-3 .disclaimer {
+  #chart3-page-3 .disclaimer strong { color: var(--disclaimer-text); font-weight: 800; }
+        .disclaimer {
     font-size: 7.7pt !important;
     padding: 1px 3px !important;
     margin-top: 1px !important;
