@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="{{ current_lang if current_lang else 'te' }}" class="notranslate">
+<html lang="{{ current_lang if current_lang else 'te' }}" class="notranslate" data-theme="cyberpunk">
 
 
 
@@ -2419,7 +2419,8 @@ body {
       } else {
         document.documentElement.setAttribute('data-theme', themeName);
       }
-      localStorage.setItem('preferred-theme', themeName);
+      localStorage.setItem('preferred-theme-v2', themeName);
+    localStorage.setItem('preferred-theme', themeName);
 
       document.querySelectorAll('.theme-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -2448,7 +2449,7 @@ body {
       }
     });
 
-    const savedTheme = localStorage.getItem('preferred-theme') || 'default';
+    const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
     setTheme(savedTheme);
 
 

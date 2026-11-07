@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="{{ current_lang if current_lang else 'te' }}" class="notranslate">
+<html lang="{{ current_lang if current_lang else 'te' }}" class="notranslate" data-theme="cyberpunk">
 
 
 
@@ -28,7 +28,7 @@
 
         (function () {
 
-            const savedTheme = localStorage.getItem('preferred-theme') || 'default';
+            const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
 
             if (savedTheme !== 'default') {
 
@@ -2157,7 +2157,8 @@ body {
 
             }
 
-            localStorage.setItem('preferred-theme', theme);
+            localStorage.setItem('preferred-theme-v2', theme);
+    localStorage.setItem('preferred-theme', theme);
 
 
 
@@ -2183,7 +2184,7 @@ body {
 
         (function () {
 
-            const savedTheme = localStorage.getItem('preferred-theme') || 'light';
+            const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
 
             setTheme(savedTheme);
 
@@ -2451,7 +2452,8 @@ body {
 
             }
 
-            localStorage.setItem('preferred-theme', themeName);
+            localStorage.setItem('preferred-theme-v2', themeName);
+    localStorage.setItem('preferred-theme', themeName);
 
 
 
@@ -2473,7 +2475,7 @@ body {
 
         document.addEventListener('DOMContentLoaded', () => {
 
-            const savedTheme = localStorage.getItem('preferred-theme') || 'light';
+            const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
 
             document.querySelectorAll('.theme-btn').forEach(btn => {
 
@@ -2764,6 +2766,7 @@ body {
     } else {
       document.documentElement.setAttribute('data-theme', themeName);
     }
+    localStorage.setItem('preferred-theme-v2', themeName);
     localStorage.setItem('preferred-theme', themeName);
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -2792,7 +2795,7 @@ body {
     }
   });
 
-  const savedTheme = localStorage.getItem('preferred-theme') || 'default';
+  const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
   setTheme(savedTheme);
 </script>
 

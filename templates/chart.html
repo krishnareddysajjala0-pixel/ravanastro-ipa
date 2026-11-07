@@ -2,7 +2,7 @@
 
 
 
-<html lang="{{ current_lang if current_lang else 'te' }}" class="notranslate">
+<html lang="{{ current_lang if current_lang else 'te' }}" class="notranslate" data-theme="cyberpunk">
 
 
 
@@ -63,7 +63,7 @@
 
 
 
-      const savedTheme = localStorage.getItem('preferred-theme') || 'default';
+      const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
 
 
 
@@ -8655,7 +8655,8 @@ body {
 
 
 
-        localStorage.setItem('preferred-theme', themeName);
+        localStorage.setItem('preferred-theme-v2', themeName);
+    localStorage.setItem('preferred-theme', themeName);
 
 
 
@@ -8703,7 +8704,7 @@ body {
 
 
 
-      const savedThemeGlobal = localStorage.getItem('preferred-theme') || 'light';
+      const savedThemeGlobal = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
 
 
 
@@ -9314,7 +9315,7 @@ body {
 
 
 
-        const savedTheme = localStorage.getItem('preferred-theme') || 'default';
+        const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
 
 
 
@@ -10577,6 +10578,7 @@ body {
     } else {
       document.documentElement.setAttribute('data-theme', themeName);
     }
+    localStorage.setItem('preferred-theme-v2', themeName);
     localStorage.setItem('preferred-theme', themeName);
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -10644,7 +10646,7 @@ body {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    const savedTheme = localStorage.getItem('preferred-theme') || 'default';
+    const savedTheme = localStorage.getItem('preferred-theme-v2') || 'cyberpunk';
     setTheme(savedTheme);
     if (localStorage.getItem('hide-karma') === 'true') {
       document.body.classList.add('hide-karma');
