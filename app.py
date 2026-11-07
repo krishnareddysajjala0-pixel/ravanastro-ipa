@@ -3596,11 +3596,28 @@ def calendar_view():
     telugu_masam_name = TELUGU_MASALU[masam_index]
     translated_masam_name = tr(telugu_masam_name)
     
-    # Festival Mapping: (Masam, Paksham, Tithi_Name) -> Festival
-    # Paksham: 0 for Shukla, 1 for Krishna
-    FEST_MAP = {
-        ("చైత్ర", 0, "పాడ్యమి"): "ఉగాది",
-        ("చైత్ర", 0, "నవమి"): "శ్రీరామ నవమి",
+    # Helper to calculate tithi and Amanta masam at any specific datetime
+    def get_tithi_info_at_time(dt):
+        lc = local_tz.localize(dt)
+        uc = lc.astimezone(pytz.utc)
+        jd_val = swe.julday(uc.year, uc.month, uc.day, uc.hour + uc.minute/60.0 + uc.second/3600.0)
+        s_lon = swe.calc_ut(jd_val, swe.SUN, PLANET_FLAGS)[0][0]
+        m_lon = swe.calc_ut(jd_val, swe.MOON, PLANET_FLAGS)[0][0]
+        diff_val = (m_lon - s_lon) % 360
+        t_idx_val = int(diff_val / 12)
+        pks_val = 0 if t_idx_val < 15 else 1
+        t_name_val = TITHIS_TELUGU[t_idx_val] if t_idx_val < 15 else TITHIS_KRISHNA_TELUGU[t_idx_val - 15]
+        
+        days_since_val = diff_val / 12.190749
+        jd_am = find_amavasya(jd_val - days_since_val)
+        am_sun = swe.calc_ut(jd_am, swe.SUN)[0][0]
+        am_ay = swe.get_ayanamsa_ut(jd_am)
+        m_idx_val = (int(((am_sun - am_ay) % 360) / 30) + 1) % 12
+        m_name_val = TELUGU_MASALU[m_idx_val]
+        return m_name_val, pks_val, t_name_val, t_idx_val
+
+    # Standard Udaya Tithi (Sunrise) Festival Mapping
+    UDAYA_FEST_MAP = {
         ("చైత్ర", 0, "పౌర్ణమి"): "హనుమజ్జయంతి",
         ("వైశాఖ", 0, "తదియ"): "అక్షయ తృతీయ",
         ("వైశాఖ", 0, "ఏకాదశి"): "మోహిని ఏకాదశి",
@@ -3613,18 +3630,13 @@ def calendar_view():
         ("శ్రావణ", 0, "పంచమి"): "నాగుల పంచమి",
         ("శ్రావణ", 0, "ఏకాదశి"): "పుత్రదా ఏకాదశి",
         ("శ్రావణ", 0, "పౌర్ణమి"): "రాఖీ పౌర్ణమి (జంధ్యాల పౌర్ణమి / ఉపాకర్మ)",
-        ("శ్రావణ", 1, "అష్టమి"): "శ్రీ కృష్ణాష్టమి (గోకులాష్టమి)",
         ("శ్రావణ", 1, "ఏకాదశి"): "కామికా ఏకాదశి",
         ("భాద్రపద", 0, "తదియ"): "ఉండ్రాళ్ల తద్ది",
-        ("భాద్రపద", 0, "చవితి"): "వినాయక చవితి",
         ("భాద్రపద", 0, "ఏకాదశి"): "పరివర్తని ఏకాదశి",
         ("భాద్రపద", 0, "చతుర్దశి"): "అనంత పద్మనాభ వ్రతం (అనంత చతుర్దశి)",
         ("ఆశ్వయుజ", 0, "పాడ్యమి"): "దేవీ నవరాత్రుల ప్రారంభం",
         ("ఆశ్వయుజ", 0, "అష్టమి"): "దుర్గాష్టమి",
         ("ఆశ్వయుజ", 0, "నవమి"): "మహార్నవమి",
-        ("ఆశ్వయుజ", 0, "దశమి"): "విజయదశమి (దసరా)",
-        ("ఆశ్వయుజ", 1, "చతుర్దశి"): "నరక చతుర్దశి",
-        ("ఆశ్వయుజ", 1, "అమావాస్య"): "దీపావళి",
         ("కార్తీక", 0, "విదియ"): "భగినీ హస్తభోజనం (యమ ద్వితీయా)",
         ("కార్తీక", 0, "చవితి"): "నాగుల చవితి (శరద్వృత్తు)",
         ("కార్తీక", 0, "ఏకాదశి"): "ప్రబోధిని ఏకాదశి (ఉత్థాన ఏకాదశి)",
@@ -3636,9 +3648,7 @@ def calendar_view():
         ("పుష్య", 0, "ఏకాదశి"): "వైకుంఠ ఏకాదశి (ముక్కోటి ఏకాదశి)",
         ("మాఘ", 0, "పంచమి"): "వసంత పంచమి (శ్రీ పంచమి)",
         ("మాఘ", 0, "సప్తమి"): "రథ సప్తమి",
-        ("మాఘ", 0, "ఏకాదశి"): "భీష్మ ఏకాదశి",
-        ("మాఘ", 1, "చతుర్దశి"): "మహా శివరాత్రి",
-        ("ఫాల్గుణ", 0, "పౌర్ణమి"): "కామదహనం / హోలీ"
+        ("మాఘ", 0, "ఏకాదశి"): "భీష్మ ఏకాదశి"
     }
     
     # Date based festivals
@@ -3675,34 +3685,89 @@ def calendar_view():
         
         panch = get_daily_panchangam_basic(jd, lat, lon, local_tz, calc_dt, calc_end_times=True)
         
-        # Check for festival
-        f_name = ""
-        pks = 0 if "శుక్ల" in panch["paksha"] else 1
-        # Extract tithi name
-        t_name = panch["tithi_full"]
-        m_name = panch["masam"]
+        # Check for festivals using Dharmashastra Kala-Vyapti rules
+        day_fests = []
         
-        # Match from map
-        key = (m_name, pks, t_name)
-        f_name = FEST_MAP.get(key, "")
+        m_sr = panch["masam"]
+        pks_sr = 0 if "శుక్ల" in panch["paksha"] else 1
+        t_sr = panch["tithi_full"]
         
-        # Special dynamic check for Varalakshmi Vratam (Friday before Sravana Purnima)
-        if not f_name and m_name == "శ్రావణ" and pks == 0 and current_dt.weekday() == 4:
-            if (purnima_dt - current_dt).days >= 0 and (purnima_dt - current_dt).days < 7:
-                f_name = "వరలక్ష్మీ వ్రతం"
+        # Calculate tithis at significant Muhurtas of the day
+        m_ar, pks_ar, t_ar, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(5, 0)))
+        m_md, pks_md, t_md, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(12, 15)))
+        m_ap, pks_ap, t_ap, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(14, 30)))
+        m_pd, pks_pd, t_pd, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(17, 45)))
+        m_ni, pks_ni, t_ni, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(23, 55)))
         
-        # Match from date
-        d_key = (current_dt.month, current_dt.day)
-        if not f_name:
-            f_name = DATE_FESTS.get(d_key, "")
+        # 1. Naraka Chaturdashi (Arunodaya Chaturdashi in Ashwayuja Krishna)
+        if m_ar == "ఆశ్వయుజ" and pks_ar == 1 and t_ar == "చతుర్దశి":
+            day_fests.append("నరక చతుర్దశి")
             
-        if f_name:
-            festivals_list.append({
-                "day": current_dt.day,
-                "month": EN_MONTHS_TELUGU[current_dt.month - 1],
-                "month_en": current_dt.strftime("%b"),
-                "name": tr(f_name)
-            })
+        # 2. Deepavali (Pradosha Amavasya in Ashwayuja Krishna)
+        if m_pd == "ఆశ్వయుజ" and pks_pd == 1 and t_pd == "అమావాస్య":
+            m_prev, pks_prev, t_prev, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt - datetime.timedelta(days=1), datetime.time(17, 45)))
+            if not (m_prev == "ఆశ్వయుజ" and pks_prev == 1 and t_prev == "అమావాస్య"):
+                day_fests.append("దీపావళి")
+                
+        # 3. Maha Shivaratri (Nishitha Chaturdashi in Magha Krishna)
+        if m_ni == "మాఘ" and pks_ni == 1 and t_ni == "చతుర్దశి":
+            day_fests.append("మహా శివరాత్రి")
+            
+        # 4. Vinayaka Chavithi (Madhyahna Chavithi in Bhadrapada Shukla)
+        if m_md == "భాద్రపద" and pks_md == 0 and t_md == "చవితి":
+            day_fests.append("వినాయక చవితి")
+            
+        # 5. Sri Rama Navami (Madhyahna Navami in Chaitra Shukla)
+        if m_md == "చైత్ర" and pks_md == 0 and t_md == "నవమి":
+            day_fests.append("శ్రీరామ నవమి")
+            
+        # 6. Sri Krishna Janmashtami (Nishitha Ashtami in Sravana Krishna)
+        if m_ni == "శ్రావణ" and pks_ni == 1 and t_ni == "అష్టమి":
+            day_fests.append("శ్రీ కృష్ణాష్టమి (గోకులాష్టమి)")
+            
+        # 7. Vijayadashami (Aparahna Dashami in Ashwayuja Shukla)
+        if m_ap == "ఆశ్వయుజ" and pks_ap == 0 and t_ap == "దశమి":
+            day_fests.append("విజయదశమి (దసరా)")
+            
+        # 8. Kamadahana / Holi (Pradosha Purnima in Phalguna)
+        if m_pd == "ఫాల్గుణ" and pks_pd == 0 and t_pd == "పౌర్ణమి":
+            m_prev_p, pks_prev_p, t_prev_p, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt - datetime.timedelta(days=1), datetime.time(17, 45)))
+            if not (m_prev_p == "ఫాల్గుణ" and pks_prev_p == 0 and t_prev_p == "పౌర్ణమి"):
+                day_fests.append("కామదహనం / హోలీ")
+                
+        # 9. Ugadi (Chaitra Shukla Padyami - Sunrise or daytime Kshaya)
+        if (m_sr == "చైత్ర" and pks_sr == 0 and t_sr == "పాడ్యమి") or (m_sr == "ఫాల్గుణ" and t_sr == "అమావాస్య" and m_md == "చైత్ర" and t_md == "పాడ్యమి"):
+            day_fests.append("ఉగాది")
+            
+        # 10. Standard Udaya Tithi (Sunrise) Festivals
+        sr_key = (m_sr, pks_sr, t_sr)
+        if sr_key in UDAYA_FEST_MAP:
+            fest_item = UDAYA_FEST_MAP[sr_key]
+            if fest_item not in day_fests:
+                day_fests.append(fest_item)
+                
+        # 11. Varalakshmi Vratam (Friday before Sravana Purnima)
+        if purnima_dt and m_sr == "శ్రావణ" and pks_sr == 0 and current_dt.weekday() == 4:
+            if 0 <= (purnima_dt - current_dt).days < 7:
+                if "వరలక్ష్మీ వ్రతం" not in day_fests:
+                    day_fests.append("వరలక్ష్మీ వ్రతం")
+                    
+        # 12. Solar / Date-based Festivals
+        d_key = (current_dt.month, current_dt.day)
+        if d_key in DATE_FESTS:
+            day_fests.append(DATE_FESTS[d_key])
+            
+        if day_fests:
+            combined_fest_name = ", ".join(tr(f) for f in day_fests)
+            for f in day_fests:
+                festivals_list.append({
+                    "day": current_dt.day,
+                    "month": EN_MONTHS_TELUGU[current_dt.month - 1],
+                    "month_en": current_dt.strftime("%b"),
+                    "name": tr(f)
+                })
+        else:
+            combined_fest_name = ""
             
         days_data[wd][week_idx] = {
             "date": current_dt.day,
@@ -3716,8 +3781,8 @@ def calendar_view():
             "calendar_nak_end": panch.get("calendar_nak_end", ""),
             "sunrise": panch["sunrise"],
             "sunset": panch["sunset"],
-            "is_festival": bool(f_name),
-            "fest_name": tr(f_name) if f_name else "",
+            "is_festival": bool(day_fests),
+            "fest_name": combined_fest_name,
             "is_shukla": "శుక్ల" in panch["paksha"],
             "is_pournami": "పౌర్ణమి" in panch["tithi_full"],
             "is_amavasya": "అమావాస్య" in panch["tithi_full"],
