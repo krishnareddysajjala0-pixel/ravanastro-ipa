@@ -13,7 +13,7 @@ def create_rules_pdf():
     
     # Title
     page.insert_text((50, 50), "జ్యోతిష్య ఫలితాల నియమములు", fontname="te", fontfile=font_path, fontsize=24, color=(0.7, 0.3, 0))
-    page.insert_text((50, 80), "Timeastro - Results Generation Rules", fontsize=14, color=(0.3, 0.3, 0.3))
+    page.insert_text((50, 80), "Ravan Astro - Results Generation Rules", fontsize=14, color=(0.3, 0.3, 0.3))
     
     context = {"y": 120, "page": page}
     
