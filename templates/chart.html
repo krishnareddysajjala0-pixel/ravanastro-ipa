@@ -4065,38 +4065,17 @@
 
 
 
-      /* kundali-and-dasha, NO transit: show on same page after kundali */
-
-
-
+      /* kundali-and-dasha, NO transit: show on same page after kundali with width matching Kundali chart */
       body[data-print-mode="kundali-and-dasha"] #mahadasha-print-section {
-
-
-
         display: block !important;
-
-
-
         page-break-before: avoid !important;
-
-
-
         break-before: avoid !important;
-
-
-
-        margin: 12px auto 0 auto !important;
-
-
-
-        width: 100% !important;
-
-
-
+        width: 1024px !important;
+        max-width: 1024px !important;
+        zoom: 0.78 !important; /* Exact same zoom and width as #print-wrapper / Kundali chart */
+        margin: 8px auto 0 auto !important;
         text-align: center !important;
-
-
-
+        box-sizing: border-box !important;
       }
 
 
@@ -5834,22 +5813,55 @@
 
 
   
-/* ===== COMPACT MAHA PRINT TABLE FOR PERFECT 1-PAGE FIT ===== */
+/* ===== COMPACT MAHA PRINT TABLE MATCHING KUNDALI WIDTH & AUTO-ADJUSTING CELL WIDTHS ===== */
 @media print {
-  .maha-print-table {
-    font-size: 9.5pt !important;
+  body[data-print-mode="kundali-and-dasha"] #mahadasha-print-section {
+    display: block !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+    width: 1024px !important;
+    max-width: 1024px !important;
+    zoom: 0.78 !important;
+    margin: 8px auto 0 auto !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
   }
-  .maha-print-table th {
-    padding: 2.5px 4px !important;
-    font-size: 9.5pt !important;
-  }
-  .maha-print-table td {
-    padding: 2px 4px !important;
-    font-size: 9pt !important;
-  }
+
   .maha-print-title {
+    font-size: 13pt !important;
+    font-weight: 800 !important;
+    margin: 0 auto 6px auto !important;
+    text-align: center !important;
+  }
+
+  .maha-print-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    border-collapse: collapse !important;
+    table-layout: auto !important; /* Auto adjust row width according to matter in cells */
     font-size: 11pt !important;
-    margin: 3px 0 !important;
+    background: #ffffff !important;
+  }
+
+  .maha-print-table th {
+    background-color: #e2e8f0 !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+    border: 1.5px solid #000 !important;
+    padding: 3.5px 6px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-size: 11pt !important;
+  }
+
+  .maha-print-table td {
+    border: 1.5px solid #000 !important;
+    padding: 3px 6px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-size: 10.5pt !important;
+    vertical-align: middle !important;
   }
 }
 </style>
