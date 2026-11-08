@@ -5610,6 +5610,7 @@
 .top-control-bar .ctrl-btn,
 .top-control-bar #karmaBtn,
 .top-control-bar #chupuluBtn,
+.top-control-bar #kundaliPosBtn,
 .top-control-bar .top-btn-theme,
 .top-control-bar .top-btn-lang {
   width: 100% !important;
@@ -5637,6 +5638,47 @@
   height: 36px !important;
   line-height: 1 !important;
   text-align: center !important;
+}
+
+@media (max-width: 480px) {
+  .top-control-bar .ctrl-btn,
+  .top-control-bar #kundaliPosBtn,
+  .top-control-bar .top-btn-theme,
+  .top-control-bar .top-btn-lang {
+    font-size: 11.5px !important;
+    padding: 6px 2px !important;
+    gap: 3px !important;
+  }
+}
+
+/* Kundali Position & Aspects: Hidden by default in Dasacharam page */
+.kundali-pos-info {
+  display: none !important;
+}
+
+body.show-kundali-positions .kundali-pos-info {
+  display: inline !important;
+}
+
+body.show-kundali-positions div.kundali-pos-info {
+  display: block !important;
+}
+
+body.show-kundali-positions .maha-dasa-right-part.kundali-pos-info {
+  display: block !important;
+}
+
+@media (min-width: 769px) {
+  body.show-kundali-positions .maha-dasa-right-part.kundali-pos-info {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+#kundaliPosBtn.active {
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.85), inset 0 0 6px rgba(255, 255, 255, 0.4) !important;
+  outline: 2px solid #ffffff !important;
+  font-weight: 800 !important;
 }
 
 .theme-switcher, .language-switcher {
@@ -6717,7 +6759,13 @@ body {
       <!-- 2. Language Switcher (LAST / RIGHT) -->
 
 
-      <div class="language-switcher">
+            <!-- 2. Kundali Position & Aspects Toggle Button (MIDDLE) -->
+      <button class="top-btn-hands ctrl-btn" id="kundaliPosBtn" onclick="toggleKundaliPositions()" title="{{ _('కుండలి స్థానం') }}">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>{{ _('కుండలి స్థానం') }}</span>
+      </button>
+
+<div class="language-switcher">
 
 
         <button class="top-btn-lang ctrl-btn" onclick="toggleLangMenu(event)" title="Change Language">
@@ -6934,7 +6982,7 @@ body {
                     class="unfavorable">{{ _('ప్రతికూలము') }}</span>
                 {% endif %}
                 {% if current_maha_pos and current_maha_pos.planet_house %}
-                <span class="dasa-kundali-pos" style="font-size: 14px; font-weight: 600; margin-left: 6px;">
+                <span class="dasa-kundali-pos kundali-pos-info" style="font-size: 14px; font-weight: 600; margin-left: 6px;">
                     - 📍 {{ _('కుండలి స్థానం') }}: {{ format_house_title(current_maha_pos.planet_house, current_maha_pos.planet_rasi) }}{% if current_maha_pos.hand_positions %} | {{ _('చేతులు') }} 👉: {% for h in current_maha_pos.hand_positions %}{{ format_house_title(h.house, h.rasi) }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
                 </span>
                 {% endif %}
@@ -7092,7 +7140,7 @@ body {
                         <td style="border: 1px solid #000; padding: 10px;">
                             {{ dasa.icon }} {{ dasa.maha }}
                             {% if dasa.planet_house %}
-                            <div style="font-size: 11px; margin-top: 3px; font-weight: normal; opacity: 0.95;">
+                            <div class="kundali-pos-info" style="font-size: 11px; margin-top: 3px; font-weight: normal; opacity: 0.95;">
                                 📍 {{ _('కుండలి స్థానం') }}: {{ format_house_title(dasa.planet_house, dasa.planet_rasi) }}{% if dasa.hand_positions %} | {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}{{ format_house_title(h.house, h.rasi) }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
                             </div>
                             {% endif %}
@@ -7212,7 +7260,7 @@ body {
                         </div>
 
                         {% if dasa.planet_house %}
-                        <div class="maha-dasa-right-part">
+                        <div class="maha-dasa-right-part kundali-pos-info">
                             <div class="pos-main">
                                 📍 {{ _('కుండలి స్థానం') }}: <strong>{{ format_house_title(dasa.planet_house, dasa.planet_rasi) }}</strong>
                             </div>
@@ -9018,6 +9066,18 @@ body {
 
 
     
+        function toggleKundaliPositions() {
+      const isShowing = document.body.classList.toggle('show-kundali-positions');
+      const btn = document.getElementById('kundaliPosBtn');
+      if (btn) {
+        if (isShowing) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      }
+    }
+
     function toggleLangMenu(e) {
       if (e) e.stopPropagation();
       const ls = document.querySelector('.language-switcher');
