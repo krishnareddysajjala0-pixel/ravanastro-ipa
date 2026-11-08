@@ -7106,17 +7106,7 @@ body {
     max-width: 900px;
     z-index: 100;
 }
-.chart-zoom-bar, .chart-slide-bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(15, 23, 42, 0.94);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    border-radius: 30px;
-    padding: 6px 14px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(10px);
-}
+.chart-zoom-bar, 
 .zoom-title, .slide-hint {
     color: #38bdf8;
     font-size: 12px;
@@ -7215,9 +7205,7 @@ body, .container {
 /* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
 .chart-controls-wrapper,
 .chart-zoom-bar,
-.chart-slide-bar {
-    display: none !important;
-}
+
 
 .is-mobile-app .chart-controls-wrapper {
     display: flex !important;
@@ -7225,9 +7213,7 @@ body, .container {
 .is-mobile-app .chart-zoom-bar {
     display: inline-flex !important;
 }
-.is-mobile-app .chart-slide-bar {
-    display: inline-flex !important;
-}
+.is-mobile-app 
 .is-mobile-app .chart {
     min-width: 520px !important;
 }
@@ -7239,9 +7225,7 @@ body, .container {
 @media print {
     .chart-controls-wrapper,
     .chart-zoom-bar,
-    .chart-slide-bar {
-        display: none !important;
-    }
+    
 }
 </style>
 </head>
@@ -7741,23 +7725,16 @@ body, .container {
 
 
     
-    <!-- Kundali Zoom and Slide Controls -->
+        <!-- Kundali Zoom Controls -->
     <div class="chart-controls-wrapper print-hide">
         <div class="chart-zoom-bar">
-            <span class="zoom-title"><i class="fas fa-search-plus"></i> {{ _('జూమ్') }}:</span>
-            <button type="button" class="zoom-btn" onclick="adjustKundaliZoom(-10)" title="Zoom Out"><i class="fas fa-minus"></i></button>
+            <span class="zoom-title">🔍 {{ _('జూమ్') }}:</span>
+            <button type="button" class="zoom-btn" onclick="adjustKundaliZoom(-10)" title="Zoom Out">−</button>
             <input type="range" id="kundaliZoomSlider" min="70" max="160" value="100" step="5" oninput="applyKundaliZoom(this.value)">
-            <button type="button" class="zoom-btn" onclick="adjustKundaliZoom(10)" title="Zoom In"><i class="fas fa-plus"></i></button>
-            <button type="button" class="zoom-reset-btn" onclick="resetKundaliZoom()"><span id="kundaliZoomDisplay">100%</span> <i class="fas fa-undo"></i></button>
+            <button type="button" class="zoom-btn" onclick="adjustKundaliZoom(10)" title="Zoom In">+</button>
+            <button type="button" class="zoom-reset-btn" onclick="resetKundaliZoom()"><span id="kundaliZoomDisplay">100%</span> ↺</button>
         </div>
-        <div class="chart-slide-bar">
-            <span class="slide-hint"><i class="fas fa-arrows-alt-h"></i> {{ _('కుండలిని పూర్తిగా చూడటానికి జరపండి') }}</span>
-            <div class="slider-controls">
-                <button type="button" class="slide-nav-btn" onclick="slideKundaliChart(-150)" title="Slide Left"><i class="fas fa-chevron-left"></i></button>
-                <input type="range" id="kundaliSlideSlider" min="0" max="100" value="0" oninput="syncKundaliSlide(this)">
-                <button type="button" class="slide-nav-btn" onclick="slideKundaliChart(150)" title="Slide Right"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
+    </div>
     </div>
 
     <!-- Chart Container -->
@@ -10983,39 +10960,7 @@ function resetKundaliZoom() {
     applyKundaliZoom(100);
 }
 
-function syncKundaliSlide(slider) {
-    var container = document.querySelector('.chart-container');
-    if (!container) return;
-    var maxScroll = container.scrollWidth - container.clientWidth;
-    if (maxScroll <= 0) return;
-    var targetScroll = (parseInt(slider.value) / 100) * maxScroll;
-    container.scrollLeft = targetScroll;
-}
 
-function slideKundaliChart(delta) {
-    var container = document.querySelector('.chart-container');
-    if (!container) return;
-    container.scrollBy({ left: delta, behavior: 'smooth' });
-}
-
-function onKundaliScroll() {
-    var container = document.querySelector('.chart-container');
-    var slider = document.getElementById('kundaliSlideSlider');
-    if (!container || !slider) return;
-    var maxScroll = container.scrollWidth - container.clientWidth;
-    if (maxScroll <= 0) {
-        slider.value = 0;
-        return;
-    }
-    var pct = Math.round((container.scrollLeft / maxScroll) * 100);
-    slider.value = pct;
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-    var container = document.querySelector('.chart-container');
-    if (container) {
-        container.addEventListener('scroll', onKundaliScroll);
-    }
     try {
         var saved = localStorage.getItem('preferred-kundali-zoom');
         if (saved && saved !== '100') {

@@ -3962,7 +3962,7 @@
             .anthara-table th:nth-child(4), .anthara-table td:nth-child(4) { width: 16% !important; }
             .anthara-table th:nth-child(5), .anthara-table td:nth-child(5) { width: 16% !important; }
             .anthara-table th:nth-child(6), .anthara-table td:nth-child(6) { width: 13% !important; }
-            .page-zoom-bar, .anthara-slider-bar { display: none !important; }
+            .page-zoom-bar, 
             .anthara-table-wrapper { overflow: visible !important; width: 100% !important; }
             .glow-container { zoom: 1 !important; transform: none !important; }
 
@@ -6248,50 +6248,16 @@ body {
         gap: 8px;
         margin-bottom: 8px;
     }
-    .anthara-slider-bar {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(0, 0, 0, 0.35);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 20px;
-        padding: 3px 8px;
-    }
-    .slide-hint {
-        font-size: 11px;
-        font-weight: 600;
-        color: #38bdf8;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
+    
+    
     .slider-controls {
         display: flex;
         align-items: center;
         gap: 4px;
     }
-    .slide-nav-btn {
-        background: rgba(255, 255, 255, 0.15);
-        border: none;
-        color: #fff;
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 10px;
-    }
-    .slide-nav-btn:active {
-        background: #0284c7;
-    }
-    .anthara-range-slider {
-        width: 80px;
-        height: 4px;
-        cursor: pointer;
-        accent-color: #38bdf8;
-    }
+    
+    
+    
     .anthara-table-wrapper {
         width: 100% !important;
         overflow-x: auto !important;
@@ -6337,16 +6303,12 @@ body {
 <style>
 /* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
 .page-zoom-bar,
-.anthara-slider-bar {
-    display: none !important;
-}
+
 
 .is-mobile-app .page-zoom-bar {
     display: flex !important;
 }
-.is-mobile-app .anthara-slider-bar {
-    display: flex !important;
-}
+.is-mobile-app 
 .is-mobile-app .anthara-table {
     min-width: 560px !important;
     width: 100% !important;
@@ -6363,9 +6325,7 @@ body {
 
 @media print {
     .page-zoom-bar,
-    .anthara-slider-bar {
-        display: none !important;
-    }
+    
 }
 </style>
 </head>
@@ -7038,11 +6998,11 @@ body {
         <!-- Page Zoom Controls -->
         <div class="page-zoom-bar print-hide" id="page-zoom-control">
             <div class="zoom-pill">
-                <span class="zoom-label"><i class="fas fa-search-plus"></i> {{ _('జూమ్') }}</span>
-                <button type="button" class="zoom-action-btn" onclick="adjustPageZoom(-10)" title="Zoom Out"><i class="fas fa-minus"></i></button>
+                <span class="zoom-label">🔍 {{ _('జూమ్') }}</span>
+                <button type="button" class="zoom-action-btn" onclick="adjustPageZoom(-10)" title="Zoom Out">−</button>
                 <input type="range" id="pageZoomSlider" min="75" max="150" value="100" step="5" oninput="applyPageZoom(this.value)">
-                <button type="button" class="zoom-action-btn" onclick="adjustPageZoom(10)" title="Zoom In"><i class="fas fa-plus"></i></button>
-                <button type="button" class="zoom-reset-btn" onclick="resetPageZoom()"><span id="pageZoomDisplay">100%</span> <i class="fas fa-undo"></i></button>
+                <button type="button" class="zoom-action-btn" onclick="adjustPageZoom(10)" title="Zoom In">+</button>
+                <button type="button" class="zoom-reset-btn" onclick="resetPageZoom()"><span id="pageZoomDisplay">100%</span> ↺</button>
             </div>
         </div>
 
@@ -7417,20 +7377,10 @@ body {
 
 
                                         <div class="anthara-container">
-                        <div class="anthara-header-row">
-                            <div class="anthara-title" style="font-size: 13px; color: var(--anthara-title-color, var(--text-muted)); font-weight: bold;">
-                                {{ _('అంతర్దశలు') }} ({{ dasa.antharas|sum(attribute='months')|round(1) }} {{ _('నెలలు') }})
-                            </div>
-                            <div class="anthara-slider-bar print-hide">
-                                <span class="slide-hint"><i class="fas fa-arrows-alt-h"></i> {{ _('పూర్తి వివరాలకు జరపండి') }}</span>
-                                <div class="slider-controls">
-                                    <button type="button" class="slide-nav-btn" onclick="slideAntharaTable(this, -150)" title="Slide Left"><i class="fas fa-chevron-left"></i></button>
-                                    <input type="range" min="0" max="100" value="0" class="anthara-range-slider" oninput="syncAntharaScroll(this)">
-                                    <button type="button" class="slide-nav-btn" onclick="slideAntharaTable(this, 150)" title="Slide Right"><i class="fas fa-chevron-right"></i></button>
-                                </div>
-                            </div>
+                        <div class="anthara-title" style="font-size: 13px; color: var(--anthara-title-color, var(--text-muted)); font-weight: bold; margin-bottom: 8px;">
+                            {{ _('అంతర్దశలు') }} ({{ dasa.antharas|sum(attribute='months')|round(1) }} {{ _('నెలలు') }})
                         </div>
-                        <div class="anthara-table-wrapper" onscroll="syncSliderThumb(this)">
+                        <div class="anthara-table-wrapper">
                         <table class="anthara-table">
 
 
@@ -9402,39 +9352,7 @@ function resetPageZoom() {
     applyPageZoom(100);
 }
 
-/* ===== ANTHARA TABLE SLIDING SYNC ===== */
-function syncSliderThumb(wrapper) {
-    var container = wrapper.closest('.anthara-container');
-    if (!container) return;
-    var slider = container.querySelector('.anthara-range-slider');
-    if (!slider) return;
-    var maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-    if (maxScroll <= 0) {
-        slider.value = 0;
-        return;
-    }
-    var pct = Math.round((wrapper.scrollLeft / maxScroll) * 100);
-    slider.value = pct;
-}
 
-function syncAntharaScroll(slider) {
-    var container = slider.closest('.anthara-container');
-    if (!container) return;
-    var wrapper = container.querySelector('.anthara-table-wrapper');
-    if (!wrapper) return;
-    var maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-    if (maxScroll <= 0) return;
-    var targetScroll = (parseInt(slider.value) / 100) * maxScroll;
-    wrapper.scrollLeft = targetScroll;
-}
-
-function slideAntharaTable(btn, delta) {
-    var container = btn.closest('.anthara-container');
-    if (!container) return;
-    var wrapper = container.querySelector('.anthara-table-wrapper');
-    if (!wrapper) return;
-    wrapper.scrollBy({ left: delta, behavior: 'smooth' });
-}
 
 window.addEventListener('DOMContentLoaded', function() {
     try {

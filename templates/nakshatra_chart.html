@@ -2817,17 +2817,7 @@ body {
     max-width: 900px;
     z-index: 100;
 }
-.nak-zoom-bar, .nak-slide-bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(15, 23, 42, 0.94);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    border-radius: 30px;
-    padding: 6px 14px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(10px);
-}
+.nak-zoom-bar, 
 .zoom-title, .slide-hint {
     color: #38bdf8;
     font-size: 12px;
@@ -2926,9 +2916,7 @@ body, .container {
 /* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
 .nak-controls-wrapper,
 .nak-zoom-bar,
-.nak-slide-bar {
-    display: none !important;
-}
+
 
 .is-mobile-app .nak-controls-wrapper {
     display: flex !important;
@@ -2936,9 +2924,7 @@ body, .container {
 .is-mobile-app .nak-zoom-bar {
     display: inline-flex !important;
 }
-.is-mobile-app .nak-slide-bar {
-    display: inline-flex !important;
-}
+.is-mobile-app 
 .is-mobile-app .chart-grid {
     min-width: 620px !important;
 }
@@ -2950,9 +2936,7 @@ body, .container {
 @media print {
     .nak-controls-wrapper,
     .nak-zoom-bar,
-    .nak-slide-bar {
-        display: none !important;
-    }
+    
 }
 </style>
 </head>
@@ -3136,23 +3120,16 @@ body, .container {
 
 
   
-  <!-- Nakshatra Kundali Zoom and Slide Controls -->
+    <!-- Nakshatra Kundali Zoom Controls -->
   <div class="nak-controls-wrapper print-hide">
       <div class="nak-zoom-bar">
-          <span class="zoom-title"><i class="fas fa-search-plus"></i> {{ _('జూమ్') }}:</span>
-          <button type="button" class="zoom-btn" onclick="adjustNakZoom(-10)" title="Zoom Out"><i class="fas fa-minus"></i></button>
+          <span class="zoom-title">🔍 {{ _('జూమ్') }}:</span>
+          <button type="button" class="zoom-btn" onclick="adjustNakZoom(-10)" title="Zoom Out">−</button>
           <input type="range" id="nakZoomSlider" min="70" max="160" value="100" step="5" oninput="applyNakZoom(this.value)">
-          <button type="button" class="zoom-btn" onclick="adjustNakZoom(10)" title="Zoom In"><i class="fas fa-plus"></i></button>
-          <button type="button" class="zoom-reset-btn" onclick="resetNakZoom()"><span id="nakZoomDisplay">100%</span> <i class="fas fa-undo"></i></button>
+          <button type="button" class="zoom-btn" onclick="adjustNakZoom(10)" title="Zoom In">+</button>
+          <button type="button" class="zoom-reset-btn" onclick="resetNakZoom()"><span id="nakZoomDisplay">100%</span> ↺</button>
       </div>
-      <div class="nak-slide-bar">
-          <span class="slide-hint"><i class="fas fa-arrows-alt-h"></i> {{ _('కుండలిని పూర్తిగా చూడటానికి జరపండి') }}</span>
-          <div class="slider-controls">
-              <button type="button" class="slide-nav-btn" onclick="slideNakChart(-150)" title="Slide Left"><i class="fas fa-chevron-left"></i></button>
-              <input type="range" id="nakSlideSlider" min="0" max="100" value="0" oninput="syncNakSlide(this)">
-              <button type="button" class="slide-nav-btn" onclick="slideNakChart(150)" title="Slide Right"><i class="fas fa-chevron-right"></i></button>
-          </div>
-      </div>
+  </div>
   </div>
 
   <!-- 4x4 South Indian Grid Chart -->
@@ -3929,39 +3906,7 @@ function resetNakZoom() {
     applyNakZoom(100);
 }
 
-function syncNakSlide(slider) {
-    var container = document.querySelector('.chart-container');
-    if (!container) return;
-    var maxScroll = container.scrollWidth - container.clientWidth;
-    if (maxScroll <= 0) return;
-    var targetScroll = (parseInt(slider.value) / 100) * maxScroll;
-    container.scrollLeft = targetScroll;
-}
 
-function slideNakChart(delta) {
-    var container = document.querySelector('.chart-container');
-    if (!container) return;
-    container.scrollBy({ left: delta, behavior: 'smooth' });
-}
-
-function onNakScroll() {
-    var container = document.querySelector('.chart-container');
-    var slider = document.getElementById('nakSlideSlider');
-    if (!container || !slider) return;
-    var maxScroll = container.scrollWidth - container.clientWidth;
-    if (maxScroll <= 0) {
-        slider.value = 0;
-        return;
-    }
-    var pct = Math.round((container.scrollLeft / maxScroll) * 100);
-    slider.value = pct;
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-    var container = document.querySelector('.chart-container');
-    if (container) {
-        container.addEventListener('scroll', onNakScroll);
-    }
     try {
         var saved = localStorage.getItem('preferred-nak-zoom');
         if (saved && saved !== '100') {
