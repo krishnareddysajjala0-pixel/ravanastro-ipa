@@ -26,7 +26,7 @@
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
 
 
 
@@ -7075,6 +7075,125 @@ body {
 }
 
 </style>
+
+<style>
+/* ===== KUNDALI ZOOM & SLIDE CONTROLS ===== */
+.chart-controls-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 12px auto 16px auto;
+    width: 100%;
+    max-width: 900px;
+    z-index: 100;
+}
+.chart-zoom-bar, .chart-slide-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(15, 23, 42, 0.94);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 30px;
+    padding: 6px 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+}
+.zoom-title, .slide-hint {
+    color: #38bdf8;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.zoom-btn, .slide-nav-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 11px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+.zoom-btn:active, .slide-nav-btn:active {
+    transform: scale(0.92);
+    background: #0284c7;
+}
+.chart-controls-wrapper input[type="range"] {
+    width: 100px;
+    cursor: pointer;
+    accent-color: #38bdf8;
+    height: 5px;
+}
+.zoom-reset-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.slider-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.chart-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    position: relative;
+    border-radius: 16px;
+}
+@media (max-width: 768px) {
+    .chart {
+        min-width: 520px !important;
+    }
+}
+body, .container {
+    padding-bottom: 115px !important;
+}
+@media (max-width: 480px) {
+    .fixed-bottom-bar, #action-bar {
+        width: calc(100vw - 12px) !important;
+        padding: 5px 6px !important;
+        gap: 4px !important;
+    }
+    .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        padding: 0 4px !important;
+        font-size: 11px !important;
+        gap: 4px !important;
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
+    }
+    .fixed-bottom-bar .float-btn span, .fixed-bottom-bar button span {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        font-size: 11px !important;
+    }
+}
+@media print {
+    .chart-controls-wrapper { display: none !important; }
+    .chart-container { overflow: visible !important; zoom: 1 !important; transform: none !important; }
+    .chart { min-width: 0 !important; }
+}
+</style>
+
 </head>
 
 
@@ -7570,6 +7689,26 @@ body {
 
 
 
+
+    
+    <!-- Kundali Zoom and Slide Controls -->
+    <div class="chart-controls-wrapper print-hide">
+        <div class="chart-zoom-bar">
+            <span class="zoom-title"><i class="fas fa-search-plus"></i> {{ _('జూమ్') }}:</span>
+            <button type="button" class="zoom-btn" onclick="adjustKundaliZoom(-10)" title="Zoom Out"><i class="fas fa-minus"></i></button>
+            <input type="range" id="kundaliZoomSlider" min="70" max="160" value="100" step="5" oninput="applyKundaliZoom(this.value)">
+            <button type="button" class="zoom-btn" onclick="adjustKundaliZoom(10)" title="Zoom In"><i class="fas fa-plus"></i></button>
+            <button type="button" class="zoom-reset-btn" onclick="resetKundaliZoom()"><span id="kundaliZoomDisplay">100%</span> <i class="fas fa-undo"></i></button>
+        </div>
+        <div class="chart-slide-bar">
+            <span class="slide-hint"><i class="fas fa-arrows-alt-h"></i> {{ _('కుండలిని పూర్తిగా చూడటానికి జరపండి') }}</span>
+            <div class="slider-controls">
+                <button type="button" class="slide-nav-btn" onclick="slideKundaliChart(-150)" title="Slide Left"><i class="fas fa-chevron-left"></i></button>
+                <input type="range" id="kundaliSlideSlider" min="0" max="100" value="0" oninput="syncKundaliSlide(this)">
+                <button type="button" class="slide-nav-btn" onclick="slideKundaliChart(150)" title="Slide Right"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
 
     <!-- Chart Container -->
 
@@ -10756,6 +10895,84 @@ if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversa
         }
     };
 })();
+</script>
+
+
+<script>
+/* ===== KUNDALI ZOOM & SLIDE SCRIPT ===== */
+function applyKundaliZoom(val) {
+    val = parseInt(val);
+    if (isNaN(val)) val = 100;
+    if (val < 65) val = 65;
+    if (val > 175) val = 175;
+    var slider = document.getElementById('kundaliZoomSlider');
+    if (slider) slider.value = val;
+    var display = document.getElementById('kundaliZoomDisplay');
+    if (display) display.innerText = val + '%';
+    
+    var container = document.querySelector('.chart-container');
+    if (container) {
+        if ('zoom' in document.body.style) {
+            container.style.zoom = (val / 100);
+        } else {
+            container.style.transform = 'scale(' + (val / 100) + ')';
+            container.style.transformOrigin = 'top center';
+        }
+    }
+    try {
+        localStorage.setItem('preferred-kundali-zoom', val);
+    } catch(e) {}
+}
+
+function adjustKundaliZoom(delta) {
+    var cur = parseInt(document.getElementById('kundaliZoomSlider') ? document.getElementById('kundaliZoomSlider').value : 100) || 100;
+    applyKundaliZoom(cur + delta);
+}
+
+function resetKundaliZoom() {
+    applyKundaliZoom(100);
+}
+
+function syncKundaliSlide(slider) {
+    var container = document.querySelector('.chart-container');
+    if (!container) return;
+    var maxScroll = container.scrollWidth - container.clientWidth;
+    if (maxScroll <= 0) return;
+    var targetScroll = (parseInt(slider.value) / 100) * maxScroll;
+    container.scrollLeft = targetScroll;
+}
+
+function slideKundaliChart(delta) {
+    var container = document.querySelector('.chart-container');
+    if (!container) return;
+    container.scrollBy({ left: delta, behavior: 'smooth' });
+}
+
+function onKundaliScroll() {
+    var container = document.querySelector('.chart-container');
+    var slider = document.getElementById('kundaliSlideSlider');
+    if (!container || !slider) return;
+    var maxScroll = container.scrollWidth - container.clientWidth;
+    if (maxScroll <= 0) {
+        slider.value = 0;
+        return;
+    }
+    var pct = Math.round((container.scrollLeft / maxScroll) * 100);
+    slider.value = pct;
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    var container = document.querySelector('.chart-container');
+    if (container) {
+        container.addEventListener('scroll', onKundaliScroll);
+    }
+    try {
+        var saved = localStorage.getItem('preferred-kundali-zoom');
+        if (saved && saved !== '100') {
+            applyKundaliZoom(parseInt(saved));
+        }
+    } catch(e) {}
+});
 </script>
 
 </body>
