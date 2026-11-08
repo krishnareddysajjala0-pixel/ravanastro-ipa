@@ -1686,11 +1686,11 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
         strength_pct = int(((longt % 30) / 30) * 100)
         
         # Check favorability using exact logic from birth chart
-        green_planets = ["సూర్యుడు", "భూమి", "కుజుడు", "గురు", "కేతు", "చంద్రుడు"]
+        green_planets = ["సూర్య", "భూమి", "కుజ", "గురు", "కేతు", "చంద్ర", "సూర్యుడు", "కుజుడు", "చంద్రుడు"]
         # Favorable for Guru Lagnas, otherwise Sani Lagnas
         positive_lagnas = ["మీనం", "మేషం", "కర్కాటకం", "సింహం", "వృశ్చికం", "ధనస్సు"]
         
-        is_green = any(p in n for p in green_planets)
+        is_green = any(p in n or n in p for p in green_planets)
         
         if lagna in positive_lagnas:
             color = "#22c55e" if is_green else "#ef4444"
@@ -2479,14 +2479,14 @@ def chart3():
             p_lagna = p['lagna']
             
             # is_friend?
-            is_green = any(gp in p_name for gp in GURU_PARTY_PLANETS)
+            is_green = any(gp in p_name or p_name in gp for gp in GURU_PARTY_PLANETS)
             is_friend = (is_green == (native_party == "గురు వర్గము"))
             
             # is_own_house?
             own_house = "N/A"
             is_own_house = False
             for rule_name, rule_house in OWN_HOUSE_RULES.items():
-                if rule_name in p_name:
+                if rule_name in p_name or p_name in rule_name:
                     own_house = rule_house
                     is_own_house = (p_lagna == rule_house)
                     break
@@ -2494,14 +2494,14 @@ def chart3():
             # bitter_enemy?
             bitter_enemy = None
             for be_key, be_val in BITTER_ENEMIES.items():
-                if be_key in p_name:
+                if be_key in p_name or p_name in be_key:
                     bitter_enemy = be_val
                     break
 
-            # detailed Rulership
+            # detailed Rulership (ఆధీనములో ఉన్నవి)
             rulership = "N/A"
             for r_name, r_text in PLANET_RULERSHIPS.items():
-                if r_name in p_name:
+                if r_name in p_name or p_name in r_name:
                     rulership = r_text
                     break
 

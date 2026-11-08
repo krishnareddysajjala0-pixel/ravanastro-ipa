@@ -816,7 +816,7 @@
 
         .section-title {
 
-            font-size: 34px;
+            font-size: 17px;
 
             background: var(--title-bg);
 
@@ -1346,41 +1346,73 @@
             width: 7.7% !important;
         }
 
-        /* 1st column header (విషయం): 7.6% width */
+        /* 1st column header (విషయం): 7.6% width with prominent background */
         .unified-varga-table th.param-header {
             width: 7.6% !important;
             max-width: 7.6% !important;
-            font-weight: 700 !important;
+            font-weight: 800 !important;
             text-align: center !important;
-            background: var(--table-row-bg, rgba(255, 255, 255, 0.05)) !important;
+            background: #1e293b !important;
+            color: #38bdf8 !important;
+            border: 1px solid var(--card-border, #cbd5e1) !important;
+            border-right: 2px solid #38bdf8 !important;
         }
 
-        /* Group headers in row 1: each spans 6 columns = 6 * 7.7% = 46.2% width */
+        /* Group headers in row 1: each spans 6 columns = 6 * 7.7% = 46.2% width with dedicated background color */
         .unified-varga-table th.varga-group-header {
             width: 46.2% !important;
-            font-size: 13px !important;
+            font-size: 13.5px !important;
             font-weight: 800 !important;
-            background: var(--table-row-bg, rgba(255, 255, 255, 0.05)) !important;
+        }
+        .unified-varga-table th.guru-group-header {
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.35), rgba(6, 78, 59, 0.55)) !important;
+            color: #34d399 !important;
+            border-bottom: 2px solid #10b981 !important;
+        }
+        .unified-varga-table th.shani-group-header {
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.35), rgba(88, 28, 135, 0.55)) !important;
+            color: #c084fc !important;
+            border-bottom: 2px solid #a855f7 !important;
         }
 
-        /* 12 Planet column headers in row 2: exactly 7.7% each */
+        /* 12 Planet column headers in row 2: background color for all 12 planets */
         .unified-varga-table thead tr:nth-child(2) th {
             width: 7.7% !important;
             max-width: 7.7% !important;
             font-size: 12.5px !important;
-            font-weight: 700 !important;
+            font-weight: 800 !important;
             text-transform: none !important;
             letter-spacing: 0 !important;
-            background: var(--table-row-bg, rgba(255, 255, 255, 0.05)) !important;
+            border: 1px solid var(--card-border, #cbd5e1) !important;
+        }
+        .unified-varga-table thead tr:nth-child(2) th.guru-planet,
+        .unified-varga-table thead tr:nth-child(2) th.surya-planet,
+        .unified-varga-table thead tr:nth-child(2) th.chandra-planet,
+        .unified-varga-table thead tr:nth-child(2) th.kuja-planet,
+        .unified-varga-table thead tr:nth-child(2) th.ketu-planet,
+        .unified-varga-table thead tr:nth-child(2) th.bhoomi-planet {
+            background: rgba(16, 185, 129, 0.22) !important;
+            color: #a7f3d0 !important;
+        }
+        .unified-varga-table thead tr:nth-child(2) th.shani-planet,
+        .unified-varga-table thead tr:nth-child(2) th.mitra-planet,
+        .unified-varga-table thead tr:nth-child(2) th.chitra-planet,
+        .unified-varga-table thead tr:nth-child(2) th.budha-planet,
+        .unified-varga-table thead tr:nth-child(2) th.shukra-planet,
+        .unified-varga-table thead tr:nth-child(2) th.rahu-planet {
+            background: rgba(168, 85, 247, 0.22) !important;
+            color: #e9d5ff !important;
         }
 
-        /* Body rows: 1st column is param (7.6%), other 12 columns are planets (7.7% each) */
+        /* Body rows: 1st column is param (7.6%) with prominent background color */
         .unified-varga-table tbody td:first-child {
             width: 7.6% !important;
             max-width: 7.6% !important;
-            font-weight: 700 !important;
+            font-weight: 800 !important;
             text-align: center !important;
-            background: var(--table-row-bg, rgba(255, 255, 255, 0.03)) !important;
+            background: #1e293b !important;
+            color: #38bdf8 !important;
+            border-right: 2px solid #38bdf8 !important;
         }
 
         .unified-varga-table tbody td:not(:first-child) {
@@ -1404,12 +1436,20 @@
             border: 1px solid var(--card-border, #cbd5e1) !important;
         }
 
-        /* Disease row cells - uniform with all other cells */
+        /* Disease row cells - increased cell height, no overlapping, word wrap everywhere */
+        .unified-varga-table .disease-row {
+            height: auto !important;
+            min-height: 85px !important;
+        }
+
         .unified-varga-table .disease-cell {
-            padding: 4px 2px !important;
+            height: auto !important;
+            min-height: 85px !important;
+            padding: 6px 3px !important;
             text-align: center !important;
             vertical-align: middle !important;
             background: var(--table-row-bg, rgba(255, 255, 255, 0.03)) !important;
+            overflow: visible !important;
         }
 
         .unified-varga-table .disease-list {
@@ -1420,18 +1460,23 @@
             border: none !important;
             display: flex !important;
             flex-direction: column !important;
-            gap: 2px !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 3px !important;
+            width: 100% !important;
         }
 
         .unified-varga-table .disease-list li {
-            font-size: 11.5px !important;
+            font-size: 11px !important;
             font-weight: 600 !important;
             color: var(--text-main, #ffffff) !important;
             line-height: 1.25 !important;
-            padding: 1px 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
             text-align: center !important;
-            word-break: normal !important;
-            overflow-wrap: break-word !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
         }
 
         /* Gender, gemstone, caste, direction, day cells - all uniform */
@@ -2057,6 +2102,7 @@
     word-break: break-word !important;
     white-space: normal !important;
   }
+  /* Print: First column and first two rows with background colors */
   #chart3-page-1 .data-table th:first-child,
   #chart3-page-1 .data-table td:first-child,
   #chart3-page-1 .unified-varga-table th.param-header,
@@ -2064,37 +2110,67 @@
     width: 7.6% !important;
     min-width: 7.6% !important;
     max-width: 7.6% !important;
-    background: #ffffff !important;
-    font-weight: 700 !important;
-    color: #000000 !important;
-    border: 1px solid #cbd5e1 !important;
+    background: #e2e8f0 !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    border: 1px solid #94a3b8 !important;
+    border-right: 1.5px solid #64748b !important;
   }
   #chart3-page-1 .unified-varga-table th.varga-group-header {
     width: 46.2% !important;
-    font-size: 6.8pt !important;
+    font-size: 7.2pt !important;
     font-weight: 800 !important;
-    background: #ffffff !important;
+    border: 1px solid #94a3b8 !important;
+  }
+  #chart3-page-1 .unified-varga-table th.guru-group-header {
+    background: #dcfce7 !important;
+    color: #166534 !important;
+  }
+  #chart3-page-1 .unified-varga-table th.shani-group-header {
+    background: #f3e8ff !important;
+    color: #6b21a8 !important;
   }
   #chart3-page-1 .data-table th:not(:first-child),
   #chart3-page-1 .data-table td:not(:first-child),
-  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th,
   #chart3-page-1 .unified-varga-table tbody td:not(:first-child) {
     width: 7.7% !important;
     min-width: 7.7% !important;
     max-width: 7.7% !important;
   }
-  #chart3-page-1 .varga-group-header {
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th {
+    width: 7.7% !important;
+    min-width: 7.7% !important;
+    max-width: 7.7% !important;
     font-size: 6.8pt !important;
     font-weight: 800 !important;
-    background: #ffffff !important;
+    border: 1px solid #94a3b8 !important;
+  }
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.guru-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.surya-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.chandra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.kuja-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.ketu-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.bhoomi-planet {
+    background: #f0fdf4 !important;
+    color: #15803d !important;
+  }
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.shani-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.mitra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.chitra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.budha-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.shukra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.rahu-planet {
+    background: #faf5ff !important;
+    color: #7e22ce !important;
   }
   #chart3-page-1 .disease-row td,
   #chart3-page-1 .disease-cell {
     border: 1px solid #cbd5e1 !important;
     background: #ffffff !important;
-    padding: 1.2px 1px !important;
+    padding: 2px 1px !important;
     text-align: center !important;
     vertical-align: middle !important;
+    height: auto !important;
   }
   #chart3-page-1 .disease-list {
     background: transparent !important;
@@ -2102,15 +2178,21 @@
     padding: 0 !important;
     margin: 0 !important;
     list-style: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1px !important;
   }
   #chart3-page-1 .disease-list li {
-    font-size: 6.8pt !important;
+    font-size: 6.2pt !important;
     font-weight: 600 !important;
-    padding: 0.1px 0 !important;
+    padding: 0 !important;
     color: #000000 !important;
-    line-height: 1.08 !important;
+    line-height: 1.15 !important;
     border: none !important;
     text-align: center !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
   }
 
   .card-top .current-loc-item {
@@ -3044,6 +3126,28 @@ body {
   }
 }
 </style>
+
+<style>
+#varga-table-section {
+  padding: 8px 12px !important;
+  margin: 15px auto 10px auto !important;
+}
+#varga-table-section .section-title {
+  font-size: 17px !important; /* Reduced to half */
+  margin-bottom: 0 !important;
+}
+@media (max-width: 768px) {
+  #varga-table-section .section-title {
+    font-size: 14px !important;
+  }
+}
+@media print {
+  #chart3-page-1 .section-title,
+  #varga-table-section .section-title {
+    font-size: 6.8pt !important; /* Reduced to half in print */
+  }
+}
+</style>
 </head>
 
 {% set is_guru_party = (native_party == 'గురు వర్గము' if native_party else true) %}
@@ -3142,19 +3246,19 @@ body {
                     <tr>
                         
                         <!-- Guru Varga Planets -->
-                        <th class="guru-planet">{{ _('గురువు') }}</th>
-                        <th class="surya-planet">{{ _('సూర్యుడు') }}</th>
-                        <th class="chandra-planet">{{ _('చంద్రుడు') }}</th>
-                        <th class="kuja-planet">{{ _('కుజుడు') }}</th>
-                        <th class="ketu-planet">{{ _('కేతువు') }}</th>
+                        <th class="guru-planet">{{ _('గురు') }}</th>
+                        <th class="surya-planet">{{ _('సూర్య') }}</th>
+                        <th class="chandra-planet">{{ _('చంద్ర') }}</th>
+                        <th class="kuja-planet">{{ _('కుజ') }}</th>
+                        <th class="ketu-planet">{{ _('కేతు') }}</th>
                         <th class="bhoomi-planet">{{ _('భూమి') }}</th>
                         <!-- Shani Varga Planets -->
                         <th class="shani-planet">{{ _('శని') }}</th>
                         <th class="mitra-planet">{{ _('మిత్ర') }}</th>
                         <th class="chitra-planet">{{ _('చిత్ర') }}</th>
-                        <th class="budha-planet">{{ _('బుధుడు') }}</th>
-                        <th class="shukra-planet">{{ _('శుక్రుడు') }}</th>
-                        <th class="rahu-planet">{{ _('రాహువు') }}</th>
+                        <th class="budha-planet">{{ _('బుధ') }}</th>
+                        <th class="shukra-planet">{{ _('శుక్ర') }}</th>
+                        <th class="rahu-planet">{{ _('రాహు') }}</th>
                         
                     </tr>
                 </thead>
@@ -3163,180 +3267,180 @@ body {
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('రంగు') }}</td>
                         
-                        <td>పసుపు</td>
-                        <td>గోధుమ</td>
-                        <td>తెలుపు</td>
-                        <td>ఎరుపు</td>
-                        <td>మిశ్రమ</td>
-                        <td>నీలం</td>
-                        <td>నలుపు</td>
-                        <td>వక్క రంగు</td>
-                        <td>లేత పసుపు</td>
-                        <td>ఆకుపచ్చ</td>
-                        <td>తెలుపు</td>
-                        <td>సిమెంటు</td>
+                        <td>{{ _('పసుపు') }}</td>
+                        <td>{{ _('గోధుమ') }}</td>
+                        <td>{{ _('తెలుపు') }}</td>
+                        <td>{{ _('ఎరుపు') }}</td>
+                        <td>{{ _('మిశ్రమ') }}</td>
+                        <td>{{ _('నీలం') }}</td>
+                        <td>{{ _('నలుపు') }}</td>
+                        <td>{{ _('వక్క రంగు') }}</td>
+                        <td>{{ _('లేత పసుపు') }}</td>
+                        <td>{{ _('ఆకుపచ్చ') }}</td>
+                        <td>{{ _('తెలుపు') }}</td>
+                        <td>{{ _('సిమెంటు') }}</td>
                         
                     </tr>
                     <!-- రత్నం -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('రత్నం') }}</td>
                         
-                        <td class="gemstone-cell">పుష్యరాగం</td>
-                        <td class="gemstone-cell">కెంపు</td>
-                        <td class="gemstone-cell">ముత్యం</td>
-                        <td class="gemstone-cell">పగడం</td>
-                        <td class="gemstone-cell">వైఢూర్యం</td>
-                        <td class="gemstone-cell">నల్లరాయి</td>
-                        <td class="gemstone-cell">నీలం</td>
-                        <td class="gemstone-cell">ఎర్రరాయి</td>
-                        <td class="gemstone-cell">తెల్లరాయి</td>
-                        <td class="gemstone-cell">పచ్చ</td>
-                        <td class="gemstone-cell">వజ్రం</td>
-                        <td class="gemstone-cell">గోమేధికం</td>
+                        <td class="gemstone-cell">{{ _('పుష్యరాగం') }}</td>
+                        <td class="gemstone-cell">{{ _('కెంపు') }}</td>
+                        <td class="gemstone-cell">{{ _('ముత్యం') }}</td>
+                        <td class="gemstone-cell">{{ _('పగడం') }}</td>
+                        <td class="gemstone-cell">{{ _('వైఢూర్యం') }}</td>
+                        <td class="gemstone-cell">{{ _('నల్లరాయి') }}</td>
+                        <td class="gemstone-cell">{{ _('నీలం') }}</td>
+                        <td class="gemstone-cell">{{ _('ఎర్రరాయి') }}</td>
+                        <td class="gemstone-cell">{{ _('తెల్లరాయి') }}</td>
+                        <td class="gemstone-cell">{{ _('పచ్చ') }}</td>
+                        <td class="gemstone-cell">{{ _('వజ్రం') }}</td>
+                        <td class="gemstone-cell">{{ _('గోమేధికం') }}</td>
                         
                     </tr>
                     <!-- ధాన్యం -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('ధాన్యం') }}</td>
                         
-                        <td class="category-cell">సెనగలు</td>
-                        <td class="category-cell">గోధుమలు</td>
-                        <td class="category-cell">బియ్యం</td>
-                        <td class="category-cell">కందులు</td>
-                        <td class="category-cell">ఉలవలు</td>
-                        <td class="category-cell">జొన్నలు</td>
-                        <td class="category-cell">నువ్వులు</td>
-                        <td class="category-cell">రాగులు</td>
-                        <td class="category-cell">అలసందలు</td>
-                        <td class="category-cell">పెసలు</td>
-                        <td class="category-cell">బొబ్బర్లు</td>
-                        <td class="category-cell">మినుములు</td>
+                        <td class="category-cell">{{ _('సెనగలు') }}</td>
+                        <td class="category-cell">{{ _('గోధుమలు') }}</td>
+                        <td class="category-cell">{{ _('బియ్యం') }}</td>
+                        <td class="category-cell">{{ _('కందులు') }}</td>
+                        <td class="category-cell">{{ _('ఉలవలు') }}</td>
+                        <td class="category-cell">{{ _('జొన్నలు') }}</td>
+                        <td class="category-cell">{{ _('నువ్వులు') }}</td>
+                        <td class="category-cell">{{ _('రాగులు') }}</td>
+                        <td class="category-cell">{{ _('అలసందలు') }}</td>
+                        <td class="category-cell">{{ _('పెసలు') }}</td>
+                        <td class="category-cell">{{ _('బొబ్బర్లు') }}</td>
+                        <td class="category-cell">{{ _('మినుములు') }}</td>
                         
                     </tr>
                     <!-- రుచి -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('రుచి') }}</td>
                         
-                        <td class="category-cell">పూర్తి తీపి</td>
-                        <td class="category-cell">మిరప కారం</td>
-                        <td class="category-cell">ఉప్పు</td>
-                        <td class="category-cell">వేప చేదు</td>
-                        <td class="category-cell">ఉప్పు</td>
-                        <td class="category-cell">బీరకాయ చేదు</td>
-                        <td class="category-cell">కరక్కాయ వగరు</td>
-                        <td class="category-cell">లేత తీపి</td>
-                        <td class="category-cell">చింత పులుపు</td>
-                        <td class="category-cell">వగరు</td>
-                        <td class="category-cell">నిమ్మ పులుపు</td>
-                        <td class="category-cell">మిరియాల కారం</td>
+                        <td class="category-cell">{{ _('పూర్తి తీపి') }}</td>
+                        <td class="category-cell">{{ _('మిరప కారం') }}</td>
+                        <td class="category-cell">{{ _('ఉప్పు') }}</td>
+                        <td class="category-cell">{{ _('వేప చేదు') }}</td>
+                        <td class="category-cell">{{ _('ఉప్పు') }}</td>
+                        <td class="category-cell">{{ _('బీరకాయ చేదు') }}</td>
+                        <td class="category-cell">{{ _('కరక్కాయ వగరు') }}</td>
+                        <td class="category-cell">{{ _('లేత తీపి') }}</td>
+                        <td class="category-cell">{{ _('చింత పులుపు') }}</td>
+                        <td class="category-cell">{{ _('వగరు') }}</td>
+                        <td class="category-cell">{{ _('నిమ్మ పులుపు') }}</td>
+                        <td class="category-cell">{{ _('మిరియాల కారం') }}</td>
                         
                     </tr>
                     <!-- దిశ -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('దిశ') }}</td>
                         
-                        <td class="direction-cell">ఈశాన్యం</td>
-                        <td class="direction-cell">తూర్పు</td>
-                        <td class="direction-cell">వాయువ్యం</td>
-                        <td class="direction-cell">దక్షిణం</td>
-                        <td class="direction-cell">పైకి</td>
-                        <td class="direction-cell">క్రిందికి</td>
-                        <td class="direction-cell">పడమర</td>
-                        <td class="direction-cell">పైకి</td>
-                        <td class="direction-cell">క్రిందికి</td>
-                        <td class="direction-cell">ఉత్తరం</td>
-                        <td class="direction-cell">ఆగ్నేయం</td>
-                        <td class="direction-cell">నైరుతి</td>
+                        <td class="direction-cell">{{ _('ఈశాన్యం') }}</td>
+                        <td class="direction-cell">{{ _('తూర్పు') }}</td>
+                        <td class="direction-cell">{{ _('వాయువ్యం') }}</td>
+                        <td class="direction-cell">{{ _('దక్షిణం') }}</td>
+                        <td class="direction-cell">{{ _('పైకి') }}</td>
+                        <td class="direction-cell">{{ _('క్రిందికి') }}</td>
+                        <td class="direction-cell">{{ _('పడమర') }}</td>
+                        <td class="direction-cell">{{ _('పైకి') }}</td>
+                        <td class="direction-cell">{{ _('క్రిందికి') }}</td>
+                        <td class="direction-cell">{{ _('ఉత్తరం') }}</td>
+                        <td class="direction-cell">{{ _('ఆగ్నేయం') }}</td>
+                        <td class="direction-cell">{{ _('నైరుతి') }}</td>
                         
                     </tr>
                     <!-- దినం -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('దినం') }}</td>
                         
-                        <td class="day-cell">గురువారం</td>
-                        <td class="day-cell">ఆదివారం</td>
-                        <td class="day-cell">సోమవారం</td>
-                        <td class="day-cell">మంగళవారం</td>
-                        <td class="day-cell">గురువారం</td>
-                        <td class="day-cell">మంగళవారం</td>
-                        <td class="day-cell">శనివారం</td>
-                        <td class="day-cell">శుక్రవారం</td>
-                        <td class="day-cell">శనివారం</td>
-                        <td class="day-cell">బుధవారం</td>
-                        <td class="day-cell">శుక్రవారం</td>
-                        <td class="day-cell">బుధవారం</td>
+                        <td class="day-cell">{{ _('గురువారం') }}</td>
+                        <td class="day-cell">{{ _('ఆదివారం') }}</td>
+                        <td class="day-cell">{{ _('సోమవారం') }}</td>
+                        <td class="day-cell">{{ _('మంగళవారం') }}</td>
+                        <td class="day-cell">{{ _('గురువారం') }}</td>
+                        <td class="day-cell">{{ _('మంగళవారం') }}</td>
+                        <td class="day-cell">{{ _('శనివారం') }}</td>
+                        <td class="day-cell">{{ _('శుక్రవారం') }}</td>
+                        <td class="day-cell">{{ _('శనివారం') }}</td>
+                        <td class="day-cell">{{ _('బుధవారం') }}</td>
+                        <td class="day-cell">{{ _('శుక్రవారం') }}</td>
+                        <td class="day-cell">{{ _('బుధవారం') }}</td>
                         
                     </tr>
                     <!-- వ్యాధులు -->
                     <tr class="disease-row">
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('వ్యాధులు') }}</td>
                         
-                        <td class="disease-cell"><ul class="disease-list"><li>మర్మస్థాన రోగాలు</li><li>శుక్ల నష్టం</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>అతిసారం</li><li>జ్వరం</li><li>శ్వాస సమస్యలు</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>పాండురోగం</li><li>కామెర్లు</li><li>మూత్ర సమస్యలు</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>వరిబీజాలు</li><li>కత్తి గాయాలు</li><li>మశూచి</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>దురద</li><li>రహస్య వ్యాధులు</li><li>క్యాన్సర్</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>అరికాళ్ళ/చేతుల మంట</li><li>కాళ్ళు చేతులు చీలుట</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>మూలవ్యాధి</li><li>కీళ్ళ వ్యాధులు</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>తలనొప్పి</li><li>వెన్నెముక నొప్పి</li><li>మనోరోగాలు</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>మోకాళ్ళ నొప్పి</li><li>గుండెనొప్పి</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>ఉదర బాధలు</li><li>కుష్ఠు</li><li>మర్మావయవాల బాధలు</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>మధుమేహం</li><li>సుఖవ్యాధులు</li><li>మూత్ర రోగాలు</li></ul></td>
-                        <td class="disease-cell"><ul class="disease-list"><li>మూర్చ</li><li>అపస్మారం</li><li>మశూచి</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('మర్మస్థాన రోగాలు') }}</li><li>{{ _('శుక్ల నష్టం') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('అతిసారం') }}</li><li>{{ _('జ్వరం') }}</li><li>{{ _('శ్వాస సమస్యలు') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('పాండురోగం') }}</li><li>{{ _('కామెర్లు') }}</li><li>{{ _('మూత్ర సమస్యలు') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('వరిబీజాలు') }}</li><li>{{ _('కత్తి గాయాలు') }}</li><li>{{ _('మశూచి') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('దురద') }}</li><li>{{ _('రహస్య వ్యాధులు') }}</li><li>{{ _('క్యాన్సర్') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('అరికాళ్ళ/చేతుల మంట') }}</li><li>{{ _('కాళ్ళు చేతులు చీలుట') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('మూలవ్యాధి') }}</li><li>{{ _('కీళ్ళ వ్యాధులు') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('తలనొప్పి') }}</li><li>{{ _('వెన్నెముక నొప్పి') }}</li><li>{{ _('మనోరోగాలు') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('మోకాళ్ళ నొప్పి') }}</li><li>{{ _('గుండెనొప్పి') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('ఉదర బాధలు') }}</li><li>{{ _('కుష్ఠు') }}</li><li>{{ _('మర్మావయవాల బాధలు') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('మధుమేహం') }}</li><li>{{ _('సుఖవ్యాధులు') }}</li><li>{{ _('మూత్ర రోగాలు') }}</li></ul></td>
+                        <td class="disease-cell"><ul class="disease-list"><li>{{ _('మూర్చ') }}</li><li>{{ _('అపస్మారం') }}</li><li>{{ _('మశూచి') }}</li></ul></td>
                         
                     </tr>
                     <!-- లింగం -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('లింగం') }}</td>
                         
-                        <td class="gender-cell male">పురుషుడు</td>
-                        <td class="gender-cell male">పురుషుడు</td>
-                        <td class="gender-cell female">స్త్రీ</td>
-                        <td class="gender-cell male">పురుషుడు</td>
-                        <td class="gender-cell neutral">నపుంసక</td>
-                        <td class="gender-cell male">పురుషుడు</td>
-                        <td class="gender-cell neutral">నపుంసక</td>
-                        <td class="gender-cell female">స్త్రీ</td>
-                        <td class="gender-cell neutral">నపుంసక</td>
-                        <td class="gender-cell neutral">నపుంసకుడు</td>
-                        <td class="gender-cell female">స్త్రీ</td>
-                        <td class="gender-cell female">స్త్రీ</td>
+                        <td class="gender-cell male">{{ _('పురుషుడు') }}</td>
+                        <td class="gender-cell male">{{ _('పురుషుడు') }}</td>
+                        <td class="gender-cell female">{{ _('స్త్రీ') }}</td>
+                        <td class="gender-cell male">{{ _('పురుషుడు') }}</td>
+                        <td class="gender-cell neutral">{{ _('నపుంసక') }}</td>
+                        <td class="gender-cell male">{{ _('పురుషుడు') }}</td>
+                        <td class="gender-cell neutral">{{ _('నపుంసక') }}</td>
+                        <td class="gender-cell female">{{ _('స్త్రీ') }}</td>
+                        <td class="gender-cell neutral">{{ _('నపుంసక') }}</td>
+                        <td class="gender-cell neutral">{{ _('నపుంసకుడు') }}</td>
+                        <td class="gender-cell female">{{ _('స్త్రీ') }}</td>
+                        <td class="gender-cell female">{{ _('స్త్రీ') }}</td>
                         
                     </tr>
                     <!-- కారకత్వం -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('కారకత్వం') }}</td>
                         
-                        <td class="category-cell">పుత్రుడు</td>
-                        <td class="category-cell">తండ్రి</td>
-                        <td class="category-cell">తల్లి</td>
-                        <td class="category-cell">సోదరులు</td>
-                        <td class="category-cell">నిరాకార జ్ఞానం</td>
-                        <td class="category-cell">అజ్ఞానం</td>
-                        <td class="category-cell">ఆయువు</td>
-                        <td class="category-cell">మిత్రుడు</td>
-                        <td class="category-cell">శత్రువు</td>
-                        <td class="category-cell">మామ</td>
-                        <td class="category-cell">భార్య</td>
-                        <td class="category-cell">చోరులు</td>
+                        <td class="category-cell">{{ _('పుత్రుడు') }}</td>
+                        <td class="category-cell">{{ _('తండ్రి') }}</td>
+                        <td class="category-cell">{{ _('తల్లి') }}</td>
+                        <td class="category-cell">{{ _('సోదరులు') }}</td>
+                        <td class="category-cell">{{ _('నిరాకార జ్ఞానం') }}</td>
+                        <td class="category-cell">{{ _('అజ్ఞానం') }}</td>
+                        <td class="category-cell">{{ _('ఆయువు') }}</td>
+                        <td class="category-cell">{{ _('మిత్రుడు') }}</td>
+                        <td class="category-cell">{{ _('శత్రువు') }}</td>
+                        <td class="category-cell">{{ _('మామ') }}</td>
+                        <td class="category-cell">{{ _('భార్య') }}</td>
+                        <td class="category-cell">{{ _('చోరులు') }}</td>
                         
                     </tr>
                     <!-- జాతి -->
                     <tr>
                         <td style="font-weight: bold; color: var(--text-muted);">{{ _('జాతి') }}</td>
                         
-                        <td class="caste-cell">బ్రాహ్మణ</td>
-                        <td class="caste-cell">క్షత్రియ</td>
-                        <td class="caste-cell">బ్రాహ్మణ</td>
-                        <td class="caste-cell">నాయిబ్రాహ్మణ</td>
-                        <td class="caste-cell">ఇస్లామీయులు</td>
-                        <td class="caste-cell">జైనులు</td>
-                        <td class="caste-cell">మాదిగ, మాల</td>
-                        <td class="caste-cell">క్రైస్తవులు</td>
-                        <td class="caste-cell">సిక్కులు</td>
-                        <td class="caste-cell">వైశ్య</td>
-                        <td class="caste-cell">నంభీబ్రాహ్మణ</td>
-                        <td class="caste-cell">వాల్మీకి (బోయ)</td>
+                        <td class="caste-cell">{{ _('బ్రాహ్మణ') }}</td>
+                        <td class="caste-cell">{{ _('క్షత్రియ') }}</td>
+                        <td class="caste-cell">{{ _('బ్రాహ్మణ') }}</td>
+                        <td class="caste-cell">{{ _('నాయిబ్రాహ్మణ') }}</td>
+                        <td class="caste-cell">{{ _('ఇస్లామీయులు') }}</td>
+                        <td class="caste-cell">{{ _('జైనులు') }}</td>
+                        <td class="caste-cell">{{ _('మాదిగ, మాల') }}</td>
+                        <td class="caste-cell">{{ _('క్రైస్తవులు') }}</td>
+                        <td class="caste-cell">{{ _('సిక్కులు') }}</td>
+                        <td class="caste-cell">{{ _('వైశ్య') }}</td>
+                        <td class="caste-cell">{{ _('నంభీబ్రాహ్మణ') }}</td>
+                        <td class="caste-cell">{{ _('వాల్మీకి (బోయ)') }}</td>
                         
                     </tr>
                 </tbody>
