@@ -5,6 +5,23 @@
 
 
 <head>
+    <script>
+        (function() {
+            var isApp = {% if is_app %}true{% else %}false{% endif %} || !!(
+                window.AndroidPrint ||
+                window.Capacitor ||
+                (navigator.userAgent && (navigator.userAgent.indexOf('RavanAstroApp') !== -1 || navigator.userAgent.indexOf('wv') !== -1)) ||
+                window.location.hostname === '127.0.0.1' ||
+                window.location.hostname === 'localhost' ||
+                window.location.port === '5000' ||
+                new URLSearchParams(window.location.search).get('app') === '1'
+            );
+            if (isApp) {
+                document.documentElement.classList.add('is-mobile-app');
+            }
+        })();
+    </script>
+
 
   <meta name="google" content="notranslate">
 
@@ -2905,6 +2922,39 @@ body, .container {
 }
 </style>
 
+<style>
+/* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
+.nak-controls-wrapper,
+.nak-zoom-bar,
+.nak-slide-bar {
+    display: none !important;
+}
+
+.is-mobile-app .nak-controls-wrapper {
+    display: flex !important;
+}
+.is-mobile-app .nak-zoom-bar {
+    display: inline-flex !important;
+}
+.is-mobile-app .nak-slide-bar {
+    display: inline-flex !important;
+}
+.is-mobile-app .chart-grid {
+    min-width: 620px !important;
+}
+.is-mobile-app .chart-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+@media print {
+    .nak-controls-wrapper,
+    .nak-zoom-bar,
+    .nak-slide-bar {
+        display: none !important;
+    }
+}
+</style>
 </head>
 
 <body>

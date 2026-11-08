@@ -11,6 +11,23 @@
 
 
 <head>
+    <script>
+        (function() {
+            var isApp = {% if is_app %}true{% else %}false{% endif %} || !!(
+                window.AndroidPrint ||
+                window.Capacitor ||
+                (navigator.userAgent && (navigator.userAgent.indexOf('RavanAstroApp') !== -1 || navigator.userAgent.indexOf('wv') !== -1)) ||
+                window.location.hostname === '127.0.0.1' ||
+                window.location.hostname === 'localhost' ||
+                window.location.port === '5000' ||
+                new URLSearchParams(window.location.search).get('app') === '1'
+            );
+            if (isApp) {
+                document.documentElement.classList.add('is-mobile-app');
+            }
+        })();
+    </script>
+
 
 
 
@@ -6316,6 +6333,40 @@ body {
             font-size: 11px !important;
         }
     }
+</style>
+<style>
+/* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
+.page-zoom-bar,
+.anthara-slider-bar {
+    display: none !important;
+}
+
+.is-mobile-app .page-zoom-bar {
+    display: flex !important;
+}
+.is-mobile-app .anthara-slider-bar {
+    display: flex !important;
+}
+.is-mobile-app .anthara-table {
+    min-width: 560px !important;
+    width: 100% !important;
+}
+.is-mobile-app .anthara-table th,
+.is-mobile-app .anthara-table td {
+    white-space: nowrap !important;
+}
+.is-mobile-app .anthara-table-wrapper {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+}
+
+@media print {
+    .page-zoom-bar,
+    .anthara-slider-bar {
+        display: none !important;
+    }
+}
 </style>
 </head>
 

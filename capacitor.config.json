@@ -3,8 +3,9 @@
   "appName": "Ravan Astro",
   "webDir": "www",
   "bundledWebRuntime": false,
+  "appendUserAgent": "RavanAstroApp/iOS",
   "server": {
-    "url": "http://127.0.0.1:5000",
+    "url": "http://127.0.0.1:5000?app=1",
     "cleartext": true
   }
 }

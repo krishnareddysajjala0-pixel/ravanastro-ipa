@@ -285,14 +285,32 @@ app.secret_key = 'astrology-secret-key-2024'  # Required for session
 @app.context_processor
 def inject_translation():
     lang = 'te'
+    is_app = False
     if has_request_context():
         lang = request.args.get('lang') or session.get('lang') or request.cookies.get('lang') or 'te'
+        ua = request.headers.get('User-Agent', '')
+        host = request.host or ''
+        is_app = (
+            'RavanAstroApp' in ua or 
+            'wv' in ua or 
+            '127.0.0.1' in host or 
+            'localhost' in host or 
+            request.args.get('app') == '1' or
+            request.cookies.get('is_app') == '1'
+        )
     
     def translate_text(text):
         if not text or lang == 'te':
             return text
         return tr(text, lang)
-    return dict(_=translate_text, current_lang=lang)
+    return dict(_=translate_text, current_lang=lang, is_app=is_app)
+
+@app.after_request
+def add_no_cache_headers(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 # ---------------- Swiss Ephemeris ----------------
 # swe.set_ephe_path(".")  # Removed to allow Render to use default pyswisseph bundled files
