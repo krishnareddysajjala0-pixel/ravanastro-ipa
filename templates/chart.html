@@ -8225,7 +8225,7 @@ html, body {
 
 
 
-      <button onclick="fetchTransitChart()" id="transit-btn" style="background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(11, 163, 96, 0.4); display: inline-flex; align-items: center; gap: 8px;">
+      <button onclick="openTransitModal()" id="transit-btn" style="background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(11, 163, 96, 0.4); display: inline-flex; align-items: center; gap: 8px;">
 
 
 
@@ -8250,6 +8250,55 @@ html, body {
 
 
     </div>
+
+    <!-- Transit Date/Time Selection Modal -->
+    <div id="transit-modal" style="display: none; position: fixed; inset: 0; z-index: 999999; background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 16px;">
+      <div style="background: linear-gradient(145deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #10b981; border-radius: 20px; max-width: 440px; width: 100%; padding: 22px 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(16, 185, 129, 0.35); color: #ffffff; box-sizing: border-box;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 10px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 800; color: #34d399;">
+            <i class="fas fa-satellite"></i> <span>{{ _('ఈ రోజు గ్రహ స్థితి (గోచారం)') }}</span>
+          </div>
+          <button type="button" onclick="closeTransitModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 14px; line-height: 1.4;">
+          {{ _('ప్రస్తుత పరికర తేది, సమయం డిఫాల్ట్‌గా ఎంచుకోబడ్డాయి. కావాలంటే మార్చుకుని జనరేట్ చేయవచ్చు:') }}
+        </p>
+
+        <div style="margin-bottom: 12px;">
+          <label for="transit-custom-date" style="display: block; font-size: 13px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">
+            <i class="fas fa-calendar-alt"></i> {{ _('తేది') }}
+          </label>
+          <input type="date" id="transit-custom-date" style="width: 100%; box-sizing: border-box; background: rgba(15, 23, 42, 0.95); border: 1.5px solid rgba(52, 211, 153, 0.6); border-radius: 10px; color: #ffffff; padding: 10px 12px; font-size: 15px; font-weight: 600; outline: none;">
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label for="transit-custom-time" style="display: block; font-size: 13px; font-weight: 700; color: #38bdf8; margin-bottom: 5px;">
+            <i class="fas fa-clock"></i> {{ _('సమయం') }}
+          </label>
+          <input type="time" id="transit-custom-time" style="width: 100%; box-sizing: border-box; background: rgba(15, 23, 42, 0.95); border: 1.5px solid rgba(56, 189, 248, 0.6); border-radius: 10px; color: #ffffff; padding: 10px 12px; font-size: 15px; font-weight: 600; outline: none;">
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" onclick="submitTransitWithCustomDateTime()" style="flex: 1 1 auto; min-width: 140px; background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: #ffffff; border: none; padding: 11px 16px; border-radius: 10px; font-size: 14.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);">
+            <i class="fas fa-bolt"></i> <span>{{ _('గ్రహ స్థితిని చూపించు') }}</span>
+          </button>
+
+          <button type="button" onclick="setTransitToDeviceNow()" title="{{ _('ప్రస్తుత సమయానికి రీసెట్') }}" style="background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25); color: #f1f5f9; padding: 11px 14px; border-radius: 10px; font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <i class="fas fa-rotate-right"></i> <span>{{ _('ఇప్పుడే') }}</span>
+          </button>
+
+          <button type="button" onclick="closeTransitModal()" style="background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 11px 14px; border-radius: 10px; font-size: 13.5px; font-weight: 700; cursor: pointer;">
+            {{ _('రద్దు') }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+
 
 
 
@@ -9381,7 +9430,42 @@ html, body {
 
 
 
-      function fetchTransitChart() {
+      function openTransitModal() {
+        setTransitToDeviceNow();
+        const modal = document.getElementById('transit-modal');
+        if (modal) modal.style.display = 'flex';
+      }
+
+      function closeTransitModal() {
+        const modal = document.getElementById('transit-modal');
+        if (modal) modal.style.display = 'none';
+      }
+
+      function setTransitToDeviceNow() {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const hh = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+
+        const dateInput = document.getElementById('transit-custom-date');
+        const timeInput = document.getElementById('transit-custom-time');
+        if (dateInput) dateInput.value = `${yyyy}-${mm}-${dd}`;
+        if (timeInput) timeInput.value = `${hh}:${min}`;
+      }
+
+      function submitTransitWithCustomDateTime() {
+        const dateInput = document.getElementById('transit-custom-date');
+        const timeInput = document.getElementById('transit-custom-time');
+        const customDate = dateInput ? dateInput.value : '';
+        const customTime = timeInput ? timeInput.value : '';
+
+        closeTransitModal();
+        fetchTransitChart(customDate, customTime);
+      }
+
+      function fetchTransitChart(customDate, customTime) {
         showLoader();
         const btn = document.getElementById('transit-btn');
         const loading = document.getElementById('transit-loading');
@@ -9393,10 +9477,10 @@ html, body {
         let timezone = '{{ session.get("birth_info", {}).get("timezone_str", "Asia/Kolkata") }}';
         let place = '{{ session.get("birth_info", {}).get("place", "Hyderabad") }}';
 
-        sendTransitRequest(lat, lon, timezone, place);
+        sendTransitRequest(lat, lon, timezone, place, customDate, customTime);
       }
 
-      function sendTransitRequest(lat, lon, timezone, place) {
+      function sendTransitRequest(lat, lon, timezone, place, customDate, customTime) {
         const btn = document.getElementById('transit-btn');
         const loading = document.getElementById('transit-loading');
         const container = document.getElementById('transit-container');
@@ -9406,6 +9490,8 @@ html, body {
         formData.append('lon', lon);
         formData.append('timezone', timezone);
         formData.append('place', place);
+        if (customDate) formData.append('transit_date', customDate);
+        if (customTime) formData.append('transit_time', customTime);
 
         fetch('/transit_chart', {
           method: 'POST',
@@ -9428,6 +9514,7 @@ html, body {
 
           const toggleBar = document.getElementById('transit-toggle-bar');
           if (toggleBar) toggleBar.style.display = 'block';
+          if (btn) btn.style.display = 'inline-flex';
           if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
         })
         .catch(error => {

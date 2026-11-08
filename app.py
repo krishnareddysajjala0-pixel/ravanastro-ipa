@@ -1908,7 +1908,23 @@ def transit_chart():
     lon = float(lon)
 
     local_tz = pytz.timezone(timezone_str)
-    local_dt = datetime.datetime.now(local_tz)
+    transit_date = request.form.get("transit_date")
+    transit_time = request.form.get("transit_time")
+
+    if transit_date and transit_time:
+        try:
+            t_parts = transit_time.strip().split(":")
+            h = int(t_parts[0])
+            m = int(t_parts[1]) if len(t_parts) > 1 else 0
+            s = int(t_parts[2]) if len(t_parts) > 2 else 0
+            d_parts = [int(p) for p in transit_date.strip().split("-")]
+            naive_dt = datetime.datetime(d_parts[0], d_parts[1], d_parts[2], h, m, s)
+            local_dt = local_tz.localize(naive_dt)
+        except Exception:
+            local_dt = datetime.datetime.now(local_tz)
+    else:
+        local_dt = datetime.datetime.now(local_tz)
+
     utc_dt = local_dt.astimezone(pytz.utc)
 
     jd = swe.julday(
@@ -3769,7 +3785,23 @@ def nakshatra_transit_chart():
     lon = float(lon)
 
     local_tz = pytz.timezone(timezone_str)
-    local_dt = datetime.datetime.now(local_tz)
+    transit_date = request.form.get("transit_date")
+    transit_time = request.form.get("transit_time")
+
+    if transit_date and transit_time:
+        try:
+            t_parts = transit_time.strip().split(":")
+            h = int(t_parts[0])
+            m = int(t_parts[1]) if len(t_parts) > 1 else 0
+            s = int(t_parts[2]) if len(t_parts) > 2 else 0
+            d_parts = [int(p) for p in transit_date.strip().split("-")]
+            naive_dt = datetime.datetime(d_parts[0], d_parts[1], d_parts[2], h, m, s)
+            local_dt = local_tz.localize(naive_dt)
+        except Exception:
+            local_dt = datetime.datetime.now(local_tz)
+    else:
+        local_dt = datetime.datetime.now(local_tz)
+
     today_dob = local_dt.strftime("%Y-%m-%d")
     today_tob = local_dt.strftime("%H:%M")
 
