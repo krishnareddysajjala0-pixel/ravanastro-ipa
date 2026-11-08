@@ -3901,15 +3901,7 @@
 
 
 
-      body.transit-loaded #print-wrapper {
-
-
-
-        zoom: 0.55 !important; /* Scale wrapper to fit both charts stacked vertically on a single page */
-
-
-
-      }
+      /* Replaced by single page transit print */
 
 
 
@@ -7318,6 +7310,138 @@ html, body {
   .chart { min-width: 0 !important; }
 }
 </style>
+
+
+
+<style id="transit-single-page-print">
+/* ===== GUARANTEED SINGLE-PAGE EQUAL-WIDTH PRINT FOR BOTH KUNDALIS ===== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 4mm 5mm 4mm 5mm !important;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+
+  /* Completely collapse non-print bars so they never trigger a blank first page */
+  .top-control-bar,
+  .top-control-bar *,
+  .fixed-bottom-bar,
+  .fixed-bottom-bar *,
+  #action-bar,
+  .print-hide,
+  #loading-overlay,
+  #print-options-modal,
+  #transit-inputs-bar,
+  #nak-transit-inputs-bar,
+  #transit-btn,
+  #transit-loading,
+  #transit-toggle-bar {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* When transit is loaded, fit BOTH Kundalis on a single A4 page with EQUAL WIDTH */
+  body.transit-loaded #chart-pdf-export-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    zoom: 0.65 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  body.transit-loaded #print-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    zoom: 1 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  body.transit-loaded #print-wrapper .header {
+    margin: 0 0 2px 0 !important;
+    padding: 2px 0 !important;
+  }
+
+  body.transit-loaded #print-wrapper .header .om-title {
+    margin-bottom: 2px !important;
+    font-size: 16px !important;
+  }
+
+  body.transit-loaded .chart-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 auto 4px auto !important;
+    padding: 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  body.transit-loaded #transit-container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 4px auto 0 auto !important;
+    padding: 0 !important;
+    zoom: 1 !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  body.transit-loaded #transit-container .header {
+    margin: 4px 0 2px 0 !important;
+    padding: 2px 0 !important;
+    border-top: 1.5px dashed #475569 !important;
+  }
+
+  body.transit-loaded #transit-container .header div {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    margin-top: 2px !important;
+  }
+
+  /* Make sure both charts have exact same box sizing & proportions */
+  body.transit-loaded .chart {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  body.transit-loaded .box {
+    padding: 2px !important;
+  }
+}
+</style>
 </head>
 
 
@@ -8238,10 +8362,7 @@ html, body {
           <input type="time" id="transit-custom-time" style="background: transparent; border: none; color: #ffffff; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; color-scheme: dark;">
         </div>
 
-        <!-- Current device date/time reset button -->
-        <button type="button" onclick="setTransitToDeviceNow()" title="{{ _('ప్రస్తుత సమయానికి రీసెట్') }}" style="background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25); color: #f1f5f9; padding: 6px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: all 0.2s ease;">
-          <i class="fas fa-rotate-right"></i> <span>{{ _('ఇప్పుడే') }}</span>
-        </button>
+        
       </div>
 
       <!-- Main Button -->

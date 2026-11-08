@@ -3091,6 +3091,64 @@ html, body {
   }
 }
 </style>
+
+
+
+<style id="nak-transit-single-page-print">
+/* ===== GUARANTEED SINGLE-PAGE EQUAL-WIDTH PRINT FOR NAKSHATRA TRANSIT ===== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 4mm 5mm 4mm 5mm !important;
+  }
+
+  /* Collapse non-print elements */
+  .top-action-bar,
+  .top-control-bar,
+  .print-hide,
+  .fixed-bottom-bar,
+  #action-bar,
+  .float-btn,
+  .no-print,
+  .fixed-bottom-bar-nav,
+  #transit-toggle-bar,
+  #transit-btn,
+  #transit-loading,
+  .location-buttons,
+  #nak-transit-inputs-bar {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.transit-loaded .nakshatra-chart-container,
+  body.transit-loaded #chart-pdf-export-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    zoom: 0.65 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  body.transit-loaded #transit-container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 4px auto 0 auto !important;
+    zoom: 1 !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -3487,10 +3545,7 @@ html, body {
           <input type="time" id="nak-transit-custom-time" style="background: transparent; border: none; color: #ffffff; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; color-scheme: dark;">
         </div>
 
-        <!-- Current device date/time reset button -->
-        <button type="button" onclick="setNakshatraTransitToDeviceNow()" title="{{ _('ప్రస్తుత సమయానికి రీసెట్') }}" style="background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25); color: #f1f5f9; padding: 6px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: all 0.2s ease;">
-          <i class="fas fa-rotate-right"></i> <span>{{ _('ఇప్పుడే') }}</span>
-        </button>
+        
       </div>
 
       <!-- Main Button -->
@@ -3642,6 +3697,7 @@ html, body {
           container.innerHTML = html;
           container.style.display = 'block';
         }
+        document.body.classList.add('transit-loaded');
         const toggleBar = document.getElementById('transit-toggle-bar');
         if (toggleBar) toggleBar.style.display = 'block';
         if (btn) btn.style.display = 'inline-flex';
@@ -3670,6 +3726,7 @@ html, body {
       if (container.style.display === 'none') {
 
         container.style.display = 'block';
+        document.body.classList.add('transit-loaded');
 
         if (icon) icon.className = 'fas fa-eye-slash';
 
@@ -3680,6 +3737,7 @@ html, body {
       } else {
 
         container.style.display = 'none';
+        document.body.classList.remove('transit-loaded');
 
         if (icon) icon.className = 'fas fa-eye';
 
