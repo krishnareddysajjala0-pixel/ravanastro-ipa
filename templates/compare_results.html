@@ -2845,21 +2845,87 @@
 
     .nak-group-row:last-child { border-bottom: none; }
 
-    .nak-name-cell { width: 42px; font-weight: 700; font-size: 10.5px; color: var(--text-muted, #ffd700); display: flex; align-items: center; padding-right: 2px; }
+    .nak-name-cell {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      min-width: 16px !important;
+      max-width: 22px !important;
+      font-weight: 800 !important;
+      font-size: 8px !important;
+      color: var(--text-muted, #ffd700);
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      padding: 1px 1px !important;
+      border-right: 1px solid var(--box-border, #334155) !important;
+    }
 
-    .padas-list-cell { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+    .nak-name-text {
+      font-size: 8px !important;
+      line-height: 1.05 !important;
+      letter-spacing: -0.3px !important;
+      font-weight: 800 !important;
+      word-break: break-all !important;
+      text-align: center !important;
+    }
 
-    .pada-row { display: flex; align-items: center; gap: 3px; font-size: 10px; padding: 1px 3px; border-radius: 3px; }
+    .padas-list-cell {
+      flex: 1 1 auto !important;
+      width: calc(100% - 22px) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 1px !important;
+      padding: 1px 2px !important;
+      overflow: visible !important;
+    }
 
-    .pada-row.has-occupant { background: rgba(255, 255, 255, 0.06); }
+    .pada-row {
+      display: flex !important;
+      align-items: center !important;
+      gap: 2px !important;
+      font-size: 9px !important;
+      padding: 0.5px 1px !important;
+      border-radius: 3px !important;
+      line-height: 1.15 !important;
+    }
 
-    .pada-num { font-weight: 700; color: var(--text-muted, #94a3b8); min-width: 10px; }
+    .pada-row.has-occupant { background: rgba(255, 255, 255, 0.08) !important; }
 
-    .pada-arrow { font-size: 11px; opacity: 0.5; }
+    .pada-num {
+      font-weight: 800 !important;
+      color: var(--text-muted, #94a3b8);
+      width: 12px !important;
+      height: 12px !important;
+      min-width: 12px !important;
+      font-size: 7.5px !important;
+      border-radius: 50% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      background: rgba(120, 120, 120, 0.15) !important;
+    }
 
-    .occupants-wrap { display: inline-flex; flex-wrap: wrap; gap: 2px; align-items: center; }
+    .pada-arrow { display: none !important; }
 
-    .occupant-pill { font-size: 10px; font-weight: 800; padding: 1px 5px; border-radius: 8px; display: inline-flex; align-items: center; }
+    .occupants-wrap {
+      display: inline-flex !important;
+      flex-wrap: wrap !important;
+      gap: 2px !important;
+      align-items: center !important;
+    }
+
+    .occupant-pill {
+      font-size: 9px !important;
+      font-weight: 800 !important;
+      padding: 0.5px 3.5px !important;
+      border-radius: 4px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      white-space: nowrap !important;
+      line-height: 1.15 !important;
+    }
 
     .lagna-occupant { background: #b45309; color: #ffffff; border: 1px solid #fbbf24; }
 
@@ -6275,65 +6341,38 @@ body {
 
 
     .nak-name-cell {
-
-      width: 24%;
-
-      min-width: 38px;
-
-      max-width: 52px;
-
-      padding: 2px 3px;
-
+      flex: 0 0 auto !important;
+      width: auto !important;
+      min-width: 16px !important;
+      max-width: 22px !important;
+      padding: 1px 1px !important;
       background: rgba(0, 0, 0, 0.05);
-
-      border-right: 1px solid var(--card-border);
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      text-align: center;
-
+      border-right: 1px solid var(--card-border, #334155) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
     }
-
-
 
     .nak-name-text {
-
-      font-size: 11px;
-
-      font-weight: 800;
-
+      font-size: 8px !important;
+      font-weight: 800 !important;
       color: var(--nak-title-color);
-
-      line-height: 1.15;
-
-      letter-spacing: -0.2px;
-
-      word-break: break-word;
-
+      line-height: 1.05 !important;
+      letter-spacing: -0.3px !important;
+      word-break: break-all !important;
+      text-align: center !important;
     }
 
-
-
     .padas-list-cell {
-
-      width: 76%;
-
-      display: flex;
-
-      flex-direction: column;
-
+      flex: 1 1 auto !important;
+      width: calc(100% - 22px) !important;
+      display: flex !important;
+      flex-direction: column !important;
       justify-content: space-around;
-
-      padding: 2px 4px;
-
+      padding: 1px 2px !important;
       background: transparent;
-
-      overflow: hidden;
-
+      overflow: visible !important;
     }
 
 
@@ -6660,47 +6699,53 @@ body {
 
 
     @media (max-width: 600px) {
-
       .nak-box {
-
         min-height: 145px;
-
       }
-
       .nak-name-cell {
-
-        width: 46%;
-
-        padding: 2px;
-
+        flex: 0 0 auto !important;
+        width: auto !important;
+        min-width: 14px !important;
+        max-width: 20px !important;
+        padding: 1px 0.5px !important;
+        border-right: 1px solid var(--box-border, #334155) !important;
       }
-
       .nak-name-text {
-
-        font-size: 9.5px;
-
+        font-size: 7.5px !important;
+        line-height: 1.0 !important;
+        letter-spacing: -0.3px !important;
       }
-
+      .padas-list-cell {
+        flex: 1 1 auto !important;
+        width: calc(100% - 20px) !important;
+        padding: 1px 1px !important;
+      }
       .pada-row {
-
-        font-size: 9px;
-
-        gap: 2px;
-
+        font-size: 8.5px !important;
+        gap: 1.5px !important;
+        padding: 0.5px 0 !important;
       }
-
+      .pada-num {
+        width: 11px !important;
+        height: 11px !important;
+        min-width: 11px !important;
+        font-size: 7px !important;
+      }
+      .occupants-wrap {
+        gap: 1.5px !important;
+      }
       .occupant-pill {
-
-        font-size: 9.5px;
-
+        font-size: 8.5px !important;
+        padding: 0.5px 2px !important;
+        border-radius: 3px !important;
+        white-space: nowrap !important;
       }
-
+      .planet-deg-suffix {
+        font-size: 7px !important;
+      }
       .rashi-title-text {
-
         font-size: 10.5px;
-
       }
-
     }
 
 

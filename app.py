@@ -2501,9 +2501,34 @@ def chart3():
             # detailed Rulership (ఆధీనములో ఉన్నవి)
             rulership = "N/A"
             for r_name, r_text in PLANET_RULERSHIPS.items():
-                if r_name in p_name or p_name in r_name:
+                if r_name and (r_name in p_name or p_name in r_name):
                     rulership = r_text
                     break
+            
+            # Robust fallback for Ketu, Bhumi and other planets
+            if rulership == "N/A":
+                canonical_p_map = {
+                    "కేతు": ["కేతు", "కేతువు", "Ke", "Ketu"],
+                    "భూమి": ["భూమి", "Ea", "Earth", "Bhoomi"],
+                    "సూర్య": ["సూర్య", "సూర్యుడు", "Su", "Sun"],
+                    "చంద్ర": ["చంద్ర", "చంద్రుడు", "Mo", "Moon"],
+                    "కుజ": ["కుజ", "కుజుడు", "Ma", "Mars"],
+                    "బుధ": ["బుధ", "బుధుడు", "Me", "Mercury"],
+                    "గురు": ["గురు", "గురువు", "Ju", "Jupiter"],
+                    "శుక్ర": ["శుక్ర", "శుక్రుడు", "Ve", "Venus"],
+                    "శని": ["శని", "శనీశ్వరుడు", "Sa", "Saturn"],
+                    "రాహు": ["రాహు", "రాహువు", "Ra", "Rahu"],
+                    "చిత్ర": ["చిత్ర", "Ch", "Chitra"],
+                    "మిత్ర": ["మిత్ర", "Mi", "Mitra"]
+                }
+                for c_telugu, aliases in canonical_p_map.items():
+                    if any(a in p_name or p_name in a for a in aliases):
+                        for a in aliases:
+                            if a in PLANET_RULERSHIPS:
+                                rulership = PLANET_RULERSHIPS[a]
+                                break
+                        if rulership != "N/A":
+                            break
 
             results_data.append({
                 "name": p_name,
