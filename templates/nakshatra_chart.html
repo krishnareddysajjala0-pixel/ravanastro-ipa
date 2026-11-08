@@ -443,25 +443,24 @@
 
 
     body {
-
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
       background: var(--bg-primary);
-
       color: var(--text-main);
-
       min-height: 100vh;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      padding: 15px 10px 100px 10px;
-
+      margin: 0 !important;
+      padding: 10px 8px 115px 8px !important;
+      box-sizing: border-box !important;
       transition: all 0.3s ease;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
 
+    .container {
+      width: 100% !important;
+      max-width: 1100px !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
     }
 
 
@@ -962,9 +961,9 @@
 
     .nak-name-cell {
       flex: 0 0 auto;
-      width: 14%;
-      min-width: 22px;
-      max-width: 32px;
+      width: auto;
+      min-width: 26px;
+      max-width: 36px;
       padding: 1px 2px;
       background: rgba(0, 0, 0, 0.05);
       border-right: 1px solid var(--card-border);
@@ -979,10 +978,11 @@
       font-size: 10px;
       font-weight: 800;
       color: var(--nak-title-color);
-      line-height: 1.1;
-      letter-spacing: -0.3px;
-      word-break: break-all;
-      overflow-wrap: anywhere;
+      line-height: 1.15;
+      letter-spacing: -0.2px;
+      white-space: normal;
+      word-break: normal;
+      overflow-wrap: normal;
     }
 
     .padas-list-cell {
@@ -1321,26 +1321,22 @@
 
 
     @media (max-width: 600px) {
-
       .nak-box {
-
         min-height: 145px;
-
       }
-
       .nak-name-cell {
         flex: 0 0 auto !important;
-        width: 14% !important;
-        min-width: 18px !important;
-        max-width: 24px !important;
-        padding: 1px !important;
+        width: auto !important;
+        min-width: 24px !important;
+        max-width: 34px !important;
+        padding: 1px 2px !important;
       }
-
       .nak-name-text {
-        font-size: 8.5px !important;
-        line-height: 1.05 !important;
-        letter-spacing: -0.3px !important;
-        word-break: break-all !important;
+        font-size: 9.5px !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.2px !important;
+        white-space: normal !important;
+        word-break: normal !important;
       }
 
       .padas-list-cell {
@@ -2429,29 +2425,35 @@
   width: 100% !important;
 }
 
+.top-control-bar a,
+.top-control-bar button,
 .top-control-bar .ctrl-btn,
 .top-control-bar .top-btn-theme,
 .top-control-bar .top-btn-lang,
 .top-control-bar .top-btn-home,
 .top-control-bar .top-btn-back,
 .top-control-bar .top-btn-print,
-.top-control-bar .top-btn-hands {
+.top-control-bar .top-btn-hands,
+.top-control-bar #chupuluBtn {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;
   box-sizing: border-box !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 6px !important;
-  padding: 8px 6px !important;
-  font-size: 13px !important;
+  gap: 4px !important;
+  padding: 0 4px !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
   border-radius: 12px !important;
   white-space: nowrap !important;
   cursor: pointer !important;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
   transition: all 0.2s ease !important;
-  height: 38px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
   line-height: 1 !important;
   text-align: center !important;
   outline: none !important;
@@ -2811,10 +2813,29 @@ body {
     -webkit-overflow-scrolling: touch !important;
     position: relative;
     border-radius: 14px;
+    width: 100% !important;
+    max-width: 1100px !important;
+    margin: 0 auto 30px auto !important;
+    box-sizing: border-box !important;
+    padding: 8px !important;
+    scroll-behavior: smooth;
+    scroll-padding-left: 6px;
+}
+.chart-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-rows: repeat(4, auto) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 @media (max-width: 768px) {
+    .chart-container {
+        padding: 6px !important;
+    }
     .chart-grid {
-        min-width: 620px !important;
+        min-width: 600px !important;
+        gap: 5px !important;
     }
 }
 body, .container {
@@ -2851,20 +2872,57 @@ body, .container {
 </style>
 
 <style>
-/* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
-
-
-.is-mobile-app 
-.is-mobile-app 
-.is-mobile-app 
+/* ===== APP-ONLY DISPLAY RULES ===== */
 .is-mobile-app .chart-grid {
-    min-width: 620px !important;
+    min-width: 600px !important;
 }
 .is-mobile-app .chart-container {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
 }
-
+.chart-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-rows: repeat(4, auto) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+@media (max-width: 768px) {
+    .chart-container {
+        padding: 6px !important;
+    }
+    .chart-grid {
+        min-width: 600px !important;
+        gap: 5px !important;
+    }
+}
+body, .container {
+    padding-bottom: 115px !important;
+}
+@media (max-width: 480px) {
+    .fixed-bottom-bar, #action-bar {
+        width: calc(100vw - 12px) !important;
+        padding: 5px 6px !important;
+        gap: 3px !important;
+    }
+    .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        padding: 0 4px !important;
+        font-size: 10.5px !important;
+        gap: 3px !important;
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
+    }
+    .fixed-bottom-bar .float-btn span, .fixed-bottom-bar button span {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        font-size: 10.5px !important;
+    }
+}
 @media print {
     
 }

@@ -5973,14 +5973,19 @@
   width: 100% !important;
 }
 
+.top-control-bar a,
+.top-control-bar button,
 .top-control-bar .ctrl-btn,
 .top-control-bar .top-btn-nakshatra,
 .top-control-bar #karmaBtn,
 .top-control-bar #chupuluBtn,
+.top-control-bar .top-btn-karma,
+.top-control-bar .top-btn-hands,
 .top-control-bar .top-btn-theme,
 .top-control-bar .top-btn-lang {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;
   box-sizing: border-box !important;
   position: static !important;
   top: auto !important;
@@ -5993,8 +5998,8 @@
   align-items: center !important;
   justify-content: center !important;
   gap: 4px !important;
-  padding: 7px 4px !important;
-  font-size: 12.5px !important;
+  padding: 0 4px !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
   border-radius: 12px !important;
   white-space: nowrap !important;
@@ -6002,8 +6007,11 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
   transition: all 0.2s ease !important;
   height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
   line-height: 1 !important;
   text-align: center !important;
+  text-decoration: none !important;
 }
 
 .theme-switcher, .language-switcher {
@@ -6020,21 +6028,27 @@
     max-width: 900px !important;
     margin: 0 auto 6px auto !important;
     padding: 6px 4px !important;
-    gap: 5px !important;
+    gap: 4px !important;
   }
 
   .theme-switcher,
-  .theme-switcher.expanded {
+  .theme-switcher.expanded,
+  .language-switcher,
+  .language-switcher.expanded {
     max-width: none !important;
     width: 100% !important;
   }
 
+  .top-control-bar a,
+  .top-control-bar button,
   .top-control-bar .ctrl-btn,
   .top-control-bar .top-btn-nakshatra,
-  .top-control-bar #karmaBtn,
-  .top-control-bar #chupuluBtn,
   .top-control-bar .top-btn-theme,
   .top-control-bar .top-btn-lang,
+  .top-control-bar .top-btn-karma,
+  .top-control-bar .top-btn-hands,
+  .top-control-bar #karmaBtn,
+  .top-control-bar #chupuluBtn,
   #karmaBtn,
   #chupuluBtn {
     position: static !important;
@@ -6042,14 +6056,40 @@
     left: auto !important;
     right: auto !important;
     bottom: auto !important;
-    padding: 6px 2px !important;
+    padding: 0 3px !important;
     font-size: 11px !important;
-    border-radius: 12px !important;
-    height: 32px !important;
+    border-radius: 10px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
     margin: 0 !important;
+    gap: 3px !important;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .top-control-bar a,
+  .top-control-bar button,
+  .top-control-bar .ctrl-btn,
+  .top-control-bar .top-btn-nakshatra,
+  .top-control-bar .top-btn-theme,
+  .top-control-bar .top-btn-lang,
+  .top-control-bar .top-btn-karma,
+  .top-control-bar .top-btn-hands,
+  .top-control-bar #karmaBtn,
+  .top-control-bar #chupuluBtn,
+  #karmaBtn,
+  #chupuluBtn {
+    padding: 0 2px !important;
+    font-size: 10px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    gap: 2px !important;
+    border-radius: 8px !important;
   }
 }
 
@@ -6238,27 +6278,35 @@ body, .container, .top-control-bar, .theme-switcher, .language-switcher {
   position: relative !important;
 }
 
+.top-control-bar a,
+.top-control-bar button,
 .top-control-bar .ctrl-btn,
 .top-control-bar .top-btn-theme,
 .top-control-bar .top-btn-lang,
 .top-control-bar .top-btn-back,
-.top-control-bar .top-btn-print {
+.top-control-bar .top-btn-print,
+.top-control-bar .top-btn-nakshatra,
+.top-control-bar #karmaBtn,
+.top-control-bar #chupuluBtn {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;
   box-sizing: border-box !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 6px !important;
-  padding: 8px 6px !important;
-  font-size: 13px !important;
+  gap: 4px !important;
+  padding: 0 4px !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
   border-radius: 12px !important;
   white-space: nowrap !important;
   cursor: pointer !important;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
   transition: all 0.2s ease !important;
-  height: 38px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
   line-height: 1 !important;
   text-align: center !important;
   outline: none !important;
