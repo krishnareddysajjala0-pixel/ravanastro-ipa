@@ -7310,11 +7310,6 @@ body {
                         <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: bold;">{{ loop.index }}</td>
                         <td style="border: 1px solid #000; padding: 10px;">
                             {{ dasa.icon }} {{ dasa.maha }}
-                            {% if dasa.planet_house %}
-                            <div class="kundali-pos-info" style="font-size: 11px; margin-top: 3px; font-weight: normal; opacity: 0.95;">
-                                📍 {{ _('కుండలి స్థానం') }}: {{ format_house_title(dasa.planet_house, dasa.planet_rasi) }}{% if dasa.hand_positions %} | {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}{{ format_house_title(h.house, h.rasi) }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
-                            </div>
-                            {% endif %}
                         </td>
                         <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: bold;">
                             {% if dasa.is_favorable %}{{ _('అనుకూలము') }}{% else %}{{ _('ప్రతికూలము') }}{% endif %}

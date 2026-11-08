@@ -5833,7 +5833,26 @@
 
 
 
-  </style>
+  
+/* ===== COMPACT MAHA PRINT TABLE FOR PERFECT 1-PAGE FIT ===== */
+@media print {
+  .maha-print-table {
+    font-size: 9.5pt !important;
+  }
+  .maha-print-table th {
+    padding: 2.5px 4px !important;
+    font-size: 9.5pt !important;
+  }
+  .maha-print-table td {
+    padding: 2px 4px !important;
+    font-size: 9pt !important;
+  }
+  .maha-print-title {
+    font-size: 11pt !important;
+    margin: 3px 0 !important;
+  }
+}
+</style>
 
 
 
@@ -8376,11 +8395,6 @@ html, body {
 
           <td class="{{ 'maha-planet-favorable' if dasa.is_favorable else 'maha-planet-unfavorable' }}">
             {{ dasa.icon }} {{ dasa.maha }}
-            {% if dasa.planet_house %}
-            <div style="font-size: 11px; margin-top: 2px; font-weight: normal; opacity: 0.95;">
-              📍 {{ _('స్థానం') }}: {{ dasa.planet_house }}{{ _('వ') }} ({{ _(dasa.planet_rasi) }}){% if dasa.hand_positions %} | {{ _('చేతులు') }} 👉: {% for h in dasa.hand_positions %}{{ h.house }}{{ _('వ') }} ({{ _(h.rasi) }}){% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
-            </div>
-            {% endif %}
           </td>
 
 
