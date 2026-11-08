@@ -300,17 +300,18 @@ LAGNA_NAMES_TELUGU = [
 ]
 
 PLANETS = {
-    "సూర్యుడు": swe.SUN,
-    "చంద్రుడు": swe.MOON,
-    "కుజుడు": swe.MARS,
-    "బుధుడు": swe.MERCURY,
+    "సూర్య": swe.SUN,
+    "చంద్ర": swe.MOON,
+    "కుజ": swe.MARS,
+    "బుధ": swe.MERCURY,
     "గురు": swe.JUPITER,
-    "శుక్రుడు": swe.VENUS,
+    "శుక్ర": swe.VENUS,
     "శని": swe.SATURN,
     "రాహు": swe.TRUE_NODE
 };
 
 SPECIAL_HANDS = {
+    "కుజ": [90, 210],
     "కుజుడు": [90, 210],
     "గురు": [120, 240],
     "శని": [60, 270]
@@ -318,18 +319,28 @@ SPECIAL_HANDS = {
 
 SHORT_PLANETS_TELUGU = {
     "సూర్యుడు": "సూర్య",
+    "సూర్య": "సూర్య",
+    "రవి": "సూర్య",
     "చంద్రుడు": "చంద్ర",
+    "చంద్ర": "చంద్ర",
     "కుజుడు": "కుజ",
+    "కుజ": "కుజ",
     "బుధుడు": "బుధ",
+    "బుధ": "బుధ",
     "గురు": "గురు",
+    "గురువు": "గురు",
     "శుక్రుడు": "శుక్ర",
+    "శుక్ర": "శుక్ర",
     "శని": "శని",
     "రాహు": "రాహు",
+    "రాహువు": "రాహు",
     "కేతు": "కేతు",
+    "కేతువు": "కేతు",
     "భూమి": "భూమి",
     "మిత్ర": "మిత్ర",
     "చిత్ర": "చిత్ర",
-    "లగ్నం": "లగ్నం"
+    "లగ్నం": "లగ్న",
+    "లగ్న": "లగ్న"
 }
 
 # ---------------- Day name Telugu ----------------
@@ -1356,13 +1367,14 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
     deg_k = ketu % 30
     d = int(deg_k)
     m = int((deg_k-d)*60)
-    short_k = SHORT_PLANETS_TELUGU.get("కేతు", "కే")
-    html_str = f"<b class='full-name'>కేతు</b><b class='short-name'>{short_k}</b> <small class='full-deg'>{d}°{m:02d}′</small><small class='short-deg'>{d}°</small>"
+    short_k = SHORT_PLANETS_TELUGU.get("కేతు", "కేతు")
+    html_str = f"<b class='full-name'>{short_k}</b><b class='short-name'>{short_k}</b> <small class='full-deg'>{d}°{m:02d}′</small><small class='short-deg'>{d}°</small>"
     chart_data_temp[r].append((deg_k, html_str))
 
     # Derived planets (Dasacharam Logic - Verified)
+    sun_val = base_pos.get("సూర్య", base_pos.get("సూర్యుడు", 0))
     derived = {
-        "భూమి": (base_pos["సూర్యుడు"] + 180) % 360,
+        "భూమి": (sun_val + 180) % 360,
         "చిత్ర": (rahu + 3.3333) % 360,  # 1 pada offset
         "మిత్ర": (ketu + 3.3333) % 360   # 1 pada offset
     }
@@ -1424,9 +1436,9 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
     lagna_degree_str = f"{lagna_deg}°{lagna_min:02d}′"
     
     # Add Lagna to chart data
-    short_l = SHORT_PLANETS_TELUGU.get("లగ్నం", "ల")
+    short_l = SHORT_PLANETS_TELUGU.get("లగ్న", "లగ్న")
     lagna_short_deg = f"{lagna_deg}°"
-    html_str = f"<b class='full-name'>లగ్నం</b><b class='short-name'>{short_l}</b> <small class='full-deg'>{lagna_degree_str}</small><small class='short-deg'>{lagna_short_deg}</small>"
+    html_str = f"<b class='full-name'>{short_l}</b><b class='short-name'>{short_l}</b> <small class='full-deg'>{lagna_degree_str}</small><small class='short-deg'>{lagna_short_deg}</small>"
     chart_data_temp[lagna].append((lagna_lon % 30, html_str))
     
     # Sort elements per house by degree
@@ -1439,7 +1451,7 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
             chart_data[r] = ""
 
     # Nakshatra + Padam
-    moon_lon = base_pos["చంద్రుడు"]
+    moon_lon = base_pos.get("చంద్ర", base_pos.get("చంద్రుడు", 0))
     nak_index = int(moon_lon / NAKSHATRA_SIZE)
     nakshatra = NAKSHATRAS_TELUGU[nak_index]
 
@@ -1489,8 +1501,8 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
         houses_map[LAGNA_NAMES_TELUGU[(idx+i)%12]] = i+1
 
     # Calculate Panchangam components (Tithi, Yoga, Karana)
-    sun_lon = base_pos["సూర్యుడు"]
-    moon_lon = base_pos["చంద్రుడు"]
+    sun_lon = base_pos.get("సూర్య", base_pos.get("సూర్యుడు", 0))
+    moon_lon = base_pos.get("చంద్ర", base_pos.get("చంద్రుడు", 0))
 
     # 1. Tithi
     diff = (moon_lon - sun_lon) % 360
@@ -1685,8 +1697,9 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
         else:
             color = "#ef4444" if is_green else "#22c55e"
         
+        p_2l = SHORT_PLANETS_TELUGU.get(n, n)
         planet_positions.append({
-            "name": n,
+            "name": p_2l,
             "lagna": r,
             "degree": f"{d}°{m:02d}′",
             "nakshatra": p_nak_name,
@@ -1711,8 +1724,9 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
             h_padam = int(h_nak_offset / PADAM_SIZE) + 1
             h_strength = int(((hl % 30) / 30) * 100)
 
+            p_2l = SHORT_PLANETS_TELUGU.get(n, n)
             planet_positions.append({
-                "name": n,
+                "name": p_2l,
                 "lagna": hr,
                 "degree": f"{hd}°{hm:02d}′",
                 "nakshatra": h_nak_name,
@@ -1924,12 +1938,13 @@ def transit_chart():
     deg_k = ketu % 30
     d = int(deg_k)
     m = int((deg_k-d)*60)
-    short_k = SHORT_PLANETS_TELUGU.get("కేతు", "కే")
-    html_str = f"<b class='full-name'>కేతు</b><b class='short-name'>{short_k}</b> <small class='full-deg'>{d}°{m:02d}′</small><small class='short-deg'>{d}°</small>"
+    short_k = SHORT_PLANETS_TELUGU.get("కేతు", "కేతు")
+    html_str = f"<b class='full-name'>{short_k}</b><b class='short-name'>{short_k}</b> <small class='full-deg'>{d}°{m:02d}′</small><small class='short-deg'>{d}°</small>"
     chart_data_temp[r].append((deg_k, html_str))
 
+    sun_val = base_pos.get("సూర్య", base_pos.get("సూర్యుడు", 0))
     derived = {
-        "భూమి": (base_pos["సూర్యుడు"] + 180) % 360,
+        "భూమి": (sun_val + 180) % 360,
         "చిత్ర": (rahu + 3.3333) % 360,
         "మిత్ర": (ketu + 3.3333) % 360
     }
@@ -1967,9 +1982,9 @@ def transit_chart():
     lagna_min = int(((lagna_lon % 30) - lagna_deg) * 60)
     lagna_degree_str = f"{lagna_deg}°{lagna_min:02d}′"
     
-    short_l = SHORT_PLANETS_TELUGU.get("లగ్నం", "ల")
+    short_l = SHORT_PLANETS_TELUGU.get("లగ్న", "లగ్న")
     lagna_short_deg = f"{lagna_deg}°"
-    html_str = f"<b class='full-name'>లగ్నం</b><b class='short-name'>{short_l}</b> <small class='full-deg'>{lagna_degree_str}</small><small class='short-deg'>{lagna_short_deg}</small>"
+    html_str = f"<b class='full-name'>{short_l}</b><b class='short-name'>{short_l}</b> <small class='full-deg'>{lagna_degree_str}</small><small class='short-deg'>{lagna_short_deg}</small>"
     chart_data_temp[lagna].append((lagna_lon % 30, html_str))
     
     chart_data = {}
@@ -2095,18 +2110,23 @@ def get_dasha_info(birth_info):
             houses = {}
 
     dasa_planet_map = {
-        "సూర్య": "సూర్యుడు",
-        "చంద్ర": "చంద్రుడు",
-        "కుజ": "కుజుడు",
-        "బుధ": "బుధుడు",
-        "శుక్ర": "శుక్రుడు",
+        "సూర్య": "సూర్య",
+        "చంద్ర": "చంద్ర",
+        "కుజ": "కుజ",
+        "బుధ": "బుధ",
+        "శుక్ర": "శుక్ర",
         "గురు": "గురు",
         "శని": "శని",
         "రాహు": "రాహు",
         "కేతు": "కేతు",
         "భూమి": "భూమి",
         "మిత్ర": "మిత్ర",
-        "చిత్ర": "చిత్ర"
+        "చిత్ర": "చిత్ర",
+        "సూర్యుడు": "సూర్య",
+        "చంద్రుడు": "చంద్ర",
+        "కుజుడు": "కుజ",
+        "బుధుడు": "బుధ",
+        "శుక్రుడు": "శుక్ర"
     }
 
     dasa_positions_lookup = {}
@@ -2910,8 +2930,8 @@ def daily_panchangam():
         # Use a list of visible planets for the daily chart (Matching Kundali rules)
         # Main 12 planets: 9 Standard + 3 Derived (Earth, Chitra, Mitra)
         DAILY_PLANETS = {
-            "సూర్యుడు": swe.SUN, "చంద్రుడు": swe.MOON, "కుజుడు": swe.MARS,
-            "బుధుడు": swe.MERCURY, "గురు": swe.JUPITER, "శుక్రుడు": swe.VENUS, 
+            "సూర్య": swe.SUN, "చంద్ర": swe.MOON, "కుజ": swe.MARS,
+            "బుధ": swe.MERCURY, "గురు": swe.JUPITER, "శుక్ర": swe.VENUS, 
             "శని": swe.SATURN, "రాహు": swe.TRUE_NODE
         }
         
@@ -2938,7 +2958,7 @@ def daily_panchangam():
 
         # Derived planets (Dasacharam Logic - Verified)
         derived = {
-            "భూమి": (base_pos["సూర్యుడు"] + 180) % 360,
+            "భూమి": (base_pos.get("సూర్య", base_pos.get("సూర్యుడు", 0)) + 180) % 360,
             "చిత్ర": (base_pos["రాహు"] + 3.3333) % 360,
             "మిత్ర": (base_pos["కేతు"] + 3.3333) % 360
         }
@@ -3024,10 +3044,11 @@ def daily_panchangam():
                 expected_lagna_b = (current_lagna_idx + 1) % 12 if not is_retro_planet else (current_lagna_idx - 1) % 12
 
             step_days = {
-                "చంద్రుడు": 0.5, "సూర్యుడు": 3, "భూమి": 3,
-                "బుధుడు": 2, "శుక్రుడు": 3, "కుజుడు": 5,
+                "చంద్ర": 0.5, "సూర్య": 3, "భూమి": 3,
+                "బుధ": 2, "శుక్ర": 3, "కుజ": 5,
                 "గురు": 15, "శని": 30,
-                "రాహు": 15, "కేతు": 15, "చిత్ర": 15, "మిత్ర": 15
+                "రాహు": 15, "కేతు": 15, "చిత్ర": 15, "మిత్ర": 15,
+                "చంద్రుడు": 0.5, "సూర్యుడు": 3, "బుధుడు": 2, "శుక్రుడు": 3, "కుజుడు": 5
             }
             step = step_days.get(name, 5)
 
@@ -3077,8 +3098,8 @@ def daily_panchangam():
 
         # All 12 planets
         ALL_PLANETS_TRANSIT = [
-            ("సూర్యుడు", swe.SUN), ("చంద్రుడు", swe.MOON), ("కుజుడు", swe.MARS),
-            ("బుధుడు", swe.MERCURY), ("గురు", swe.JUPITER), ("శుక్రుడు", swe.VENUS),
+            ("సూర్య", swe.SUN), ("చంద్ర", swe.MOON), ("కుజ", swe.MARS),
+            ("బుధ", swe.MERCURY), ("గురు", swe.JUPITER), ("శుక్ర", swe.VENUS),
             ("శని", swe.SATURN), ("రాహు", swe.TRUE_NODE),
             ("కేతు", None), ("భూమి", None), ("చిత్ర", None), ("మిత్ర", None)
         ]
@@ -3583,7 +3604,7 @@ def build_nakshatra_pada_boxes(data):
                 # Lagna Point in this pada
                 if is_lagna_box and r_pada == lagna_pada_in_rashi:
                     occupants.append({
-                        "name": "లగ్నం",
+                        "name": "లగ్న",
                         "degree": lagna_deg_str,
                         "deg_only": extract_deg_only(lagna_deg_str),
                         "is_lagna": True,
@@ -3604,8 +3625,9 @@ def build_nakshatra_pada_boxes(data):
                             p_pada_calc = 1
 
                         if p_pada_calc == r_pada:
+                            occ_2l = SHORT_PLANETS_TELUGU.get(p["name"], p["name"])
                             occupants.append({
-                                "name": p["name"],
+                                "name": occ_2l,
                                 "degree": p["degree"],
                                 "deg_only": extract_deg_only(p.get("degree", "")),
                                 "is_lagna": False,

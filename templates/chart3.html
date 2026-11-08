@@ -3016,6 +3016,34 @@ body {
             letter-spacing: 0.5px;
         }
 </style>
+<style>
+/* ===== FINAL PRINT OVERRIDE: ELIMINATE EMPTY LAST PAGE (STRICTLY 2 PAGES) ===== */
+@media print {
+  @page {
+    size: A4 portrait !important;
+    margin: 4mm 5mm !important;
+  }
+  html, body, .container {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    overflow: visible !important;
+  }
+  #chart3-page-1, .print-page-1 {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+  #chart3-page-2, .print-page-2 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .cards-grid {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+}
+</style>
 </head>
 
 {% set is_guru_party = (native_party == 'గురు వర్గము' if native_party else true) %}

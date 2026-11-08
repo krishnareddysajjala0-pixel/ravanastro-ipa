@@ -41,7 +41,12 @@
     "సూర్యుడు": "Shani",
     "శని": "Sun",
     "బుధుడు": "Thursday",
-    "గురు": "Mercury"
+    "గురు": "Mercury",
+    "కుజ": "Venus",
+    "శుక్ర": "Mars",
+    "చంద్ర": "Rahu",
+    "సూర్య": "Shani",
+    "బుధ": "Thursday"
   },
   "PLANET_RULERSHIPS": {
     "సూర్యుడు": "Father, Soul, Self, Kingdom, Influence, Courage, Power, Eye, Pitta, Bravery, Power, Foreign Travel, Wisdom, Prowess, Heat, Fire, Dharma Meditation, Stomach, Eye, Ruling Power, Government Lands, Court Affairs, Barren Lands, Round Fields, King's Thought, Rural Areas, Red sandalwood, stamp duty, white district, east, English education, Sunday, Chaitra month, palaces, blue lights that generate heat, high-storied buildings. (Race: Kshatriya, Color: Brown)",
@@ -69,6 +74,11 @@
     "కేతు": "Sagittarius",
     "రాహు": "Capricorn",
     "శని": "Aquarius",
-    "గురు": "Pisces"
+    "గురు": "Pisces",
+    "కుజ": "Aries",
+    "చంద్ర": "Cancer",
+    "సూర్య": "Lion",
+    "బుధ": "Virgo",
+    "శుక్ర": "Libra"
   }
 }

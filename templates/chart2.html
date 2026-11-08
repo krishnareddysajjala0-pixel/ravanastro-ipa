@@ -6251,9 +6251,21 @@ body {
     }
     @media screen and (max-width: 480px) {
         .fixed-bottom-bar, #action-bar {
-            width: calc(100vw - 12px) !important;
-            padding: 5px 6px !important;
-            gap: 4px !important;
+            width: calc(100vw - 8px) !important;
+            padding: 4px 4px !important;
+            gap: 3px !important;
+        }
+        .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
+            flex: 1 1 0% !important;
+            min-width: 0 !important;
+            padding: 0 2px !important;
+            font-size: 10px !important;
+        }
+        .fixed-bottom-bar .float-btn span, .fixed-bottom-bar button span {
+            font-size: 10px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
         }
         .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
             height: 36px !important;
@@ -6294,9 +6306,168 @@ body {
 }
 
 @media print {
-    
-}
-</style>
+    @page {
+        size: A4 portrait !important;
+        margin: 4mm 6mm !important;
+    }
+
+    html, body, .glow-container, .container {
+        padding: 0 !important;
+        margin: 0 !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 8.5px !important;
+        overflow: visible !important;
+    }
+
+    /* Hide non-print controls */
+    .top-control-bar,
+    .fixed-bottom-bar,
+    #action-bar,
+    .no-print,
+    nav,
+    .floating-actions,
+    #loading-overlay,
+    .theme-switcher,
+    .language-switcher,
+    .zoom-toolbar,
+    #zoom-toolbar,
+    .results-section,
+    .notes-section,
+    .anthara-slider-controls,
+    .slider-controls,
+    .fixed-bottom-bar-nav,
+    .float-btn {
+        display: none !important;
+        height: 0 !important;
+        width: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* USER REQUEST: Hide Kundali Position & Hands info in PDF */
+    .kundali-pos-info,
+    .dasa-kundali-pos,
+    .maha-dasa-right-part,
+    .dasa-table-kundali-pos,
+    .pos-main,
+    .pos-hands {
+        display: none !important;
+        height: 0 !important;
+        width: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Page 1: Cosmic Header + Summary Table */
+    .cosmic-header-card {
+        margin: 0 0 2mm 0 !important;
+        padding: 2mm !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    .dasa-summary-card,
+    .print-summary-section {
+        margin: 0 !important;
+        padding: 2mm !important;
+        page-break-after: always !important;
+        break-after: page !important;
+    }
+
+    .summary-table {
+        font-size: 8px !important;
+        width: 100% !important;
+    }
+
+    .summary-table th, .summary-table td {
+        padding: 1.5px 2px !important;
+    }
+
+    /* Dasas section */
+    .dasa-section {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Cards */
+    .maha-dasa-card {
+        padding: 1px 4px !important;
+        margin: 0 auto 2px auto !important;
+        border-radius: 6px !important;
+        box-sizing: border-box !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Explicit Page Breaks before Card 5 and Card 9 */
+    .print-break-before {
+        page-break-before: always !important;
+        break-before: page !important;
+    }
+
+    /* Mahadasa header */
+    .maha-dasa-header {
+        margin: 0 0 1px 0 !important;
+        padding: 1px 2px !important;
+    }
+
+    .maha-dasa-name {
+        font-size: 8.5pt !important;
+        line-height: 1.15 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .maha-dasa-period {
+        font-size: 7.5pt !important;
+        line-height: 1.1 !important;
+        margin: 0 !important;
+    }
+
+    .maha-dasa-number {
+        font-size: 8pt !important;
+        padding: 1px 3px !important;
+        min-width: 16px !important;
+    }
+
+    /* Anthara table */
+    .anthara-container {
+        padding: 0 2px !important;
+        margin: 0 !important;
+    }
+
+    .anthara-table {
+        margin: 0 !important;
+        font-size: 6.8pt !important;
+        border-collapse: collapse !important;
+    }
+
+    .anthara-table th {
+        padding: 0.5px 2px !important;
+        font-size: 7pt !important;
+        line-height: 1.1 !important;
+    }
+
+    .anthara-table td {
+        padding: 0.4px 2px !important;
+        font-size: 6.7pt !important;
+        line-height: 1.1 !important;
+    }
+
+    .status-badge {
+        font-size: 6.5pt !important;
+        padding: 0.5px 3px !important;
+    }
+
+    /* Ensure NO extra pages at the end */
+    .dasa-section .maha-dasa-card:last-child {
+        margin-bottom: 0 !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+}</style>
 </head>
 
 

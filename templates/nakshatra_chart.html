@@ -2807,124 +2807,288 @@ body {
 </style>
 
 <style>
+/* ===== RESPONSIVE MOBILE FIT (NO HORIZONTAL SLIDER) & EQUAL BUTTON HEIGHTS ===== */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.container {
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin: 0 auto !important;
+  padding: 0 4px !important; /* Safe padding prevents clipping of left/right borders! */
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+  padding-bottom: 90px !important;
+}
+
+/* Top control bar: guaranteed equal height across Web, Android, iOS */
+.top-control-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  gap: 4px !important;
+  width: 100% !important;
+  margin: 0 auto 6px auto !important;
+  padding: 4px 2px !important;
+  box-sizing: border-box !important;
+}
+
+.top-control-bar > *,
+.top-control-bar .theme-switcher,
+.top-control-bar .language-switcher {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  height: 38px !important;
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.top-control-bar a,
+.top-control-bar button,
+.top-control-bar .ctrl-btn,
+.top-control-bar .top-btn-theme,
+.top-control-bar .top-btn-lang {
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 3px !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+}
 
 .chart-container {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    position: relative;
-    border-radius: 14px;
-    width: 100% !important;
-    max-width: 1100px !important;
-    margin: 0 auto 30px auto !important;
-    box-sizing: border-box !important;
-    padding: 8px !important;
-    scroll-behavior: smooth;
-    scroll-padding-left: 6px;
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin: 0 auto 15px auto !important;
+  padding: 4px !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important; /* NO HORIZONTAL SLIDER! */
 }
-.chart-grid {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: repeat(4, auto) !important;
-    gap: 8px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-@media (max-width: 768px) {
-    .chart-container {
-        padding: 6px !important;
-    }
-    .chart-grid {
-        min-width: 600px !important;
-        gap: 5px !important;
-    }
-}
-body, .container {
-    padding-bottom: 115px !important;
-}
-@media (max-width: 480px) {
-    .fixed-bottom-bar, #action-bar {
-        width: calc(100vw - 12px) !important;
-        padding: 5px 6px !important;
-        gap: 3px !important;
-    }
-    .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
-        height: 36px !important;
-        min-height: 36px !important;
-        max-height: 36px !important;
-        padding: 0 4px !important;
-        font-size: 10.5px !important;
-        gap: 3px !important;
-        flex: 1 1 0% !important;
-        min-width: 0 !important;
-    }
-    .fixed-bottom-bar .float-btn span, .fixed-bottom-bar button span {
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
-        font-size: 10.5px !important;
-    }
-}
-@media print {
-    
-    .chart-container { overflow: visible !important; zoom: 1 !important; transform: none !important; }
-    .chart-grid { min-width: 0 !important; }
-}
-</style>
 
-<style>
-/* ===== APP-ONLY DISPLAY RULES ===== */
-.is-mobile-app .chart-grid {
-    min-width: 600px !important;
-}
-.is-mobile-app .chart-container {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-}
 .chart-grid {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: repeat(4, auto) !important;
-    gap: 8px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, calc((100% - 9px) / 4)) !important;
+  gap: 3px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
 }
-@media (max-width: 768px) {
-    .chart-container {
-        padding: 6px !important;
-    }
-    .chart-grid {
-        min-width: 600px !important;
-        gap: 5px !important;
-    }
+
+.nak-box {
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
-body, .container {
-    padding-bottom: 115px !important;
+
+.nak-name-cell {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 16px !important;
+  max-width: 24px !important;
+  padding: 1px 1px !important;
 }
-@media (max-width: 480px) {
-    .fixed-bottom-bar, #action-bar {
-        width: calc(100vw - 12px) !important;
-        padding: 5px 6px !important;
-        gap: 3px !important;
-    }
-    .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
-        height: 36px !important;
-        min-height: 36px !important;
-        max-height: 36px !important;
-        padding: 0 4px !important;
-        font-size: 10.5px !important;
-        gap: 3px !important;
-        flex: 1 1 0% !important;
-        min-width: 0 !important;
-    }
-    .fixed-bottom-bar .float-btn span, .fixed-bottom-bar button span {
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
-        font-size: 10.5px !important;
-    }
+
+.nak-name-text {
+  font-size: 8px !important;
+  line-height: 1.0 !important;
+  letter-spacing: -0.2px !important;
 }
+
+.pada-row {
+  font-size: 8px !important;
+  gap: 1.5px !important;
+}
+
+.pada-num {
+  width: 11px !important;
+  height: 11px !important;
+  min-width: 11px !important;
+  font-size: 7.5px !important;
+}
+
+.occupant-pill {
+  font-size: 8px !important;
+  padding: 0 1px !important;
+}
+
+.occupants-wrap {
+  gap: 1px 2px !important;
+}
+
+.center-table {
+  font-size: 9px !important;
+}
+
+.center-table td, .center-table th {
+  padding: 1px 2px !important;
+}
+
+/* Bottom Bar */
+.fixed-bottom-bar, #action-bar {
+  width: calc(100vw - 12px) !important;
+  max-width: 900px !important;
+  padding: 4px 6px !important;
+  gap: 4px !important;
+}
+
+.fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  padding: 0 4px !important;
+  font-size: 11px !important;
+  gap: 4px !important;
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+}
+
+/* ===== STRICT 1-PAGE A4 PRINT CSS ===== */
 @media print {
-    
+  @page {
+    size: A4 portrait !important;
+    margin: 4mm !important;
+  }
+
+  html, body {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 8px !important;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .top-control-bar,
+  .fixed-bottom-bar,
+  #action-bar,
+  .no-print,
+  nav,
+  .floating-actions,
+  #loading-overlay,
+  .theme-switcher,
+  .language-switcher,
+  .zoom-toolbar,
+  #zoom-toolbar,
+  .results-section,
+  .notes-section {
+    display: none !important;
+  }
+
+  .page-header {
+    margin: 0 0 2mm 0 !important;
+    padding: 0 !important;
+  }
+
+  .page-header h1 {
+    font-size: 14px !important;
+    margin: 0 0 1mm 0 !important;
+    color: #000000 !important;
+  }
+
+  .chart-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 1mm !important;
+    border: 1.5px solid #000 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    overflow: visible !important;
+  }
+
+  .chart-grid {
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 1mm !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .nak-box {
+    border: 1px solid #333 !important;
+    border-radius: 4px !important;
+    padding: 1px !important;
+    background: #ffffff !important;
+  }
+
+  .nak-box-header {
+    padding: 1px 2px !important;
+    border-bottom: 1px solid #666 !important;
+  }
+
+  .house-badge, .karma-badge-small {
+    font-size: 7px !important;
+    padding: 0 2px !important;
+  }
+
+  .rashi-title-text {
+    font-size: 8.5px !important;
+    color: #000000 !important;
+  }
+
+  .nak-name-cell {
+    min-width: 14px !important;
+    max-width: 20px !important;
+    padding: 0.5px !important;
+    border-right: 1px solid #888 !important;
+  }
+
+  .nak-name-text {
+    font-size: 7px !important;
+    line-height: 1.0 !important;
+    color: #451a03 !important;
+  }
+
+  .pada-row {
+    font-size: 7px !important;
+    gap: 1px !important;
+  }
+
+  .pada-num {
+    width: 9px !important;
+    height: 9px !important;
+    min-width: 9px !important;
+    font-size: 6.5px !important;
+  }
+
+  .occupant-pill {
+    font-size: 7px !important;
+    padding: 0 !important;
+  }
+
+  .center-table {
+    font-size: 7px !important;
+  }
+
+  .center-table th, .center-table td {
+    padding: 1px 2px !important;
+  }
 }
 </style>
 </head>
@@ -3026,84 +3190,64 @@ body, .container {
   <!-- Macro for Nakshatra Box -->
 
   {% macro render_nak_box(rashi_name) %}
-
   {% set b = nakshatra_boxes[rashi_name] %}
-
+  {% set p_2l = {
+    'సూర్యుడు': 'సూర్య', 'సూర్య': 'సూర్య', 'రవి': 'సూర్య',
+    'చంద్రుడు': 'చంద్ర', 'చంద్ర': 'చంద్ర',
+    'కుజుడు': 'కుజ', 'కుజ': 'కుజ',
+    'బుధుడు': 'బుధ', 'బుధ': 'బుధ',
+    'గురు': 'గురు', 'గురువు': 'గురు',
+    'శుక్రుడు': 'శుక్ర', 'శుక్ర': 'శుక్ర',
+    'శని': 'శని',
+    'రాహు': 'రాహు', 'రాహువు': 'రాహు',
+    'కేతు': 'కేతు', 'కేతువు': 'కేతు',
+    'భూమి': 'భూమి',
+    'చిత్ర': 'చిత్ర',
+    'మిత్ర': 'మిత్ర',
+    'లగ్నం': 'లగ్న', 'లగ్న': 'లగ్న',
+    'Sun': 'Su', 'Moon': 'Mo', 'Mars': 'Ma', 'Mercury': 'Me',
+    'Jupiter': 'Ju', 'Venus': 'Ve', 'Saturn': 'Sa', 'Rahu': 'Ra',
+    'Ketu': 'Ke', 'Earth': 'Ea', 'Mitra': 'Mi', 'Chitra': 'Ch', 'Lagna': 'La'
+  } %}
   <div class="nak-box {{ b.karma_class }} {% if b.is_lagna %}lagna-box{% endif %}">
-
     <div class="nak-box-header">
-
       <span class="house-badge">{{ b.house_no }}</span>
-
       <span class="rashi-title-text">{{ _(b.rashi_name) }}</span>
-
       <span class="karma-badge-small" title="{% if b.karma_label == 'పు+పా' %}{{ _('పుణ్యం + పాపం') }}{% else %}{{ _(b.karma_label) }}{% endif %}">{{ _(b.karma_label) }}</span>
-
     </div>
-
-
 
     <div class="nak-padas-container">
-
       {% for nak in b.nakshatras %}
-
       <div class="nak-group-row">
-
         <div class="nak-name-cell" title="{{ nak.nakshatra_name }}">
-
           <span class="nak-name-text">{{ _(nak.short_nakshatra_name) if nak.short_nakshatra_name else _(nak.nakshatra_name) }}</span>
-
         </div>
-
         <div class="padas-list-cell">
-
           {% for p in nak.padas %}
-
           <div class="pada-row {% if p.occupants %}has-occupant{% endif %}">
-
             <span class="pada-num">{{ p.rashi_pada }}</span>
-
             {% if p.occupants %}
-
               <span class="occupants-wrap">
-
                 {% for occ in p.occupants %}
-
+                  {% set occ_name_2l = p_2l.get(occ.name, occ.name) %}
                   {% if occ.is_lagna %}
-
-                    <span class="occupant-pill lagna-occupant">🚩 {{ _("లగ్నం") }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
-
+                    <span class="occupant-pill lagna-occupant">🚩 {{ _(occ_name_2l) if _(occ_name_2l) != occ_name_2l else _("లగ్న") }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
                   {% elif occ.is_hand %}
-
-                    <span class="occupant-pill aspect-hand" style="color: {{ occ.color }};">👉 {{ _(occ.name) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
-
+                    <span class="occupant-pill aspect-hand" style="color: {{ occ.color }};">👉 {{ _(occ_name_2l) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
                   {% else %}
-
-                    <span class="occupant-pill planet-name-pill" style="color: {{ occ.color }};">{{ _(occ.name) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
-
+                    <span class="occupant-pill planet-name-pill" style="color: {{ occ.color }};">{{ _(occ_name_2l) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
                   {% endif %}
-
                 {% endfor %}
-
               </span>
-
             {% endif %}
-
           </div>
-
           {% endfor %}
-
         </div>
-
       </div>
-
       {% endfor %}
-
     </div>
-
   </div>
-
-  {% endmacro %}
+{% endmacro %}
   </div>
 
   <!-- 4x4 South Indian Grid Chart -->

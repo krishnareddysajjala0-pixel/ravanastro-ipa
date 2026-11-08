@@ -7142,68 +7142,149 @@ body {
 </style>
 
 <style>
+/* ===== RESPONSIVE MOBILE FIT (NO HORIZONTAL SLIDER) & EQUAL BUTTON HEIGHTS ===== */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.container {
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin: 0 auto !important;
+  padding: 0 4px !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+  padding-bottom: 90px !important;
+}
+
+/* Top control bar: guaranteed equal height across Web, Android, iOS */
+.top-control-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  gap: 4px !important;
+  width: 100% !important;
+  margin: 0 auto 6px auto !important;
+  padding: 4px 2px !important;
+  box-sizing: border-box !important;
+}
+
+.top-control-bar > *,
+.top-control-bar .theme-switcher,
+.top-control-bar .language-switcher {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  height: 38px !important;
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.top-control-bar a,
+.top-control-bar button,
+.top-control-bar .ctrl-btn,
+.top-control-bar .top-btn-theme,
+.top-control-bar .top-btn-lang,
+.top-control-bar .top-btn-karma,
+.top-control-bar .top-btn-hands,
+.top-control-bar #karmaBtn,
+.top-control-bar #chupuluBtn {
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 3px !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+}
 
 .chart-container {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    position: relative;
-    border-radius: 16px;
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin: 0 auto 15px auto !important;
+  padding: 4px !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important; /* NO HORIZONTAL SLIDER! */
 }
-@media (max-width: 768px) {
-    .chart {
-        min-width: 520px !important;
-    }
-}
-body, .container {
-    padding-bottom: 115px !important;
-}
-@media (max-width: 480px) {
-    .fixed-bottom-bar, #action-bar {
-        width: calc(100vw - 12px) !important;
-        padding: 5px 6px !important;
-        gap: 4px !important;
-    }
-    .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
-        height: 36px !important;
-        min-height: 36px !important;
-        max-height: 36px !important;
-        padding: 0 4px !important;
-        font-size: 11px !important;
-        gap: 4px !important;
-        flex: 1 1 0% !important;
-        min-width: 0 !important;
-    }
-    .fixed-bottom-bar .float-btn span, .fixed-bottom-bar button span {
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
-        font-size: 11px !important;
-    }
-}
-@media print {
-    
-    .chart-container { overflow: visible !important; zoom: 1 !important; transform: none !important; }
-    .chart { min-width: 0 !important; }
-}
-</style>
 
-<style>
-/* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
+.chart {
+  display: grid !important;
+  grid-template-columns: repeat(4, calc((100% - 9px) / 4)) !important;
+  gap: 3px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+}
 
-
-.is-mobile-app 
-.is-mobile-app 
-.is-mobile-app 
 .is-mobile-app .chart {
-    min-width: 520px !important;
+  min-width: 0 !important;
+  width: 100% !important;
 }
+
 .is-mobile-app .chart-container {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
+  overflow-x: hidden !important;
+}
+
+.box {
+  min-height: 80px !important;
+  padding: 3px !important;
+  font-size: 11px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.box-header {
+  font-size: 10px !important;
+}
+
+.center-box {
+  font-size: 9px !important;
+  padding: 2px !important;
+}
+
+.center-table {
+  font-size: 8.5px !important;
+}
+
+.center-table td, .center-table th {
+  padding: 1px 2px !important;
+}
+
+/* Ensure 2-letter planet names display properly */
+.full-name, .short-name {
+  font-weight: 800 !important;
+}
+
+/* Bottom Bar */
+.fixed-bottom-bar, #action-bar {
+  width: calc(100vw - 12px) !important;
+  max-width: 900px !important;
+  padding: 4px 6px !important;
+  gap: 4px !important;
+}
+
+.fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  padding: 0 4px !important;
+  font-size: 11px !important;
+  gap: 4px !important;
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
 }
 
 @media print {
-    
+  .chart-container { overflow: visible !important; zoom: 1 !important; transform: none !important; }
+  .chart { min-width: 0 !important; }
 }
 </style>
 </head>
