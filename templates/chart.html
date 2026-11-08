@@ -303,7 +303,8 @@
 
 
 
-      --label-text: #ffffff;
+      --label-text: #fbbf24;
+      --label-bg: rgba(45, 8, 8, 0.92);
 
 
 
@@ -2158,6 +2159,20 @@
 
 
     }
+
+    /* Sunset Theme High-Contrast Lagna Names & House Numbers */
+    [data-theme="sunset"] .lagna-name {
+      color: #fbbf24 !important;
+      background: rgba(45, 8, 8, 0.92) !important;
+      border: 1.5px solid rgba(251, 191, 36, 0.5) !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+    }
+    [data-theme="sunset"] .house-no {
+      color: #fbbf24 !important;
+      background: rgba(45, 8, 8, 0.85) !important;
+      border: 1px solid rgba(251, 191, 36, 0.4) !important;
+    }
+
 
 
 
@@ -7442,6 +7457,168 @@ html, body {
   }
 }
 </style>
+<style>
+
+/* Guaranteed Single Line & Top-Button Matching Height for Transit Controls */
+#transit-inputs-bar,
+.transit-inputs-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 auto 8px auto !important;
+  width: 100% !important;
+  max-width: 480px !important;
+  box-sizing: border-box !important;
+}
+
+.transit-input-group,
+#transit-inputs-bar > div {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  background: rgba(15, 23, 42, 0.9) !important;
+  padding: 0 8px !important;
+  border-radius: 10px !important;
+  border: 1.5px solid rgba(52, 211, 153, 0.6) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  box-sizing: border-box !important;
+  flex: 0 1 auto !important;
+}
+
+#transit-inputs-bar > div:nth-child(2) {
+  border-color: rgba(56, 189, 248, 0.6) !important;
+}
+
+#transit-inputs-bar label {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+#transit-inputs-bar input {
+  background: transparent !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  outline: none !important;
+  cursor: pointer !important;
+  color-scheme: dark !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100% !important;
+  line-height: 1 !important;
+}
+
+#transit-custom-date {
+  max-width: 108px !important;
+}
+
+#transit-custom-time {
+  max-width: 78px !important;
+}
+
+#transit-btn {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  padding: 0 18px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+@media screen and (max-width: 480px) {
+  #transit-inputs-bar,
+  .transit-inputs-bar {
+    gap: 4px !important;
+    margin-bottom: 6px !important;
+  }
+  .transit-input-group,
+  #transit-inputs-bar > div {
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    padding: 0 6px !important;
+    gap: 3px !important;
+  }
+  #transit-inputs-bar label {
+    font-size: 11px !important;
+  }
+  #transit-inputs-bar input {
+    font-size: 11.5px !important;
+  }
+  #transit-custom-date {
+    max-width: 100px !important;
+  }
+  #transit-custom-time {
+    max-width: 72px !important;
+  }
+  #transit-btn {
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    font-size: 12px !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  #transit-inputs-bar,
+  .transit-inputs-bar {
+    gap: 3px !important;
+  }
+  .transit-input-group,
+  #transit-inputs-bar > div {
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    padding: 0 4px !important;
+    gap: 2px !important;
+  }
+  #transit-inputs-bar label {
+    font-size: 10px !important;
+  }
+  #transit-inputs-bar input {
+    font-size: 10.5px !important;
+  }
+  #transit-custom-date {
+    max-width: 88px !important;
+  }
+  #transit-custom-time {
+    max-width: 64px !important;
+  }
+  #transit-btn {
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    font-size: 11px !important;
+    padding: 0 10px !important;
+  }
+}
+
+</style>
 </head>
 
 
@@ -8345,29 +8522,27 @@ html, body {
     <div class="print-hide" style="text-align: center; margin: 22px auto 14px auto; max-width: 520px; padding: 0 12px;">
       
       <!-- Inline Date & Time Fields directly above 'ఈ రోజు గ్రహ స్థితి' button -->
-      <div id="transit-inputs-bar" style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 12px; flex-wrap: wrap;">
+      <div id="transit-inputs-bar" class="transit-inputs-bar transit-inputs-bar">
         <!-- Date field -->
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.85); padding: 6px 12px; border-radius: 10px; border: 1.5px solid rgba(52, 211, 153, 0.6); box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-          <label for="transit-custom-date" style="font-size: 13px; font-weight: 700; color: #34d399; margin: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+        <div class="transit-input-group date-group">
+          <label for="transit-custom-date">
             <i class="fas fa-calendar-alt"></i> <span>{{ _('తేది') }}:</span>
           </label>
-          <input type="date" id="transit-custom-date" style="background: transparent; border: none; color: #ffffff; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; color-scheme: dark;">
+          <input type="date" id="transit-custom-date">
         </div>
 
         <!-- Time field -->
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.85); padding: 6px 12px; border-radius: 10px; border: 1.5px solid rgba(56, 189, 248, 0.6); box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-          <label for="transit-custom-time" style="font-size: 13px; font-weight: 700; color: #38bdf8; margin: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+        <div class="transit-input-group time-group">
+          <label for="transit-custom-time">
             <i class="fas fa-clock"></i> <span>{{ _('సమయం') }}:</span>
           </label>
-          <input type="time" id="transit-custom-time" style="background: transparent; border: none; color: #ffffff; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; color-scheme: dark;">
+          <input type="time" id="transit-custom-time">
         </div>
-
-        
       </div>
 
       <!-- Main Button -->
-      <button onclick="fetchTransitChart()" id="transit-btn" style="background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%); color: white; border: none; padding: 11px 22px; border-radius: 8px; font-size: 15.5px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(11, 163, 96, 0.4); display: inline-flex; align-items: center; gap: 8px; transition: transform 0.15s ease;">
-        <i class="fas fa-satellite" style="filter: drop-shadow(0 0 5px red) drop-shadow(0 0 5px orange) drop-shadow(0 0 5px yellow) drop-shadow(0 0 5px green) drop-shadow(0 0 5px blue) drop-shadow(0 0 5px indigo) drop-shadow(0 0 5px violet);"></i> {{ _('ఈ రోజు గ్రహ స్థితి') }}
+      <button onclick="fetchTransitChart()" id="transit-btn" class="transit-submit-btn">
+        <i class="fas fa-satellite" style="filter: drop-shadow(0 0 5px red) drop-shadow(0 0 5px orange) drop-shadow(0 0 5px yellow) drop-shadow(0 0 5px green) drop-shadow(0 0 5px blue) drop-shadow(0 0 5px indigo) drop-shadow(0 0 5px violet);"></i> <span>{{ _('ఈ రోజు గ్రహ స్థితి') }}</span>
       </button>
 
       <div id="transit-loading" style="display: none; color: #ffd700; margin-top: 12px; font-size: 13.5px; font-weight: 600;">
