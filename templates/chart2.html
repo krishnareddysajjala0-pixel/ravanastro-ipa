@@ -3962,7 +3962,6 @@
             .anthara-table th:nth-child(4), .anthara-table td:nth-child(4) { width: 16% !important; }
             .anthara-table th:nth-child(5), .anthara-table td:nth-child(5) { width: 16% !important; }
             .anthara-table th:nth-child(6), .anthara-table td:nth-child(6) { width: 13% !important; }
-            .page-zoom-bar, 
             .anthara-table-wrapper { overflow: visible !important; width: 100% !important; }
             .glow-container { zoom: 1 !important; transform: none !important; }
 
@@ -6169,75 +6168,7 @@ body {
 }
 </style>
 <style>
-    /* ===== PAGE ZOOM CONTROLS ===== */
-    .page-zoom-bar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 12px auto 16px auto;
-        width: 100%;
-        max-width: 600px;
-        z-index: 100;
-    }
-    .zoom-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(15, 23, 42, 0.94);
-        border: 1px solid rgba(56, 189, 248, 0.4);
-        border-radius: 30px;
-        padding: 6px 14px;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
-        backdrop-filter: blur(10px);
-    }
-    .zoom-label {
-        color: #38bdf8;
-        font-size: 12px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    .zoom-action-btn {
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        color: #fff;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 11px;
-        transition: transform 0.15s ease, background 0.15s ease;
-    }
-    .zoom-action-btn:active {
-        transform: scale(0.92);
-        background: #0284c7;
-    }
-    .zoom-pill input[type="range"] {
-        width: 110px;
-        cursor: pointer;
-        accent-color: #38bdf8;
-        height: 5px;
-    }
-    .zoom-reset-btn {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #e2e8f0;
-        border-radius: 12px;
-        padding: 3px 8px;
-        font-size: 11px;
-        font-weight: bold;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-    .zoom-reset-btn:active {
-        background: rgba(255, 255, 255, 0.2);
-    }
+    
 
     /* ===== ANTHARA SLIDER AND SCROLL WRAPPER ===== */
     .anthara-header-row {
@@ -6302,12 +6233,9 @@ body {
 </style>
 <style>
 /* ===== APP-ONLY DISPLAY RULES: Hidden on Web App, Shown in Mobile App ===== */
-.page-zoom-bar,
 
 
-.is-mobile-app .page-zoom-bar {
-    display: flex !important;
-}
+.is-mobile-app 
 .is-mobile-app 
 .is-mobile-app .anthara-table {
     min-width: 560px !important;
@@ -6324,7 +6252,6 @@ body {
 }
 
 @media print {
-    .page-zoom-bar,
     
 }
 </style>
@@ -6986,24 +6913,6 @@ body {
 
 
 
-        </div>
-
-
-
-
-
-
-
-        
-        <!-- Page Zoom Controls -->
-        <div class="page-zoom-bar print-hide" id="page-zoom-control">
-            <div class="zoom-pill">
-                <span class="zoom-label">🔍 {{ _('జూమ్') }}</span>
-                <button type="button" class="zoom-action-btn" onclick="adjustPageZoom(-10)" title="Zoom Out">−</button>
-                <input type="range" id="pageZoomSlider" min="75" max="150" value="100" step="5" oninput="applyPageZoom(this.value)">
-                <button type="button" class="zoom-action-btn" onclick="adjustPageZoom(10)" title="Zoom In">+</button>
-                <button type="button" class="zoom-reset-btn" onclick="resetPageZoom()"><span id="pageZoomDisplay">100%</span> ↺</button>
-            </div>
         </div>
 
         <!-- Current Dasa - Galaxy Style -->
@@ -9320,48 +9229,7 @@ if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversa
 
 
 <script>
-/* ===== PAGE ZOOM CONTROLS SCRIPT ===== */
-function applyPageZoom(val) {
-    val = parseInt(val);
-    if (isNaN(val)) val = 100;
-    if (val < 70) val = 70;
-    if (val > 160) val = 160;
-    var slider = document.getElementById('pageZoomSlider');
-    if (slider) slider.value = val;
-    var display = document.getElementById('pageZoomDisplay');
-    if (display) display.innerText = val + '%';
-    
-    var container = document.querySelector('.glow-container') || document.body;
-    if ('zoom' in document.body.style) {
-        container.style.zoom = (val / 100);
-    } else {
-        container.style.transform = 'scale(' + (val / 100) + ')';
-        container.style.transformOrigin = 'top center';
-    }
-    try {
-        localStorage.setItem('preferred-dasa-zoom', val);
-    } catch(e) {}
-}
 
-function adjustPageZoom(delta) {
-    var cur = parseInt(document.getElementById('pageZoomSlider') ? document.getElementById('pageZoomSlider').value : 100) || 100;
-    applyPageZoom(cur + delta);
-}
-
-function resetPageZoom() {
-    applyPageZoom(100);
-}
-
-
-
-window.addEventListener('DOMContentLoaded', function() {
-    try {
-        var saved = localStorage.getItem('preferred-dasa-zoom');
-        if (saved && saved !== '100') {
-            applyPageZoom(parseInt(saved));
-        }
-    } catch(e) {}
-});
 </script>
 
 </body>
