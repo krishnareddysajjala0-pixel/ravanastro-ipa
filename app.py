@@ -3818,5 +3818,10 @@ def nakshatra_transit_chart():
     )
 
 
+@app.route("/privacy")
+def privacy_policy():
+    return render_template("privacy.html")
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000, debug=True)
