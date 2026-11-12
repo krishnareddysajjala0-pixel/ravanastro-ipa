@@ -2689,34 +2689,86 @@
     display: none !important;
   }
 
-  /* Strict 2-page print: Page 1 has table + 1st half of friendly planets; Page 2 has 2nd half + enemy planets */
+  /* Strict 2-page print (+30% larger readable typography to fill both pages cleanly) */
   html, body {
     min-height: 0 !important;
     height: auto !important;
     padding: 0 !important;
     margin: 0 !important;
   }
-  #chart3-page-1 .party-info {
-    margin: 3px 0 2px 0 !important;
-    padding: 1.5px 6px !important;
+
+  /* Page 1 Table (+20-30% larger fonts tuned to stay strictly 2 pages across all languages) */
+  #chart3-page-1 .data-table,
+  #chart3-page-1 .unified-varga-table {
+    font-size: 8.1pt !important;
   }
+  #chart3-page-1 .data-table th,
+  #chart3-page-1 .data-table td,
+  #chart3-page-1 .unified-varga-table th,
+  #chart3-page-1 .unified-varga-table td {
+    font-size: 8.1pt !important;
+    padding: 1.5px 1px !important;
+    line-height: 1.1 !important;
+  }
+  #chart3-page-1 .unified-varga-table th.varga-group-header {
+    font-size: 8.8pt !important;
+  }
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th {
+    font-size: 8.1pt !important;
+  }
+  #chart3-page-1 .disease-list li {
+    font-size: 7.4pt !important;
+    line-height: 1.1 !important;
+  }
+
+  /* 3 lines spacing above గురు వర్గ వ్యక్తి / మీ లగ్నం line + larger badge */
+  #chart3-page-1 .party-info {
+    margin: 40px 0 4px 0 !important;
+    padding: 3px 8px !important;
+  }
+  #chart3-page-1 .party-info .party-badge {
+    font-size: 14.5pt !important;
+    padding: 1.5px 10px !important;
+  }
+  #chart3-page-1 .party-info div {
+    font-size: 12.5pt !important;
+    margin-top: 2px !important;
+  }
+
   #chart3-page-1 .friendly-section-title {
-    margin: 2px 0 3px 0 !important;
-    font-size: 11pt !important;
+    margin: 4px 0 3px 0 !important;
+    font-size: 13.5pt !important;
+  }
+  #chart3-page-2 .enemy-section-title {
+    margin: 5px 0 3px 0 !important;
+    font-size: 13.5pt !important;
   }
   #chart3-page-1 .results-grid,
   #chart3-page-2 .results-grid {
-    gap: 3px 4px !important;
+    gap: 3px 5px !important;
     margin-top: 2px !important;
     margin-bottom: 2px !important;
   }
-  #chart3-page-2 .enemy-section-title {
-    margin: 4px 0 3px 0 !important;
-    font-size: 11pt !important;
-  }
+  html body .result-card,
   html body .result-card.friendly-card,
   html body .result-card.enemy-card {
     background: #ffffff !important;
+    padding: 2.5px 4px !important;
+  }
+  html body .result-card .planet-name {
+    font-size: 12.2pt !important;
+    line-height: 1.12 !important;
+    margin-bottom: 1px !important;
+  }
+  html body .result-card .own-house-badge {
+    font-size: 9.2pt !important;
+    padding: 0.5px 3px !important;
+  }
+  html body .result-card .info-row,
+  html body .result-card .info-row .label,
+  html body .result-card .info-row .val {
+    font-size: 10.2pt !important;
+    line-height: 1.12 !important;
   }
   html body .result-card.friendly-card .planet-name,
   html body .result-card.friendly-card .info-row .label {
@@ -2730,8 +2782,8 @@
   html body .result-card.friendly-card .info-row.rulership-row .val,
   html body .result-card.enemy-card .info-row.rulership-row .val {
     color: #000000 !important;
-    font-size: 7.6pt !important;
-    line-height: 1.08 !important;
+    font-size: 8.8pt !important;
+    line-height: 1.1 !important;
   }
 }
 
@@ -4408,7 +4460,7 @@ body {
 @media print {
   #chart3-page-1 .section-title,
   #varga-table-section .section-title {
-    font-size: 6.8pt !important; /* Reduced to half in print */
+    font-size: 10.5pt !important;
   }
 }
 </style>
