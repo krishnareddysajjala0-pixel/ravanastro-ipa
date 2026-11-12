@@ -80,10 +80,11 @@
 
 
 
-      const rawSavedTheme = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+      const rawSavedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
       const savedTheme = (rawSavedTheme === 'solar' || rawSavedTheme === 'cosmic') ? rawSavedTheme : 'solar';
 
       document.documentElement.setAttribute('data-theme', savedTheme);
+      localStorage.setItem('preferred-theme-v3', savedTheme);
       localStorage.setItem('preferred-theme-v2', savedTheme);
       localStorage.setItem('preferred-theme', savedTheme);
 
@@ -530,93 +531,114 @@
 
 
     [data-theme="solar"] {
-
-
-
-      --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
-
-
-
-      --text-main: #451a03;
-
-
-
-      --text-muted: #92400e;
-
-
-
-      --card-bg: rgba(255, 255, 255, 0.92);
-
-
-
-      --card-border: rgba(217, 119, 6, 0.32);
-
-
-
+      --bg-primary: radial-gradient(circle at 15% 10%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
+                    radial-gradient(circle at 85% 15%, rgba(249, 115, 22, 0.14) 0%, transparent 42%),
+                    radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.20) 0%, transparent 50%),
+                    linear-gradient(155deg, #fffdf7 0%, #fef3c7 52%, #ffedd5 100%);
+      --text-main: #291303;
+      --text-muted: #7c2d12;
+      --card-bg: rgba(255, 253, 248, 0.96);
+      --card-border: rgba(217, 119, 6, 0.45);
       --input-bg: #ffffff;
-
-
-
-      --input-border: rgba(217, 119, 6, 0.4);
-
-
-
-      --input-focus-border: #d97706;
-
-
-
-      --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
-
-
-
+      --input-border: rgba(180, 83, 9, 0.42);
+      --input-focus-border: #b45309;
+      --input-focus-shadow: 0 0 18px rgba(217, 119, 6, 0.34);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
-
-
-
       --btn-show-text: #ffffff;
-
-
-
-      --shadow-color: rgba(120, 53, 15, 0.12);
-
-
-
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
-
-
-
-      --label-bg: rgba(254, 243, 199, 0.8);
-
-
-
-      --label-text: #78350f;
-
-
-
-      --house-no-bg: rgba(245, 158, 11, 0.22);
-
-
-
+      --shadow-color: rgba(146, 64, 14, 0.18);
+      --header-bg: linear-gradient(135deg, #7c2d12 0%, #b45309 55%, #d97706 100%);
+      --label-bg: rgba(254, 243, 199, 0.92);
+      --label-text: #7c2d12;
+      --house-no-bg: rgba(245, 158, 11, 0.28);
       --house-no-text: #451a03;
-
-
-
-      --box-border: rgba(217, 119, 6, 0.28);
-
-
-
+      --box-border: rgba(180, 83, 9, 0.36);
       --box-border-hover: #b45309;
+      --color-pos: #047857;
+      --color-neg: #b91c1c;
+    }
 
+    [data-theme="solar"] .box,
+    [data-theme="solar"] .center {
+      box-shadow: 0 6px 20px rgba(180, 83, 9, 0.12);
+    }
 
+    [data-theme="solar"] .om-title span,
+    [data-theme="solar"] .om-title .om-icon {
+      color: #9a3412 !important;
+      text-shadow: none !important;
+      filter: none !important;
+    }
 
-      --color-pos: #059669;
+    [data-theme="solar"] .lagna-text,
+    [data-theme="solar"] .box .planets-content > div[style*="gold"] {
+      color: #9a3412 !important;
+      font-weight: 800 !important;
+      font-size: 14.5px !important;
+      text-shadow: none !important;
+    }
 
+    [data-theme="solar"] .planets-content {
+      font-size: 14px;
+      font-weight: 700;
+      color: #291303;
+    }
 
+    [data-theme="solar"] .pos,
+    [data-theme="solar"] .neg {
+      font-weight: 700 !important;
+    }
 
-      --color-neg: #dc2626;
+    [data-theme="solar"] .center td[style*="#ffd700"],
+    [data-theme="solar"] .center td[style*="#FFD700"],
+    [data-theme="solar"] .center td[style*="gold"],
+    [data-theme="solar"] .center-content td[style*="#ffd700"] {
+      color: #7c2d12 !important;
+      font-weight: 800 !important;
+    }
 
+    [data-theme="solar"] .center table,
+    [data-theme="solar"] .center-content table {
+      color: #291303 !important;
+      font-weight: 600;
+    }
 
+    [data-theme="solar"] .center td[style*="#a0a0ff"],
+    [data-theme="solar"] .header div[style*="#a0a0ff"] {
+      color: #7c2d12 !important;
+      font-weight: 700 !important;
+    }
 
+    [data-theme="solar"] .header .page-title[style*="#ff9800"] {
+      color: #9a3412 !important;
+      font-weight: 800 !important;
+    }
+
+    [data-theme="solar"] .person-name {
+      color: #291303 !important;
+      text-shadow: none !important;
+    }
+
+    [data-theme="solar"] .info-line i,
+    [data-theme="solar"] .nakshatra-title {
+      color: #9a3412 !important;
+    }
+
+    [data-theme="solar"] .nakshatra-info {
+      background: rgba(254, 243, 199, 0.72) !important;
+      border-color: rgba(180, 83, 9, 0.3) !important;
+    }
+
+    [data-theme="solar"] .lagna-name {
+      background: linear-gradient(135deg, #7c2d12, #9a3412) !important;
+      color: #fef3c7 !important;
+      border-color: rgba(217, 119, 6, 0.7) !important;
+      box-shadow: 0 2px 6px rgba(124, 45, 18, 0.25) !important;
+    }
+
+    [data-theme="solar"] .house-no {
+      background: rgba(124, 45, 18, 0.9) !important;
+      color: #fef3c7 !important;
+      border-color: rgba(217, 119, 6, 0.6) !important;
     }
 
 
@@ -9141,7 +9163,8 @@ html, body {
 
         document.documentElement.setAttribute('data-theme', activeTheme);
 
-        localStorage.setItem('preferred-theme-v2', activeTheme);
+        localStorage.setItem('preferred-theme-v3', activeTheme);
+      localStorage.setItem('preferred-theme-v2', activeTheme);
     localStorage.setItem('preferred-theme', activeTheme);
 
 
@@ -9190,7 +9213,7 @@ html, body {
 
 
 
-      const rawSavedThemeGlobal = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+      const rawSavedThemeGlobal = localStorage.getItem('preferred-theme-v3') || 'solar';
       const savedThemeGlobal = (rawSavedThemeGlobal === 'solar' || rawSavedThemeGlobal === 'cosmic') ? rawSavedThemeGlobal : 'solar';
 
 
@@ -9831,7 +9854,7 @@ html, body {
 
 
 
-        const rawSavedThemePrint = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+        const rawSavedThemePrint = localStorage.getItem('preferred-theme-v3') || 'solar';
         const savedTheme = (rawSavedThemePrint === 'solar' || rawSavedThemePrint === 'cosmic') ? rawSavedThemePrint : 'solar';
 
 
@@ -11092,7 +11115,8 @@ html, body {
   function setTheme(themeName) {
     const activeTheme = (themeName === 'solar' || themeName === 'cosmic') ? themeName : 'solar';
     document.documentElement.setAttribute('data-theme', activeTheme);
-    localStorage.setItem('preferred-theme-v2', activeTheme);
+    localStorage.setItem('preferred-theme-v3', activeTheme);
+      localStorage.setItem('preferred-theme-v2', activeTheme);
     localStorage.setItem('preferred-theme', activeTheme);
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -11160,7 +11184,7 @@ html, body {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    const rawSavedThemeDOM = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+    const rawSavedThemeDOM = localStorage.getItem('preferred-theme-v3') || 'solar';
     const savedTheme = (rawSavedThemeDOM === 'solar' || rawSavedThemeDOM === 'cosmic') ? rawSavedThemeDOM : 'solar';
     setTheme(savedTheme);
     if (localStorage.getItem('hide-karma') === 'true') {

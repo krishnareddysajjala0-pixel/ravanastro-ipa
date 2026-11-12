@@ -206,58 +206,54 @@
 
 
     [data-theme="solar"] {
-
-
-
-      --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
-
-
-
-      --text-main: #451a03;
-
-
-
-      --text-muted: #92400e;
-
-
-
-      --card-bg: rgba(255, 255, 255, 0.92);
-
-
-
-      --card-border: rgba(217, 119, 6, 0.32);
-
-
-
+      --bg-primary: radial-gradient(circle at 15% 10%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
+                    radial-gradient(circle at 85% 15%, rgba(249, 115, 22, 0.14) 0%, transparent 42%),
+                    radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.20) 0%, transparent 50%),
+                    linear-gradient(155deg, #fffdf7 0%, #fef3c7 52%, #ffedd5 100%);
+      --text-main: #291303;
+      --text-muted: #7c2d12;
+      --card-bg: rgba(255, 253, 248, 0.96);
+      --card-border: rgba(217, 119, 6, 0.45);
       --input-bg: #ffffff;
-
-
-
-      --input-border: rgba(217, 119, 6, 0.4);
-
-
-
-      --input-focus-border: #d97706;
-
-
-
-      --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
-
-
-
+      --input-border: rgba(180, 83, 9, 0.42);
+      --input-focus-border: #b45309;
+      --input-focus-shadow: 0 0 18px rgba(217, 119, 6, 0.34);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
-
-
-
       --btn-show-text: #ffffff;
+      --shadow-color: rgba(146, 64, 14, 0.18);
+      --header-bg: linear-gradient(135deg, #7c2d12 0%, #b45309 55%, #d97706 100%);
+    }
 
+    [data-theme="solar"] .card {
+      box-shadow: 0 12px 36px rgba(180, 83, 9, 0.16), 0 0 0 1px rgba(245, 158, 11, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
 
+    [data-theme="solar"] .input-group label {
+      color: #451a03;
+      font-weight: 700;
+      font-size: 14px;
+    }
 
-      --shadow-color: rgba(120, 53, 15, 0.12);
+    [data-theme="solar"] .header h2 {
+      text-shadow: none;
+    }
 
+    [data-theme="solar"] .header .subtitle {
+      color: #7c2d12;
+      opacity: 1;
+      font-weight: 600;
+    }
 
+    [data-theme="solar"] .geo-status,
+    [data-theme="solar"] #geo-status,
+    [data-theme="solar"] .tagline {
+      color: #7c2d12 !important;
+      font-weight: 600;
+    }
 
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
+    [data-theme="solar"] .hybrid-picker-trigger {
+      color: #9a3412 !important;
+    }
 
 
 
@@ -3765,7 +3761,8 @@ body {
 
         document.documentElement.setAttribute('data-theme', activeTheme);
 
-        localStorage.setItem('preferred-theme-v2', activeTheme);
+        localStorage.setItem('preferred-theme-v3', activeTheme);
+      localStorage.setItem('preferred-theme-v2', activeTheme);
     localStorage.setItem('preferred-theme', activeTheme);
 
 
@@ -3978,7 +3975,7 @@ body {
 
 
 
-        const savedTheme = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+        const savedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
 
 
 
@@ -4990,6 +4987,7 @@ body {
 
       document.documentElement.setAttribute('data-theme', activeTheme);
 
+      localStorage.setItem('preferred-theme-v3', activeTheme);
       localStorage.setItem('preferred-theme-v2', activeTheme);
     localStorage.setItem('preferred-theme', activeTheme);
 
@@ -5051,7 +5049,7 @@ body {
 
 
 
-    const rawSavedTheme = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+    const rawSavedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
     const savedTheme = (rawSavedTheme === 'solar' || rawSavedTheme === 'cosmic') ? rawSavedTheme : 'solar';
 
 
@@ -8150,8 +8148,8 @@ body {
               <span>{{ _('థీమ్') }}</span>
           </button>
           <div class="theme-options drop-up-popup" id="theme-options-dropdown">
-              <button type="button" class="theme-btn" data-theme-btn="solar" onclick="setTheme('solar')" title="Solar Amber (Bright Mode)"><i class="fas fa-sun"></i> <span>Solar Amber</span></button>
-              <button type="button" class="theme-btn" data-theme-btn="cosmic" onclick="setTheme('cosmic')" title="Cosmic Mode (Dark Mode)"><i class="fas fa-moon"></i> <span>Cosmic Mode</span></button>
+              <button type="button" class="theme-btn" data-theme-btn="solar" onclick="setTheme('solar')" title="Light Mode"><i class="fas fa-sun"></i> <span>Light</span></button>
+              <button type="button" class="theme-btn" data-theme-btn="cosmic" onclick="setTheme('cosmic')" title="Dark Mode"><i class="fas fa-moon"></i> <span>Dark</span></button>
           </div>
       </div>
 

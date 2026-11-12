@@ -262,27 +262,43 @@
 
     /* ☀️ Solar Amber — Warm sunlit papyrus glow (Bright Mode) */
     [data-theme="solar"] {
-      --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
-      --text-main: #451a03;
-      --text-muted: #92400e;
-      --card-bg: rgba(255, 255, 255, 0.92);
-      --card-border: rgba(217, 119, 6, 0.32);
+      --bg-primary: radial-gradient(circle at 15% 10%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
+                    radial-gradient(circle at 85% 15%, rgba(249, 115, 22, 0.14) 0%, transparent 42%),
+                    radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.20) 0%, transparent 50%),
+                    linear-gradient(155deg, #fffdf7 0%, #fef3c7 52%, #ffedd5 100%);
+      --text-main: #291303;
+      --text-muted: #7c2d12;
+      --card-bg: rgba(255, 253, 248, 0.96);
+      --card-border: rgba(217, 119, 6, 0.45);
       --input-bg: #ffffff;
-      --input-border: rgba(217, 119, 6, 0.4);
-      --input-focus-border: #d97706;
-      --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
+      --input-border: rgba(180, 83, 9, 0.42);
+      --input-focus-border: #b45309;
+      --input-focus-shadow: 0 0 18px rgba(217, 119, 6, 0.34);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
       --btn-show-text: #ffffff;
-      --shadow-color: rgba(120, 53, 15, 0.12);
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
-      --label-bg: rgba(254, 243, 199, 0.8);
-      --label-text: #78350f;
-      --house-no-bg: rgba(245, 158, 11, 0.22);
+      --shadow-color: rgba(146, 64, 14, 0.18);
+      --header-bg: linear-gradient(135deg, #7c2d12 0%, #b45309 55%, #d97706 100%);
+      --label-bg: rgba(254, 243, 199, 0.92);
+      --label-text: #7c2d12;
+      --house-no-bg: rgba(245, 158, 11, 0.28);
       --house-no-text: #451a03;
-      --box-border: rgba(217, 119, 6, 0.28);
+      --box-border: rgba(180, 83, 9, 0.36);
       --box-border-hover: #b45309;
-      --color-pos: #059669;
-      --color-neg: #dc2626;
+      --color-pos: #047857;
+      --color-neg: #b91c1c;
+    }
+
+    [data-theme="solar"] .person-title {
+      color: #9a3412 !important;
+      text-shadow: none !important;
+    }
+
+    [data-theme="solar"] .input-wrapper i {
+      color: #9a3412 !important;
+    }
+
+    [data-theme="solar"] .loading-text {
+      color: #7c2d12 !important;
     }
 
     /* 🪔 Royal Mandala — Indian heritage: saffron, crimson & gold */
@@ -2403,6 +2419,7 @@ body {
     function setTheme(themeName) {
       const activeTheme = (themeName === 'solar' || themeName === 'cosmic') ? themeName : 'solar';
       document.documentElement.setAttribute('data-theme', activeTheme);
+      localStorage.setItem('preferred-theme-v3', activeTheme);
       localStorage.setItem('preferred-theme-v2', activeTheme);
     localStorage.setItem('preferred-theme', activeTheme);
 
@@ -2433,7 +2450,7 @@ body {
       }
     });
 
-    const rawSavedTheme = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+    const rawSavedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
     const savedTheme = (rawSavedTheme === 'solar' || rawSavedTheme === 'cosmic') ? rawSavedTheme : 'solar';
     setTheme(savedTheme);
 

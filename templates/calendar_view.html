@@ -191,52 +191,64 @@
     /* ☀️ Solar Amber — Warm sunlit papyrus glow */
 
     [data-theme="solar"] {
-
-      --bg-primary: linear-gradient(150deg, #fffbeb 0%, #fef3c7 45%, #fff7ed 100%);
-
-      --text-main: #451a03;
-
-      --text-muted: #92400e;
-
-      --card-bg: rgba(255, 255, 255, 0.92);
-
-      --card-border: rgba(217, 119, 6, 0.32);
-
+      --bg-primary: radial-gradient(circle at 15% 10%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
+                    radial-gradient(circle at 85% 15%, rgba(249, 115, 22, 0.14) 0%, transparent 42%),
+                    radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.20) 0%, transparent 50%),
+                    linear-gradient(155deg, #fffdf7 0%, #fef3c7 52%, #ffedd5 100%);
+      --text-main: #291303;
+      --text-muted: #7c2d12;
+      --card-bg: rgba(255, 253, 248, 0.96);
+      --card-border: rgba(217, 119, 6, 0.45);
       --input-bg: #ffffff;
-
-      --input-border: rgba(217, 119, 6, 0.4);
-
-      --input-focus-border: #d97706;
-
-      --input-focus-shadow: 0 0 16px rgba(217, 119, 6, 0.28);
-
+      --input-border: rgba(180, 83, 9, 0.42);
+      --input-focus-border: #b45309;
+      --input-focus-shadow: 0 0 18px rgba(217, 119, 6, 0.34);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
-
       --btn-show-text: #ffffff;
-
-      --shadow-color: rgba(120, 53, 15, 0.12);
-
-      --header-bg: linear-gradient(45deg, #451a03, #b45309);
-
-      --header-bg-top: linear-gradient(135deg, #b45309, #d97706, #f59e0b);
-
-      --label-bg: rgba(254, 243, 199, 0.8);
-
-      --label-text: #78350f;
-
-      --house-no-bg: rgba(245, 158, 11, 0.22);
-
+      --shadow-color: rgba(146, 64, 14, 0.18);
+      --header-bg: linear-gradient(135deg, #7c2d12 0%, #b45309 55%, #d97706 100%);
+      --header-bg-top: linear-gradient(135deg, #9a3412, #b45309, #d97706);
+      --label-bg: rgba(254, 243, 199, 0.92);
+      --label-text: #7c2d12;
+      --house-no-bg: rgba(245, 158, 11, 0.28);
       --house-no-text: #451a03;
-
-      --box-border: rgba(217, 119, 6, 0.28);
-
+      --box-border: rgba(180, 83, 9, 0.36);
       --box-border-hover: #b45309;
-
-      --color-pos: #059669;
-
-      --color-neg: #dc2626;
-
+      --color-pos: #047857;
+      --color-neg: #b91c1c;
     }
+
+    [data-theme="solar"] .calendar-container {
+      border-color: rgba(217, 119, 6, 0.45);
+      box-shadow: 0 10px 30px rgba(180, 83, 9, 0.16);
+    }
+
+    [data-theme="solar"] .day-header {
+      background: rgba(254, 243, 199, 0.95);
+      color: #7c2d12;
+      border-bottom-color: rgba(180, 83, 9, 0.38);
+      font-size: 14.5px;
+    }
+
+    [data-theme="solar"] .day-0 { color: #b91c1c; }
+    [data-theme="solar"] .day-1 { color: #1d4ed8; }
+    [data-theme="solar"] .day-2 { color: #9a3412; }
+    [data-theme="solar"] .day-3 { color: #047857; }
+    [data-theme="solar"] .day-4 { color: #a16207; }
+    [data-theme="solar"] .day-5 { color: #be185d; }
+    [data-theme="solar"] .day-6 { color: #334155; }
+
+    [data-theme="solar"] .shukla-box .festival-name-tag {
+      color: #047857 !important;
+      text-shadow: none !important;
+      font-size: 11px;
+    }
+
+    [data-theme="solar"] .tithi-text { font-size: 12.5px; }
+    [data-theme="solar"] .tithi-time { font-size: 11px; opacity: 0.95; }
+    [data-theme="solar"] .nakshatra-text { font-size: 11.5px; }
+    [data-theme="solar"] .nakshatra-time { font-size: 10.5px; opacity: 0.92; }
+    [data-theme="solar"] .sun-times { font-size: 10px; }
 
     /* 🪔 Royal Mandala — Indian heritage: saffron, crimson & gold */
 
@@ -2050,7 +2062,8 @@ body {
 
             document.body.setAttribute('data-theme', activeTheme);
 
-            localStorage.setItem('preferred-theme-v2', activeTheme);
+            localStorage.setItem('preferred-theme-v3', activeTheme);
+      localStorage.setItem('preferred-theme-v2', activeTheme);
     localStorage.setItem('preferred-theme', activeTheme);
 
 
@@ -2173,11 +2186,12 @@ body {
 
         (function () {
 
-            const rawSavedTheme = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+            const rawSavedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
             const savedTheme = (rawSavedTheme === 'solar' || rawSavedTheme === 'cosmic') ? rawSavedTheme : 'solar';
 
             document.documentElement.setAttribute('data-theme', savedTheme);
-            localStorage.setItem('preferred-theme-v2', savedTheme);
+            localStorage.setItem('preferred-theme-v3', savedTheme);
+      localStorage.setItem('preferred-theme-v2', savedTheme);
             localStorage.setItem('preferred-theme', savedTheme);
 
             
@@ -2365,7 +2379,8 @@ body {
   function setTheme(themeName) {
     const activeTheme = (themeName === 'solar' || themeName === 'cosmic') ? themeName : 'solar';
     document.documentElement.setAttribute('data-theme', activeTheme);
-    localStorage.setItem('preferred-theme-v2', activeTheme);
+    localStorage.setItem('preferred-theme-v3', activeTheme);
+      localStorage.setItem('preferred-theme-v2', activeTheme);
     localStorage.setItem('preferred-theme', activeTheme);
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -2395,7 +2410,7 @@ body {
     }
   });
 
-  const rawSavedThemeGlobal = localStorage.getItem('preferred-theme-v2') || localStorage.getItem('preferred-theme') || 'solar';
+  const rawSavedThemeGlobal = localStorage.getItem('preferred-theme-v3') || 'solar';
   const savedTheme = (rawSavedThemeGlobal === 'solar' || rawSavedThemeGlobal === 'cosmic') ? rawSavedThemeGlobal : 'solar';
   setTheme(savedTheme);
 </script>
