@@ -272,7 +272,7 @@
   "మిరప కారం": "Chili spicy",
   "ఉప్పు": "Salty",
   "విరోధి": "Virodhi",
-  "లగ్నం": "La",
+  "లగ్నం": "Lagna",
   "{ fetchSuggestions(q); }, 300); }); // Fetch location suggestions async function fetchSuggestions(q) { if (controller) controller.abort(); controller = new AbortController(); const url = \"https://nominatim.openstreetmap.org/search\" + \"?format=json\" + \"&limit=8\" + \"&addressdetails=1\" + \"&q=\" + encodeURIComponent(q); try { const res = await fetch(url, { signal: controller.signal, headers: { \"Accept\": \"application/json\" } }); const data = await res.json(); suggestions.innerHTML = \"\"; if (data.length === 0) { const noResult = document.createElement(\"div\"); noResult.textContent = \"ఫలితాలు లేవు\"; noResult.style.color = \"#888\"; noResult.style.fontStyle = \"italic\"; suggestions.appendChild(noResult); } else { data.forEach(p => { const type = p.type || \"\"; if (![\"city\", \"town\", \"village\", \"administrative\"].includes(type)) return; const div = document.createElement(\"div\"); div.innerHTML = `": "{ fetchSuggestions(q); }, 300); }); // Fetch location suggestions async function fetchSuggestions(q) { if (controller) controller.abort(); controller = new AbortController(); const url = \"https://nominatim.openstreetmap.org/search\" + \"?format=json\" + \"&limit=8\" + \"&addressdetails=1\" + \"&q=\" + encodeURIComponent(q); try { const res = await fetch(url, { signal: controller.signal, headers: { \"Accept\": \"application/json\" } }); const data = await res.json(); suggestions.innerHTML = \"\"; if (data.length === 0) { const noResult = document.createElement(\"div\"); noResult.textContent = \"No Results\"; noResult.style.color = \"#888\"; noResult.style.fontStyle = \"italic\"; suggestions.appendChild(noResult); } else { data.forEach(p => { const type = p.type || \"\"; if (![\"city\", \"town\", \"village\", \"administrative\"].includes(type)) return; const div = document.createElement(\"div\"); div.innerHTML = `",
   "ఈ రోజు కుండలి దాచు": "hide kundli today",
   "ఫలితం": "result",
@@ -951,8 +951,8 @@
   "Earth": "Ea",
   "Mitra": "Mi",
   "Chitra": "Ch",
-  "లగ్న": "La",
-  "Lagna": "La",
+  "లగ్న": "Lagna",
+  "Lagna": "Lagna",
   "ద్వాదశ గ్రహముల కారకాలు": "Dwadasha Grahamula Karakaalu",
   "గురువర్గ గ్రహాలు": "Guru Varga Planets",
   "శనివర్గ గ్రహాలు": "Shani Varga Planets",
@@ -961,5 +961,7 @@
   "సమయం": "Time",
   "తేది:": "Date:",
   "\"జా\" అనగా పుట్టుట, పథకము అనగా ముందే నిర్ణయించబడినది కావున దీనిని జాఫతకము అంటున్నాము.": "\"Jaa\" means birth, and \"Pathakamu\" means predetermined plan; therefore it is called Japhatakamu.",
-  "ద్వాదశ గ్రహములతో కూడిన త్రైత సిద్ధాంత జ్యోతిష్య శాస్త్రము ఆధారముగా మీ జాఫతకము నిర్ణయించబడుతుంది.": "Your Birth Plan is determined based on Thraitha Siddhanta astrology with Dwadasa planets."
+  "ద్వాదశ గ్రహములతో కూడిన త్రైత సిద్ధాంత జ్యోతిష్య శాస్త్రము ఆధారముగా మీ జాఫతకము నిర్ణయించబడుతుంది.": "Your Birth Plan is determined based on Thraitha Siddhanta astrology with Dwadasa planets.",
+  "గోచార లగ్నం": "Transit Lagna",
+  "\"జా\" అనగా పుట్టుట, \"పతకము\" అనగా ముందే నిర్ణయించబడినది కావున దీనిని \"జాఫతకము\" అంటున్నాము.": "\"Jaa\" means birth, \"Pathakamu\" means predetermined plan; therefore it is called \"Japhatakamu\"."
 }

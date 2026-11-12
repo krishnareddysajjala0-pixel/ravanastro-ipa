@@ -861,9 +861,11 @@
 
       border-bottom: 1.5px solid var(--box-border);
 
-      white-space: nowrap;
+      flex-wrap: wrap;
 
-      overflow: hidden;
+      row-gap: 2px;
+
+      overflow: visible;
 
     }
 
@@ -899,13 +901,17 @@
 
       color: var(--text-main);
 
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
 
-      white-space: nowrap;
+      white-space: normal;
 
-      overflow: hidden;
+      overflow: visible;
 
-      text-overflow: ellipsis;
+      text-overflow: clip;
+
+      word-break: keep-all;
+
+      text-align: center;
 
       margin: 0 2px;
 
@@ -1385,31 +1391,77 @@
 
       }
 
+      .occupant-pill.lagna-occupant {
+
+        white-space: normal !important;
+
+        word-break: keep-all !important;
+
+        font-size: 9px !important;
+
+        line-height: 1.15 !important;
+
+      }
+
       .nak-box-header {
 
-        padding: 3px 4px !important;
+        padding: 3px 3px !important;
 
-        white-space: nowrap !important;
+        flex-wrap: wrap !important;
+
+        justify-content: space-between !important;
+
+        align-items: center !important;
+
+        row-gap: 2px !important;
+
+        white-space: normal !important;
+
+        overflow: visible !important;
 
       }
 
       .house-badge {
 
-        font-size: 9.5px !important;
+        order: 1;
 
-        padding: 1px 3px !important;
+        font-size: 9px !important;
+
+        padding: 1px 4px !important;
 
       }
 
       .rashi-title-text {
 
-        font-size: 10px !important;
+        order: 3;
 
-        margin: 0 2px !important;
+        flex: 1 0 100% !important;
+
+        width: 100% !important;
+
+        text-align: center !important;
+
+        font-size: clamp(9.5px, 2.7vw, 11.5px) !important;
+
+        line-height: 1.15 !important;
+
+        letter-spacing: 0 !important;
+
+        white-space: normal !important;
+
+        overflow: visible !important;
+
+        text-overflow: clip !important;
+
+        word-break: keep-all !important;
+
+        margin: 1px 0 0 0 !important;
 
       }
 
       .karma-badge-small {
+
+        order: 2;
 
         font-size: 8.5px !important;
 
@@ -3412,10 +3464,10 @@ html, body {
     'భూమి': 'భూమి',
     'చిత్ర': 'చిత్ర',
     'మిత్ర': 'మిత్ర',
-    'లగ్నం': 'లగ్న', 'లగ్న': 'లగ్న',
+    'లగ్నం': 'లగ్నం', 'లగ్న': 'లగ్నం',
     'Sun': 'Su', 'Moon': 'Mo', 'Mars': 'Ma', 'Mercury': 'Me',
     'Jupiter': 'Ju', 'Venus': 'Ve', 'Saturn': 'Sa', 'Rahu': 'Ra',
-    'Ketu': 'Ke', 'Earth': 'Ea', 'Mitra': 'Mi', 'Chitra': 'Ch', 'Lagna': 'La'
+    'Ketu': 'Ke', 'Earth': 'Ea', 'Mitra': 'Mi', 'Chitra': 'Ch', 'Lagna': 'Lagna'
   } %}
   <div class="nak-box {{ b.karma_class }} {% if b.is_lagna %}lagna-box{% endif %}">
     <div class="nak-box-header">
@@ -3439,7 +3491,7 @@ html, body {
                 {% for occ in p.occupants %}
                   {% set occ_name_2l = p_2l.get(occ.name, occ.name) %}
                   {% if occ.is_lagna %}
-                    <span class="occupant-pill lagna-occupant">🚩 {{ _(occ_name_2l) if _(occ_name_2l) != occ_name_2l else _("లగ్న") }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
+                    <span class="occupant-pill lagna-occupant">🚩 {{ _("లగ్నం") }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
                   {% elif occ.is_hand %}
                     <span class="occupant-pill aspect-hand" style="color: {{ occ.color }};">👉 {{ _(occ_name_2l) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
                   {% else %}

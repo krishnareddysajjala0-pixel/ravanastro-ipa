@@ -2292,15 +2292,13 @@
 
 
       .lagna-name {
-
         font-size: 9.2px !important;
-
         padding: 2px 5px !important;
-
         bottom: 2px !important;
-
         right: 2px !important;
-
+        white-space: nowrap !important;
+        overflow: visible !important;
+        max-width: none !important;
       }
 
 
@@ -2830,13 +2828,13 @@
     .nak-box.lagna-box { border: 3.5px solid #facc15 !important; box-shadow: 0 0 18px rgba(250, 204, 21, 0.55) !important; position: relative !important; }
     .nak-box.lagna-box::after { content: "" !important; position: absolute !important; inset: 2px !important; border: 2.5px solid #10b981 !important; border-radius: 7px !important; pointer-events: none !important; z-index: 2 !important; }
 
-    .nak-box-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; background: rgba(120, 120, 120, 0.1); border-bottom: 1px solid var(--box-border, #334155); }
+    .nak-box-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; row-gap: 2px; padding: 4px 6px; background: rgba(120, 120, 120, 0.1); border-bottom: 1px solid var(--box-border, #334155); overflow: visible; }
 
-    .house-badge { font-weight: 800; font-size: 11px; padding: 1px 5px; border-radius: 4px; background: var(--house-no-bg, rgba(255,255,255,0.1)); color: var(--house-no-text, #fff); }
+    .house-badge { font-weight: 800; font-size: 11px; padding: 1px 5px; border-radius: 4px; background: var(--house-no-bg, rgba(255,255,255,0.1)); color: var(--house-no-text, #fff); flex-shrink: 0; }
 
-    .rashi-title-text { font-weight: 800; font-size: 13px; color: var(--text-main, #fff); }
+    .rashi-title-text { font-weight: 800; font-size: 13px; color: var(--text-main, #fff); white-space: normal; overflow: visible; text-overflow: clip; word-break: keep-all; text-align: center; }
 
-    .karma-badge-small { font-size: 10px; font-weight: 700; padding: 1px 4px; border-radius: 4px; }
+    .karma-badge-small { font-size: 10px; font-weight: 700; padding: 1px 4px; border-radius: 4px; flex-shrink: 0; }
 
     .nak-padas-container { display: flex; flex-direction: column; gap: 2px; padding: 4px; flex: 1; }
 
@@ -6221,6 +6219,12 @@ body {
 
       border-bottom: 1.5px solid var(--box-border);
 
+      flex-wrap: wrap;
+
+      row-gap: 2px;
+
+      overflow: visible;
+
     }
 
 
@@ -6241,6 +6245,8 @@ body {
 
       border: 1px solid var(--card-border);
 
+      flex-shrink: 0;
+
     }
 
 
@@ -6249,11 +6255,21 @@ body {
 
       font-weight: 800;
 
-      font-size: 11px;
+      font-size: 11.5px;
 
       color: var(--text-main);
 
-      letter-spacing: 0.5px;
+      letter-spacing: 0.2px;
+
+      white-space: normal;
+
+      overflow: visible;
+
+      text-overflow: clip;
+
+      word-break: keep-all;
+
+      text-align: center;
 
     }
 
@@ -6725,8 +6741,39 @@ body {
         font-size: 5.5px !important;
         opacity: 0.85 !important;
       }
+      .nak-box-header {
+        padding: 3px 3px !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        row-gap: 2px !important;
+        white-space: normal !important;
+        overflow: visible !important;
+      }
+      .house-badge {
+        order: 1;
+        font-size: 9px !important;
+        padding: 1px 4px !important;
+      }
+      .karma-badge-small {
+        order: 2;
+        font-size: 8.5px !important;
+        padding: 1px 3px !important;
+        white-space: nowrap !important;
+      }
       .rashi-title-text {
-        font-size: 9.5px;
+        order: 3;
+        flex: 1 0 100% !important;
+        width: 100% !important;
+        text-align: center !important;
+        font-size: clamp(9.5px, 2.7vw, 11px) !important;
+        line-height: 1.15 !important;
+        letter-spacing: 0 !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: keep-all !important;
+        margin: 1px 0 0 0 !important;
       }
     }
 

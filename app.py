@@ -339,8 +339,8 @@ SHORT_PLANETS_TELUGU = {
     "భూమి": "భూమి",
     "మిత్ర": "మిత్ర",
     "చిత్ర": "చిత్ర",
-    "లగ్నం": "లగ్న",
-    "లగ్న": "లగ్న"
+    "లగ్నం": "లగ్నం",
+    "లగ్న": "లగ్నం"
 }
 
 # ---------------- Day name Telugu ----------------
@@ -1538,7 +1538,7 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
     lagna_degree_str = f"{lagna_deg}°{lagna_min:02d}′"
     
     # Add Lagna to chart data
-    short_l = SHORT_PLANETS_TELUGU.get("లగ్న", "లగ్న")
+    short_l = "లగ్నం"
     lagna_short_deg = f"{lagna_deg}°"
     html_str = f"<b class='full-name'>{short_l}</b><b class='short-name'>{short_l}</b> <small class='full-deg'>{lagna_degree_str}</small><small class='short-deg'>{lagna_short_deg}</small>"
     chart_data_temp[lagna].append((lagna_lon % 30, html_str))
@@ -2100,7 +2100,7 @@ def transit_chart():
     lagna_min = int(((lagna_lon % 30) - lagna_deg) * 60)
     lagna_degree_str = f"{lagna_deg}°{lagna_min:02d}′"
     
-    short_l = SHORT_PLANETS_TELUGU.get("లగ్న", "లగ్న")
+    short_l = "లగ్నం"
     lagna_short_deg = f"{lagna_deg}°"
     html_str = f"<b class='full-name'>{short_l}</b><b class='short-name'>{short_l}</b> <small class='full-deg'>{lagna_degree_str}</small><small class='short-deg'>{lagna_short_deg}</small>"
     chart_data_temp[lagna].append((lagna_lon % 30, html_str))
@@ -3747,7 +3747,7 @@ def build_nakshatra_pada_boxes(data):
                 # Lagna Point in this pada
                 if is_lagna_box and r_pada == lagna_pada_in_rashi:
                     occupants.append({
-                        "name": "లగ్న",
+                        "name": "లగ్నం",
                         "degree": lagna_deg_str,
                         "deg_only": extract_deg_only(lagna_deg_str),
                         "is_lagna": True,

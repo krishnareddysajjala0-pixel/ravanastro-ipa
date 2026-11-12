@@ -78,7 +78,7 @@
 
                   {% if occ.is_lagna %}
 
-                    <span class="occupant-pill lagna-occupant">🚩 గోచార లగ్నం{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
+                    <span class="occupant-pill lagna-occupant">🚩 {{ _('గోచార లగ్నం') }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
 
                   {% elif occ.is_hand %}
 
