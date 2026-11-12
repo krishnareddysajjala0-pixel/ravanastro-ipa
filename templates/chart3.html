@@ -2568,7 +2568,8 @@
     break-inside: avoid !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
   }
 
   .result-card * {
@@ -2697,51 +2698,55 @@
     margin: 0 !important;
   }
 
-  /* Page 1 Table (+20-30% larger fonts tuned to stay strictly 2 pages across all languages) */
+  /* +10% larger typography while keeping strict 2-page PDF across languages and removing empty card gap */
+  @page {
+    size: A4 portrait !important;
+    margin: 2.5mm 3.5mm !important;
+  }
   #chart3-page-1 .data-table,
   #chart3-page-1 .unified-varga-table {
-    font-size: 8.1pt !important;
+    font-size: 8.9pt !important;
   }
   #chart3-page-1 .data-table th,
   #chart3-page-1 .data-table td,
   #chart3-page-1 .unified-varga-table th,
   #chart3-page-1 .unified-varga-table td {
-    font-size: 8.1pt !important;
+    font-size: 8.9pt !important;
     padding: 1.5px 1px !important;
-    line-height: 1.1 !important;
+    line-height: 1.08 !important;
   }
   #chart3-page-1 .unified-varga-table th.varga-group-header {
-    font-size: 8.8pt !important;
+    font-size: 9.6pt !important;
   }
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th {
-    font-size: 8.1pt !important;
+    font-size: 8.9pt !important;
   }
   #chart3-page-1 .disease-list li {
-    font-size: 7.4pt !important;
-    line-height: 1.1 !important;
+    font-size: 8.1pt !important;
+    line-height: 1.08 !important;
   }
 
-  /* 3 lines spacing above గురు వర్గ వ్యక్తి / మీ లగ్నం line + larger badge */
+  /* 3 lines spacing above గురు వర్గ వ్యక్తి / మీ లగ్నం line + 10% larger badge */
   #chart3-page-1 .party-info {
     margin: 40px 0 4px 0 !important;
     padding: 3px 8px !important;
   }
   #chart3-page-1 .party-info .party-badge {
-    font-size: 14.5pt !important;
+    font-size: 15.8pt !important;
     padding: 1.5px 10px !important;
   }
   #chart3-page-1 .party-info div {
-    font-size: 12.5pt !important;
+    font-size: 13.5pt !important;
     margin-top: 2px !important;
   }
 
   #chart3-page-1 .friendly-section-title {
-    margin: 4px 0 3px 0 !important;
-    font-size: 13.5pt !important;
+    margin: 3px 0 2px 0 !important;
+    font-size: 14.5pt !important;
   }
   #chart3-page-2 .enemy-section-title {
-    margin: 5px 0 3px 0 !important;
-    font-size: 13.5pt !important;
+    margin: 4px 0 2px 0 !important;
+    font-size: 14.5pt !important;
   }
   #chart3-page-1 .results-grid,
   #chart3-page-2 .results-grid {
@@ -2753,22 +2758,39 @@
   html body .result-card.friendly-card,
   html body .result-card.enemy-card {
     background: #ffffff !important;
-    padding: 2.5px 4px !important;
+    padding: 2px 4px !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+  }
+  html body .result-card .card-top {
+    margin-bottom: 2px !important;
+    align-items: flex-start !important;
+  }
+  html body .result-card .info-body {
+    margin-bottom: 0 !important;
   }
   html body .result-card .planet-name {
-    font-size: 12.2pt !important;
-    line-height: 1.12 !important;
-    margin-bottom: 1px !important;
+    font-size: 13.2pt !important;
+    line-height: 1.1 !important;
+    margin-bottom: 0 !important;
   }
   html body .result-card .own-house-badge {
-    font-size: 9.2pt !important;
+    font-size: 10pt !important;
     padding: 0.5px 3px !important;
   }
   html body .result-card .info-row,
+  html body .result-card .info-row-inline,
   html body .result-card .info-row .label,
   html body .result-card .info-row .val {
-    font-size: 10.2pt !important;
-    line-height: 1.12 !important;
+    font-size: 10.8pt !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.5px !important;
+  }
+  html body .result-card .info-row-inline {
+    gap: 3px !important;
+  }
+  html body .result-card .info-col {
+    gap: 2px !important;
   }
   html body .result-card.friendly-card .planet-name,
   html body .result-card.friendly-card .info-row .label {
@@ -2782,8 +2804,22 @@
   html body .result-card.friendly-card .info-row.rulership-row .val,
   html body .result-card.enemy-card .info-row.rulership-row .val {
     color: #000000 !important;
-    font-size: 8.8pt !important;
-    line-height: 1.1 !important;
+    font-size: 9.6pt !important;
+    line-height: 1.08 !important;
+    margin-top: 1px !important;
+  }
+  html[lang="en"] body .result-card .info-row,
+  html[lang="en"] body .result-card .info-row-inline,
+  html[lang="en"] body .result-card .info-row .label,
+  html[lang="en"] body .result-card .info-row .val {
+    font-size: 9.8pt !important;
+    line-height: 1.06 !important;
+  }
+  html[lang="en"] body .result-card .info-row.rulership-row .val,
+  html[lang="en"] body .result-card.friendly-card .info-row.rulership-row .val,
+  html[lang="en"] body .result-card.enemy-card .info-row.rulership-row .val {
+    font-size: 8.6pt !important;
+    line-height: 1.05 !important;
   }
 }
 
