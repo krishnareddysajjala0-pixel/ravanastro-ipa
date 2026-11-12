@@ -971,13 +971,13 @@ def calculate_anthara_periods(maha_name, start_date, end_date, lagna="", birth_d
             age_start_str = ""
             age_end_str = ""
             if birth_dt:
-                age_start_days = (anthara_start - birth_dt).days
-                if age_start_days >= 0:
+                if anthara_start <= birth_dt:
+                    age_start_str = tr("పుట్టుక")
+                else:
+                    age_start_days = (anthara_start - birth_dt).days
                     age_start_y = age_start_days // 365
                     age_start_m = (age_start_days % 365) // 30
                     age_start_str = f"{age_start_y}సం, {age_start_m}నెలలు"
-                else:
-                    age_start_str = "0సం, 0నెలలు"
                 
                 age_end_days = (anthara_end - birth_dt).days
                 if age_end_days >= 0:
@@ -2348,8 +2348,11 @@ def get_dasha_info(birth_info):
         disp_start_str = disp_start_dt.strftime("%d-%m-%Y")
 
         # Calculate Age
-        age_start_days = max(0, (disp_start_dt - birth_dt).days)
-        age_start_str = format_days_ym(age_start_days)
+        if start_date <= birth_dt:
+            age_start_str = tr("పుట్టుక")
+        else:
+            age_start_days = max(0, (disp_start_dt - birth_dt).days)
+            age_start_str = format_days_ym(age_start_days)
 
         age_end_days = max(0, (end_date - birth_dt).days)
         age_end_str = format_days_ym(age_end_days)
