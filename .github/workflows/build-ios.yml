@@ -3,9 +3,15 @@ name: Build Ravan Astro iOS (.ipa)
 on:
   push:
     branches: [ main, master ]
+    paths-ignore:
+      - 'user_data.txt'
+      - '.vercelignore'
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-ios:
@@ -154,15 +160,35 @@ jobs:
           zip -r RavanAstro.ipa Payload
 
       - name: Upload Build Log
-        if: always()
+        if: failure()
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: xcodebuild-log
           path: ios/App/xcodebuild.log
+          retention-days: 2
+
+      - name: Publish iOS (.ipa) to GitHub Release (No Artifact Quota)
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -f build-output/RavanAstro.ipa ]; then
+            echo "RavanAstro.ipa not found."
+            exit 1
+          fi
+          NOTES="Automated iOS build from commit ${{ github.sha }} ($(date -u +'%Y-%m-%d %H:%M UTC'))."
+          if gh release view latest-ios >/dev/null 2>&1; then
+            gh release upload latest-ios build-output/RavanAstro.ipa --clobber
+            gh release edit latest-ios --title "Latest Ravan Astro iOS Build" --notes "$NOTES" --target "${{ github.ref_name }}"
+          else
+            gh release create latest-ios build-output/RavanAstro.ipa --title "Latest Ravan Astro iOS Build" --notes "$NOTES" --target "${{ github.ref_name }}"
+          fi
 
       - name: Upload iOS App (.ipa) Artifact
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: RavanAstro-iOS-IPA
           path: build-output/RavanAstro.ipa
-          retention-days: 14
+          retention-days: 2
