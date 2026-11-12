@@ -2791,12 +2791,17 @@ def get_daily_panchangam_basic(jd, lat, lon, local_tz, local_midnight, calc_end_
     elif target_tithi_start.date() > calc_date:
         tithi_start_str = f"{tr('రేపు')} {tithi_start_str}"
         
+    def format_calendar_end(end_dt):
+        day_prefix = f"{tr('రేపు')} " if end_dt.date() > calc_date else ""
+        period_prefix = tr('ఉ: ') if end_dt.hour < 12 else tr('సా: ')
+        return f"{day_prefix}{period_prefix}{end_dt.strftime('%I:%M')}"
+
     if target_tithi_end.date() > calc_date:
         tithi_end_str = f"{tr('రేపు')} {tithi_end_str}"
     elif target_tithi_end.date() < calc_date:
         tithi_end_str = f"{tr('నిన్న')} {tithi_end_str}"
         
-    calendar_tithi_end = f"{tr('ఉ: ') if target_tithi_end.hour < 12 else tr('సా: ')}{target_tithi_end.strftime('%I:%M')}"
+    calendar_tithi_end = format_calendar_end(target_tithi_end)
     
     # Nakshatra exact tracking
     nak_index = int(moon_lon / NAKSHATRA_SIZE)
@@ -2838,7 +2843,7 @@ def get_daily_panchangam_basic(jd, lat, lon, local_tz, local_midnight, calc_end_
     elif target_nak.date() < calc_date:
         nak_end_str = f"{tr('నిన్న')} {nak_end_str}"
 
-    calendar_nak_end = f"{tr('ఉ: ') if target_nak.hour < 12 else tr('సా: ')}{target_nak.strftime('%I:%M')}"
+    calendar_nak_end = format_calendar_end(target_nak)
     
     # Yoga
     yoga_index = int(((sun_lon + moon_lon) % 360) / NAKSHATRA_SIZE)
