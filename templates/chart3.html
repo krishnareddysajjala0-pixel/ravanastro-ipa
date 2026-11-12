@@ -2688,6 +2688,51 @@
   .fixed-bottom-bar, .scrolling-footer, .theme-switcher, .float-btn, .print-hide, .fixed-bottom-bar-nav, #action-bar, #loading-overlay, .footer, .disclaimer {
     display: none !important;
   }
+
+  /* Strict 2-page print: Page 1 has table + 1st half of friendly planets; Page 2 has 2nd half + enemy planets */
+  html, body {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #chart3-page-1 .party-info {
+    margin: 3px 0 2px 0 !important;
+    padding: 1.5px 6px !important;
+  }
+  #chart3-page-1 .friendly-section-title {
+    margin: 2px 0 3px 0 !important;
+    font-size: 11pt !important;
+  }
+  #chart3-page-1 .results-grid,
+  #chart3-page-2 .results-grid {
+    gap: 3px 4px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+  }
+  #chart3-page-2 .enemy-section-title {
+    margin: 4px 0 3px 0 !important;
+    font-size: 11pt !important;
+  }
+  html body .result-card.friendly-card,
+  html body .result-card.enemy-card {
+    background: #ffffff !important;
+  }
+  html body .result-card.friendly-card .planet-name,
+  html body .result-card.friendly-card .info-row .label {
+    color: #065f46 !important;
+  }
+  html body .result-card.enemy-card .planet-name,
+  html body .result-card.enemy-card .info-row .label {
+    color: #991b1b !important;
+  }
+  html body .result-card .info-row.rulership-row .val,
+  html body .result-card.friendly-card .info-row.rulership-row .val,
+  html body .result-card.enemy-card .info-row.rulership-row .val {
+    color: #000000 !important;
+    font-size: 7.6pt !important;
+    line-height: 1.08 !important;
+  }
 }
 
 .mobile-print-force {
@@ -3812,26 +3857,33 @@
         color: #991b1b !important;
     }
 
-    /* Rulership data text (ఆధీనములో ఉన్నవి: value): White in dark themes, Black in light themes */
-    html body .result-card .info-row.rulership-row .val,
-    html body .result-card.friendly-card .info-row.rulership-row .val,
-    html body .result-card.enemy-card .info-row.rulership-row .val {
-        color: #ffffff !important;
-    }
+    /* Rulership data text (ఆధీనములో ఉన్నవి: value): White in dark themes, Black in light themes (screen only so print stays black on white) */
+    @media screen {
+        html body .result-card .info-row.rulership-row .val,
+        html body .result-card.friendly-card .info-row.rulership-row .val,
+        html body .result-card.enemy-card .info-row.rulership-row .val {
+            color: #ffffff !important;
+        }
 
-    [data-theme="solar"] body .result-card .info-row.rulership-row .val,
-    [data-theme="solar"] body .result-card.friendly-card .info-row.rulership-row .val,
-    [data-theme="solar"] body .result-card.enemy-card .info-row.rulership-row .val,
-    [data-theme="light"] body .result-card .info-row.rulership-row .val,
-    [data-theme="light"] body .result-card.friendly-card .info-row.rulership-row .val,
-    [data-theme="light"] body .result-card.enemy-card .info-row.rulership-row .val,
-    [data-theme="default"] body .result-card .info-row.rulership-row .val,
-    [data-theme="default"] body .result-card.friendly-card .info-row.rulership-row .val,
-    [data-theme="default"] body .result-card.enemy-card .info-row.rulership-row .val,
-    html:not([data-theme]) body .result-card .info-row.rulership-row .val,
-    html:not([data-theme]) body .result-card.friendly-card .info-row.rulership-row .val,
-    html:not([data-theme]) body .result-card.enemy-card .info-row.rulership-row .val {
-        color: #000000 !important;
+        [data-theme="solar"] body .result-card .info-row.rulership-row .val,
+        [data-theme="solar"] body .result-card.friendly-card .info-row.rulership-row .val,
+        [data-theme="solar"] body .result-card.enemy-card .info-row.rulership-row .val,
+        [data-theme="light"] body .result-card .info-row.rulership-row .val,
+        [data-theme="light"] body .result-card.friendly-card .info-row.rulership-row .val,
+        [data-theme="light"] body .result-card.enemy-card .info-row.rulership-row .val,
+        [data-theme="default"] body .result-card .info-row.rulership-row .val,
+        [data-theme="default"] body .result-card.friendly-card .info-row.rulership-row .val,
+        [data-theme="default"] body .result-card.enemy-card .info-row.rulership-row .val,
+        html:not([data-theme]) body .result-card .info-row.rulership-row .val,
+        html:not([data-theme]) body .result-card.friendly-card .info-row.rulership-row .val,
+        html:not([data-theme]) body .result-card.enemy-card .info-row.rulership-row .val {
+            color: #000000 !important;
+        }
+
+        /* Keep split Friendly Planets grids visually unified on screen */
+        #chart3-page-1 .results-grid.friends-grid-half1 {
+            margin-bottom: 20px;
+        }
     }
 
 </style>
@@ -4609,12 +4661,7 @@ body {
                 </tbody>
             </table>
         </div>
-        </div> <!-- Close Page 1 print-page-container -->
-
-        <!-- Page 2 Container -->
-
-        <div class="print-page-container" id="chart3-page-2">
-        <!-- Friends/Enemies/Party section moved from results page -->
+        <!-- Page 1 also holds party badge + 1st half of Friendly Planets so print fits strictly on 2 pages -->
         {% if native_party %}
         <div class="party-info {{ 'guru-bg' if native_party == 'గురు వర్గము' else 'shani-bg' }}">
             <div class="party-badge">{% if native_party == 'గురు వర్గము' %}{{ _('గురు వర్గ వ్యక్తి') }}{% else %}{{ _('శని వర్గ వ్యక్తి') }}{% endif %}</div>
@@ -4623,9 +4670,63 @@ body {
         {% endif %}
 
         {% if friends %}
+        {% set half_friends = ((friends|length + 1) // 2) %}
         <h3 class="section-title friendly-section-title"><i class="fas fa-heart"></i> {{ _('మిత్ర గ్రహములు (Friendly Planets)') }}</h3>
-        <div class="results-grid">
-            {% for r in friends %}
+        <div class="results-grid friends-grid-half1">
+            {% for r in friends[:half_friends] %}
+            <div class="result-card friendly-card {{ 'is-own-house' if r.is_own_house else '' }}">
+                <div class="card-top">
+                    {% if r.is_own_house %}
+                    <div class="own-house-badge">{{ _('స్వక్షేత్రం') }}</div>
+                    {% endif %}
+                    <div class="planet-name" style="color: {{ r.color }};">
+                        <i class="fas fa-certificate"></i> {{ r.name }} <span style="font-size: 0.8em; opacity: 0.8;">({{ r.degree }})</span>
+                    </div>
+                </div>
+
+                <div class="info-body">
+                    <div class="info-row info-row-inline">
+                        <div class="info-col">
+                            <span class="label">{{ _('ప్రస్తుత స్థానము:') }}</span>
+                            <span class="val">{{ r.current_lagna }}</span>
+                        </div>
+                        <div class="info-col">
+                            <span class="label">{{ _('స్వంత ఇల్లు:') }}</span>
+                            <span class="val own-val">{{ r.own_house }}</span>
+                        </div>
+                    </div>
+                    <div class="info-row rulership-row" style="flex-direction: column; align-items: flex-start;">
+                        <span class="label">{{ _('ఆధీనములో ఉన్నవి:') }}</span>
+                        <span class="val" style="font-size: 12px; margin-top: 5px;">{{ r.rulership }}</span>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="status-msg {{ 'msg-positive' if r.is_own_house else 'msg-neutral' }}">
+                        {% if r.is_own_house %}
+                        <i class="fas fa-check-circle"></i> {{ _('స్వంత ఇంట్లో ఉన్నది.') }}
+                        {% else %}
+                        <i class="fas fa-info-circle"></i> {{ _('ఇతర లగ్నములో ఉన్నది.') }}
+                        {% endif %}
+                    </div>
+                    {% if r.bitter_enemy %}
+                    <div class="bitter-enemy-alert">
+                        <i class="fas fa-skull-crossbones"></i> {{ _('బద్ధ శత్రువు') }}: {{ r.bitter_enemy }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        </div> <!-- Close Page 1 print-page-container -->
+
+        <!-- Page 2 Container: 2nd half of Friendly Planets + Enemy Planets -->
+        <div class="print-page-container" id="chart3-page-2">
+        {% if friends and (friends|length > 1) %}
+        {% set half_friends = ((friends|length + 1) // 2) %}
+        <div class="results-grid friends-grid-half2">
+            {% for r in friends[half_friends:] %}
             <div class="result-card friendly-card {{ 'is-own-house' if r.is_own_house else '' }}">
                 <div class="card-top">
                     {% if r.is_own_house %}

@@ -6404,7 +6404,7 @@ body {
 @media print {
     @page {
         size: A4 portrait !important;
-        margin: 4mm 6mm !important;
+        margin: 3mm 5mm !important;
     }
 
     html, body, .glow-container, .container {
@@ -6412,9 +6412,12 @@ body {
         margin: 0 !important;
         padding-bottom: 0 !important;
         margin-bottom: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        zoom: 1 !important;
         background: #ffffff !important;
         color: #000000 !important;
-        font-size: 8.5px !important;
+        font-size: 8px !important;
         overflow: visible !important;
     }
 
@@ -6435,7 +6438,9 @@ body {
     .anthara-slider-controls,
     .slider-controls,
     .fixed-bottom-bar-nav,
-    .float-btn {
+    .float-btn,
+    .dasa-header-row,
+    .dasa-section .dasa-header-row {
         display: none !important;
         height: 0 !important;
         width: 0 !important;
@@ -6457,18 +6462,33 @@ body {
         margin: 0 !important;
     }
 
-    /* Page 1: Cosmic Header + Summary Table */
+    /* Page 1: Cosmic Header + Current Dasha + Complete 12-Dasha Summary Table */
+    .cosmic-header,
     .cosmic-header-card {
-        margin: 0 0 2mm 0 !important;
-        padding: 2mm !important;
+        margin: 0 auto 3px auto !important;
+        padding: 4px 6px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    .current-dasa-box {
+        margin: 0 auto 3px auto !important;
+        padding: 4px 6px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
     }
 
     .dasa-summary-card,
     .print-summary-section {
-        margin: 0 !important;
-        padding: 2mm !important;
+        display: block !important;
+        margin: 2px auto 0 auto !important;
+        padding: 2px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
         page-break-after: always !important;
         break-after: page !important;
     }
@@ -6479,26 +6499,33 @@ body {
     }
 
     .summary-table th, .summary-table td {
-        padding: 1.5px 2px !important;
+        padding: 2px 3px !important;
     }
 
-    /* Dasas section */
+    /* Pages 2, 3, 4: Strictly 4 Mahadasha Cards per Page (Cards 1-4, 5-8, 9-12) */
     .dasa-section {
         margin: 0 !important;
         padding: 0 !important;
+        zoom: 0.90 !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
     }
 
     /* Cards */
     .maha-dasa-card {
-        padding: 1px 4px !important;
+        padding: 1.5px 4px !important;
         margin: 0 auto 2px auto !important;
         border-radius: 6px !important;
         box-sizing: border-box !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
     }
 
-    /* Explicit Page Breaks before Card 5 and Card 9 */
+    /* Explicit Page Breaks before Card 5 (Page 3) and Card 9 (Page 4) */
     .print-break-before {
         page-break-before: always !important;
         break-before: page !important;
@@ -6507,28 +6534,38 @@ body {
     /* Mahadasa header */
     .maha-dasa-header {
         margin: 0 0 1px 0 !important;
-        padding: 1px 2px !important;
+        padding: 0.5px 2px !important;
     }
 
     .maha-dasa-name {
-        font-size: 8.5pt !important;
-        line-height: 1.15 !important;
+        font-size: 7.8pt !important;
+        line-height: 1.08 !important;
         margin-bottom: 0 !important;
     }
 
     .maha-dasa-period {
-        font-size: 7.5pt !important;
-        line-height: 1.1 !important;
+        font-size: 6.8pt !important;
+        line-height: 1.05 !important;
         margin: 0 !important;
     }
 
-    .maha-dasa-number {
-        font-size: 8pt !important;
-        padding: 1px 3px !important;
-        min-width: 16px !important;
+    .maha-dasa-age {
+        font-size: 6.8pt !important;
     }
 
-    /* Anthara table */
+    .maha-dasa-number {
+        font-size: 7.5pt !important;
+        padding: 0.5px 3px !important;
+        min-width: 15px !important;
+    }
+
+    .anthara-title {
+        font-size: 6pt !important;
+        line-height: 1 !important;
+        margin: 0 0 0.5px 0 !important;
+    }
+
+    /* Anthara table: prevent 2-line wraps so 4 cards fit comfortably on each A4 page */
     .anthara-container {
         padding: 0 2px !important;
         margin: 0 !important;
@@ -6536,28 +6573,53 @@ body {
 
     .anthara-table {
         margin: 0 !important;
-        font-size: 6.8pt !important;
+        font-size: 6.1pt !important;
         border-collapse: collapse !important;
+        table-layout: fixed !important;
+        width: 100% !important;
     }
+
+    .anthara-table th:nth-child(1), .anthara-table td:nth-child(1) { width: 28% !important; }
+    .anthara-table th:nth-child(2), .anthara-table td:nth-child(2) { width: 14.5% !important; }
+    .anthara-table th:nth-child(3), .anthara-table td:nth-child(3) { width: 14.5% !important; }
+    .anthara-table th:nth-child(4), .anthara-table td:nth-child(4) { width: 14.5% !important; }
+    .anthara-table th:nth-child(5), .anthara-table td:nth-child(5) { width: 14.5% !important; }
+    .anthara-table th:nth-child(6), .anthara-table td:nth-child(6) { width: 14% !important; }
 
     .anthara-table th {
         padding: 0.5px 2px !important;
-        font-size: 7pt !important;
-        line-height: 1.1 !important;
+        font-size: 6.2pt !important;
+        line-height: 1.05 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
 
     .anthara-table td {
         padding: 0.4px 2px !important;
-        font-size: 6.7pt !important;
-        line-height: 1.1 !important;
+        font-size: 6.1pt !important;
+        line-height: 1.05 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
 
-    .status-badge {
-        font-size: 6.5pt !important;
-        padding: 0.5px 3px !important;
+    .anthara-table .planet-cell,
+    .anthara-table td.date-cell,
+    .anthara-table td.age-cell {
+        font-size: 6.1pt !important;
+        white-space: nowrap !important;
     }
 
-    /* Ensure NO extra pages at the end */
+    .status-badge,
+    .anthara-table .status-badge {
+        font-size: 5.8pt !important;
+        padding: 0 3px !important;
+        line-height: 1.05 !important;
+        white-space: nowrap !important;
+    }
+
+    /* Ensure NO extra page after Card 12 */
     .dasa-section .maha-dasa-card:last-child {
         margin-bottom: 0 !important;
         page-break-after: avoid !important;
