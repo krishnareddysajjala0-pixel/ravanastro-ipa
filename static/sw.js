@@ -1,32 +1,30 @@
-const CACHE_NAME = 'telugu-astrology-v1';
+const CACHE_NAME = 'telugu-astrology-v2';
 const urlsToCache = [
-  '/',
-  '/chart3',
   '/static/manifest.json',
   '/static/icons/icon-192x192.png',
   '/static/icons/icon-512x512.png'
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
 self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  // Network-first so deployed updates appear immediately when online, with cache fallback offline
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+    fetch(event.request)
+      .then(networkResponse => {
+        if (networkResponse && networkResponse.status === 200 && event.request.url.startsWith(self.location.origin)) {
+          const respClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, respClone));
         }
-        return fetch(event.request);
-      }
-    )
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
 
@@ -41,6 +39,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
