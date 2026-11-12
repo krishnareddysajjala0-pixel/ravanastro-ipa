@@ -7590,8 +7590,16 @@ body {
 
 
                                         <div class="anthara-container">
+                        {% set _tot_m = (dasa.antharas|sum(attribute='months'))|round(1) %}
+                        {% set _ay = (_tot_m // 12)|int %}
+                        {% set _am_raw = (_tot_m - (_ay * 12))|round(1) %}
+                        {% if _am_raw >= 12 %}
+                            {% set _ay = _ay + 1 %}
+                            {% set _am_raw = 0 %}
+                        {% endif %}
+                        {% set _am = _am_raw|int if _am_raw == _am_raw|int else _am_raw %}
                         <div class="anthara-title" style="font-size: 13px; color: var(--anthara-title-color, var(--text-muted)); font-weight: bold; margin-bottom: 8px;">
-                            {{ _('అంతర్దశలు') }} ({{ dasa.antharas|sum(attribute='months')|round(1) }} {{ _('నెలలు') }})
+                            {{ _('అంతర్దశలు') }} ({% if _ay > 0 and _am > 0 %}{{ _ay }} {{ _('సంవత్సరాలు') }}, {{ _am }} {{ _('నెలలు') }}{% elif _ay > 0 %}{{ _ay }} {{ _('సంవత్సరాలు') }}{% else %}{{ _am }} {{ _('నెలలు') }}{% endif %})
                         </div>
                         <div class="anthara-table-wrapper">
                         <table class="anthara-table">
