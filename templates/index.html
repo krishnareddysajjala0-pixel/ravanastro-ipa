@@ -1393,6 +1393,75 @@
       color: #ffffff;
     }
 
+    .hybrid-dt-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hybrid-dt-wrap input[type="text"] {
+      padding-right: 46px !important;
+      width: 100%;
+    }
+
+    .picker-trigger-btn {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      border: 1px solid var(--card-border);
+      background: rgba(120, 120, 120, 0.14);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 3;
+      padding: 0;
+    }
+
+    .picker-trigger-btn:hover {
+      color: var(--text-main);
+      background: rgba(120, 120, 120, 0.24);
+    }
+
+    .picker-trigger-btn input.picker-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0;
+      cursor: pointer;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+      z-index: 4;
+    }
+
+    #edit-profile-modal .picker-trigger-btn {
+      width: 30px;
+      height: 30px;
+      right: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #cbd5e1;
+    }
+
+    #edit-profile-modal .hybrid-dt-wrap input[type="text"] {
+      width: 100%;
+      padding: 10px 38px 10px 10px !important;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-size: 14px;
+    }
+
     .location-buttons {
       display: flex;
       gap: 10px;
@@ -4115,15 +4184,16 @@ body {
 
             <div class="input-container">
 
-
-
               <div class="input-icon"><i class="fas fa-birthday-cake"></i></div>
 
-
-
-              <input type="date" id="dob" name="dob" required>
-
-
+              <div class="hybrid-dt-wrap">
+                <input type="hidden" id="dob" name="dob">
+                <input type="text" id="dob-text" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="DD-MM-YYYY" aria-label="{{ _('జన్మ తేది') }}" required>
+                <button type="button" class="picker-trigger-btn" title="{{ _('క్యాలెండర్ నుండి ఎంచుకోండి') }}" aria-label="{{ _('క్యాలెండర్') }}">
+                  <i class="fas fa-calendar-alt"></i>
+                  <input type="date" id="dob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true">
+                </button>
+              </div>
 
             </div>
 
@@ -4163,15 +4233,16 @@ body {
 
             <div class="input-container">
 
-
-
               <div class="input-icon"><i class="fas fa-history"></i></div>
 
-
-
-              <input type="time" id="tob" name="tob" required>
-
-
+              <div class="hybrid-dt-wrap">
+                <input type="hidden" id="tob" name="tob">
+                <input type="text" id="tob-text" inputmode="numeric" maxlength="5" autocomplete="off" placeholder="HH:MM" aria-label="{{ _('జన్మ సమయం') }}" required>
+                <button type="button" class="picker-trigger-btn" title="{{ _('గడియారం నుండి ఎంచుకోండి') }}" aria-label="{{ _('సమయం') }}">
+                  <i class="fas fa-clock"></i>
+                  <input type="time" id="tob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true">
+                </button>
+              </div>
 
             </div>
 
@@ -4671,33 +4742,27 @@ body {
 
 
           <div>
-
-
-
             <label style="font-size:13px; color:#cbd5e1; font-weight:bold; margin-bottom:4px; display:block;">{{ _('జన్మ తేది') }} *</label>
-
-
-
-            <input type="date" id="edit-dob" style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff;">
-
-
-
+            <div class="hybrid-dt-wrap">
+              <input type="hidden" id="edit-dob">
+              <input type="text" id="edit-dob-text" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="DD-MM-YYYY" aria-label="{{ _('జన్మ తేది') }}">
+              <button type="button" class="picker-trigger-btn" title="{{ _('క్యాలెండర్') }}" aria-label="{{ _('క్యాలెండర్') }}">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="edit-dob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true">
+              </button>
+            </div>
           </div>
 
-
-
           <div>
-
-
-
             <label style="font-size:13px; color:#cbd5e1; font-weight:bold; margin-bottom:4px; display:block;">{{ _('జన్మ సమయం') }}</label>
-
-
-
-            <input type="time" id="edit-tob" style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff;">
-
-
-
+            <div class="hybrid-dt-wrap">
+              <input type="hidden" id="edit-tob">
+              <input type="text" id="edit-tob-text" inputmode="numeric" maxlength="5" autocomplete="off" placeholder="HH:MM" aria-label="{{ _('జన్మ సమయం') }}">
+              <button type="button" class="picker-trigger-btn" title="{{ _('సమయం') }}" aria-label="{{ _('సమయం') }}">
+                <i class="fas fa-clock"></i>
+                <input type="time" id="edit-tob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true">
+              </button>
+            </div>
           </div>
 
 
@@ -5474,8 +5539,32 @@ body {
 
 
     mainForm.addEventListener("submit", (e) => {
+      const dobTextEl = document.getElementById("dob-text");
+      const tobTextEl = document.getElementById("tob-text");
 
+      if (!dobInput || !dobInput.value) {
+        e.preventDefault();
+        if (dobTextEl) {
+          if (!dobTextEl.validity.customError) {
+            dobTextEl.setCustomValidity("{{ _('దయచేసి జన్మ తేది ఎంచుకోండి') }}");
+          }
+          dobTextEl.reportValidity();
+          dobTextEl.focus();
+        }
+        return;
+      }
 
+      if (!tobInput || !tobInput.value) {
+        e.preventDefault();
+        if (tobTextEl) {
+          if (!tobTextEl.validity.customError) {
+            tobTextEl.setCustomValidity("{{ _('దయచేసి సమయం ఎంచుకోండి') }}");
+          }
+          tobTextEl.reportValidity();
+          tobTextEl.focus();
+        }
+        return;
+      }
 
       // Check if lat/lon are set
 
@@ -5612,16 +5701,16 @@ body {
 
 
 
-    // Input focus effects (skip place box so suggestions stacking context never gets trapped)
+    // Input focus effects (skip place box & picker overlays so layout/stacking never shifts)
     document.querySelectorAll('input').forEach(input => {
       input.addEventListener('focus', function () {
-        if (this.id !== 'place') {
+        if (this.id !== 'place' && !this.classList.contains('picker-overlay') && this.type !== 'hidden') {
           this.parentElement.style.transform = 'scale(1.02)';
         }
       });
 
       input.addEventListener('blur', function () {
-        if (this.id !== 'place') {
+        if (this.id !== 'place' && !this.classList.contains('picker-overlay') && this.type !== 'hidden') {
           this.parentElement.style.transform = 'scale(1)';
         }
       });
@@ -5696,6 +5785,159 @@ body {
 
 
 
+
+    // Allow direct numeric typing (DD-MM-YYYY / HH:MM) alongside native date/time picker icon
+    (function initHybridDateTimeFields() {
+      const nativeValueDesc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
+      function setRawValue(el, val) {
+        nativeValueDesc.set.call(el, val || '');
+      }
+
+      function bindHybridField(canonicalId, textId, pickerId, config) {
+        const canonicalEl = document.getElementById(canonicalId);
+        const textEl = document.getElementById(textId);
+        const pickerEl = document.getElementById(pickerId);
+        if (!canonicalEl || !textEl || !pickerEl) return;
+
+        const syncFromCanonical = (isoVal) => {
+          const formatted = config.toDisplay(isoVal);
+          textEl.value = formatted;
+          textEl.setCustomValidity('');
+          pickerEl.value = config.isValidIso(isoVal) ? isoVal : '';
+        };
+
+        Object.defineProperty(canonicalEl, 'value', {
+          configurable: true,
+          get() {
+            return nativeValueDesc.get.call(canonicalEl);
+          },
+          set(val) {
+            const s = val == null ? '' : String(val);
+            setRawValue(canonicalEl, s);
+            syncFromCanonical(s);
+          }
+        });
+
+        textEl.addEventListener('input', (e) => {
+          const isDelete = e && e.inputType && e.inputType.startsWith('delete');
+          if (!isDelete) {
+            textEl.value = config.formatTyping(textEl.value);
+          }
+          const iso = config.toIso(textEl.value);
+          if (iso) {
+            setRawValue(canonicalEl, iso);
+            pickerEl.value = iso;
+            textEl.setCustomValidity('');
+          } else {
+            setRawValue(canonicalEl, '');
+            textEl.setCustomValidity(textEl.value.trim() ? config.invalidMsg : '');
+          }
+        });
+
+        textEl.addEventListener('blur', () => {
+          const iso = config.toIso(textEl.value, true);
+          if (iso) {
+            setRawValue(canonicalEl, iso);
+            syncFromCanonical(iso);
+          } else if (textEl.value.trim()) {
+            setRawValue(canonicalEl, '');
+            textEl.setCustomValidity(config.invalidMsg);
+          } else {
+            setRawValue(canonicalEl, '');
+            textEl.setCustomValidity('');
+          }
+        });
+
+        const handlePicker = () => {
+          if (pickerEl.value) {
+            setRawValue(canonicalEl, pickerEl.value);
+            syncFromCanonical(pickerEl.value);
+          }
+        };
+        pickerEl.addEventListener('change', handlePicker);
+        pickerEl.addEventListener('input', handlePicker);
+
+        const initial = nativeValueDesc.get.call(canonicalEl);
+        if (initial) syncFromCanonical(initial);
+      }
+
+      const dateConfig = {
+        invalidMsg: "{{ _('దయచేసి జన్మ తేది ఎంచుకోండి') }}",
+        isValidIso: (iso) => /^\d{4}-\d{2}-\d{2}$/.test(iso || ''),
+        toDisplay: (iso) => {
+          const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+          return m ? `${m[3]}-${m[2]}-${m[1]}` : (iso || '');
+        },
+        formatTyping: (raw) => {
+          const digits = (raw || '').replace(/\D/g, '').slice(0, 8);
+          if (digits.length <= 2) return digits;
+          if (digits.length <= 4) return `${digits.slice(0, 2)}-${digits.slice(2)}`;
+          return `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4)}`;
+        },
+        toIso: (disp) => {
+          const m = /^(\d{2})-(\d{2})-(\d{4})$/.exec((disp || '').trim());
+          if (!m) {
+            const digits = (disp || '').replace(/\D/g, '');
+            if (digits.length !== 8) return '';
+            const dd = parseInt(digits.slice(0, 2), 10);
+            const mm = parseInt(digits.slice(2, 4), 10);
+            const yyyy = parseInt(digits.slice(4, 8), 10);
+            const dt = new Date(yyyy, mm - 1, dd);
+            if (yyyy < 1800 || yyyy > 2200 || dt.getFullYear() !== yyyy || dt.getMonth() !== mm - 1 || dt.getDate() !== dd) return '';
+            return `${String(yyyy).padStart(4, '0')}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+          }
+          const dd = parseInt(m[1], 10);
+          const mm = parseInt(m[2], 10);
+          const yyyy = parseInt(m[3], 10);
+          const dt = new Date(yyyy, mm - 1, dd);
+          if (yyyy < 1800 || yyyy > 2200 || dt.getFullYear() !== yyyy || dt.getMonth() !== mm - 1 || dt.getDate() !== dd) return '';
+          return `${String(yyyy).padStart(4, '0')}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+        }
+      };
+
+      const timeConfig = {
+        invalidMsg: "{{ _('దయచేసి సమయం ఎంచుకోండి') }}",
+        isValidIso: (val) => /^([01]\d|2[0-3]):[0-5]\d$/.test(val || ''),
+        toDisplay: (val) => {
+          const m = /^(\d{2}):(\d{2})/.exec(val || '');
+          return m ? `${m[1]}:${m[2]}` : (val || '');
+        },
+        formatTyping: (raw) => {
+          const digits = (raw || '').replace(/\D/g, '').slice(0, 4);
+          if (digits.length <= 2) return digits;
+          return `${digits.slice(0, 2)}:${digits.slice(2)}`;
+        },
+        toIso: (disp, onBlur = false) => {
+          const s = (disp || '').trim();
+          let m = /^(\d{1,2}):(\d{2})$/.exec(s);
+          if (!m && onBlur) {
+            const digits = s.replace(/\D/g, '');
+            if (digits.length === 4) {
+              m = [digits, digits.slice(0, 2), digits.slice(2, 4)];
+            }
+          }
+          if (!m) {
+            if (!s.includes(':')) {
+              const digits = s.replace(/\D/g, '');
+              if (digits.length !== 4) return '';
+              m = [digits, digits.slice(0, 2), digits.slice(2, 4)];
+            } else {
+              return '';
+            }
+          }
+          const hh = parseInt(m[1], 10);
+          const min = parseInt(m[2], 10);
+          if (hh < 0 || hh > 23 || min < 0 || min > 59) return '';
+          return `${String(hh).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+        }
+      };
+
+      bindHybridField('dob', 'dob-text', 'dob-picker', dateConfig);
+      bindHybridField('tob', 'tob-text', 'tob-picker', timeConfig);
+      bindHybridField('edit-dob', 'edit-dob-text', 'edit-dob-picker', dateConfig);
+      bindHybridField('edit-tob', 'edit-tob-text', 'edit-tob-picker', timeConfig);
+    })();
 
     // Populate Date
 
@@ -6148,21 +6390,10 @@ body {
 
 
       if (!dob) {
-
-
-
         alert("{{ _('దయచేసి జన్మ తేది ఎంచుకోండి') }}");
-
-
-
-        if (dobInput) dobInput.focus();
-
-
-
+        const dobVis = document.getElementById('dob-text') || dobInput;
+        if (dobVis) dobVis.focus();
         return;
-
-
-
       }
 
 
