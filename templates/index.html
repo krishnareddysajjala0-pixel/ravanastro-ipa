@@ -90,7 +90,7 @@
 
 
 
-      background-color: #fffbeb; /* Critical for mobile overscroll/bounce */
+      background-color: #ffffff; /* Critical for mobile overscroll/bounce */
 
 
 
@@ -206,13 +206,10 @@
 
 
     [data-theme="solar"] {
-      --bg-primary: radial-gradient(circle at 15% 10%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
-                    radial-gradient(circle at 85% 15%, rgba(249, 115, 22, 0.14) 0%, transparent 42%),
-                    radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.20) 0%, transparent 50%),
-                    linear-gradient(155deg, #fffdf7 0%, #fef3c7 52%, #ffedd5 100%);
+      --bg-primary: #ffffff;
       --text-main: #291303;
       --text-muted: #7c2d12;
-      --card-bg: rgba(255, 253, 248, 0.96);
+      --card-bg: #ffffff;
       --card-border: rgba(217, 119, 6, 0.45);
       --input-bg: #ffffff;
       --input-border: rgba(180, 83, 9, 0.42);
@@ -220,12 +217,18 @@
       --input-focus-shadow: 0 0 18px rgba(217, 119, 6, 0.34);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
       --btn-show-text: #ffffff;
-      --shadow-color: rgba(146, 64, 14, 0.18);
+      --shadow-color: rgba(146, 64, 14, 0.14);
       --header-bg: linear-gradient(135deg, #7c2d12 0%, #b45309 55%, #d97706 100%);
     }
 
+    html[data-theme="solar"],
+    html[data-theme="solar"] body {
+      background-color: #ffffff;
+    }
+
     [data-theme="solar"] .card {
-      box-shadow: 0 12px 36px rgba(180, 83, 9, 0.16), 0 0 0 1px rgba(245, 158, 11, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      background: #ffffff;
+      box-shadow: 0 12px 36px rgba(180, 83, 9, 0.14), 0 0 0 1px rgba(245, 158, 11, 0.28);
     }
 
     [data-theme="solar"] .input-group label {
@@ -486,6 +489,10 @@
 
 
       padding: 20px;
+
+
+
+      margin: auto;
 
 
 
@@ -3612,25 +3619,26 @@ body {
   }
 
   .container {
-    min-height: calc(100dvh - 75px) !important;
+    min-height: auto !important;
     display: flex !important;
     flex-direction: column !important;
-    padding: 10px 10px calc(max(env(safe-area-inset-bottom, 0px), 10px) + 70px) 10px !important;
+    padding: 8px 10px 12px 10px !important;
+    margin: auto 0 !important;
     box-sizing: border-box !important;
   }
 
   .card {
-    min-height: calc(100dvh - 95px) !important;
+    min-height: auto !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
-    padding: 16px 14px 14px 14px !important;
+    justify-content: flex-start !important;
+    padding: 16px 14px 16px 14px !important;
     box-sizing: border-box !important;
-    flex: 1 1 auto !important;
+    flex: 0 0 auto !important;
   }
 
   .header {
-    margin-bottom: clamp(6px, 1.5vh, 12px) !important;
+    margin-bottom: clamp(8px, 1.5vh, 14px) !important;
     flex-shrink: 0 !important;
   }
 
@@ -3647,18 +3655,18 @@ body {
   #mainForm {
     display: flex !important;
     flex-direction: column !important;
-    flex: 1 1 auto !important;
-    justify-content: space-between !important;
+    flex: 0 0 auto !important;
+    justify-content: flex-start !important;
   }
 
   .form-grid {
     grid-template-columns: 1fr !important;
     display: flex !important;
     flex-direction: column !important;
-    flex: 1 1 auto !important;
-    justify-content: space-evenly !important;
-    gap: clamp(10px, 2.2vh, 18px) !important;
-    margin-bottom: clamp(8px, 1.8vh, 14px) !important;
+    flex: 0 0 auto !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
   }
 
   .form-grid > div:empty {
@@ -3682,6 +3690,10 @@ body {
     border-radius: 10px !important;
   }
 
+  .input-container .hybrid-dt-wrap input[type="text"] {
+    padding-right: 44px !important;
+  }
+
   .input-container .country-select {
     padding-right: 24px !important;
     padding-left: 32px !important;
@@ -3699,7 +3711,7 @@ body {
   }
 
   .location-buttons {
-    margin-top: clamp(4px, 1vh, 8px) !important;
+    margin-top: clamp(6px, 1.2vh, 10px) !important;
     gap: 8px !important;
   }
 
@@ -3711,8 +3723,8 @@ body {
   }
 
   .btn-container {
-    margin-top: auto !important;
-    gap: clamp(8px, 1.6vh, 14px) !important;
+    margin-top: 12px !important;
+    gap: clamp(8px, 1.6vh, 12px) !important;
     padding-bottom: 2px !important;
     flex-shrink: 0 !important;
   }

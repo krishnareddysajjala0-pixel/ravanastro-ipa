@@ -298,25 +298,23 @@
     /* ☀️ Solar Amber — Warm sunlit papyrus glow */
 
     [data-theme="solar"] {
-      --bg-primary: radial-gradient(circle at 15% 10%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
-                    radial-gradient(circle at 85% 15%, rgba(249, 115, 22, 0.14) 0%, transparent 42%),
-                    radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.20) 0%, transparent 50%),
-                    linear-gradient(155deg, #fffdf7 0%, #fef3c7 52%, #ffedd5 100%);
+      --bg-primary: #ffffff;
       --text-main: #291303;
       --text-muted: #7c2d12;
-      --card-bg: rgba(255, 253, 248, 0.96);
-      --card-border: rgba(217, 119, 6, 0.45);
+      --card-bg: #ffffff;
+      --card-border: rgba(217, 119, 6, 0.42);
       --input-bg: #ffffff;
       --input-border: rgba(180, 83, 9, 0.42);
       --input-focus-border: #b45309;
       --input-focus-shadow: 0 0 18px rgba(217, 119, 6, 0.34);
       --btn-show-bg: linear-gradient(135deg, #b45309, #f59e0b);
       --btn-show-text: #ffffff;
-      --shadow-color: rgba(146, 64, 14, 0.18);
+      --shadow-color: rgba(146, 64, 14, 0.14);
       --header-bg: linear-gradient(135deg, #7c2d12 0%, #b45309 55%, #d97706 100%);
-      --label-bg: rgba(254, 243, 199, 0.92);
+      --title-bg: linear-gradient(135deg, #7c2d12 0%, #b45309 60%, #d97706 100%);
+      --label-bg: #fff7ed;
       --label-text: #7c2d12;
-      --house-no-bg: rgba(245, 158, 11, 0.28);
+      --house-no-bg: rgba(245, 158, 11, 0.22);
       --house-no-text: #451a03;
       --box-border: rgba(180, 83, 9, 0.36);
       --box-border-hover: #b45309;
@@ -325,8 +323,56 @@
       --text-bright: #291303;
       --val-own-color: #9a3412;
       --label-color: #7c2d12;
-      --table-row-bg: rgba(255, 253, 248, 0.98);
-      --table-row-alt-bg: rgba(254, 243, 199, 0.68);
+      --table-row-bg: #ffffff;
+      --table-row-alt-bg: #f8fafc;
+    }
+
+    html[data-theme="solar"],
+    html[data-theme="solar"] body {
+      background-color: #ffffff;
+    }
+
+    [data-theme="solar"] .header,
+    [data-theme="solar"] .section-header,
+    [data-theme="solar"] .party-info-box,
+    [data-theme="solar"] .result-card,
+    [data-theme="solar"] .table-container {
+      background: #ffffff !important;
+      border-color: rgba(217, 119, 6, 0.42) !important;
+      box-shadow: 0 8px 24px rgba(146, 64, 14, 0.10) !important;
+    }
+
+    [data-theme="solar"] .header h1,
+    [data-theme="solar"] .section-title {
+      background: none !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+      -webkit-text-fill-color: #7c2d12 !important;
+      color: #7c2d12 !important;
+      text-shadow: none !important;
+    }
+
+    [data-theme="solar"] .header-subtitle,
+    [data-theme="solar"] .section-subtitle,
+    [data-theme="solar"] .party-info-box p,
+    [data-theme="solar"] .party-info-box strong {
+      color: #451a03 !important;
+    }
+
+    [data-theme="solar"] .unified-varga-table th {
+      background: #f8fafc !important;
+      color: #1e293b !important;
+      border-color: rgba(180, 83, 9, 0.25) !important;
+    }
+
+    [data-theme="solar"] .unified-varga-table th.guru-group-header {
+      color: #047857 !important;
+      background: #ecfdf5 !important;
+    }
+
+    [data-theme="solar"] .unified-varga-table th.shani-group-header {
+      color: #6d28d9 !important;
+      background: #f5f3ff !important;
     }
 
     [data-theme="solar"] .neutral,
@@ -2820,6 +2866,23 @@
   pointer-events: auto !important;
 }
 
+.fixed-bottom-bar .language-switcher {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.fixed-bottom-bar .language-switcher.expanded .lang-options {
+  top: auto !important;
+  bottom: calc(100% + 12px) !important;
+  right: 0 !important;
+  left: auto !important;
+}
+
+.fixed-bottom-bar .btn-lang {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+}
+
 .theme-options .theme-btn,
 .lang-options .lang-btn {
   width: 100% !important;
@@ -3511,10 +3574,10 @@ body {
   .fixed-bottom-bar,
   #action-bar {
     bottom: max(env(safe-area-inset-bottom, 0px), 10px) !important;
-    padding: 6px 10px !important;
-    gap: 6px !important;
+    padding: 6px 8px !important;
+    gap: 5px !important;
     border-radius: 40px !important;
-    max-width: calc(100vw - 12px) !important;
+    max-width: calc(100vw - 10px) !important;
   }
 
   .fixed-bottom-bar .float-btn,
@@ -3522,15 +3585,20 @@ body {
     height: 36px !important;
     min-height: 36px !important;
     max-height: 36px !important;
-    padding: 0 11px !important;
-    font-size: 12px !important;
-    gap: 5px !important;
+    padding: 0 9px !important;
+    font-size: 11.5px !important;
+    gap: 4px !important;
     border-radius: 18px !important;
+  }
+
+  .fixed-bottom-bar .language-switcher {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
   }
 
   .fixed-bottom-bar .float-btn i,
   .fixed-bottom-bar button i {
-    font-size: 12px !important;
+    font-size: 11.5px !important;
   }
 }
 
@@ -3656,29 +3724,6 @@ body {
 <body style="--guru-color: {{ '#00ff00' if is_guru_party else '#ff3333' }}; --shani-color: {{ '#ff3333' if is_guru_party else '#00ff00' }};">
 
   <div class="container">
-
-    <!-- Top Control Row Bar (Theme First, Language Last in Single Line at Top) -->
-
-    <div class="top-control-bar print-hide">
-
-      <!-- 1. Language Switcher (LAST / RIGHT) -->
-      <div class="language-switcher" id="language-switcher-container">
-        <button class="top-btn-lang ctrl-btn" onclick="toggleLangMenu(event)" title="Change Language">
-          <i class="fas fa-language"></i>
-          <span>{{ _('భాష') }}</span>
-        </button>
-        <div class="lang-options" id="lang-options-dropdown">
-          <a href="javascript:void(0)" onclick="setLanguageDirect('te')" class="lang-btn {% if current_lang == 'te' or not current_lang %}active{% endif %}">తెలుగు</a>
-          <a href="javascript:void(0)" onclick="setLanguageDirect('en')" class="lang-btn {% if current_lang == 'en' %}active{% endif %}">English</a>
-          <a href="javascript:void(0)" onclick="setLanguageDirect('kn')" class="lang-btn {% if current_lang == 'kn' %}active{% endif %}">ಕನ್ನಡ</a>
-          <a href="javascript:void(0)" onclick="setLanguageDirect('hi')" class="lang-btn {% if current_lang == 'hi' %}active{% endif %}">हिन्दी</a>
-          <a href="javascript:void(0)" onclick="setLanguageDirect('ta')" class="lang-btn {% if current_lang == 'ta' %}active{% endif %}">தமிழ்</a>
-          <a href="javascript:void(0)" onclick="setLanguageDirect('ml')" class="lang-btn {% if current_lang == 'ml' %}active{% endif %}">മലയാളം</a>
-          <a href="javascript:void(0)" onclick="setLanguageDirect('or')" class="lang-btn {% if current_lang == 'or' %}active{% endif %}">ଓଡ଼ିଆ</a>
-        </div>
-      </div>
-
-    </div>
 
     <div id="chart3-pdf-export-container">
     <div class="print-page-container" id="chart3-page-1">
@@ -4085,6 +4130,20 @@ body {
         <button class="float-btn btn-dasa" onclick="goToDashaChart()">
             <i class="fas fa-calendar-alt"></i> <span>{{ _('దశాచారము') }}</span>
         </button>
+        <div class="language-switcher print-hide" id="language-switcher-container">
+            <button type="button" class="float-btn btn-lang" onclick="toggleLangMenu(event)" title="Change Language">
+                <i class="fas fa-language"></i> <span>{{ _('భాష') }}</span>
+            </button>
+            <div class="lang-options" id="lang-options-dropdown">
+                <a href="javascript:void(0)" onclick="setLanguageDirect('te')" class="lang-btn {% if current_lang == 'te' or not current_lang %}active{% endif %}">తెలుగు</a>
+                <a href="javascript:void(0)" onclick="setLanguageDirect('en')" class="lang-btn {% if current_lang == 'en' %}active{% endif %}">English</a>
+                <a href="javascript:void(0)" onclick="setLanguageDirect('kn')" class="lang-btn {% if current_lang == 'kn' %}active{% endif %}">ಕನ್ನಡ</a>
+                <a href="javascript:void(0)" onclick="setLanguageDirect('hi')" class="lang-btn {% if current_lang == 'hi' %}active{% endif %}">हिन्दी</a>
+                <a href="javascript:void(0)" onclick="setLanguageDirect('ta')" class="lang-btn {% if current_lang == 'ta' %}active{% endif %}">தமிழ்</a>
+                <a href="javascript:void(0)" onclick="setLanguageDirect('ml')" class="lang-btn {% if current_lang == 'ml' %}active{% endif %}">മലയാളം</a>
+                <a href="javascript:void(0)" onclick="setLanguageDirect('or')" class="lang-btn {% if current_lang == 'or' %}active{% endif %}">ଓଡ଼ିଆ</a>
+            </div>
+        </div>
         <button class="float-btn btn-print print-hide" onclick="handleChart3Print()">
             <i class="fas fa-print"></i> <span>{{ _('ప్రింట్') }}</span>
         </button>
