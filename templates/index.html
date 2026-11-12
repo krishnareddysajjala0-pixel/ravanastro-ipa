@@ -534,21 +534,12 @@
 
 
       position: relative;
+      overflow: visible;
+      transition: box-shadow 0.3s ease;
+    }
 
-
-
-      overflow: hidden;
-
-
-
-      transform: translateY(0);
-
-
-
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-
-
+    .card:focus-within {
+      z-index: 100005;
     }
 
 
@@ -960,7 +951,8 @@
 
       }
 
-      .input-container input {
+      .input-container input,
+      .input-container .country-select {
 
         padding: 8px 12px 8px 38px !important;
 
@@ -970,6 +962,17 @@
 
         border-radius: 10px !important;
 
+      }
+
+      .input-container .country-select {
+        padding-right: 26px !important;
+        padding-left: 34px !important;
+        font-size: 13.5px !important;
+      }
+
+      .place-split-row {
+        grid-template-columns: minmax(110px, 38%) 1fr !important;
+        gap: 8px !important;
       }
 
       .input-container .input-icon {
@@ -1281,45 +1284,84 @@
 
 
     /* Place input full width */
-
-
-
     .place-container {
-
-
-
       grid-column: 1 / -1;
-
-
-
       position: relative;
-
-
-
+      z-index: 100000;
     }
 
+    .place-split-row {
+      display: grid;
+      grid-template-columns: minmax(130px, 37%) 1fr;
+      gap: 10px;
+      position: relative;
+      z-index: 100000;
+    }
 
+    .country-box {
+      position: relative;
+    }
 
+    .country-box::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: var(--text-muted);
+      pointer-events: none;
+      z-index: 2;
+    }
 
+    .country-select {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding: 16px 32px 16px 44px;
+      border-radius: 14px;
+      border: 2px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
 
+    .country-select:focus {
+      outline: none;
+      border-color: var(--input-focus-border);
+      box-shadow: var(--input-focus-shadow), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      background: var(--card-bg);
+    }
 
+    [data-theme="solar"] .country-select option {
+      background: #ffffff;
+      color: #451a03;
+    }
+
+    [data-theme="cosmic"] .country-select option {
+      background: #0f172a;
+      color: #ffffff;
+    }
 
     .location-buttons {
-
-
-
       display: flex;
-
-
-
       gap: 10px;
-
-
-
       margin-top: 8px;
-
-
-
+      position: relative;
+      z-index: 1;
     }
 
 
@@ -1409,25 +1451,12 @@
 
 
     .btn-container {
-
-
-
       display: flex;
-
-
-
       flex-direction: column;
-
-
-
       gap: 12px;
-
-
-
       margin-top: 24px;
-
-
-
+      position: relative;
+      z-index: 1;
     }
 
 
@@ -1690,96 +1719,52 @@
 
     #suggestions {
       position: absolute;
-      top: calc(100% + 4px);
+      top: calc(100% + 6px);
       left: 0;
       right: 0;
-      background: var(--card-bg, #ffffff);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: #ffffff;
+      color: #451a03;
       border-radius: 12px;
-      max-height: 240px;
+      max-height: 230px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       margin-top: 0;
-      border: 1px solid var(--card-border, rgba(0, 0, 0, 0.15));
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      z-index: 9999;
+      border: 2px solid #d97706;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42);
+      z-index: 9999999 !important;
       display: none;
     }
 
+    [data-theme="cosmic"] #suggestions {
+      background: #0f172a;
+      color: #ffffff;
+      border: 2px solid #818cf8;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.72);
+    }
 
-
-
-
-
-
-    #suggestions div {
-
-
-
-      padding: 12px 16px;
-
-
-
+    #suggestions > div {
+      padding: 11px 14px;
       cursor: pointer;
-
-
-
       font-size: 14px;
-
-
-
-      color: var(--text-main);
-
-
-
-      transition: all 0.2s ease;
-
-
-
-      border-bottom: 1px solid var(--card-border);
-
-
-
+      color: inherit;
+      transition: background 0.15s ease;
+      border-bottom: 1px solid rgba(217, 119, 6, 0.22);
     }
 
+    [data-theme="cosmic"] #suggestions > div {
+      border-bottom: 1px solid rgba(129, 140, 248, 0.25);
+    }
 
-
-
-
-
-
-    #suggestions div:last-child {
-
-
-
+    #suggestions > div:last-child {
       border-bottom: none;
-
-
-
     }
 
+    #suggestions > div:hover {
+      background: #fef3c7;
+    }
 
-
-
-
-
-
-    #suggestions div:hover {
-
-
-
-      background: var(--input-bg);
-
-
-
-      color: var(--input-focus-border);
-
-
-
-      padding-left: 20px;
-
-
-
+    [data-theme="cosmic"] #suggestions > div:hover {
+      background: #1e293b;
     }
 
 
@@ -3581,11 +3566,23 @@ body {
     font-size: clamp(12.5px, 1.8vh, 14px) !important;
   }
 
-  .input-container input {
+  .input-container input,
+  .input-container .country-select {
     padding: 8px 12px 8px 38px !important;
     height: clamp(38px, 5.2vh, 46px) !important;
     font-size: clamp(13.5px, 1.9vh, 15px) !important;
     border-radius: 10px !important;
+  }
+
+  .input-container .country-select {
+    padding-right: 24px !important;
+    padding-left: 32px !important;
+    font-size: clamp(12.5px, 1.8vh, 14px) !important;
+  }
+
+  .place-split-row {
+    grid-template-columns: minmax(108px, 37%) 1fr !important;
+    gap: 8px !important;
   }
 
   .input-container .input-icon {
@@ -4161,49 +4158,149 @@ body {
 
 
 
-          <!-- Full width place input -->
-
-
-
+          <!-- Full width place input (Country + Place Details) -->
           <div class="form-group place-container">
-
-
-
             <label for="place" class="required-field">
-
-
-
               <i class="fas fa-map-marker-alt"></i> {{ _('జన్మ స్థలం') }}
-
-
-
             </label>
 
+            <div class="place-split-row">
+              <div class="input-container country-box">
+                <div class="input-icon"><i class="fas fa-globe-asia"></i></div>
+                <select id="country" name="country" class="country-select" aria-label="Country">
+                  <option value="in" selected>India</option>
+                  <option value="af">Afghanistan</option>
+                  <option value="al">Albania</option>
+                  <option value="dz">Algeria</option>
+                  <option value="ad">Andorra</option>
+                  <option value="ao">Angola</option>
+                  <option value="ar">Argentina</option>
+                  <option value="am">Armenia</option>
+                  <option value="au">Australia</option>
+                  <option value="at">Austria</option>
+                  <option value="az">Azerbaijan</option>
+                  <option value="bh">Bahrain</option>
+                  <option value="bd">Bangladesh</option>
+                  <option value="by">Belarus</option>
+                  <option value="be">Belgium</option>
+                  <option value="bt">Bhutan</option>
+                  <option value="bo">Bolivia</option>
+                  <option value="ba">Bosnia and Herzegovina</option>
+                  <option value="bw">Botswana</option>
+                  <option value="br">Brazil</option>
+                  <option value="bn">Brunei</option>
+                  <option value="bg">Bulgaria</option>
+                  <option value="kh">Cambodia</option>
+                  <option value="cm">Cameroon</option>
+                  <option value="ca">Canada</option>
+                  <option value="cl">Chile</option>
+                  <option value="cn">China</option>
+                  <option value="co">Colombia</option>
+                  <option value="cr">Costa Rica</option>
+                  <option value="hr">Croatia</option>
+                  <option value="cu">Cuba</option>
+                  <option value="cy">Cyprus</option>
+                  <option value="cz">Czechia</option>
+                  <option value="dk">Denmark</option>
+                  <option value="do">Dominican Republic</option>
+                  <option value="ec">Ecuador</option>
+                  <option value="eg">Egypt</option>
+                  <option value="ee">Estonia</option>
+                  <option value="et">Ethiopia</option>
+                  <option value="fj">Fiji</option>
+                  <option value="fi">Finland</option>
+                  <option value="fr">France</option>
+                  <option value="ge">Georgia</option>
+                  <option value="de">Germany</option>
+                  <option value="gh">Ghana</option>
+                  <option value="gr">Greece</option>
+                  <option value="gt">Guatemala</option>
+                  <option value="hk">Hong Kong</option>
+                  <option value="hu">Hungary</option>
+                  <option value="is">Iceland</option>
+                  <option value="id">Indonesia</option>
+                  <option value="ir">Iran</option>
+                  <option value="iq">Iraq</option>
+                  <option value="ie">Ireland</option>
+                  <option value="il">Israel</option>
+                  <option value="it">Italy</option>
+                  <option value="jm">Jamaica</option>
+                  <option value="jp">Japan</option>
+                  <option value="jo">Jordan</option>
+                  <option value="kz">Kazakhstan</option>
+                  <option value="ke">Kenya</option>
+                  <option value="kw">Kuwait</option>
+                  <option value="kg">Kyrgyzstan</option>
+                  <option value="la">Laos</option>
+                  <option value="lv">Latvia</option>
+                  <option value="lb">Lebanon</option>
+                  <option value="lt">Lithuania</option>
+                  <option value="lu">Luxembourg</option>
+                  <option value="my">Malaysia</option>
+                  <option value="mv">Maldives</option>
+                  <option value="mt">Malta</option>
+                  <option value="mu">Mauritius</option>
+                  <option value="mx">Mexico</option>
+                  <option value="md">Moldova</option>
+                  <option value="mn">Mongolia</option>
+                  <option value="ma">Morocco</option>
+                  <option value="mm">Myanmar</option>
+                  <option value="na">Namibia</option>
+                  <option value="np">Nepal</option>
+                  <option value="nl">Netherlands</option>
+                  <option value="nz">New Zealand</option>
+                  <option value="ng">Nigeria</option>
+                  <option value="no">Norway</option>
+                  <option value="om">Oman</option>
+                  <option value="pk">Pakistan</option>
+                  <option value="pa">Panama</option>
+                  <option value="py">Paraguay</option>
+                  <option value="pe">Peru</option>
+                  <option value="ph">Philippines</option>
+                  <option value="pl">Poland</option>
+                  <option value="pt">Portugal</option>
+                  <option value="qa">Qatar</option>
+                  <option value="ro">Romania</option>
+                  <option value="ru">Russia</option>
+                  <option value="sa">Saudi Arabia</option>
+                  <option value="rs">Serbia</option>
+                  <option value="sg">Singapore</option>
+                  <option value="sk">Slovakia</option>
+                  <option value="si">Slovenia</option>
+                  <option value="za">South Africa</option>
+                  <option value="kr">South Korea</option>
+                  <option value="es">Spain</option>
+                  <option value="lk">Sri Lanka</option>
+                  <option value="se">Sweden</option>
+                  <option value="ch">Switzerland</option>
+                  <option value="tw">Taiwan</option>
+                  <option value="tz">Tanzania</option>
+                  <option value="th">Thailand</option>
+                  <option value="tt">Trinidad and Tobago</option>
+                  <option value="tn">Tunisia</option>
+                  <option value="tr">Turkey</option>
+                  <option value="ug">Uganda</option>
+                  <option value="ua">Ukraine</option>
+                  <option value="ae">United Arab Emirates</option>
+                  <option value="gb">United Kingdom</option>
+                  <option value="us">United States</option>
+                  <option value="uy">Uruguay</option>
+                  <option value="uz">Uzbekistan</option>
+                  <option value="ve">Venezuela</option>
+                  <option value="vn">Vietnam</option>
+                  <option value="zm">Zambia</option>
+                  <option value="zw">Zimbabwe</option>
+                </select>
+              </div>
 
-
-            <div class="input-container">
-
-
-
-              <div class="input-icon"><i class="fas fa-globe-asia"></i></div>
-
-
-
-              <input type="text" id="place" name="place" autocomplete="off" required
-
-
-
-                placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}">
-
-
+              <div class="input-container place-box">
+                <div class="input-icon"><i class="fas fa-city"></i></div>
+                <input type="text" id="place" name="place" autocomplete="off" required
+                  placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}">
+              </div>
 
               <div id="suggestions"></div>
-
-
-
             </div>
-
-
 
             <div class="error-message">{{ _('దయచేసి జాబితా నుండి స్థలం ఎంచుకోండి') }}</div>
 
@@ -4897,10 +4994,16 @@ body {
 
 
     const placeInput = document.getElementById("place");
-
-
-
+    const countrySelect = document.getElementById("country");
     const suggestions = document.getElementById("suggestions");
+
+    function syncCountrySelect(code) {
+      if (!countrySelect || !code) return;
+      const cc = String(code).trim().toLowerCase();
+      if ([...countrySelect.options].some(opt => opt.value === cc)) {
+        countrySelect.value = cc;
+      }
+    }
 
 
 
@@ -5029,6 +5132,9 @@ body {
           if (data && data.display_name && placeInput) {
             placeInput.value = data.display_name;
           }
+          if (data && data.country_code) {
+            syncCountrySelect(data.country_code);
+          }
         } catch (e) {
           console.warn("Reverse geocoding network error, coordinates retained:", e);
         } finally {
@@ -5101,50 +5207,49 @@ body {
 
 
     // Clear location
-
-
-
     function clearLocation() {
-
-
-
       placeInput.value = "";
-
-
-
       latInput.value = "";
-
-
-
       lonInput.value = "";
-
-
-
+      if (countrySelect) countrySelect.value = "in";
       suggestions.innerHTML = "";
-
-
-
       suggestions.style.display = "none";
-
-
-
     }
 
+    if (countrySelect) {
+      countrySelect.addEventListener("change", () => {
+        const hadCoords = Boolean(latInput.value && lonInput.value);
+        latInput.value = "";
+        lonInput.value = "";
+        suggestions.innerHTML = "";
+        suggestions.style.display = "none";
+        if (hadCoords) {
+          placeInput.value = "";
+          placeInput.focus();
+        } else {
+          const q = placeInput.value.trim();
+          if (q.length >= 2) {
+            fetchSuggestions(q);
+          } else {
+            placeInput.focus();
+          }
+        }
+      });
+    }
 
-
-
-
-
+    placeInput.addEventListener("focus", () => {
+      setTimeout(() => {
+        try {
+          placeInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        } catch (e) {}
+      }, 220);
+    });
 
     // Show suggestions with debounce
-
-
-
     placeInput.addEventListener("input", () => {
-
-
-
       const q = placeInput.value.trim();
+      latInput.value = "";
+      lonInput.value = "";
 
 
 
@@ -5220,7 +5325,8 @@ body {
       if (controller) controller.abort();
       controller = new AbortController();
 
-      const url = `/api/search_place?q=${encodeURIComponent(q)}`;
+      const selectedCountry = countrySelect ? countrySelect.value : 'in';
+      const url = `/api/search_place?q=${encodeURIComponent(q)}&country=${encodeURIComponent(selectedCountry)}`;
 
       try {
         const res = await fetch(url, {
@@ -5243,25 +5349,24 @@ body {
             const div = document.createElement("div");
             div.style.padding = "10px 14px";
             div.style.cursor = "pointer";
-            div.style.borderBottom = "1px solid var(--card-border, rgba(0,0,0,0.08))";
             div.style.transition = "background 0.15s ease";
-            div.onmouseenter = () => { div.style.background = "var(--input-bg, rgba(59, 130, 246, 0.1))"; };
-            div.onmouseleave = () => { div.style.background = "transparent"; };
 
             const parts = (p.display_name || "").split(',');
             const mainTitle = parts[0].trim();
             const subTitle = parts.slice(1).join(',').trim();
 
             div.innerHTML = `
-              <div style="font-weight: 600; color: var(--text-main, #1e293b); font-size: 14px;">${mainTitle}</div>
+              <div style="font-weight: 700; color: inherit; font-size: 14px;">${mainTitle}</div>
               ${subTitle ? `<div style="font-size: 12px; color: var(--text-muted, #64748b); margin-top: 2px;">${subTitle}</div>` : ''}
             `;
 
-            div.onclick = (e) => {
+            const selectItem = (e) => {
+              e.preventDefault();
               e.stopPropagation();
               placeInput.value = p.display_name;
               latInput.value = p.lat;
               lonInput.value = p.lon;
+              if (p.country_code) syncCountrySelect(p.country_code);
               suggestions.innerHTML = "";
               suggestions.style.display = "none";
               placeInput.style.borderColor = "#6bcf7f";
@@ -5269,6 +5374,8 @@ body {
                 placeInput.style.borderColor = "";
               }, 1000);
             };
+            div.onmousedown = selectItem;
+            div.onclick = selectItem;
 
             suggestions.appendChild(div);
           });
@@ -5344,33 +5451,20 @@ body {
 
 
 
-        let errorMsg = placeInput.parentNode.querySelector('.location-error');
-
-
+        const placeContainer = placeInput.closest('.place-container') || placeInput.parentNode;
+        let errorMsg = placeContainer.querySelector('.location-error');
 
         if (!errorMsg) {
 
-
-
           errorMsg = document.createElement('div');
-
-
 
           errorMsg.className = 'error-message location-error';
 
-
-
           errorMsg.style.display = 'block';
-
-
 
           errorMsg.textContent = '{{ _("దయచేసి జాబితా నుండి ఒక స్థలాన్ని ఎంచుకోండి") }}';
 
-
-
-          placeInput.parentNode.appendChild(errorMsg);
-
-
+          placeContainer.appendChild(errorMsg);
 
         }
 
@@ -5464,42 +5558,19 @@ body {
 
 
 
-    // Input focus effects
-
-
-
+    // Input focus effects (skip place box so suggestions stacking context never gets trapped)
     document.querySelectorAll('input').forEach(input => {
-
-
-
       input.addEventListener('focus', function () {
-
-
-
-        this.parentElement.style.transform = 'scale(1.02)';
-
-
-
+        if (this.id !== 'place') {
+          this.parentElement.style.transform = 'scale(1.02)';
+        }
       });
-
-
-
-
-
-
 
       input.addEventListener('blur', function () {
-
-
-
-        this.parentElement.style.transform = 'scale(1)';
-
-
-
+        if (this.id !== 'place') {
+          this.parentElement.style.transform = 'scale(1)';
+        }
       });
-
-
-
     });
 
 
@@ -5636,6 +5707,9 @@ body {
             if (data && data.display_name && data.display_name !== 'Unknown Location') {
               if (placeInput) placeInput.value = data.display_name;
             }
+            if (data && data.country_code) {
+              syncCountrySelect(data.country_code);
+            }
           })
           .catch(() => {});
       };
@@ -5758,7 +5832,8 @@ body {
 
 
 
-        const errorMsg = this.parentNode.querySelector('.error-message');
+        const errorContainer = this.closest('.form-group') || this.parentNode;
+        const errorMsg = errorContainer.querySelector('.error-message');
 
 
 
