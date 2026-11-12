@@ -528,11 +528,7 @@
 
 
 
-      border: 3px solid #ffd700;
-
-
-
-      animation: rainbow-border 3s linear infinite;
+      border: 2.5px solid #eab308;
 
 
 
@@ -659,62 +655,44 @@
 
 
 
-    .card::before {
+    @keyframes rotateBorderLightClockwise {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
 
-
-
-      content: '';
-
-
-
+    .card-glow-ring {
       position: absolute;
+      inset: -3px;
+      border-radius: 26px;
+      padding: 3.5px;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 2;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+    }
 
-
-
-      top: 0;
-
-
-
-      left: 0;
-
-
-
-      right: 0;
-
-
-
-      height: 4px;
-
-
-
-      background: linear-gradient(90deg,
-
-
-
-          #ff6b6b,
-
-
-
-          #ffd93d,
-
-
-
-          #6bcf7f,
-
-
-
-          #4d96ff,
-
-
-
-          #9d4edd);
-
-
-
-      border-radius: 24px 24px 0 0;
-
-
-
+    .card-glow-ring::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 220%;
+      height: 220%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg 255deg,
+        rgba(245, 158, 11, 0.35) 285deg,
+        #facc15 315deg,
+        #fffbeb 336deg,
+        #ffffff 345deg,
+        #facc15 354deg,
+        transparent 360deg
+      );
+      transform: translate(-50%, -50%) rotate(0deg);
+      animation: rotateBorderLightClockwise 8s linear infinite;
     }
 
 
@@ -4086,6 +4064,7 @@ body {
 
   <div class="container">
     <div class="card">
+      <div class="card-glow-ring" aria-hidden="true"></div>
       <div class="header">
         <div class="om-title">
           <span class="om-icon">🕉️</span>
