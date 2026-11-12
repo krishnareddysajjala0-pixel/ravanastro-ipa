@@ -2939,10 +2939,10 @@ def get_daily_panchangam_basic(jd, lat, lon, local_tz, local_midnight, calc_end_
     durmuhurtams = []
     
     try:
+        from astral.sun import sunrise as astral_sunrise, sunset as astral_sunset
         loc = LocationInfo("Local", "Region", local_tz.zone, lat or 17.3850, lon or 78.4867)
-        s = sun(loc.observer, date=local_midnight.date(), tzinfo=local_tz)
-        sunrise_dt = s["sunrise"].astimezone(local_tz)
-        sunset_dt = s["sunset"].astimezone(local_tz)
+        sunrise_dt = astral_sunrise(loc.observer, date=local_midnight.date(), tzinfo=local_tz).astimezone(local_tz)
+        sunset_dt = astral_sunset(loc.observer, date=local_midnight.date(), tzinfo=local_tz).astimezone(local_tz)
         suryodayam = get_am_pm_str(sunrise_dt)
         suryastamayam = get_am_pm_str(sunset_dt)
         
@@ -3311,35 +3311,52 @@ def calendar_view():
     
     def find_amavasya(jd_guess):
         jd_val = jd_guess
-        for _ in range(10):
-            m = swe.calc_ut(jd_val, swe.MOON)[0][0]
-            s = swe.calc_ut(jd_val, swe.SUN)[0][0]
+        for _ in range(15):
+            m = swe.calc_ut(jd_val, swe.MOON, PLANET_FLAGS)[0][0]
+            s = swe.calc_ut(jd_val, swe.SUN, PLANET_FLAGS)[0][0]
             df = (m - s) % 360
             if df > 180: df -= 360
             jd_val -= df / 12.190749
             if abs(df) < 0.0001:
                 break
         return jd_val
-        
+
+    def jd_to_local_dt(jd_val):
+        y_j, m_j, d_j, h_j = swe.revjul(jd_val)
+        total_secs = int(round(h_j * 3600))
+        dt_utc = pytz.utc.localize(datetime.datetime(int(y_j), int(m_j), int(d_j))) + datetime.timedelta(seconds=total_secs)
+        return dt_utc.astimezone(local_tz)
+
+    def get_sunrise_local(d_obj):
+        try:
+            from astral import LocationInfo
+            from astral.sun import sunrise as astral_sunrise
+            loc = LocationInfo("Local", "Region", local_tz.zone, lat or 17.3850, lon or 78.4867)
+            return astral_sunrise(loc.observer, date=d_obj, tzinfo=local_tz).astimezone(local_tz)
+        except Exception:
+            return local_tz.localize(datetime.datetime.combine(d_obj, datetime.time(6, 0)))
+
     sun_lon = swe.calc_ut(jd_input, swe.SUN, PLANET_FLAGS)[0][0]
     moon_lon = swe.calc_ut(jd_input, swe.MOON, PLANET_FLAGS)[0][0]
     diff = (moon_lon - sun_lon) % 360
     days_since = diff / 12.190749
     jd_start = find_amavasya(jd_input - days_since)
     jd_end = find_amavasya(jd_input + (360 - diff)/12.190749)
-    
-    y, m_dt, d, h = swe.revjul(jd_start)
-    start_dt = datetime.datetime(y, m_dt, d).date() + datetime.timedelta(days=1)
-    
-    y2, m2_dt, d2, h2 = swe.revjul(jd_end)
-    end_dt = datetime.datetime(y2, m2_dt, d2).date()
-    
+
+    start_am_dt = jd_to_local_dt(jd_start)
+    start_am_date = start_am_dt.date()
+    start_dt = start_am_date if start_am_dt < get_sunrise_local(start_am_date) else start_am_date + datetime.timedelta(days=1)
+
+    end_am_dt = jd_to_local_dt(jd_end)
+    end_am_date = end_am_dt.date()
+    end_dt = end_am_date - datetime.timedelta(days=1) if end_am_dt < get_sunrise_local(end_am_date) else end_am_date
+
     if view_type == "english":
         import calendar as py_calendar
         start_dt = datetime.date(date_obj.year, date_obj.month, 1)
         last_day = py_calendar.monthrange(date_obj.year, date_obj.month)[1]
         end_dt = datetime.date(date_obj.year, date_obj.month, last_day)
-    
+
     # Branding Calculations (Year, Kaliyogamu, Thraitha Sakamu)
     adj_year = date_obj.year
     year_index = (adj_year - 1987) % 60
@@ -3351,7 +3368,7 @@ def calendar_view():
     # Calculate Paksham Ranges
     def find_tithi_jd(jd_guess, target_diff):
         jd_val = jd_guess
-        for _ in range(10):
+        for _ in range(15):
             res_m = swe.calc_ut(jd_val, swe.MOON, PLANET_FLAGS)
             res_s = swe.calc_ut(jd_val, swe.SUN, PLANET_FLAGS)
             m = res_m[0][0]; s = res_s[0][0]
@@ -3362,8 +3379,9 @@ def calendar_view():
         return jd_val
 
     jd_purnima = find_tithi_jd(jd_start + 14.5, 180)
-    y3, m3, d3, h3 = swe.revjul(jd_purnima)
-    purnima_dt = datetime.date(int(y3), int(m3), int(d3))
+    purnima_local_dt = jd_to_local_dt(jd_purnima)
+    purnima_local_date = purnima_local_dt.date()
+    purnima_dt = purnima_local_date - datetime.timedelta(days=1) if purnima_local_dt < get_sunrise_local(purnima_local_date) else purnima_local_date
     
     EN_MONTHS_TELUGU = ["జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్", "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"]
     def tr_month(te_month):
@@ -3462,12 +3480,11 @@ def calendar_view():
         wd = (current_dt.weekday() + 1) % 7
         week_idx = (offset + first_wd) // 7
         
-        calc_dt = datetime.datetime.combine(current_dt, datetime.time(6, 0))
-        local_calc = local_tz.localize(calc_dt)
-        utc_calc = local_calc.astimezone(pytz.utc)
-        jd = swe.julday(utc_calc.year, utc_calc.month, utc_calc.day, utc_calc.hour + utc_calc.minute/60.0)
+        sunrise_local = get_sunrise_local(current_dt)
+        utc_calc = sunrise_local.astimezone(pytz.utc)
+        jd = swe.julday(utc_calc.year, utc_calc.month, utc_calc.day, utc_calc.hour + utc_calc.minute/60.0 + utc_calc.second/3600.0)
         
-        panch = get_daily_panchangam_basic(jd, lat, lon, local_tz, calc_dt, calc_end_times=True)
+        panch = get_daily_panchangam_basic(jd, lat, lon, local_tz, sunrise_local.replace(tzinfo=None), calc_end_times=True)
         
         # Check for festivals using Dharmashastra Kala-Vyapti rules
         day_fests = []
