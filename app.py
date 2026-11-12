@@ -985,7 +985,7 @@ def calculate_anthara_periods(maha_name, start_date, end_date, lagna="", birth_d
                     age_end_m = (age_end_days % 365) // 30
                     age_end_str = f"{age_end_y}సం, {age_end_m}నెలలు"
 
-            if birth_dt and anthara_end < birth_dt:
+            if birth_dt and anthara_end <= birth_dt:
                 anthara_start = anthara_end
                 continue
 
@@ -2285,6 +2285,15 @@ def get_dasha_info(birth_info):
         }
 
     # 5. Calculate ALL 12 Mahadashas in sequence (120 years)
+    def format_days_ym(days_val):
+        d = max(0, int(days_val))
+        y = d // 365
+        m = (d % 365) // 30
+        if m >= 12:
+            y += 1
+            m = 0
+        return f"{y}{tr('సం')}, {m}{tr('నెలలు')}"
+
     all_dasas = []
     start_date = birth_dasa_start
     
@@ -2334,31 +2343,16 @@ def get_dasha_info(birth_info):
             stiti = "భవిష్యత్తు"
         
         
-        # Calculate Age
-        age_start_str = ""
-        age_end_str = ""
-        
-        age_start_days = (start_date - birth_dt).days
-        if age_start_days >= 0:
-            age_start_y = age_start_days // 365
-            age_start_m = (age_start_days % 365) // 30
-            age_start_str = f"{age_start_y}సం, {age_start_m}నెలలు"
-        else:
-            abs_days = abs(age_start_days)
-            age_start_y = abs_days // 365
-            age_start_m = (abs_days % 365) // 30
-            if age_start_y == 0 and age_start_m == 0:
-                age_start_str = "0సం, 0నెలలు"
-            else:
-                age_start_str = f"-{age_start_y}సం, {age_start_m}నెలలు"
-            
-        age_end_days = (end_date - birth_dt).days
-        if age_end_days >= 0:
-            age_end_y = age_end_days // 365
-            age_end_m = (age_end_days % 365) // 30
-            age_end_str = f"{age_end_y}సం, {age_end_m}నెలలు"
+        # Clamp display start to date of birth (no pre-birth period or negative age for Janma Dasha)
+        disp_start_dt = birth_dt if start_date < birth_dt else start_date
+        disp_start_str = disp_start_dt.strftime("%d-%m-%Y")
 
-        disp_start_str = start_str
+        # Calculate Age
+        age_start_days = max(0, (disp_start_dt - birth_dt).days)
+        age_start_str = format_days_ym(age_start_days)
+
+        age_end_days = max(0, (end_date - birth_dt).days)
+        age_end_str = format_days_ym(age_end_days)
 
         # Kundali position and hands
         pos_info = dasa_positions_lookup.get(dasa_name, {})
@@ -2394,7 +2388,7 @@ def get_dasha_info(birth_info):
         if is_current_today:
             current_maha_index = i
             current_maha_name = dasa_name
-            current_maha_start = start_str
+            current_maha_start = disp_start_str
             current_maha_end = end_str
             current_maha_years = dasa_years
             current_maha_age_start = age_start_str
@@ -2438,14 +2432,19 @@ def get_dasha_info(birth_info):
     current_end_dt = local_tz.localize(datetime.datetime.strptime(current_maha_end, "%d-%m-%Y"))
     
     # Calculate elapsed days in current dasa
-    total_days_current = (current_end_dt - current_start_dt).days
+    total_days_current = max(0, (current_end_dt - current_start_dt).days)
     elapsed_days_current = (today - current_start_dt).days
     
     # Ensure days are within range
     elapsed_days_current = max(0, min(elapsed_days_current, total_days_current))
+    remaining_days_current = max(0, total_days_current - elapsed_days_current)
     
     elapsed_years_current = elapsed_days_current / 365.25
-    remaining_years_current = (total_days_current - elapsed_days_current) / 365.25
+    remaining_years_current = remaining_days_current / 365.25
+    progress_pct_current = round((elapsed_days_current / total_days_current * 100), 1) if total_days_current > 0 else 0.0
+
+    completed_str = format_days_ym(elapsed_days_current)
+    remaining_str = format_days_ym(remaining_days_current)
     
     # 8. Calculate total years covered
     total_years_covered = sum(dasa.get("years", 10) for dasa in all_dasas)
@@ -2468,6 +2467,9 @@ def get_dasha_info(birth_info):
         "total_years": current_maha_years,
         "completed_years": round(elapsed_years_current, 2),
         "remaining_years": round(remaining_years_current, 2),
+        "completed_str": completed_str,
+        "remaining_str": remaining_str,
+        "progress_pct": progress_pct_current,
         "current_dasa_color": current_dasa_color,
         "current_dasa_icon": current_dasa_icon,
         "current_dasa_favorable": current_dasa_favorable,

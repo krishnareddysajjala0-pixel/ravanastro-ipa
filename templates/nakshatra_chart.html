@@ -3485,7 +3485,7 @@ html, body {
         <div class="padas-list-cell">
           {% for p in nak.padas %}
           <div class="pada-row {% if p.occupants %}has-occupant{% endif %}">
-            <span class="pada-num">{{ p.rashi_pada }}</span>
+            <span class="pada-num">{{ p.nak_pada_num }}</span>
             {% if p.occupants %}
               <span class="occupants-wrap">
                 {% for occ in p.occupants %}

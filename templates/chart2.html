@@ -7127,39 +7127,19 @@ body {
 
                     <div class="progress-fill" id="progressFill"
 
-
-
-                        style="width: {{ ((completed_years / total_years * 100) if total_years > 0 else 0)|round(1) }}%">
-
-
+                        style="width: {{ progress_pct }}%">
 
                     </div>
 
-
-
                 </div>
-
-
 
                 <div class="progress-stats" style="font-size: 14px; justify-content: space-around;">
 
+                    <span>{{ _('గతమైనది') }}: {{ completed_str }}</span>
 
+                    <span>{{ _('మిగిలినది') }}: {{ remaining_str }}</span>
 
-                    <span>{{ _('గతమైనది') }}: {{ "%.2f"|format(completed_years) }} {{ _('సం') }}.</span>
-
-
-
-                    <span>{{ _('మిగిలినది') }}: {{ "%.2f"|format(remaining_years) }} {{ _('సం') }}.</span>
-
-
-
-                    <span style="color: #4CAF50; font-weight: bold;">{{ ((completed_years / total_years * 100) if
-
-
-
-                        total_years > 0 else 0)|round(1) }}% {{ _('పూర్తైంది') }}</span>
-
-
+                    <span style="color: #4CAF50; font-weight: bold;">{{ progress_pct }}% {{ _('పూర్తైంది') }}</span>
 
                 </div>
 
