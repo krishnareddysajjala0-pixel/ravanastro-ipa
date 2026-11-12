@@ -799,11 +799,43 @@
 
     }
 
+    .om-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      -webkit-text-fill-color: initial;
+      line-height: 1.2;
+    }
 
+    .om-title .om-icon {
+      font-size: 22px;
+      color: #FFD700;
+      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+      line-height: 1;
+      display: inline-block;
+    }
 
+    .om-title .om-text {
+      color: #FFD700;
+      font-size: 22px;
+      font-weight: 800;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+      letter-spacing: 1px;
+    }
 
+    [data-theme="solar"] .om-title .om-text {
+      color: #b45309;
+      text-shadow: 0 1px 4px rgba(180, 83, 9, 0.18);
+    }
 
-
+    [data-theme="solar"] .om-title .om-icon {
+      color: #d97706;
+      filter: drop-shadow(0 1px 3px rgba(217, 119, 6, 0.35));
+    }
 
     .header .subtitle {
 
@@ -880,11 +912,8 @@
       }
 
       .header h2 {
-
-        font-size: 24px !important;
-
-        margin-bottom: 4px !important;
-
+        font-size: 32px !important;
+        margin-bottom: 0 !important;
       }
 
       .header p {
@@ -3939,67 +3968,19 @@ body {
   <div class="container">
     <div class="card">
       <div class="header">
+        <div class="om-title">
+          <span class="om-icon">🕉️</span>
+          <span class="om-text">{{ _('ఓం శ్రీ గురవే నమః') }}</span>
+          <span class="om-icon">🕉️</span>
+        </div>
 
-
-
-        <style>
-
-
-
-          .title-emblem {
-
-
-
-            width: 40px;
-
-
-
-            height: 40px;
-
-
-
-            vertical-align: middle;
-
-
-
-            margin: 0 10px;
-
-
-
-            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
-
-
-
-          }
-
-
-
-        </style>
-
-
-
-        <h2 style="display: flex; align-items: center; justify-content: center; gap: 10px;"> 
-
-
-
-          <img src="/static/images/brand_logo.png" alt="Logo" class="title-emblem-small" style="height: 26px; width: auto; object-fit: contain; vertical-align: middle;">
-
-
-
-          {{ _('జాఫతకము') }} 
-
-
-
-          <img src="/static/images/brand_logo.png" alt="Logo" class="title-emblem-small" style="height: 26px; width: auto; object-fit: contain; vertical-align: middle;">
-
-
-
+        <h2 style="display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 32px; margin-bottom: 0;">
+          <img src="/static/images/brand_logo.png" alt="Logo" style="height: 28px; width: auto; object-fit: contain; vertical-align: middle;">
+          {{ _('జాఫతకము') }}
+          <img src="/static/images/brand_logo.png" alt="Logo" style="height: 28px; width: auto; object-fit: contain; vertical-align: middle;">
         </h2>
 
-
-
-        <div class="subtitle">{{ _('ప్రారబ్దకర్మ పత్రము') }}</div>
-
+        <div class="subtitle" style="margin-top: 6px;">{{ _('ప్రారబ్దకర్మ పత్రము') }}</div>
       </div>
 
 
