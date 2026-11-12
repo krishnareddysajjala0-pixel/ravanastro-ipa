@@ -336,27 +336,30 @@
     [data-theme="solar"] .section-header,
     [data-theme="solar"] .party-info-box,
     [data-theme="solar"] .result-card,
-    [data-theme="solar"] .table-container {
+    [data-theme="solar"] .table-container,
+    [data-theme="solar"] .footer {
       background: #ffffff !important;
       border-color: rgba(217, 119, 6, 0.42) !important;
       box-shadow: 0 8px 24px rgba(146, 64, 14, 0.10) !important;
     }
 
     [data-theme="solar"] .header h1,
-    [data-theme="solar"] .section-title {
+    [data-theme="solar"] .section-title,
+    [data-theme="solar"] #varga-table-section .section-title {
       background: none !important;
       -webkit-background-clip: border-box !important;
       background-clip: border-box !important;
-      -webkit-text-fill-color: #7c2d12 !important;
-      color: #7c2d12 !important;
+      -webkit-text-fill-color: #451a03 !important;
+      color: #451a03 !important;
       text-shadow: none !important;
     }
 
     [data-theme="solar"] .header-subtitle,
     [data-theme="solar"] .section-subtitle,
     [data-theme="solar"] .party-info-box p,
-    [data-theme="solar"] .party-info-box strong {
-      color: #451a03 !important;
+    [data-theme="solar"] .party-info-box strong,
+    [data-theme="solar"] .footer p {
+      color: #291303 !important;
     }
 
     [data-theme="solar"] .unified-varga-table th {
@@ -365,37 +368,58 @@
       border-color: rgba(180, 83, 9, 0.25) !important;
     }
 
+    [data-theme="solar"] .unified-varga-table th.param-header {
+      background: #fef3c7 !important;
+      color: #451a03 !important;
+      border-right: 2px solid #b45309 !important;
+    }
+
+    [data-theme="solar"] .unified-varga-table tbody td:first-child {
+      background: #fffbeb !important;
+      color: #451a03 !important;
+      border-right: 2px solid #b45309 !important;
+    }
+
     [data-theme="solar"] .unified-varga-table th.guru-group-header {
-      color: #047857 !important;
-      background: #ecfdf5 !important;
+      color: #064e3b !important;
+      background: #a7f3d0 !important;
     }
 
     [data-theme="solar"] .unified-varga-table th.shani-group-header {
-      color: #6d28d9 !important;
-      background: #f5f3ff !important;
+      color: #3b0764 !important;
+      background: #e9d5ff !important;
     }
 
     [data-theme="solar"] .neutral,
     [data-theme="solar"] .gender-cell.neutral {
-      color: #6d28d9 !important;
+      color: #4c1d95 !important;
       text-shadow: none !important;
       font-weight: 700 !important;
     }
 
+    [data-theme="solar"] .msg-positive {
+      color: #065f46 !important;
+      font-weight: 700 !important;
+    }
+
     [data-theme="solar"] .msg-neutral {
-      color: #57534e !important;
+      color: #451a03 !important;
       font-weight: 600 !important;
     }
 
+    [data-theme="solar"] .bitter-enemy-alert {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b !important;
+    }
+
     [data-theme="solar"] p[style*="#cbd5e1"] {
-      color: #7c2d12 !important;
+      color: #291303 !important;
       font-weight: 700 !important;
-      font-size: 16.5px !important;
     }
 
     [data-theme="solar"] .unified-varga-table th,
     [data-theme="solar"] .unified-varga-table td {
-      font-size: 13.5px !important;
       font-weight: 700 !important;
       color: #291303 !important;
     }
@@ -2939,9 +2963,15 @@
     [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.chandra-planet,
     [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.kuja-planet,
     [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.ketu-planet,
-    [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.bhoomi-planet {
+    [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.bhoomi-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.guru-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.surya-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.chandra-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.kuja-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.ketu-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.bhoomi-planet {
         background: #d1fae5 !important;
-        color: #065f46 !important;
+        color: #064e3b !important;
     }
 
     html:not([data-theme]) .unified-varga-table thead tr:nth-child(2) th.shani-planet,
@@ -2961,9 +2991,15 @@
     [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.chitra-planet,
     [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.budha-planet,
     [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.shukra-planet,
-    [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.rahu-planet {
+    [data-theme="default"] .unified-varga-table thead tr:nth-child(2) th.rahu-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.shani-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.mitra-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.chitra-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.budha-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.shukra-planet,
+    [data-theme="solar"] .unified-varga-table thead tr:nth-child(2) th.rahu-planet {
         background: #f3e8ff !important;
-        color: #6b21a8 !important;
+        color: #3b0764 !important;
     }
 
     html:not([data-theme]) .unified-varga-table th.guru-group-header,
@@ -2982,23 +3018,26 @@
 
     html:not([data-theme]) .party-info.guru-bg,
     [data-theme="light"] .party-info.guru-bg,
-    [data-theme="default"] .party-info.guru-bg {
+    [data-theme="default"] .party-info.guru-bg,
+    [data-theme="solar"] .party-info.guru-bg {
         background: #fef9c3 !important;
-        border: 1px solid #fde047 !important;
-        color: #854d0e !important;
+        border: 1px solid #f59e0b !important;
+        color: #451a03 !important;
     }
 
     html:not([data-theme]) .party-info.shani-bg,
     [data-theme="light"] .party-info.shani-bg,
-    [data-theme="default"] .party-info.shani-bg {
+    [data-theme="default"] .party-info.shani-bg,
+    [data-theme="solar"] .party-info.shani-bg {
         background: #dbeafe !important;
-        border: 1px solid #93c5fd !important;
+        border: 1px solid #3b82f6 !important;
         color: #1e3a8a !important;
     }
 
     html:not([data-theme]) .party-info *,
     [data-theme="light"] .party-info *,
-    [data-theme="default"] .party-info * {
+    [data-theme="default"] .party-info *,
+    [data-theme="solar"] .party-info * {
         color: inherit !important;
     }
 
@@ -3166,10 +3205,9 @@
     [data-theme="default"] .planet-name[style*="#F0F8FF"],
     [data-theme="default"] .planet-name[style*="#ffffff"],
     [data-theme="default"] .planet-name[style*="rgb(255, 255, 255)"],
-    [data-theme="solar"] .planet-name[style*="#F0F8FF"],
-    [data-theme="solar"] .planet-name[style*="#ffffff"],
-    [data-theme="solar"] .planet-name[style*="rgb(255, 255, 255)"] {
-        color: #2563eb !important;
+    [data-theme="solar"] .planet-name,
+    [data-theme="solar"] .planet-name span {
+        color: #291303 !important;
     }
 
     /* Dark theme planet name contrast adjustments for dark colors */

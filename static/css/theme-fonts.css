@@ -22,10 +22,10 @@
 
 /* Solar Amber Theme (Bright Mode) */
 [data-theme="solar"], html[data-theme="solar"], body[data-theme="solar"] {
-  --font-te: 'Tenali Ramakrishna', 'Noto Sans Telugu', 'Noto Sans Kannada', 'Rajdhani', sans-serif !important;
-  --font-en: 'Outfit', 'Poppins', sans-serif !important;
-  --font-hi: 'Rajdhani', 'Noto Sans Devanagari', sans-serif !important;
-  --font-kn: 'Noto Sans Kannada', sans-serif !important;
+  --font-te: 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', 'Noto Serif Kannada', 'Noto Serif Devanagari', 'Noto Serif Tamil', serif !important;
+  --font-en: 'Philosopher', 'Playfair Display', serif !important;
+  --font-hi: 'Rozha One', 'Noto Serif Devanagari', serif !important;
+  --font-kn: 'Noto Serif Kannada', serif !important;
 }
 
 /* Fix Theme Switcher expansion to fit Solar Amber & Cosmic Mode cleanly */
@@ -164,7 +164,7 @@ html, body, p, span, div, td, th, label, button, input, select, textarea, li, a,
 
 /* Specific Theme Font Targets for Calendar Elements */
 [data-theme="cosmic"] .cal-cell *, [data-theme="cosmic"] .date-number, [data-theme="cosmic"] .tithi-text, [data-theme="cosmic"] .nakshatra-text, [data-theme="cosmic"] .header-masam { font-family: 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif !important; }
-[data-theme="solar"] .cal-cell *, [data-theme="solar"] .date-number, [data-theme="solar"] .tithi-text, [data-theme="solar"] .nakshatra-text, [data-theme="solar"] .header-masam { font-family: 'Tenali Ramakrishna', 'Noto Sans Telugu', sans-serif !important; }
+[data-theme="solar"] .cal-cell *, [data-theme="solar"] .date-number, [data-theme="solar"] .tithi-text, [data-theme="solar"] .nakshatra-text, [data-theme="solar"] .header-masam { font-family: 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif !important; }
 
 html[lang="en"] body, html[lang="en"] p, html[lang="en"] span, html[lang="en"] div, html[lang="en"] td, html[lang="en"] th, html[lang="en"] label, html[lang="en"] button, html[lang="en"] input, html[lang="en"] select, html[lang="en"] textarea, html[lang="en"] li, html[lang="en"] a { font-family: var(--font-en) !important; }
 html[lang="hi"] body, html[lang="hi"] p, html[lang="hi"] span, html[lang="hi"] div, html[lang="hi"] td, html[lang="hi"] th, html[lang="hi"] label, html[lang="hi"] button, html[lang="hi"] input, html[lang="hi"] select, html[lang="hi"] textarea, html[lang="hi"] li, html[lang="hi"] a { font-family: var(--font-hi) !important; }
