@@ -3812,6 +3812,28 @@
         color: #991b1b !important;
     }
 
+    /* Rulership data text (ఆధీనములో ఉన్నవి: value): White in dark themes, Black in light themes */
+    html body .result-card .info-row.rulership-row .val,
+    html body .result-card.friendly-card .info-row.rulership-row .val,
+    html body .result-card.enemy-card .info-row.rulership-row .val {
+        color: #ffffff !important;
+    }
+
+    [data-theme="solar"] body .result-card .info-row.rulership-row .val,
+    [data-theme="solar"] body .result-card.friendly-card .info-row.rulership-row .val,
+    [data-theme="solar"] body .result-card.enemy-card .info-row.rulership-row .val,
+    [data-theme="light"] body .result-card .info-row.rulership-row .val,
+    [data-theme="light"] body .result-card.friendly-card .info-row.rulership-row .val,
+    [data-theme="light"] body .result-card.enemy-card .info-row.rulership-row .val,
+    [data-theme="default"] body .result-card .info-row.rulership-row .val,
+    [data-theme="default"] body .result-card.friendly-card .info-row.rulership-row .val,
+    [data-theme="default"] body .result-card.enemy-card .info-row.rulership-row .val,
+    html:not([data-theme]) body .result-card .info-row.rulership-row .val,
+    html:not([data-theme]) body .result-card.friendly-card .info-row.rulership-row .val,
+    html:not([data-theme]) body .result-card.enemy-card .info-row.rulership-row .val {
+        color: #000000 !important;
+    }
+
 </style>
   <link rel="stylesheet" href="/static/css/theme-fonts.css">
 <style>
@@ -4625,7 +4647,7 @@ body {
                             <span class="val own-val">{{ r.own_house }}</span>
                         </div>
                     </div>
-                    <div class="info-row" style="flex-direction: column; align-items: flex-start;">
+                    <div class="info-row rulership-row" style="flex-direction: column; align-items: flex-start;">
                         <span class="label">{{ _('ఆధీనములో ఉన్నవి:') }}</span>
                         <span class="val" style="font-size: 12px; margin-top: 5px;">{{ r.rulership }}</span>
                     </div>
@@ -4675,7 +4697,7 @@ body {
                             <span class="val own-val">{{ r.own_house }}</span>
                         </div>
                     </div>
-                    <div class="info-row" style="flex-direction: column; align-items: flex-start;">
+                    <div class="info-row rulership-row" style="flex-direction: column; align-items: flex-start;">
                         <span class="label">{{ _('ఆధీనములో ఉన్నవి:') }}</span>
                         <span class="val" style="font-size: 12px; margin-top: 5px;">{{ r.rulership }}</span>
                     </div>
