@@ -62,7 +62,7 @@
   border: 1px solid #ffd700 !important;
 }
 
-/* Reduced & Compact Input Box Sizes */
+/* Clear & Readable Input Box Sizes */
 input[type="text"],
 input[type="number"],
 input[type="date"],
@@ -75,9 +75,10 @@ textarea,
 .form-control {
   padding: 10px 14px 10px 42px !important;
   border-radius: 10px !important;
-  font-size: 14px !important;
-  min-height: 40px !important;
-  max-height: 44px !important;
+  font-size: 16.5px !important;
+  font-weight: 600 !important;
+  min-height: 44px !important;
+  max-height: 48px !important;
 }
 
 .input-container input {
@@ -681,26 +682,34 @@ button, input, select, textarea, h1, h2, h3, h4, h5, h6, table, th, td {
 [data-theme="cosmic"] .nav-item:nth-child(4) { background: linear-gradient(135deg, #be123c 0%, #881337 100%) !important; color: #ffffff !important; }
 
 /* --- 3. Solar Amber Theme (Bright) --- */
-[data-theme="solar"] .btn-submit, [data-theme="solar"] .btn-show, [data-theme="solar"] #mainForm button[type="submit"] {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(253, 230, 138, 0.4) !important;
+[data-theme="solar"] .btn-show {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(254, 215, 170, 0.5) !important;
+}
+[data-theme="solar"] .btn-save-show {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(187, 247, 208, 0.5) !important;
 }
 [data-theme="solar"] .btn-location, [data-theme="solar"] #btn-get-location {
-  background: linear-gradient(135deg, #eab308 0%, #a16207 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(254, 240, 138, 0.4) !important;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(167, 243, 208, 0.45) !important;
 }
 [data-theme="solar"] .btn-clear, [data-theme="solar"] #btn-clear {
-  background: linear-gradient(135deg, #c2410c 0%, #7c2d12 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(254, 215, 170, 0.4) !important;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(191, 219, 254, 0.45) !important;
 }
 [data-theme="solar"] .expand-all-btn {
-  background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important;
-  color: #ffffff !important; border: 1px solid rgba(253, 230, 138, 0.4) !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+  color: #ffffff !important; border: 1px solid rgba(221, 214, 254, 0.45) !important;
 }
-[data-theme="solar"] .nav-item:nth-child(1) { background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important; color: #ffffff !important; }
-[data-theme="solar"] .nav-item:nth-child(2) { background: linear-gradient(135deg, #a16207 0%, #713f12 100%) !important; color: #ffffff !important; }
-[data-theme="solar"] .nav-item:nth-child(3) { background: linear-gradient(135deg, #9a3412 0%, #7c2d12 100%) !important; color: #ffffff !important; }
-[data-theme="solar"] .nav-item:nth-child(4) { background: linear-gradient(135deg, #7c2d12 0%, #451a03 100%) !important; color: #ffffff !important; }
+[data-theme="solar"] .nav-item:nth-child(1) { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important; color: #ffffff !important; }
+[data-theme="solar"] .nav-item:nth-child(2) { background: linear-gradient(135deg, #059669 0%, #047857 100%) !important; color: #ffffff !important; }
+[data-theme="solar"] .nav-item:nth-child(3) { background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important; color: #ffffff !important; }
+[data-theme="solar"] .nav-item:nth-child(4) { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important; color: #ffffff !important; }
+[data-theme="solar"] .nav-item:nth-child(5),
+[data-theme="solar"] .nav-theme { background: linear-gradient(135deg, #db2777 0%, #9d174d 100%) !important; color: #ffffff !important; }
+[data-theme="solar"] .nav-item:nth-child(6),
+[data-theme="solar"] .nav-lang { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important; color: #ffffff !important; }
 
 /* ==========================================
    GLOBAL PDF / PRINT DISPLAY RULES
@@ -897,16 +906,22 @@ body.mobile-pdf-rendering #loading-overlay {
 
 /* 3. Solar Amber Mode (Bright) */
 [data-theme="solar"] .nav-home, [data-theme="solar"] .nav-item:nth-child(1) {
-  background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
 }
 [data-theme="solar"] .nav-compare, [data-theme="solar"] .nav-item:nth-child(2) {
-  background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%) !important;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
 }
 [data-theme="solar"] .nav-panch, [data-theme="solar"] .nav-item:nth-child(3) {
-  background: linear-gradient(135deg, #a16207 0%, #713f12 100%) !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
 }
 [data-theme="solar"] .nav-cal, [data-theme="solar"] .nav-dasa, [data-theme="solar"] .nav-item:nth-child(4) {
-  background: linear-gradient(135deg, #9a3412 0%, #7c2d12 100%) !important;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+}
+[data-theme="solar"] .nav-theme, [data-theme="solar"] .nav-item:nth-child(5) {
+  background: linear-gradient(135deg, #db2777 0%, #9d174d 100%) !important;
+}
+[data-theme="solar"] .nav-lang, [data-theme="solar"] .nav-item:nth-child(6) {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
 }
 
 /* ===== UNIFIED FLOATING GOLDEN BOTTOM NAVIGATION BAR (6 PILLS & 4 PILLS) ===== */
