@@ -4517,7 +4517,12 @@ body {
 
     </div>
 
-
+    <!-- Prabodha Tharangaalu Random Non-Repeating Scrolling Quote Bar -->
+    <div id="prabodha-quote-ticker" class="prabodha-quote-ticker print-hide" aria-live="polite" style="display: none;">
+      <div class="prabodha-quote-viewport" id="prabodha-quote-viewport">
+        <span id="prabodha-quote-track" class="prabodha-quote-track"><span class="prabodha-quote-label">{{ _('ప్రబోధ తరంగాలు:') }}</span> <span id="prabodha-quote-text"></span></span>
+      </div>
+    </div>
 
   </div>
 
@@ -7947,8 +7952,91 @@ body {
     }
 
     @media print {
-      .fixed-bottom-bar-nav {
+      .fixed-bottom-bar-nav,
+      .prabodha-quote-ticker {
         display: none !important;
+      }
+    }
+
+    /* Prabodha Tharangaalu Random Scrolling Quote Bar */
+    .prabodha-quote-ticker {
+      width: 100%;
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      box-sizing: border-box;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1.5px solid rgba(251, 191, 36, 0.45);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38);
+      color: #fef3c7;
+      cursor: pointer;
+    }
+
+    [data-theme="solar"] .prabodha-quote-ticker {
+      background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 50%, #fffbeb 100%);
+      border: 1.5px solid rgba(217, 119, 6, 0.48);
+      box-shadow: 0 6px 20px rgba(180, 83, 9, 0.14);
+      color: #451a03;
+    }
+
+    .prabodha-quote-label {
+      font-weight: 800;
+      margin-right: 4px;
+      color: #fbbf24;
+    }
+
+    [data-theme="solar"] .prabodha-quote-label {
+      color: #b45309;
+    }
+
+    .prabodha-quote-viewport {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .prabodha-quote-track {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.45;
+      will-change: transform;
+      animation: prabodha-marquee var(--pq-duration, 18s) linear infinite;
+    }
+
+    .prabodha-quote-ticker:hover .prabodha-quote-track,
+    .prabodha-quote-ticker.paused .prabodha-quote-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes prabodha-marquee {
+      0% {
+        transform: translateX(var(--pq-start, 100%));
+      }
+      100% {
+        transform: translateX(var(--pq-end, -100%));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .prabodha-quote-ticker {
+        margin-top: 10px;
+        padding: 8px 10px;
+        gap: 8px;
+        border-radius: 13px;
+      }
+      .prabodha-quote-label {
+        font-size: 13px;
+      }
+      .prabodha-quote-track {
+        font-size: 13.5px;
       }
     }
 
@@ -9024,6 +9112,130 @@ if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversa
             console.warn('Audio play error:', e);
         }
     };
+})();
+</script>
+
+<script>
+(function initPrabodhaQuoteTicker() {
+    var STORAGE_KEY = 'prabodha_quote_deck_v1';
+    var ACTIVE_LANG = "{{ current_lang if current_lang else 'te' }}";
+    var SUPPORTED_LANGS = ['en', 'hi', 'kn', 'ta', 'ml', 'or'];
+    var DATA_URL = (SUPPORTED_LANGS.indexOf(ACTIVE_LANG) !== -1)
+        ? ('/static/data/prabodha_quotes_' + ACTIVE_LANG + '.json')
+        : '/static/data/prabodha_quotes.json';
+    var FALLBACK_URL = '/static/data/prabodha_quotes.json';
+
+    function shuffleArray(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+        return arr;
+    }
+
+    function drawNonRepeatingQuote(quotes) {
+        var total = quotes.length;
+        var state = null;
+        try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                state = JSON.parse(raw);
+            }
+        } catch (e) {
+            state = null;
+        }
+
+        var lastId = (state && typeof state.lastId === 'number') ? state.lastId : null;
+        var remaining = (state && Array.isArray(state.remaining)) ? state.remaining.filter(function(idx) {
+            return Number.isInteger(idx) && idx >= 0 && idx < total;
+        }) : [];
+
+        if (remaining.length === 0) {
+            remaining = new Array(total);
+            for (var k = 0; k < total; k++) {
+                remaining[k] = k;
+            }
+            shuffleArray(remaining);
+            if (lastId !== null && total > 1 && quotes[remaining[remaining.length - 1]].id === lastId) {
+                var swapTmp = remaining[0];
+                remaining[0] = remaining[remaining.length - 1];
+                remaining[remaining.length - 1] = swapTmp;
+            }
+        }
+
+        var pickedIdx = remaining.pop();
+        var pickedQuote = quotes[pickedIdx];
+
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                remaining: remaining,
+                lastId: pickedQuote.id
+            }));
+        } catch (e) {}
+
+        return pickedQuote;
+    }
+
+    function updateMarqueeMetrics() {
+        var viewport = document.getElementById('prabodha-quote-viewport');
+        var track = document.getElementById('prabodha-quote-track');
+        if (!viewport || !track) return;
+        var vw = viewport.clientWidth || 300;
+        var tw = track.scrollWidth || 300;
+        var duration = Math.max(12, (vw + tw) / 58);
+        track.style.setProperty('--pq-start', vw + 'px');
+        track.style.setProperty('--pq-end', (-tw) + 'px');
+        track.style.setProperty('--pq-duration', duration.toFixed(2) + 's');
+    }
+
+    function renderQuote(quote) {
+        var ticker = document.getElementById('prabodha-quote-ticker');
+        var textEl = document.getElementById('prabodha-quote-text');
+        if (!ticker || !textEl || !quote) return;
+
+        textEl.textContent = quote.text;
+        ticker.setAttribute('data-quote-id', String(quote.id));
+        ticker.style.display = 'flex';
+        ticker.onclick = function() {
+            ticker.classList.toggle('paused');
+        };
+
+        requestAnimationFrame(updateMarqueeMetrics);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(updateMarqueeMetrics);
+        }
+    }
+
+    function fetchQuotes(url) {
+        return fetch(url, { cache: 'no-store' }).then(function(resp) {
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            return resp.json();
+        });
+    }
+
+    function loadAndShow() {
+        fetchQuotes(DATA_URL)
+            .catch(function() {
+                return (DATA_URL !== FALLBACK_URL) ? fetchQuotes(FALLBACK_URL) : Promise.reject(new Error('No fallback'));
+            })
+            .then(function(quotes) {
+                if (!Array.isArray(quotes) || quotes.length === 0) return;
+                var picked = drawNonRepeatingQuote(quotes);
+                renderQuote(picked);
+            })
+            .catch(function(err) {
+                console.warn('Prabodha quotes load error:', err);
+            });
+    }
+
+    window.addEventListener('resize', updateMarqueeMetrics);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadAndShow);
+    } else {
+        loadAndShow();
+    }
 })();
 </script>
 

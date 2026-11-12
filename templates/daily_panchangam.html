@@ -328,8 +328,62 @@
     }
 
     [data-theme="solar"] .lagna-name-c {
-      background: linear-gradient(135deg, #7c2d12, #9a3412) !important;
-      color: #fef3c7 !important;
+      background: transparent !important;
+      color: #7c2d12 !important;
+      font-weight: 700 !important;
+    }
+
+    [data-theme="solar"] .chart-c {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    [data-theme="solar"] .box-c {
+      background: transparent !important;
+      color: #111827 !important;
+      font-weight: 600;
+    }
+
+    [data-theme="solar"] .box-c b {
+      color: #000000 !important;
+    }
+
+    [data-theme="solar"] .box-c small {
+      color: #374151 !important;
+      font-weight: 600;
+    }
+
+    [data-theme="solar"] .box-c span[style*="255,255,255"],
+    [data-theme="solar"] .box-c span[style*="255, 255, 255"] {
+      color: #4b5563 !important;
+      font-weight: 600 !important;
+    }
+
+    [data-theme="solar"] .center-c {
+      color: #7c2d12 !important;
+      text-shadow: none !important;
+      border-color: rgba(180, 83, 9, 0.35) !important;
+    }
+
+    [data-theme="solar"] .house-no-c {
+      color: #7c2d12 !important;
+    }
+
+    [data-theme="solar"] .section-title {
+      color: #7c2d12 !important;
+    }
+
+    [data-theme="solar"] .lagna-c,
+    [data-theme="solar"] .box-c.lagna-c {
+      box-shadow: 0 0 12px rgba(217, 119, 6, 0.35) !important;
+    }
+
+    [data-theme="solar"] .result-icon i[style*="#e0e0e0"] {
+      color: #b45309 !important;
+    }
+
+    [data-theme="solar"] .btn {
+      color: var(--btn-show-text) !important;
     }
 
     /* 🪔 Royal Mandala — Indian heritage: saffron, crimson & gold */
@@ -616,21 +670,21 @@
 
             border-radius: 24px;
 
-            padding: 32px;
+            padding: 18px 24px;
 
             border: 1px solid var(--card-border);
 
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
 
-            margin-bottom: 20px;
+            margin-bottom: 14px;
 
         }
 
-        .header { text-align: center; margin-bottom: 20px; }
+        .header { text-align: center; margin-bottom: 10px; }
 
         .header h2 {
 
-            font-size: 28px;
+            font-size: 26px;
 
             background: var(--header-bg);
 
@@ -640,7 +694,7 @@
 
             -webkit-text-fill-color: transparent;
 
-            margin-bottom: 8px;
+            margin-bottom: 2px;
 
         }
 
@@ -650,17 +704,17 @@
 
             grid-template-columns: repeat(2, 1fr);
 
-            gap: 20px;
+            gap: 10px 16px;
 
-            margin-bottom: 20px;
+            margin-bottom: 8px;
 
         }
 
-        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-muted); }
+        label { display: block; margin-bottom: 4px; font-size: 13.5px; font-weight: 600; color: var(--text-muted); }
 
         .input-container { position: relative; }
 
-        .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
 
         input {
 
@@ -674,21 +728,21 @@
 
             appearance: none;
 
-            padding: 14px 14px 14px 44px;
+            padding: 10px 12px 10px 40px;
 
             border-radius: 12px; border: 2px solid var(--input-border);
 
-            background: var(--input-bg); color: var(--text-main); font-size: 16px;
+            background: var(--input-bg); color: var(--text-main); font-size: 15px;
 
         }
 
-        .btn-container { margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .btn-container { margin-top: 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 
         .btn {
 
-            padding: 14px 24px; border-radius: 12px; border: none; font-size: 16px;
+            padding: 10px 22px; border-radius: 12px; border: none; font-size: 15px;
 
-            font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;
 
             background: var(--btn-show-bg); color: #111;
 
@@ -696,7 +750,7 @@
 
         .btn-locate {
 
-            padding: 14px 20px; border-radius: 12px; border: 1px solid rgba(102,126,234,0.5); font-size: 15px;
+            padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(102,126,234,0.5); font-size: 14px;
 
             font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;
 
@@ -710,11 +764,13 @@
 
         #geo-status {
 
-            text-align: center; margin-top: 12px; font-size: 13px; color: #a0a0ff;
+            text-align: center; margin-top: 6px; font-size: 13px; color: #a0a0ff;
 
-            min-height: 20px; transition: all 0.3s ease;
+            min-height: 0; transition: all 0.3s ease;
 
         }
+
+        #geo-status:empty { display: none; }
 
         #geo-status.error { color: #fca5a5; }
 
@@ -722,9 +778,9 @@
 
         .panchangam-result {
 
-            margin-top: 30px;
+            margin-top: 14px;
 
-            padding-top: 20px;
+            padding-top: 12px;
 
             border-top: 1px solid var(--card-border);
 
@@ -1037,11 +1093,11 @@
 
             body { padding: 10px; padding-bottom: 90px; }
 
-            .card { padding: 15px; margin-bottom: 10px; }
+            .card { padding: 12px; margin-bottom: 10px; }
 
-            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            .form-grid { grid-template-columns: 1fr; gap: 8px; }
 
-            .panchangam-result { grid-template-columns: 1fr; gap: 10px; margin-top: 15px; padding-top: 15px; }
+            .panchangam-result { grid-template-columns: 1fr; gap: 10px; margin-top: 10px; padding-top: 10px; }
 
             .panchangam-result > div { min-width: 0; }
 
@@ -2092,15 +2148,15 @@ body {
                         <input type="hidden" id="inp-lat" name="lat" value="{{ lat }}">
                         <input type="hidden" id="inp-lon" name="lon" value="{{ lon }}">
 
-                        <div class="location-buttons" style="display: flex; gap: 10px; margin-top: 8px;">
+                        <div class="location-buttons" style="display: flex; gap: 8px; margin-top: 6px;">
 
-                          <button type="button" class="location-btn" onclick="detectLocation()" style="flex: 1; padding: 8px 12px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); color: var(--text-main); border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                          <button type="button" class="location-btn" onclick="detectLocation()" style="flex: 1; padding: 6px 10px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); color: var(--text-main); border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
 
                             <i class="fas fa-location-crosshairs"></i> {{ _('ప్రస్తుత స్థానం') }}
 
                           </button>
 
-                          <button type="button" class="location-btn" onclick="clearPanchLocation()" style="flex: 1; padding: 8px 12px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: var(--text-main); border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                          <button type="button" class="location-btn" onclick="clearPanchLocation()" style="flex: 1; padding: 6px 10px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: var(--text-main); border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
 
                             <i class="fas fa-eraser"></i> {{ _('క్లియర్') }}
 
@@ -2126,9 +2182,9 @@ body {
 
             {% if panch %}
 
-            <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--card-border);"></div>
+            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--card-border);"></div>
 
-            <div class="panchangam-result" style="margin-top: 10px; padding-top: 0; border-top: none;">
+            <div class="panchangam-result" style="margin-top: 4px; padding-top: 0; border-top: none;">
 
                 <!-- Header Block centered -->
 
