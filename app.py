@@ -1168,6 +1168,86 @@ LOCAL_CITIES = [
     {"display_name": "Singapore", "lat": 1.3521, "lon": 103.8198, "country_code": "sg"}
 ]
 
+def _clean_place_part(text):
+    """Normalize OSM/Nominatim casing typos (e.g., TadIpatri -> Tadipatri) and extra whitespace."""
+    if not text:
+        return ""
+    cleaned_words = []
+    for idx, word in enumerate(str(text).split()):
+        if not word:
+            continue
+        # Fix accidental mid-word capitalization like 'TadIpatri' -> 'Tadipatri'
+        if any(c.islower() for c in word) and any(c.isupper() for c in word[1:]):
+            # Keep standard 'Mc...' surnames if any, otherwise lowercase stray internal capitals
+            if not (word.startswith("Mc") and len(word) > 3 and word[2].isupper() and word[3:].islower()):
+                word = word[0] + word[1:].lower()
+        elif word.isupper() and len(word) > 4:
+            word = word.capitalize()
+        elif word.islower():
+            if idx == 0 or word not in {"of", "and", "the", "in", "de", "la"}:
+                word = word.capitalize()
+        cleaned_words.append(word)
+    return " ".join(cleaned_words)
+
+
+def _format_nominatim_place(item):
+    """Format Nominatim address into a clean, consistent 'Place, [Area], District, State, Country' string."""
+    addr = item.get("address") or {}
+    raw_first = (item.get("display_name") or "").split(",")[0].strip()
+
+    settlement = _clean_place_part(
+        addr.get("village")
+        or addr.get("town")
+        or addr.get("city")
+        or addr.get("hamlet")
+        or addr.get("municipality")
+        or addr.get("suburb")
+        or addr.get("county")
+        or item.get("name")
+        or raw_first
+    )
+    county = _clean_place_part(addr.get("county") or "")
+    district = _clean_place_part(addr.get("state_district") or "")
+    state = _clean_place_part(addr.get("state") or "")
+    country = _clean_place_part(addr.get("country") or "")
+
+    # Strip urban/noise suffixes when matching redundancy
+    sett_low = settlement.lower()
+    parts = []
+    seen_parts = set()
+
+    def _add(part):
+        if not part:
+            return
+        low = part.lower()
+        if low in seen_parts:
+            return
+        seen_parts.add(low)
+        parts.append(part)
+
+    _add(settlement)
+    # Include county/mandal only if distinct and not just repeating the settlement name (e.g., avoid 'Tadipatri, Tadipatri Mandal')
+    if county:
+        c_low = county.lower()
+        if c_low != sett_low and not c_low.startswith(sett_low + " ") and c_low != (district.lower() if district else ""):
+            _add(county)
+    # Include district unless it simply repeats settlement/state (e.g., avoid 'Tirupati, Tirupati District')
+    if district:
+        d_low = district.lower()
+        if d_low != sett_low and not d_low.startswith(sett_low + " "):
+            _add(district)
+    if state and state.lower() != sett_low:
+        _add(state)
+    _add(country)
+
+    formatted = ", ".join([p for p in parts if p])
+    if formatted:
+        return formatted
+    # Fallback: clean comma-separated segments without postcode noise
+    raw_parts = [_clean_place_part(p) for p in (item.get("display_name") or "").split(",") if p.strip() and not p.strip().isdigit()]
+    return ", ".join(raw_parts)
+
+
 @app.route("/api/search_place")
 @app.route("/api/search_location")
 def api_search_place():
@@ -1202,7 +1282,10 @@ def api_search_place():
         url = f"https://nominatim.openstreetmap.org/search?format=json&limit=10&addressdetails=1&q={requests.utils.quote(q)}"
         if country and len(country) == 2 and country.isalpha():
             url += f"&countrycodes={requests.utils.quote(country)}"
-        headers = {"User-Agent": "RavanAstroApp/1.0 (info@ravanastro.com)"}
+        headers = {
+            "User-Agent": "RavanAstroApp/1.0 (info@ravanastro.com)",
+            "Accept-Language": "en"
+        }
         resp = requests.get(url, headers=headers, timeout=2.5)
         if resp.status_code == 200:
             for item in resp.json():
@@ -1210,8 +1293,8 @@ def api_search_place():
                 if country:
                     if not item_cc or item_cc != country:
                         continue
-                d_name = item.get("display_name", "")
-                if d_name.lower() not in seen:
+                d_name = _format_nominatim_place(item)
+                if d_name and d_name.lower() not in seen:
                     results.append({
                         "display_name": d_name,
                         "lat": float(item.get("lat", 0)),
@@ -1240,14 +1323,17 @@ def api_reverse_geocode():
 
     try:
         url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat_f}&lon={lon_f}&zoom=10&addressdetails=1"
-        headers = {"User-Agent": "RavanAstroApp/1.0 (info@ravanastro.com)"}
+        headers = {
+            "User-Agent": "RavanAstroApp/1.0 (info@ravanastro.com)",
+            "Accept-Language": "en"
+        }
         resp = requests.get(url, headers=headers, timeout=2.5)
         if resp.status_code == 200:
             data = resp.json()
             addr = data.get("address", {})
-            city = addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or ""
-            state = addr.get("state") or ""
-            country = addr.get("country") or ""
+            city = _clean_place_part(addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or "")
+            state = _clean_place_part(addr.get("state") or "")
+            country = _clean_place_part(addr.get("country") or "")
             country_code = (addr.get("country_code") or "").lower()
             place = ", ".join([p for p in [city, state, country] if p])
             if place:
