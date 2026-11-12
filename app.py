@@ -822,7 +822,7 @@ def log_user_to_github(name, dob, tob, place, mobile=None):
                         
                         # Update file
                         update_data = {
-                            "message": f"Log user data: {entry_name} (API)",
+                            "message": f"Log user data: {entry_name} (API) [skip ci]",
                             "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
                             "sha": sha
                         }
@@ -849,7 +849,7 @@ def log_user_to_github(name, dob, tob, place, mobile=None):
             try:
                 git_exec = GIT_PATH if os.path.exists(GIT_PATH) else "git"
                 subprocess.run([git_exec, "add", "user_data.txt"], check=True, capture_output=True, cwd=basedir)
-                subprocess.run([git_exec, "commit", "-m", f"Log new user data: {entry_name}"], capture_output=True, cwd=basedir)
+                subprocess.run([git_exec, "commit", "-m", f"Log new user data: {entry_name} [skip ci]"], capture_output=True, cwd=basedir)
                 subprocess.run([git_exec, "push"], check=True, capture_output=True, cwd=basedir)
                 print(f"Successfully pushed {entry_name} to GitHub via local Git.")
             except Exception as e:
