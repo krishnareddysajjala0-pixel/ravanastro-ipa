@@ -3109,45 +3109,74 @@ body {
     }
 
     function initCompareDefaultLocation() {
-        // 1. Immediately read cached device location from localStorage for Person 1 (like Home Page)
+        // 1. Immediately read cached device location from localStorage for BOTH Person 1 and Person 2
         try {
             const raw = localStorage.getItem('astro_device_location');
             if (raw) {
                 const sl = JSON.parse(raw);
                 if (sl.lat && sl.lon && sl.place) {
+                    const formattedLat = parseFloat(sl.lat).toFixed(4);
+                    const formattedLon = parseFloat(sl.lon).toFixed(4);
+                    const countryVal = sl.country_code ? sl.country_code.toLowerCase() : 'in';
+
+                    // Person 1
                     const p1 = document.getElementById('place1');
                     const lat1 = document.getElementById('lat1');
                     const lon1 = document.getElementById('lon1');
                     const c1 = document.getElementById('country1');
                     if (p1 && !p1.value) p1.value = sl.place;
-                    if (lat1 && !lat1.value) lat1.value = parseFloat(sl.lat).toFixed(4);
-                    if (lon1 && !lon1.value) lon1.value = parseFloat(sl.lon).toFixed(4);
-                    if (c1 && sl.country_code) c1.value = sl.country_code.toLowerCase();
+                    if (lat1 && !lat1.value) lat1.value = formattedLat;
+                    if (lon1 && !lon1.value) lon1.value = formattedLon;
+                    if (c1) c1.value = countryVal;
+
+                    // Person 2
+                    const p2 = document.getElementById('place2');
+                    const lat2 = document.getElementById('lat2');
+                    const lon2 = document.getElementById('lon2');
+                    const c2 = document.getElementById('country2');
+                    if (p2 && !p2.value) p2.value = sl.place;
+                    if (lat2 && !lat2.value) lat2.value = formattedLat;
+                    if (lon2 && !lon2.value) lon2.value = formattedLon;
+                    if (c2) c2.value = countryVal;
                 }
             }
         } catch(e) {}
 
-        // 2. Fetch server / device location if Person 1 is still empty
+        // 2. Fetch server / device location if either Person 1 or Person 2 is still empty
         const p1 = document.getElementById('place1');
         const lat1 = document.getElementById('lat1');
-        if (!p1 || !p1.value || !lat1 || !lat1.value) {
+        const p2 = document.getElementById('place2');
+        const lat2 = document.getElementById('lat2');
+        if (!p1 || !p1.value || !lat1 || !lat1.value || !p2 || !p2.value || !lat2 || !lat2.value) {
             fetch('/api/device_location')
                 .then(r => r.json())
                 .then(d => {
                     if (d && d.available && d.latitude && d.longitude) {
-                        const numLat = parseFloat(d.latitude);
-                        const numLon = parseFloat(d.longitude);
-                        if (lat1 && !lat1.value) lat1.value = numLat.toFixed(4);
-                        if (document.getElementById('lon1') && !document.getElementById('lon1').value) {
-                            document.getElementById('lon1').value = numLon.toFixed(4);
-                        }
-                        if (d.display_name && p1 && !p1.value) {
-                            p1.value = d.display_name;
-                        } else if (p1 && !p1.value) {
-                            reverseGeocode(numLat, numLon, function(placeName, countryCode) {
-                                if (placeName && p1 && !p1.value) p1.value = placeName;
-                                const c1 = document.getElementById('country1');
-                                if (c1 && countryCode) c1.value = countryCode;
+                        const numLat = parseFloat(d.latitude).toFixed(4);
+                        const numLon = parseFloat(d.longitude).toFixed(4);
+                        const lon1 = document.getElementById('lon1');
+                        const lon2 = document.getElementById('lon2');
+                        const c1 = document.getElementById('country1');
+                        const c2 = document.getElementById('country2');
+
+                        if (lat1 && !lat1.value) lat1.value = numLat;
+                        if (lon1 && !lon1.value) lon1.value = numLon;
+                        if (lat2 && !lat2.value) lat2.value = numLat;
+                        if (lon2 && !lon2.value) lon2.value = numLon;
+
+                        if (d.display_name) {
+                            if (p1 && !p1.value) p1.value = d.display_name;
+                            if (p2 && !p2.value) p2.value = d.display_name;
+                        } else {
+                            reverseGeocode(d.latitude, d.longitude, function(placeName, countryCode) {
+                                if (placeName) {
+                                    if (p1 && !p1.value) p1.value = placeName;
+                                    if (p2 && !p2.value) p2.value = placeName;
+                                }
+                                if (countryCode) {
+                                    if (c1) c1.value = countryCode;
+                                    if (c2) c2.value = countryCode;
+                                }
                             });
                         }
                     }
@@ -3155,25 +3184,45 @@ body {
                 .catch(() => {});
         }
 
-        // 3. Fast GPS check to keep device location accurate
+        // 3. Fast GPS check to keep device location accurate for both persons
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function(pos) {
                     const numLat = parseFloat(pos.coords.latitude);
                     const numLon = parseFloat(pos.coords.longitude);
-                    const curLat = parseFloat((document.getElementById('lat1') || {}).value);
-                    const curLon = parseFloat((document.getElementById('lon1') || {}).value);
-                    if (isNaN(curLat) || isNaN(curLon) || Math.abs(curLat - numLat) > 0.05 || Math.abs(curLon - numLon) > 0.05) {
+                    const curLat1 = parseFloat((document.getElementById('lat1') || {}).value);
+                    const curLon1 = parseFloat((document.getElementById('lon1') || {}).value);
+                    const curLat2 = parseFloat((document.getElementById('lat2') || {}).value);
+                    const curLon2 = parseFloat((document.getElementById('lon2') || {}).value);
+
+                    const p1NeedsUpdate = isNaN(curLat1) || isNaN(curLon1) || Math.abs(curLat1 - numLat) > 0.05 || Math.abs(curLon1 - numLon) > 0.05;
+                    const p2NeedsUpdate = isNaN(curLat2) || isNaN(curLon2) || Math.abs(curLat2 - numLat) > 0.05 || Math.abs(curLon2 - numLon) > 0.05;
+
+                    if (p1NeedsUpdate || p2NeedsUpdate) {
                         const lat1El = document.getElementById('lat1');
                         const lon1El = document.getElementById('lon1');
                         const p1El = document.getElementById('place1');
                         const c1El = document.getElementById('country1');
-                        if (lat1El) lat1El.value = numLat.toFixed(4);
-                        if (lon1El) lon1El.value = numLon.toFixed(4);
+
+                        const lat2El = document.getElementById('lat2');
+                        const lon2El = document.getElementById('lon2');
+                        const p2El = document.getElementById('place2');
+                        const c2El = document.getElementById('country2');
+
                         reverseGeocode(numLat, numLon, function(placeName, countryCode) {
-                            if (placeName && p1El) {
-                                p1El.value = placeName;
-                                if (c1El && countryCode) c1El.value = countryCode;
+                            if (placeName) {
+                                if (p1NeedsUpdate) {
+                                    if (lat1El) lat1El.value = numLat.toFixed(4);
+                                    if (lon1El) lon1El.value = numLon.toFixed(4);
+                                    if (p1El) p1El.value = placeName;
+                                    if (c1El && countryCode) c1El.value = countryCode;
+                                }
+                                if (p2NeedsUpdate) {
+                                    if (lat2El) lat2El.value = numLat.toFixed(4);
+                                    if (lon2El) lon2El.value = numLon.toFixed(4);
+                                    if (p2El) p2El.value = placeName;
+                                    if (c2El && countryCode) c2El.value = countryCode;
+                                }
                                 try {
                                     localStorage.setItem('astro_device_location', JSON.stringify({
                                         lat: numLat, lon: numLon, place: placeName, country_code: countryCode || 'in'
