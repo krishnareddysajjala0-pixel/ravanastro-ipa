@@ -2879,6 +2879,11 @@ def daily_panchangam():
         
     local_tz = pytz.timezone(timezone_str)
     try:
+        dt_parts = dob.split("-")
+        dob_display = f"{dt_parts[2]}-{dt_parts[1]}-{dt_parts[0]}" if len(dt_parts) == 3 else dob
+    except Exception:
+        dob_display = dob
+    try:
         local_dt = local_tz.localize(datetime.datetime.strptime(dob+" "+tob,"%Y-%m-%d %H:%M"))
     except Exception:
         local_dt = datetime.datetime.now(local_tz)
@@ -3109,7 +3114,7 @@ def daily_panchangam():
     
     return render_template(
         "daily_panchangam.html",
-        dob=dob, tob=tob, place=place, lat=lat, lon=lon,
+        dob=dob, dob_display=dob_display, tob=tob, place=place, lat=lat, lon=lon,
         panch=panch_data
     )
 

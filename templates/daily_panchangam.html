@@ -1928,9 +1928,9 @@ body {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
     padding: 4px 1px !important;
     margin: 0 !important;
     flex: 1 1 100% !important;
@@ -1954,14 +1954,12 @@ body {
   }
 
   .fixed-bottom-bar-nav .nav-item i {
-    font-size: 14px !important;
-    height: 15px !important;
-    line-height: 15px !important;
+    font-size: 15px !important;
+    height: 16px !important;
+    line-height: 16px !important;
     width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
+    display: block !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     flex-shrink: 0 !important;
     text-align: center !important;
@@ -1969,9 +1967,9 @@ body {
 
   .fixed-bottom-bar-nav .nav-item span {
     font-size: 9.5px !important;
-    line-height: 1.15 !important;
-    height: 13px !important;
-    max-height: 13px !important;
+    line-height: 1.25 !important;
+    height: 14px !important;
+    max-height: 14px !important;
     width: 100% !important;
     max-width: 100% !important;
     white-space: nowrap !important;
@@ -2010,11 +2008,11 @@ body {
 
   .fixed-bottom-bar-nav .nav-item,
   .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item {
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 50px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 52px !important;
     padding: 3px 1px !important;
-    gap: 2.5px !important;
+    gap: 2px !important;
     border-radius: 10px !important;
   }
 
@@ -2026,22 +2024,21 @@ body {
   }
 
   .fixed-bottom-bar-nav .nav-item i {
-    font-size: 13px !important;
-    height: 14px !important;
-    line-height: 14px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
+    font-size: 14px !important;
+    height: 15px !important;
+    line-height: 15px !important;
+    display: block !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     flex-shrink: 0 !important;
+    text-align: center !important;
   }
 
   .fixed-bottom-bar-nav .nav-item span {
     font-size: 8.5px !important;
-    height: 12px !important;
-    max-height: 12px !important;
-    line-height: 1.15 !important;
+    height: 13px !important;
+    max-height: 13px !important;
+    line-height: 1.2 !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
@@ -2079,137 +2076,11 @@ body {
     </div>
 
     <script>
-
-        function setTheme(theme) {
-
-            const activeTheme = (theme === 'solar' || theme === 'cosmic') ? theme : 'solar';
-
-            document.documentElement.setAttribute('data-theme', activeTheme);
-
-            localStorage.setItem('preferred-theme-v3', activeTheme);
-      localStorage.setItem('preferred-theme-v2', activeTheme);
-    localStorage.setItem('preferred-theme', activeTheme);
-
-        }
-
-
-
-        function playLoadingSound() {
-
-            try {
-
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-                let time = audioCtx.currentTime;
-
-                for(let i = 0; i < 6; i++) {
-
-                    const osc = audioCtx.createOscillator();
-
-                    const gain = audioCtx.createGain();
-
-                    osc.type = i % 2 === 0 ? 'sine' : 'triangle';
-
-                    osc.frequency.setValueAtTime(440 + (i * 80), time);
-
-                    gain.gain.setValueAtTime(0, time);
-
-                    gain.gain.linearRampToValueAtTime(0.04, time + 0.05);
-
-                    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.3);
-
-                    osc.connect(gain);
-
-                    gain.connect(audioCtx.destination);
-
-                    osc.start(time);
-
-                    osc.stop(time + 0.4);
-
-                    time += 0.25;
-
-                }
-
-            } catch (e) {}
-
-        }
-
-
-
-        function startTyping() {
-
-            const element = document.getElementById("typing-text");
-
-            if (!element) return;
-
-            element.innerHTML = '{{ _('గణన చేస్తోంది') }}';
-
-        }
-
-
-
-        function showLoader() {
-
-            playLoadingSound();
-
-            const overlay = document.getElementById('loading-overlay');
-
-            if (overlay) overlay.style.display = 'flex';
-
-            startTyping();
-
-        }
-
-        
-
-        // Navigation auto-loader
-
-        document.querySelectorAll('.nav-item').forEach(item => {
-
-            item.addEventListener('click', function(e) {
-
-                if(!this.href.includes('#')) showLoader();
-
-            });
-
-        });
-
-
-
-        // Form submission loader
-
-        const panchForm = document.getElementById('panch-form');
-
-        if(panchForm) {
-
-            panchForm.addEventListener('submit', function() {
-
-                showLoader();
-
-            });
-
-        }
-
-
-
-        // Initialize theme
-
         (function () {
-
             const rawSavedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
             const savedTheme = (rawSavedTheme === 'solar' || rawSavedTheme === 'cosmic') ? rawSavedTheme : 'solar';
-
             document.documentElement.setAttribute('data-theme', savedTheme);
-            localStorage.setItem('preferred-theme-v3', savedTheme);
-      localStorage.setItem('preferred-theme-v2', savedTheme);
-            localStorage.setItem('preferred-theme', savedTheme);
-
-            
-
-            
-
         })();
-
     </script>
 
 
@@ -2240,10 +2111,10 @@ body {
                             <i class="fas fa-calendar-day input-icon"></i>
                             <div class="hybrid-dt-wrap">
                                 <input type="hidden" id="inp-dob" name="dob" value="{{ dob }}">
-                                <input type="text" id="inp-dob-text" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="DD-MM-YYYY" aria-label="{{ _('తేది') }}" required>
+                                <input type="text" id="inp-dob-text" inputmode="numeric" maxlength="10" autocomplete="off" value="{{ dob_display }}" placeholder="DD-MM-YYYY" aria-label="{{ _('తేది') }}" required>
                                 <button type="button" class="picker-trigger-btn" title="{{ _('క్యాలెండర్ నుండి ఎంచుకోండి') }}" aria-label="{{ _('క్యాలెండర్') }}">
                                     <i class="fas fa-calendar-alt"></i>
-                                    <input type="date" id="inp-dob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true">
+                                    <input type="date" id="inp-dob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true" value="{{ dob }}">
                                 </button>
                             </div>
                         </div>
@@ -2255,10 +2126,10 @@ body {
                             <i class="fas fa-clock input-icon"></i>
                             <div class="hybrid-dt-wrap">
                                 <input type="hidden" id="inp-tob" name="tob" value="{{ tob }}">
-                                <input type="text" id="inp-tob-text" inputmode="numeric" maxlength="5" autocomplete="off" placeholder="HH:MM" aria-label="{{ _('సమయం') }}" required>
+                                <input type="text" id="inp-tob-text" inputmode="numeric" maxlength="5" autocomplete="off" value="{{ tob }}" placeholder="HH:MM" aria-label="{{ _('సమయం') }}" required>
                                 <button type="button" class="picker-trigger-btn" title="{{ _('గడియారం నుండి ఎంచుకోండి') }}" aria-label="{{ _('సమయం') }}">
                                     <i class="fas fa-clock"></i>
-                                    <input type="time" id="inp-tob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true">
+                                    <input type="time" id="inp-tob-picker" class="picker-overlay" tabindex="-1" aria-hidden="true" value="{{ tob }}">
                                 </button>
                             </div>
                         </div>
@@ -2659,7 +2530,19 @@ body {
             <span>{{ _('క్యాలెండర్') }}</span>
         </a>
 
-        <!-- 5. భాష (Drop-up) -->
+        <!-- 5. థీమ్ (Drop-up) -->
+        <div class="theme-switcher nav-dropdown-wrapper" id="theme-switcher-container">
+            <button type="button" class="nav-item nav-theme" onclick="toggleThemeMenu(event)" title="{{ _('థీమ్') }}">
+                <i class="fas fa-palette"></i>
+                <span>{{ _('థీమ్') }}</span>
+            </button>
+            <div class="theme-options drop-up-popup" id="theme-options-dropdown">
+                <button type="button" class="theme-btn" data-theme-btn="solar" onclick="setTheme('solar')" title="Light Mode"><i class="fas fa-sun"></i> <span>Light</span></button>
+                <button type="button" class="theme-btn" data-theme-btn="cosmic" onclick="setTheme('cosmic')" title="Dark Mode"><i class="fas fa-moon"></i> <span>Dark</span></button>
+            </div>
+        </div>
+
+        <!-- 6. భాష (Drop-up) -->
         <div class="language-switcher nav-dropdown-wrapper" id="language-switcher-container">
             <button type="button" class="nav-item nav-lang" onclick="toggleLangMenu(event)" title="{{ _('భాష') }}">
                 <i class="fas fa-globe"></i>
@@ -2837,15 +2720,22 @@ body {
 
         function clearPanchLocation() {
             sessionStorage.removeItem('panch_auto_detected');
-            document.getElementById('inp-lat').value = '';
-            document.getElementById('inp-lon').value = '';
-            document.getElementById('inp-place').value = '';
+            const latEl = document.getElementById('inp-lat');
+            const lonEl = document.getElementById('inp-lon');
+            const pi = document.getElementById('inp-place');
+            if (latEl) latEl.value = '';
+            if (lonEl) lonEl.value = '';
+            if (pi) {
+                pi.value = '';
+                pi.focus();
+            }
             const cs = document.getElementById('inp-country');
             if (cs) cs.value = 'in';
             const sg = document.getElementById('panch-suggestions');
             if (sg) { sg.innerHTML = ''; sg.style.display = 'none'; }
             setGeoStatus('', '');
         }
+        window.clearPanchLocation = clearPanchLocation;
 
         function handlePositionSuccess(pos) {
             const lat = pos.coords.latitude;
@@ -2902,6 +2792,7 @@ body {
                 { timeout: 8000, maximumAge: 60000, enableHighAccuracy: true }
             );
         }
+        window.detectLocation = detectLocation;
 
         // Auto-detect device location on load ONCE (prevent reload loop)
         (function autoDetectOnPanchangamLoad() {
@@ -3072,6 +2963,12 @@ body {
 
             bindHybridField('inp-dob', 'inp-dob-text', 'inp-dob-picker', dateConfig);
             bindHybridField('inp-tob', 'inp-tob-text', 'inp-tob-picker', timeConfig);
+
+            const dobEl = document.getElementById('inp-dob');
+            const tobEl = document.getElementById('inp-tob');
+            if ((dobEl && !dobEl.value) || (tobEl && !tobEl.value)) {
+                fillCurrentDateTime();
+            }
         })();
 
         // Place input autocomplete suggestions
@@ -3112,6 +3009,7 @@ body {
                                 div.innerHTML = `<div style="font-weight:600; color:#ffd700;">${p.display_name.split(',')[0]}</div><div style="font-size:11px; color:#cbd5e1;">${p.display_name.split(',').slice(1).join(',').trim()}</div>`;
                                 div.onmouseover = () => { div.style.background = 'rgba(255,215,0,0.15)'; };
                                 div.onmouseout = () => { div.style.background = 'transparent'; };
+                                div.onmousedown = (e) => { e.preventDefault(); };
                                 div.onclick = () => {
                                     placeInput.value = p.display_name;
                                     latInput.value = p.lat;
@@ -3137,40 +3035,6 @@ body {
         })();
 
     </script>
-
-    <script>
-
-        function setTheme(theme) {
-
-            const activeTheme = (theme === 'solar' || theme === 'cosmic') ? theme : 'solar';
-
-            document.documentElement.setAttribute('data-theme', activeTheme);
-
-            localStorage.setItem('preferred-theme-v3', activeTheme);
-      localStorage.setItem('preferred-theme-v2', activeTheme);
-    localStorage.setItem('preferred-theme', activeTheme);
-
-        }
-
-
-
-        // Initialize theme
-
-        (function () {
-
-        const rawSavedTheme2 = localStorage.getItem('preferred-theme-v3') || 'solar';
-        const savedTheme = (rawSavedTheme2 === 'solar' || rawSavedTheme2 === 'cosmic') ? rawSavedTheme2 : 'solar';
-
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        localStorage.setItem('preferred-theme-v3', savedTheme);
-      localStorage.setItem('preferred-theme-v2', savedTheme);
-        localStorage.setItem('preferred-theme', savedTheme);
-
-    })();
-
-    </script>
-
-
 
     <!-- Universal Loading Interceptor -->
 
@@ -3377,9 +3241,11 @@ body {
     }
   });
 
-  const rawSavedTheme3 = localStorage.getItem('preferred-theme-v3') || 'solar';
-  const savedTheme = (rawSavedTheme3 === 'solar' || rawSavedTheme3 === 'cosmic') ? rawSavedTheme3 : 'solar';
-  setTheme(savedTheme);
+  (function() {
+    const rawSavedTheme3 = localStorage.getItem('preferred-theme-v3') || 'solar';
+    const savedTheme = (rawSavedTheme3 === 'solar' || rawSavedTheme3 === 'cosmic') ? rawSavedTheme3 : 'solar';
+    setTheme(savedTheme);
+  })();
 </script>
 
 

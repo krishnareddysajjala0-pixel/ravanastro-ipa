@@ -1648,9 +1648,9 @@ body {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
     padding: 4px 1px !important;
     margin: 0 !important;
     flex: 1 1 100% !important;
@@ -1674,14 +1674,12 @@ body {
   }
 
   .fixed-bottom-bar-nav .nav-item i {
-    font-size: 14px !important;
-    height: 15px !important;
-    line-height: 15px !important;
+    font-size: 15px !important;
+    height: 16px !important;
+    line-height: 16px !important;
     width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
+    display: block !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     flex-shrink: 0 !important;
     text-align: center !important;
@@ -1689,9 +1687,9 @@ body {
 
   .fixed-bottom-bar-nav .nav-item span {
     font-size: 9.5px !important;
-    line-height: 1.15 !important;
-    height: 13px !important;
-    max-height: 13px !important;
+    line-height: 1.25 !important;
+    height: 14px !important;
+    max-height: 14px !important;
     width: 100% !important;
     max-width: 100% !important;
     white-space: nowrap !important;
@@ -1985,7 +1983,19 @@ body {
             <span>{{ _('క్యాలెండర్') }}</span>
         </a>
 
-        <!-- 5. భాష (Drop-up) -->
+        <!-- 5. థీమ్ (Drop-up) -->
+        <div class="theme-switcher nav-dropdown-wrapper" id="theme-switcher-container">
+            <button type="button" class="nav-item nav-theme" onclick="toggleThemeMenu(event)" title="{{ _('థీమ్') }}">
+                <i class="fas fa-palette"></i>
+                <span>{{ _('థీమ్') }}</span>
+            </button>
+            <div class="theme-options drop-up-popup" id="theme-options-dropdown">
+                <button type="button" class="theme-btn" data-theme-btn="solar" onclick="setTheme('solar')" title="Light Mode"><i class="fas fa-sun"></i> <span>Light</span></button>
+                <button type="button" class="theme-btn" data-theme-btn="cosmic" onclick="setTheme('cosmic')" title="Dark Mode"><i class="fas fa-moon"></i> <span>Dark</span></button>
+            </div>
+        </div>
+
+        <!-- 6. భాష (Drop-up) -->
         <div class="language-switcher nav-dropdown-wrapper" id="language-switcher-container">
             <button type="button" class="nav-item nav-lang" onclick="toggleLangMenu(event)" title="{{ _('భాష') }}">
                 <i class="fas fa-globe"></i>
