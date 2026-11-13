@@ -847,27 +847,15 @@
 
     /* ===== TWO-COLUMN LAYOUT ===== */
 
-
-
     .form-grid {
-
-
 
       display: grid;
 
-
-
       grid-template-columns: repeat(2, 1fr);
 
+      gap: 8px 16px;
 
-
-      gap: 20px;
-
-
-
-      margin-bottom: 20px;
-
-
+      margin-bottom: 8px;
 
     }
 
@@ -911,33 +899,22 @@
       }
 
       .form-grid {
-
         grid-template-columns: 1fr !important;
-
-        gap: 8px !important;
-
-        margin-bottom: 8px !important;
-
+        gap: 5px !important;
+        margin-bottom: 5px !important;
       }
 
       .form-grid > div:empty {
-
         display: none !important;
-
       }
 
       .form-group {
-
         margin-bottom: 0 !important;
-
       }
 
       .form-group label {
-
-        margin-bottom: 3px !important;
-
+        margin-bottom: 2px !important;
         font-size: 13px !important;
-
       }
 
       .input-container input,
@@ -1053,33 +1030,12 @@
 
 
     label {
-
-
-
       display: block;
-
-
-
-      margin-bottom: 8px;
-
-
-
-      font-size: 14px;
-
-
-
+      margin-bottom: 3px;
+      font-size: 13.5px;
       font-weight: 600;
-
-
-
       color: var(--text-muted);
-
-
-
       letter-spacing: 0.3px;
-
-
-
     }
 
 
@@ -1453,8 +1409,8 @@
 
     .location-buttons {
       display: flex;
-      gap: 10px;
-      margin-top: 8px;
+      gap: 8px;
+      margin-top: 4px;
       position: relative;
       z-index: 1;
     }
@@ -3651,8 +3607,8 @@ body {
     flex-direction: column !important;
     flex: 0 0 auto !important;
     justify-content: flex-start !important;
-    gap: 12px !important;
-    margin-bottom: 12px !important;
+    gap: 5px !important;
+    margin-bottom: 5px !important;
   }
 
   .form-grid > div:empty {
@@ -3664,8 +3620,8 @@ body {
   }
 
   .form-group label {
-    margin-bottom: clamp(3px, 0.8vh, 6px) !important;
-    font-size: clamp(12.5px, 1.8vh, 14px) !important;
+    margin-bottom: 2px !important;
+    font-size: clamp(12.5px, 1.8vh, 13.5px) !important;
   }
 
   .input-container input,
@@ -3698,8 +3654,8 @@ body {
   }
 
   .location-buttons {
-    margin-top: clamp(6px, 1.2vh, 10px) !important;
-    gap: 8px !important;
+    margin-top: 4px !important;
+    gap: 6px !important;
   }
 
   .location-btn {
@@ -3710,8 +3666,8 @@ body {
   }
 
   .btn-container {
-    margin-top: 12px !important;
-    gap: clamp(8px, 1.6vh, 12px) !important;
+    margin-top: 8px !important;
+    gap: 6px !important;
     padding-bottom: 2px !important;
     flex-shrink: 0 !important;
   }
@@ -4482,16 +4438,16 @@ body {
 
 
         <!-- Main Action Buttons -->
-        <div class="btn-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
+        <div class="btn-container" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
           <!-- Top Row: Button 1 (Save & Show) + Button 2 (Show Kundali) in SAME LINE -->
           <div style="display: flex; gap: 10px; width: 100%;">
             <!-- 1. Save & Show Kundali Button (FIRST) -->
-            <button type="button" onclick="saveUserProfile(true)" class="btn btn-submit btn-save-show" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+            <button type="button" onclick="saveUserProfile(true)" class="btn btn-submit btn-save-show" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 12px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
               <i class="fas fa-save"></i> <span>{{ _('సేవ్ & కుండలి') }}</span>
             </button>
 
             <!-- 2. Show Kundali Button (SECOND) -->
-            <button type="submit" formaction="/chart" class="btn btn-show" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+            <button type="submit" formaction="/chart" class="btn btn-show" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 12px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
               <i class="fas fa-chart-pie"></i> <span>{{ _('కుండలి') }}</span>
             </button>
           </div>
@@ -4499,12 +4455,12 @@ body {
           <!-- Second Row: Button 3 (Nakshatra Pada Kundali) + Button 4 (Saved Data) in SAME LINE -->
           <div style="display: flex; gap: 10px; width: 100%;">
             <!-- 3. Nakshatra Pada Kundali Button -->
-            <button type="button" onclick="saveUserProfile(true, '/nakshatra_chart')" class="btn btn-nakshatra" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+            <button type="button" onclick="saveUserProfile(true, '/nakshatra_chart')" class="btn btn-nakshatra" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 12px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
               <i class="fas fa-star"></i> <span>{{ _('నక్షత్ర కుండలి') }}</span>
             </button>
 
             <!-- 4. Saved Data Button -->
-            <button type="button" onclick="openSavedProfilesModal()" class="btn btn-saved-data" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 14px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+            <button type="button" onclick="openSavedProfilesModal()" class="btn btn-saved-data" style="flex: 1; min-width: 0; color: #ffffff; font-size: 15px; font-weight: 800; border-radius: 12px; border: none; padding: 12px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
               <i class="fas fa-folder-open"></i> <span>{{ _('సేవ్ డేటా') }}</span> <span id="saved-profiles-count">(0)</span>
             </button>
           </div>
@@ -4514,11 +4470,11 @@ body {
 
       </form>
 
-      <div class="home-form-tagline" style="text-align: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--card-border);">
+      <div class="home-form-tagline" style="text-align: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--card-border);">
         <div style="font-size: 12px; font-weight: 700; line-height: 1.45; color: var(--text-main);">
           {{ _('"జా" అనగా పుట్టుట, "పతకము" అనగా ముందే నిర్ణయించబడినది కావున దీనిని "జాఫతకము" అంటున్నాము.') }}
         </div>
-        <div style="font-size: 11.5px; color: var(--text-muted); opacity: 0.88; margin-top: 5px; line-height: 1.45;">
+        <div style="font-size: 11.5px; color: var(--text-muted); opacity: 0.88; margin-top: 4px; line-height: 1.45;">
           {{ _('ద్వాదశ గ్రహములతో కూడిన త్రైత సిద్ధాంత జ్యోతిష్య శాస్త్రము ఆధారముగా మీ జాఫతకము నిర్ణయించబడుతుంది.') }}
         </div>
       </div>
@@ -4527,19 +4483,23 @@ body {
 
     <!-- Prabodha Tharangaalu Full Quote Display Card with Next Button -->
     <div id="prabodha-quote-ticker" class="prabodha-quote-ticker print-hide" aria-live="polite" style="display: none;">
-      <div class="prabodha-quote-content" id="prabodha-quote-content">
+      <div class="prabodha-quote-badge-col">
         <span class="prabodha-quote-badge">
           <span class="prabodha-quote-sparkle">✨</span>
           <span class="prabodha-quote-title">{{ _('ప్రబోధ తరంగాలు') }}</span>
           <span class="prabodha-quote-num-pill">(<span id="prabodha-quote-num"></span>)</span>
         </span>
+      </div>
+      <div class="prabodha-quote-text-col" id="prabodha-quote-content">
         <span id="prabodha-quote-text" class="prabodha-quote-text"></span>
       </div>
-      <button type="button" id="prabodha-quote-next-btn" class="prabodha-quote-next-btn" title="{{ _('తరువాతి వాక్యం') }}" aria-label="{{ _('తరువాతి వాక్యం') }}">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
+      <div class="prabodha-quote-action-col">
+        <button type="button" id="prabodha-quote-next-btn" class="prabodha-quote-next-btn" title="{{ _('తరువాతి వాక్యం') }}" aria-label="{{ _('తరువాతి వాక్యం') }}">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
     </div>
 
   </div>
@@ -8023,8 +7983,8 @@ body {
     /* Prabodha Tharangaalu Highlighted Full Quote Display Card */
     .prabodha-quote-ticker {
       width: 100%;
-      margin-top: 12px;
-      padding: 10px 14px;
+      margin-top: 8px;
+      padding: 8px 14px;
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -8045,33 +8005,29 @@ body {
       color: #431407 !important;
     }
 
-    .prabodha-quote-content {
-      flex: 1 1 auto;
-      min-width: 0;
-      white-space: normal !important;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      line-height: 1.6 !important;
-      font-size: 14px !important;
-      text-align: left;
+    .prabodha-quote-badge-col {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
 
     .prabodha-quote-badge {
       display: inline-flex !important;
       align-items: center !important;
       gap: 4px !important;
-      padding: 2.5px 8px !important;
+      padding: 3px 8px !important;
       border-radius: 14px !important;
       font-weight: 800 !important;
       font-size: 12px !important;
-      margin-right: 8px !important;
-      margin-bottom: 2px !important;
+      margin: 0 !important;
       vertical-align: middle !important;
       letter-spacing: 0.15px !important;
       background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
       color: #0f172a;
       border: 1.5px solid #fef08a;
       box-shadow: 0 2px 8px rgba(251, 191, 36, 0.45);
+      white-space: nowrap !important;
     }
 
     [data-theme="solar"] .prabodha-quote-badge {
@@ -8096,19 +8052,41 @@ body {
       color: #ffffff !important;
     }
 
+    .prabodha-quote-text-col {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center !important;
+      padding: 0 8px;
+    }
+
     .prabodha-quote-text {
       color: #fef08a;
-      font-weight: 600 !important;
-      line-height: 1.6 !important;
+      font-weight: 700 !important;
+      line-height: 1.55 !important;
       font-size: 14px !important;
       letter-spacing: 0.15px !important;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-      vertical-align: middle;
+      text-align: center !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+      display: block;
+      width: 100%;
     }
 
     [data-theme="solar"] .prabodha-quote-text {
       color: #431407 !important;
       text-shadow: none !important;
+    }
+
+    .prabodha-quote-action-col {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .prabodha-quote-next-btn {
@@ -8155,26 +8133,25 @@ body {
 
     @media (max-width: 600px) {
       .prabodha-quote-ticker {
-        margin-top: 10px;
-        padding: 8px 10px;
-        gap: 8px;
+        margin-top: 8px;
+        padding: 6px 8px;
+        gap: 6px;
         border-radius: 12px;
-      }
-      .prabodha-quote-content {
-        font-size: 13px !important;
-        line-height: 1.55 !important;
       }
       .prabodha-quote-badge {
         font-size: 11px !important;
         padding: 2px 6px !important;
-        margin-right: 6px !important;
       }
       .prabodha-quote-num-pill {
         font-size: 10.5px !important;
       }
+      .prabodha-quote-text-col {
+        padding: 0 3px;
+      }
       .prabodha-quote-text {
-        font-size: 13px !important;
-        line-height: 1.55 !important;
+        font-size: 12.5px !important;
+        line-height: 1.45 !important;
+        text-align: center !important;
       }
       .prabodha-quote-next-btn {
         flex: 0 0 28px;
