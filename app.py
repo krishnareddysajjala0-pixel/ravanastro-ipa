@@ -520,6 +520,11 @@ TELUGU_MASALU = [
     "ఆశ్వయుజ", "కార్తీక", "మార్గశిర", "పుష్య", "మాఘ", "ఫాల్గుణ"
 ]
 
+EN_MONTHS_TELUGU = [
+    "జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్",
+    "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"
+]
+
 ENGLISH_MONTHS = [
     "(March - April)", "(April - May)", "(May - June)", "(June - July)",
     "(July - August)", "(August - September)", "(September - October)",
@@ -1726,22 +1731,33 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
     masam_index = (lagna_idx + 1) % 12
     telugu_masam_name = TELUGU_MASALU[masam_index]
     
-    EN_TO_TELUGU_MONTHS = {
-        "january": "జనవరి", "february": "ఫిబ్రవరి", "march": "మార్చి",
-        "april": "ఏప్రిల్", "may": "మే", "june": "జూన్",
-        "july": "జూలై", "august": "ఆగస్టు", "september": "సెప్టెంబర్",
-        "october": "అక్టోబర్", "november": "నవంబర్", "december": "డిసెంబర్"
-    }
-    
-    def format_jd(jd_time):
-        y, m_dt, d, h = swe.revjul(jd_time)
-        dt_val = datetime.datetime(y, m_dt, d, int(h), int((h%1)*60))
-        dt_val = pytz.utc.localize(dt_val).astimezone(local_tz)
-        en_month = dt_val.strftime("%B").lower()
-        te_month = tr(EN_TO_TELUGU_MONTHS.get(en_month, en_month))
-        return f"{te_month}-{d:02d}"
+    # Masam boundaries synchronized with calendar_view sunrise calculation
+    def jd_to_local_dt(jd_val):
+        y_j, m_j, d_j, h_j = swe.revjul(jd_val)
+        total_secs = int(round(h_j * 3600))
+        dt_utc = pytz.utc.localize(datetime.datetime(int(y_j), int(m_j), int(d_j))) + datetime.timedelta(seconds=total_secs)
+        return dt_utc.astimezone(local_tz)
 
-    telugu_masam = f"{masam_index+1}. {tr(telugu_masam_name)} {tr('మాసం')} ({format_jd(jd_start)} {tr('నుంచి')} {format_jd(jd_end)} {tr('వరకు')})"
+    def get_sunrise_for_date(d_obj):
+        try:
+            from astral import LocationInfo
+            from astral.sun import sunrise as astral_sunrise
+            loc = LocationInfo("Local", "Region", local_tz.zone, lat or 17.3850, lon or 78.4867)
+            return astral_sunrise(loc.observer, date=d_obj, tzinfo=local_tz).astimezone(local_tz)
+        except Exception:
+            return local_tz.localize(datetime.datetime.combine(d_obj, datetime.time(6, 0)))
+
+    start_am_dt = jd_to_local_dt(jd_start)
+    start_am_date = start_am_dt.date()
+    start_dt = start_am_date if start_am_dt < get_sunrise_for_date(start_am_date) else start_am_date + datetime.timedelta(days=1)
+
+    end_am_dt = jd_to_local_dt(jd_end)
+    end_am_date = end_am_dt.date()
+    end_dt = end_am_date - datetime.timedelta(days=1) if end_am_dt < get_sunrise_for_date(end_am_date) else end_am_date
+
+    start_dt_str = f"{start_dt.day} {tr(EN_MONTHS_TELUGU[start_dt.month - 1])}"
+    end_dt_str = f"{end_dt.day} {tr(EN_MONTHS_TELUGU[end_dt.month - 1])}"
+    telugu_masam = f"{masam_index+1}. {tr(telugu_masam_name)} {tr('మాసం')} ({start_dt_str} {tr('నుంచి')} {end_dt_str} {tr('వరకు')})"
 
     # 4. Telugu Year (Samvatsara) accurate calculation
     try:
@@ -2902,21 +2918,33 @@ def get_daily_panchangam_basic(jd, lat, lon, local_tz, local_midnight, calc_end_
     masam_index = (lagna_idx + 1) % 12
     telugu_masam_name = TELUGU_MASALU[masam_index]
     
-    EN_TO_TELUGU_MONTHS = {
-        "january": "జనవరి", "february": "ఫిబ్రవరి", "march": "మార్చి",
-        "april": "ఏప్రిల్", "may": "మే", "june": "జూన్",
-        "july": "జూలై", "august": "ఆగస్టు", "september": "సెప్టెంబర్",
-        "october": "అక్టోబర్", "november": "నవంబర్", "december": "డిసెంబర్"
-    }
-    def format_jd(jd_time):
-        y_a, m_dt_a, d_a, h_a = swe.revjul(jd_time)
-        dt_val = datetime.datetime(y_a, m_dt_a, d_a, int(h_a), int((h_a%1)*60))
-        dt_val = pytz.utc.localize(dt_val).astimezone(local_tz)
-        en_month = dt_val.strftime("%B").lower()
-        te_month = tr(EN_TO_TELUGU_MONTHS.get(en_month, en_month))
-        return f"{te_month}-{d_a:02d}"
+    # Masam boundaries synchronized with calendar_view sunrise calculation
+    def jd_to_local_dt(jd_val):
+        y_j, m_j, d_j, h_j = swe.revjul(jd_val)
+        total_secs = int(round(h_j * 3600))
+        dt_utc = pytz.utc.localize(datetime.datetime(int(y_j), int(m_j), int(d_j))) + datetime.timedelta(seconds=total_secs)
+        return dt_utc.astimezone(local_tz)
 
-    telugu_masam_full = f"{masam_index+1}. {tr(telugu_masam_name)} {tr('మాసం')} ({format_jd(jd_start)} {tr('నుంచి')} {format_jd(jd_end)} {tr('వరకు')})"
+    def get_sunrise_for_date(d_obj):
+        try:
+            from astral import LocationInfo
+            from astral.sun import sunrise as astral_sunrise
+            loc = LocationInfo("Local", "Region", local_tz.zone, lat or 17.3850, lon or 78.4867)
+            return astral_sunrise(loc.observer, date=d_obj, tzinfo=local_tz).astimezone(local_tz)
+        except Exception:
+            return local_tz.localize(datetime.datetime.combine(d_obj, datetime.time(6, 0)))
+
+    start_am_dt = jd_to_local_dt(jd_start)
+    start_am_date = start_am_dt.date()
+    start_dt = start_am_date if start_am_dt < get_sunrise_for_date(start_am_date) else start_am_date + datetime.timedelta(days=1)
+
+    end_am_dt = jd_to_local_dt(jd_end)
+    end_am_date = end_am_dt.date()
+    end_dt = end_am_date - datetime.timedelta(days=1) if end_am_dt < get_sunrise_for_date(end_am_date) else end_am_date
+
+    start_dt_str = f"{start_dt.day} {tr(EN_MONTHS_TELUGU[start_dt.month - 1])}"
+    end_dt_str = f"{end_dt.day} {tr(EN_MONTHS_TELUGU[end_dt.month - 1])}"
+    telugu_masam_full = f"{masam_index+1}. {tr(telugu_masam_name)} {tr('మాసం')} ({start_dt_str} {tr('నుంచి')} {end_dt_str} {tr('వరకు')})"
     
     year = local_midnight.year
     month_cal = local_midnight.month

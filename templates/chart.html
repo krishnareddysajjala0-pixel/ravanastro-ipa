@@ -7199,29 +7199,64 @@ body {
 @media screen and (max-width: 768px) {
   .fixed-bottom-bar,
   #action-bar {
-    bottom: max(env(safe-area-inset-bottom, 0px), 10px) !important;
-    padding: 6px 8px !important;
-    gap: 6px !important;
-    border-radius: 18px !important;
-    width: calc(100vw - 16px) !important;
+    bottom: max(env(safe-area-inset-bottom, 0px), 6px) !important;
+    padding: 3px 4px !important;
+    gap: 3px !important;
+    border-radius: 16px !important;
+    width: calc(100vw - 12px) !important;
     max-width: 900px !important;
   }
 
   .fixed-bottom-bar .float-btn,
   .fixed-bottom-bar button {
-    height: 36px !important;
-    min-height: 36px !important;
-    max-height: 36px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 52px !important;
     min-width: 0 !important;
-    padding: 0 8px !important;
-    font-size: 12px !important;
-    gap: 5px !important;
+    padding: 3px 1px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
     border-radius: 12px !important;
+    flex: 1 1 0% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
   }
 
   .fixed-bottom-bar .float-btn i,
   .fixed-bottom-bar button i {
-    font-size: 12px !important;
+    font-size: 14px !important;
+    height: 15px !important;
+    line-height: 15px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+    text-align: center !important;
+  }
+
+  .fixed-bottom-bar .float-btn span,
+  .fixed-bottom-bar button span {
+    font-size: 9.5px !important;
+    line-height: 1.15 !important;
+    height: 13px !important;
+    max-height: 13px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 1px !important;
+    flex-shrink: 0 !important;
+    letter-spacing: -0.2px !important;
   }
 }
 
@@ -7412,17 +7447,20 @@ body {
 .fixed-bottom-bar, #action-bar {
   width: calc(100vw - 12px) !important;
   max-width: 900px !important;
-  padding: 4px 6px !important;
-  gap: 4px !important;
+  padding: 3px 4px !important;
+  gap: 3px !important;
 }
 
 .fixed-bottom-bar .float-btn, .fixed-bottom-bar button {
-  height: 38px !important;
-  min-height: 38px !important;
-  max-height: 38px !important;
-  padding: 0 4px !important;
-  font-size: 11px !important;
-  gap: 4px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 52px !important;
+  padding: 3px 1px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
   flex: 1 1 0% !important;
   min-width: 0 !important;
 }

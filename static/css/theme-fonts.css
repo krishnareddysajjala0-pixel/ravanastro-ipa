@@ -1174,30 +1174,36 @@ body.mobile-pdf-rendering #loading-overlay {
   }
 }
 
-@media screen and (max-width: 600px) {
-  .fixed-bottom-bar-nav {
+@media screen and (max-width: 768px) {
+  .fixed-bottom-bar-nav,
+  .fixed-bottom-bar,
+  #action-bar {
     position: fixed !important;
-    left: 8px !important;
-    right: 8px !important;
+    left: 6px !important;
+    right: 6px !important;
     width: auto !important;
-    max-width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 12px) !important;
     margin-left: auto !important;
     margin-right: auto !important;
     transform: none !important;
-    bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
-    padding: 4px 5px !important;
+    bottom: max(env(safe-area-inset-bottom, 0px), 6px) !important;
+    padding: 3px 4px !important;
     gap: 3px !important;
-    border-radius: 18px !important;
-    display: grid !important;
-    grid-auto-flow: column !important;
-    grid-auto-columns: 1fr !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
     align-items: center !important;
     box-sizing: border-box !important;
     z-index: 99999 !important;
     overflow: visible !important;
   }
 
-  .fixed-bottom-bar-nav > * {
+  .fixed-bottom-bar-nav > *,
+  .fixed-bottom-bar > *,
+  #action-bar > *,
+  .fixed-bottom-bar-nav .nav-dropdown-wrapper,
+  .fixed-bottom-bar .language-switcher {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
@@ -1206,31 +1212,25 @@ body.mobile-pdf-rendering #loading-overlay {
     padding: 0 !important;
     box-sizing: border-box !important;
     display: flex !important;
-    flex: none !important;
-  }
-
-  .fixed-bottom-bar-nav .nav-dropdown-wrapper {
-    position: relative !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    box-sizing: border-box !important;
-    flex: none !important;
+    flex: 1 1 0% !important;
   }
 
   .fixed-bottom-bar-nav .nav-item,
-  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item {
+  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item,
+  .fixed-bottom-bar .float-btn,
+  .fixed-bottom-bar button,
+  #action-bar .float-btn,
+  #action-bar button,
+  .float-btn {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
     height: 48px !important;
     min-height: 48px !important;
-    max-height: 48px !important;
-    padding: 4px 1px !important;
+    max-height: 52px !important;
+    padding: 3px 1px !important;
     margin: 0 !important;
-    flex: 1 1 100% !important;
+    flex: 1 1 0% !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -1242,36 +1242,64 @@ body.mobile-pdf-rendering #loading-overlay {
     text-decoration: none !important;
   }
 
-  /* All 6 buttons strictly uniform in shape - no asymmetrical end corners */
+  /* All buttons strictly uniform in shape - no asymmetrical end corners */
   .fixed-bottom-bar-nav > :first-child.nav-item,
   .fixed-bottom-bar-nav > :first-child .nav-item,
   .fixed-bottom-bar-nav > :last-child.nav-item,
-  .fixed-bottom-bar-nav > :last-child .nav-item {
+  .fixed-bottom-bar-nav > :last-child .nav-item,
+  .fixed-bottom-bar > :first-child,
+  .fixed-bottom-bar > :last-child {
     border-radius: 12px !important;
   }
 
-  .fixed-bottom-bar-nav .nav-item i {
+  .fixed-bottom-bar-nav .nav-item i,
+  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item i,
+  .fixed-bottom-bar .float-btn i,
+  .fixed-bottom-bar button i,
+  #action-bar .float-btn i,
+  #action-bar button i,
+  .float-btn i {
     font-size: 14px !important;
-    line-height: 1 !important;
+    height: 15px !important;
+    line-height: 15px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     margin: 0 !important;
-    display: block !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+    text-align: center !important;
   }
 
-  .fixed-bottom-bar-nav .nav-item span {
-    font-size: 10px !important;
-    line-height: 1.1 !important;
+  .fixed-bottom-bar-nav .nav-item span,
+  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item span,
+  .fixed-bottom-bar .float-btn span,
+  .fixed-bottom-bar button span,
+  #action-bar .float-btn span,
+  #action-bar button span,
+  .float-btn span {
+    font-size: 9.5px !important;
+    line-height: 1.15 !important;
+    height: 13px !important;
+    max-height: 13px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    max-width: 100% !important;
     display: block !important;
     text-align: center !important;
+    margin: 0 !important;
     padding: 0 1px !important;
+    flex-shrink: 0 !important;
+    letter-spacing: -0.2px !important;
   }
 
   .fixed-bottom-bar-nav .drop-up-popup,
   .fixed-bottom-bar-nav .theme-options,
-  .fixed-bottom-bar-nav .lang-options {
+  .fixed-bottom-bar-nav .lang-options,
+  .fixed-bottom-bar .lang-options {
     position: absolute !important;
     bottom: calc(100% + 10px) !important;
     right: 0 !important;
@@ -1284,48 +1312,76 @@ body.mobile-pdf-rendering #loading-overlay {
 }
 
 @media screen and (max-width: 360px) {
-  .fixed-bottom-bar-nav {
+  .fixed-bottom-bar-nav,
+  .fixed-bottom-bar,
+  #action-bar {
     left: 4px !important;
     right: 4px !important;
-    padding: 3px 3px !important;
+    width: calc(100vw - 8px) !important;
+    padding: 3px 2px !important;
     gap: 2px !important;
     border-radius: 14px !important;
   }
 
   .fixed-bottom-bar-nav .nav-item,
-  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item {
-    height: 44px !important;
-    min-height: 44px !important;
-    max-height: 44px !important;
+  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item,
+  .fixed-bottom-bar .float-btn,
+  .fixed-bottom-bar button,
+  #action-bar .float-btn,
+  #action-bar button {
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 50px !important;
     padding: 3px 1px !important;
-    gap: 1px !important;
+    gap: 2.5px !important;
     border-radius: 10px !important;
   }
 
   .fixed-bottom-bar-nav > :first-child.nav-item,
   .fixed-bottom-bar-nav > :first-child .nav-item,
   .fixed-bottom-bar-nav > :last-child.nav-item,
-  .fixed-bottom-bar-nav > :last-child .nav-item {
+  .fixed-bottom-bar-nav > :last-child .nav-item,
+  .fixed-bottom-bar > :first-child,
+  .fixed-bottom-bar > :last-child {
     border-radius: 10px !important;
   }
 
-  .fixed-bottom-bar,
-  #action-bar {
-    border-radius: 14px !important;
-  }
-
-  .fixed-bottom-bar .float-btn,
-  .fixed-bottom-bar button,
-  .float-btn {
-    border-radius: 10px !important;
-  }
-
-  .fixed-bottom-bar-nav .nav-item i {
+  .fixed-bottom-bar-nav .nav-item i,
+  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item i,
+  .fixed-bottom-bar .float-btn i,
+  .fixed-bottom-bar button i,
+  #action-bar .float-btn i,
+  #action-bar button i {
     font-size: 13px !important;
+    height: 14px !important;
+    line-height: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
   }
 
-  .fixed-bottom-bar-nav .nav-item span {
+  .fixed-bottom-bar-nav .nav-item span,
+  .fixed-bottom-bar-nav .nav-dropdown-wrapper > .nav-item span,
+  .fixed-bottom-bar .float-btn span,
+  .fixed-bottom-bar button span,
+  #action-bar .float-btn span,
+  #action-bar button span {
     font-size: 8.5px !important;
+    height: 12px !important;
+    max-height: 12px !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 1px !important;
+    flex-shrink: 0 !important;
+    letter-spacing: -0.2px !important;
   }
 }
 

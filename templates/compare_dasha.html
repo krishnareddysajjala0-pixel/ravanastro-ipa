@@ -517,11 +517,12 @@
             padding: 12px 0; z-index: 10000;
         }
         .nav-item {
-            display: flex; flex-direction: column; align-items: center;
-            color: #a0a0ff; text-decoration: none; font-size: 12px; gap: 5px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #a0a0ff; text-decoration: none; font-size: 10px; gap: 2px;
         }
         .nav-item.active { color: #ffd700; }
-        .nav-item i { font-size: 20px; }
+        .nav-item i { font-size: 14px; height: 15px; line-height: 15px; }
+        .nav-item span { font-size: 9.5px; line-height: 1.15; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .nav-home i, .nav-panch i, .nav-cal i, .nav-compare i { animation: rainbow-glow 3s infinite linear; }
 
