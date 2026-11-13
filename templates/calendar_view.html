@@ -18,18 +18,46 @@
 
     <link rel="icon" type="image/png" href="/static/favicon.png">
 
+    <meta name="theme-color" id="theme-color-meta" content="#0c0c0c">
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('preferred-theme-v3') || localStorage.getItem('preferred-theme') || 'cosmic';
+          if (t === 'solar' || t === 'cosmic') {
+            document.documentElement.setAttribute('data-theme', t);
+            var m = document.getElementById('theme-color-meta');
+            if (m) m.setAttribute('content', t === 'solar' ? '#ffffff' : '#0c0c0c');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
 
         * { margin: 0; padding: 0; box-sizing: border-box;  }
 
-        html { background-color: #0c0c0c; }
+        html { 
+            background-color: #0c0c0c; 
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            outline: none !important;
+        }
 
-        
+        html[data-theme="solar"], html[data-theme="solar"] body {
+            background-color: #ffffff !important;
+        }
+
+        html[data-theme="cosmic"], html[data-theme="cosmic"] body {
+            background-color: #0c0c0c !important;
+        }
 
         body { 
-
+            margin: 0 !important;
+            border-top: none !important;
+            outline: none !important;
             background-color: #0c0c0c;
 
             background: var(--bg-primary); 
