@@ -4521,8 +4521,12 @@ body {
     <div id="prabodha-quote-ticker" class="prabodha-quote-ticker print-hide" aria-live="polite" style="display: none;">
       <div class="prabodha-quote-viewport" id="prabodha-quote-viewport">
         <span id="prabodha-quote-track" class="prabodha-quote-track">
-          <span class="prabodha-quote-label">{{ _('ప్రబోధ తరంగాలు') }} (<span id="prabodha-quote-num"></span>):</span>
-          <span id="prabodha-quote-text"></span>
+          <span class="prabodha-quote-badge">
+            <span class="prabodha-quote-sparkle">✨</span>
+            <span class="prabodha-quote-title">{{ _('ప్రబోధ తరంగాలు') }}</span>
+            <span class="prabodha-quote-num-pill">(<span id="prabodha-quote-num"></span>)</span>
+          </span>
+          <span id="prabodha-quote-text" class="prabodha-quote-text"></span>
         </span>
       </div>
       <button type="button" id="prabodha-quote-next-btn" class="prabodha-quote-next-btn" title="{{ _('తరువాతి వాక్యం') }}" aria-label="{{ _('తరువాతి వాక్యం') }}">
@@ -5253,6 +5257,14 @@ body {
           const data = await response.json();
           if (data && data.display_name && placeInput) {
             placeInput.value = data.display_name;
+            try {
+              localStorage.setItem('astro_device_location', JSON.stringify({
+                lat: parseFloat(numLat), lon: parseFloat(numLon), place: data.display_name, country_code: data.country_code || 'in'
+              }));
+              document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
+                lat: parseFloat(numLat), lon: parseFloat(numLon), place: data.display_name
+              })) + "; path=/; max-age=31536000";
+            } catch(e) {}
           }
           if (data && data.country_code) {
             syncCountrySelect(data.country_code);
@@ -6005,6 +6017,14 @@ body {
           .then(data => {
             if (data && data.display_name && data.display_name !== 'Unknown Location') {
               if (placeInput) placeInput.value = data.display_name;
+              try {
+                localStorage.setItem('astro_device_location', JSON.stringify({
+                  lat: parseFloat(lat), lon: parseFloat(lon), place: data.display_name, country_code: data.country_code || 'in'
+                }));
+                document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
+                  lat: parseFloat(lat), lon: parseFloat(lon), place: data.display_name
+                })) + "; path=/; max-age=31536000";
+              } catch(e) {}
             }
             if (data && data.country_code) {
               syncCountrySelect(data.country_code);
@@ -7962,39 +7982,70 @@ body {
       }
     }
 
-    /* Prabodha Tharangaalu Random Scrolling Quote Bar */
+    /* Prabodha Tharangaalu Highlighted Wisdom Quote Bar */
     .prabodha-quote-ticker {
       width: 100%;
       margin-top: 14px;
-      padding: 10px 14px;
-      border-radius: 16px;
+      padding: 10px 16px;
+      min-height: 56px;
+      border-radius: 18px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       overflow: hidden;
       box-sizing: border-box;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1.5px solid rgba(251, 191, 36, 0.45);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38);
-      color: #fef3c7;
+      background: linear-gradient(135deg, rgba(26, 16, 61, 0.98) 0%, rgba(46, 26, 107, 0.95) 45%, rgba(15, 23, 42, 0.98) 100%);
+      border: 2.5px solid #fbbf24;
+      box-shadow: 0 6px 26px rgba(251, 191, 36, 0.38), 0 0 16px rgba(139, 92, 246, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      color: #fef08a;
       cursor: pointer;
+      position: relative;
     }
 
     [data-theme="solar"] .prabodha-quote-ticker {
-      background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 50%, #fffbeb 100%);
-      border: 1.5px solid rgba(217, 119, 6, 0.48);
-      box-shadow: 0 6px 20px rgba(180, 83, 9, 0.14);
-      color: #451a03;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fed7aa 100%) !important;
+      border: 2.5px solid #f59e0b !important;
+      box-shadow: 0 6px 24px rgba(245, 158, 11, 0.35), 0 0 0 1.5px rgba(217, 119, 6, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+      color: #431407 !important;
     }
 
-    .prabodha-quote-label {
-      font-weight: 800;
-      margin-right: 4px;
-      color: #fbbf24;
+    .prabodha-quote-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      padding: 4px 10px !important;
+      border-radius: 20px !important;
+      font-weight: 800 !important;
+      font-size: 13.5px !important;
+      margin-right: 12px !important;
+      flex-shrink: 0 !important;
+      letter-spacing: 0.2px !important;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      color: #0f172a;
+      border: 1.5px solid #fef08a;
+      box-shadow: 0 2px 10px rgba(251, 191, 36, 0.5);
     }
 
-    [data-theme="solar"] .prabodha-quote-label {
-      color: #b45309;
+    [data-theme="solar"] .prabodha-quote-badge {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+      color: #ffffff !important;
+      border: 1.5px solid #fed7aa !important;
+      box-shadow: 0 2px 8px rgba(194, 65, 12, 0.35) !important;
+    }
+
+    .prabodha-quote-num-pill {
+      font-weight: 900 !important;
+      font-size: 13px !important;
+      padding: 1px 6px !important;
+      border-radius: 12px !important;
+      display: inline-block !important;
+      background: rgba(15, 23, 42, 0.25);
+      color: #0f172a;
+    }
+
+    [data-theme="solar"] .prabodha-quote-num-pill {
+      background: rgba(255, 255, 255, 0.28) !important;
+      color: #ffffff !important;
     }
 
     .prabodha-quote-viewport {
@@ -8003,16 +8054,36 @@ body {
       overflow: hidden;
       position: relative;
       white-space: nowrap;
+      padding: 8px 0 !important;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
 
     .prabodha-quote-track {
-      display: inline-block;
-      white-space: nowrap;
-      font-size: 15px;
-      font-weight: 600;
-      line-height: 1.45;
+      display: inline-flex !important;
+      align-items: center !important;
+      white-space: nowrap !important;
+      font-size: 15.5px !important;
+      font-weight: 700 !important;
+      line-height: 2.2 !important;
+      padding: 6px 0 !important;
       will-change: transform;
       animation: prabodha-marquee var(--pq-duration, 18s) linear infinite;
+    }
+
+    .prabodha-quote-text {
+      color: #fef08a;
+      font-weight: 700 !important;
+      line-height: 2.2 !important;
+      font-size: 15.5px !important;
+      letter-spacing: 0.15px !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    [data-theme="solar"] .prabodha-quote-text {
+      color: #431407 !important;
+      text-shadow: none !important;
     }
 
     .prabodha-quote-ticker:hover .prabodha-quote-track,
@@ -8021,29 +8092,27 @@ body {
     }
 
     .prabodha-quote-next-btn {
-      flex: 0 0 34px;
-      width: 34px;
-      height: 34px;
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      border: 1.5px solid rgba(251, 191, 36, 0.65);
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.55) 100%);
-      color: #fef3c7;
+      border: 2px solid #fef08a;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      color: #0f172a;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       padding: 0;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.25s ease;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
       z-index: 2;
     }
 
     .prabodha-quote-next-btn:hover {
-      transform: scale(1.12);
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      color: #ffffff;
-      border-color: #ffd700;
-      box-shadow: 0 0 12px rgba(251, 191, 36, 0.7);
+      transform: scale(1.14);
+      background: linear-gradient(135deg, #ffd700 0%, #fbbf24 100%);
+      box-shadow: 0 0 18px rgba(251, 191, 36, 0.85);
     }
 
     .prabodha-quote-next-btn:active {
@@ -8051,16 +8120,17 @@ body {
     }
 
     [data-theme="solar"] .prabodha-quote-next-btn {
-      border: 1.5px solid rgba(217, 119, 6, 0.65);
-      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-      color: #b45309;
-      box-shadow: 0 2px 6px rgba(180, 83, 9, 0.2);
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+      color: #ffffff !important;
+      border: 2px solid #fed7aa !important;
+      box-shadow: 0 3px 10px rgba(234, 88, 12, 0.4) !important;
     }
 
     [data-theme="solar"] .prabodha-quote-next-btn:hover {
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      color: #ffffff;
-      border-color: #b45309;
+      background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%) !important;
+      border-color: #ffd700 !important;
+      transform: scale(1.14) !important;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.6) !important;
     }
 
     @keyframes prabodha-marquee {
@@ -8075,15 +8145,28 @@ body {
     @media (max-width: 600px) {
       .prabodha-quote-ticker {
         margin-top: 10px;
-        padding: 8px 10px;
+        padding: 8px 12px;
         gap: 8px;
-        border-radius: 13px;
+        min-height: 50px;
+        border-radius: 14px;
       }
-      .prabodha-quote-label {
-        font-size: 13px;
+      .prabodha-quote-badge {
+        font-size: 12px !important;
+        padding: 2.5px 7px !important;
+        margin-right: 8px !important;
+      }
+      .prabodha-quote-num-pill {
+        font-size: 11.5px !important;
+        padding: 0 4px !important;
       }
       .prabodha-quote-track {
-        font-size: 13.5px;
+        font-size: 13.5px !important;
+        line-height: 2.1 !important;
+        padding: 4px 0 !important;
+      }
+      .prabodha-quote-text {
+        font-size: 13.5px !important;
+        line-height: 2.1 !important;
       }
       .prabodha-quote-next-btn {
         flex: 0 0 30px;
@@ -8503,26 +8586,28 @@ body {
 
 
 
-      // Navigation auto-loader
-
-
-
+      // Navigation auto-loader with location carry-forward for Panchangam
       document.querySelectorAll('.nav-item').forEach(item => {
-
-
-
           item.addEventListener('click', function(e) {
-
-
-
+              if (this.classList.contains('nav-panch')) {
+                  let lat = (document.getElementById('lat') || {}).value;
+                  let lon = (document.getElementById('lon') || {}).value;
+                  let place = (document.getElementById('place') || {}).value;
+                  if (!lat || !lon) {
+                      try {
+                          const raw = localStorage.getItem('astro_device_location');
+                          if (raw) {
+                              const sl = JSON.parse(raw);
+                              lat = sl.lat; lon = sl.lon; place = sl.place;
+                          }
+                      } catch(err) {}
+                  }
+                  if (lat && lon) {
+                      this.href = `/daily_panchangam?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&place=${encodeURIComponent(place || '')}`;
+                  }
+              }
               if(!this.href.includes('#')) showLoader();
-
-
-
           });
-
-
-
       });
 
 

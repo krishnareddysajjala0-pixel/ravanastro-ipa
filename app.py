@@ -882,6 +882,28 @@ def get_server_ip_location():
 @app.route("/api/device_location", methods=["GET", "POST"])
 @app.route("/api/ip_location", methods=["GET", "POST"])
 def api_device_location():
+    if request.method == "POST":
+        d = request.get_json(silent=True) or request.form
+        p_lat = d.get("latitude") or d.get("lat")
+        p_lon = d.get("longitude") or d.get("lon")
+        p_place = d.get("display_name") or d.get("place") or ""
+        if p_lat and p_lon:
+            try:
+                lat_f = float(p_lat)
+                lon_f = float(p_lon)
+                session['device_location'] = {
+                    'lat': lat_f,
+                    'lon': lon_f,
+                    'place': p_place
+                }
+                resp = jsonify({"status": "saved", "lat": lat_f, "lon": lon_f, "place": p_place})
+                import urllib.parse
+                cookie_val = urllib.parse.quote(json.dumps({'lat': lat_f, 'lon': lon_f, 'place': p_place}))
+                resp.set_cookie('device_loc', cookie_val, max_age=365*24*3600, path='/')
+                return resp
+            except (ValueError, TypeError):
+                pass
+
     lat = os.environ.get("DEVICE_LAT", "").strip()
     lon = os.environ.get("DEVICE_LON", "").strip()
     if lat and lon:
@@ -896,6 +918,18 @@ def api_device_location():
             })
         except ValueError:
             pass
+
+    # Check session device location
+    dev_sess = session.get('device_location')
+    if dev_sess and dev_sess.get('lat') and dev_sess.get('lon'):
+        return jsonify({
+            "available": True,
+            "latitude": dev_sess['lat'],
+            "longitude": dev_sess['lon'],
+            "lat": dev_sess['lat'],
+            "lon": dev_sess['lon'],
+            "display_name": dev_sess.get('place', '')
+        })
 
     loc = get_server_ip_location()
     if loc:
@@ -2872,19 +2906,46 @@ def daily_panchangam():
     today = datetime.datetime.now()
     dob = today.strftime("%Y-%m-%d")
     tob = today.strftime("%H:%M")
-    place = "Hyderabad, Telangana"
-    lat = 17.3850
-    lon = 78.4867
 
-    # Use parameters from GET or POST, with defaults for today
+    # 1. Resolve default place, lat, lon from device cookie or session
+    default_place = "Hyderabad, Telangana"
+    default_lat = 17.3850
+    default_lon = 78.4867
+    dev_cookie = request.cookies.get("device_loc")
+    if dev_cookie:
+        try:
+            import urllib.parse
+            c_data = json.loads(urllib.parse.unquote(dev_cookie))
+            if c_data.get("lat") and c_data.get("lon"):
+                default_lat = float(c_data["lat"])
+                default_lon = float(c_data["lon"])
+                default_place = c_data.get("place") or default_place
+        except Exception:
+            pass
+
+    if default_lat == 17.3850 and default_lon == 78.4867:
+        dev_sess = session.get('device_location') or session.get('chart_form') or session.get('birth_info') or {}
+        if dev_sess.get('lat') and dev_sess.get('lon'):
+            try:
+                default_lat = float(dev_sess['lat'])
+                default_lon = float(dev_sess['lon'])
+                default_place = dev_sess.get('place') or default_place
+            except Exception:
+                pass
+
+    place = default_place
+    lat = default_lat
+    lon = default_lon
+
+    # Use parameters from GET or POST, with fallback to default_lat/lon
     dob = request.values.get("dob") or dob
     tob = request.values.get("tob") or tob
     place = request.values.get("place") or place
     lat_str = request.values.get("lat")
     lon_str = request.values.get("lon")
     
-    lat = float(lat_str) if lat_str else 17.3850
-    lon = float(lon_str) if lon_str else 78.4867
+    lat = float(lat_str) if lat_str else lat
+    lon = float(lon_str) if lon_str else lon
     
     if place in ["Current Location", "Unknown Location", ""] and lat_str and lon_str:
         cache_key = (round(lat, 3), round(lon, 3))

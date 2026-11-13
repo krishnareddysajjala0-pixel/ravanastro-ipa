@@ -2765,20 +2765,43 @@ body {
             const placeEl = document.getElementById('inp-place');
             const formEl = document.getElementById('panch-form');
 
-            if (latEl) latEl.value = lat;
-            if (lonEl) lonEl.value = lon;
+            const currentLat = parseFloat(latEl ? latEl.value : 0);
+            const currentLon = parseFloat(lonEl ? lonEl.value : 0);
+            const isDifferent = isNaN(currentLat) || isNaN(currentLon) ||
+                                (Math.abs(currentLat - lat) > 0.05 || Math.abs(currentLon - lon) > 0.05);
+
+            if (latEl) latEl.value = lat.toFixed(4);
+            if (lonEl) lonEl.value = lon.toFixed(4);
             fillCurrentDateTime();
-            setGeoStatus('✅ స్థానం గుర్తించబడింది. లోడ్ అవుతోంది...', 'success');
-            sessionStorage.setItem('panch_auto_detected', '1');
 
             reverseGeocode(lat, lon, function(placeName) {
                 if (placeEl) placeEl.value = placeName;
-                const dobTextEl = document.getElementById('inp-dob-text');
-                const tobTextEl = document.getElementById('inp-tob-text');
-                if (dobTextEl) dobTextEl.setCustomValidity('');
-                if (tobTextEl) tobTextEl.setCustomValidity('');
-                showLoader();
-                if (formEl) formEl.submit();
+                try {
+                    localStorage.setItem('astro_device_location', JSON.stringify({
+                        lat: lat, lon: lon, place: placeName
+                    }));
+                    document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
+                        lat: lat, lon: lon, place: placeName
+                    })) + "; path=/; max-age=31536000";
+                } catch(e) {}
+
+                fetch('/api/device_location', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ latitude: lat, longitude: lon, display_name: placeName })
+                }).catch(() => {});
+
+                if (isDifferent && formEl) {
+                    setGeoStatus('✅ స్థానం గుర్తించబడింది. లోడ్ అవుతోంది...', 'success');
+                    const dobTextEl = document.getElementById('inp-dob-text');
+                    const tobTextEl = document.getElementById('inp-tob-text');
+                    if (dobTextEl) dobTextEl.setCustomValidity('');
+                    if (tobTextEl) tobTextEl.setCustomValidity('');
+                    showLoader();
+                    formEl.submit();
+                } else {
+                    setGeoStatus('✅ ప్రస్తుత స్థానం సెట్ చేయబడింది.', 'success');
+                }
             });
         }
 
@@ -2812,19 +2835,54 @@ body {
             navigator.geolocation.getCurrentPosition(
                 handlePositionSuccess,
                 function(err) {
-                    tryNativePanchFallback(isAutoLoad);
+                    navigator.geolocation.getCurrentPosition(
+                        handlePositionSuccess,
+                        function() {
+                            tryNativePanchFallback(isAutoLoad);
+                        },
+                        { timeout: 7000, enableHighAccuracy: true }
+                    );
                 },
-                { timeout: 7000, maximumAge: 60000, enableHighAccuracy: true }
+                { timeout: 5000, maximumAge: 300000, enableHighAccuracy: false }
             );
         }
         window.detectLocation = detectLocation;
 
-        // Auto-detect device location on load ONCE (prevent reload loop)
+        // Auto-detect device location on load
         (function autoDetectOnPanchangamLoad() {
-            const isPost = document.getElementById('inp-is-post') && document.getElementById('inp-is-post').value === '1';
-            if (isPost || sessionStorage.getItem('panch_auto_detected') === '1') {
-                return;
+            const latEl = document.getElementById('inp-lat');
+            const lonEl = document.getElementById('inp-lon');
+            const placeEl = document.getElementById('inp-place');
+            const formEl = document.getElementById('panch-form');
+
+            // 1. Check if we already have saved device location in localStorage
+            let savedLoc = null;
+            try {
+                const raw = localStorage.getItem('astro_device_location');
+                if (raw) savedLoc = JSON.parse(raw);
+            } catch(e) {}
+
+            const currLat = parseFloat(latEl ? latEl.value : 0);
+            const currLon = parseFloat(lonEl ? lonEl.value : 0);
+
+            if (savedLoc && savedLoc.lat && savedLoc.lon) {
+                const sLat = parseFloat(savedLoc.lat);
+                const sLon = parseFloat(savedLoc.lon);
+                const isDifferent = isNaN(currLat) || isNaN(currLon) ||
+                                    (Math.abs(currLat - sLat) > 0.05 || Math.abs(currLon - sLon) > 0.05);
+
+                if (isDifferent) {
+                    if (latEl) latEl.value = sLat.toFixed(4);
+                    if (lonEl) lonEl.value = sLon.toFixed(4);
+                    if (placeEl && savedLoc.place) placeEl.value = savedLoc.place;
+                    fillCurrentDateTime();
+                    showLoader();
+                    if (formEl) formEl.submit();
+                    return;
+                }
             }
+
+            // 2. Query browser GPS
             detectLocation(true);
         })();
 

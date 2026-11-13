@@ -2173,16 +2173,22 @@ body {
 
         
 
-        // Navigation auto-loader
-
+        // Navigation auto-loader with location carry-forward for Panchangam
         document.querySelectorAll('.nav-item').forEach(item => {
-
             item.addEventListener('click', function(e) {
-
+                if (this.classList.contains('nav-panch')) {
+                    try {
+                        const raw = localStorage.getItem('astro_device_location');
+                        if (raw) {
+                            const sl = JSON.parse(raw);
+                            if (sl.lat && sl.lon) {
+                                this.href = `/daily_panchangam?lat=${encodeURIComponent(sl.lat)}&lon=${encodeURIComponent(sl.lon)}&place=${encodeURIComponent(sl.place || '')}`;
+                            }
+                        }
+                    } catch(err) {}
+                }
                 if(!this.href.includes('#')) showLoader();
-
             });
-
         });
 
 
