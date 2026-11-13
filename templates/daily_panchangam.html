@@ -2604,16 +2604,20 @@ body {
 
 
 
+        function startTyping() {
+            const element = document.getElementById("typing-text");
+            if (element) {
+                element.innerHTML = '{{ _("గణన చేస్తోంది") }}';
+            }
+        }
+
         function showLoader() {
-
-            playLoadingSound();
-
+            try {
+                playLoadingSound();
+            } catch (e) {}
             const overlay = document.getElementById('loading-overlay');
-
             if (overlay) overlay.style.display = 'flex';
-
             startTyping();
-
         }
 
         
@@ -2701,21 +2705,35 @@ body {
 
             const tobEl = document.getElementById('inp-tob');
 
+            const dobTextEl = document.getElementById('inp-dob-text');
+
+            const tobTextEl = document.getElementById('inp-tob-text');
+
             if (dobEl) dobEl.value = `${yyyy}-${mm}-${dd}`;
 
+            if (dobTextEl) dobTextEl.value = `${dd}-${mm}-${yyyy}`;
+
             if (tobEl) tobEl.value = `${hh}:${mi}`;
+
+            if (tobTextEl) tobTextEl.value = `${hh}:${mi}`;
 
         }
 
 
 
         function reverseGeocode(lat, lon, callback) {
-            fetch(`/api/reverse_geocode?lat=${lat}&lon=${lon}`)
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3500);
+            fetch(`/api/reverse_geocode?lat=${lat}&lon=${lon}`, { signal: controller.signal })
                 .then(r => r.json())
                 .then(data => {
+                    clearTimeout(timeoutId);
                     callback(data.display_name || 'Current Location');
                 })
-                .catch(() => callback('Current Location'));
+                .catch(() => {
+                    clearTimeout(timeoutId);
+                    callback('Current Location');
+                });
         }
 
         function clearPanchLocation() {
@@ -2738,31 +2756,45 @@ body {
         window.clearPanchLocation = clearPanchLocation;
 
         function handlePositionSuccess(pos) {
+            if (!pos || !pos.coords) return;
             const lat = pos.coords.latitude;
             const lon = pos.coords.longitude;
-            document.getElementById('inp-lat').value = lat;
-            document.getElementById('inp-lon').value = lon;
+            const latEl = document.getElementById('inp-lat');
+            const lonEl = document.getElementById('inp-lon');
+            const placeEl = document.getElementById('inp-place');
+            const formEl = document.getElementById('panch-form');
+
+            if (latEl) latEl.value = lat;
+            if (lonEl) lonEl.value = lon;
             fillCurrentDateTime();
             setGeoStatus('✅ స్థానం గుర్తించబడింది. లోడ్ అవుతోంది...', 'success');
+            sessionStorage.setItem('panch_auto_detected', '1');
+
             reverseGeocode(lat, lon, function(placeName) {
-                document.getElementById('inp-place').value = placeName;
+                if (placeEl) placeEl.value = placeName;
+                const dobTextEl = document.getElementById('inp-dob-text');
+                const tobTextEl = document.getElementById('inp-tob-text');
+                if (dobTextEl) dobTextEl.setCustomValidity('');
+                if (tobTextEl) tobTextEl.setCustomValidity('');
                 showLoader();
-                document.getElementById('panch-form').submit();
+                if (formEl) formEl.submit();
             });
         }
 
-        function tryNativePanchFallback() {
+        function tryNativePanchFallback(isAutoLoad = false) {
             fetch('/api/device_location')
                 .then(r => r.json())
                 .then(d => {
                     if (d && d.available && d.latitude && d.longitude) {
                         handlePositionSuccess({ coords: { latitude: d.latitude, longitude: d.longitude } });
-                    } else {
+                    } else if (!isAutoLoad) {
                         setGeoStatus('లొకేషన్ గుర్తించలేకపోయాము. దయచేసి మాన్యువల్‌గా స్థలం నమోదు చేయండి.', 'error');
                     }
                 })
                 .catch(() => {
-                    setGeoStatus('లొకేషన్ గుర్తించలేకపోయాము. దయచేసి మాన్యువల్‌గా స్థలం నమోదు చేయండి.', 'error');
+                    if (!isAutoLoad) {
+                        setGeoStatus('లొకేషన్ గుర్తించలేకపోయాము. దయచేసి మాన్యువల్‌గా స్థలం నమోదు చేయండి.', 'error');
+                    }
                 });
         }
 
@@ -2772,24 +2804,16 @@ body {
             }
 
             if (!navigator.geolocation) {
-                tryNativePanchFallback();
+                tryNativePanchFallback(isAutoLoad);
                 return;
             }
 
             navigator.geolocation.getCurrentPosition(
                 handlePositionSuccess,
                 function(err) {
-                    if (!isAutoLoad) {
-                        navigator.geolocation.getCurrentPosition(
-                            handlePositionSuccess,
-                            function(err2) {
-                                tryNativePanchFallback();
-                            },
-                            { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false }
-                        );
-                    }
+                    tryNativePanchFallback(isAutoLoad);
                 },
-                { timeout: 8000, maximumAge: 60000, enableHighAccuracy: true }
+                { timeout: 7000, maximumAge: 60000, enableHighAccuracy: true }
             );
         }
         window.detectLocation = detectLocation;
@@ -2800,18 +2824,7 @@ body {
             if (isPost || sessionStorage.getItem('panch_auto_detected') === '1') {
                 return;
             }
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(pos) {
-                        sessionStorage.setItem('panch_auto_detected', '1');
-                        handlePositionSuccess(pos);
-                    },
-                    function(err) {
-                        console.log('Panchangam auto-location declined/unavailable:', err);
-                    },
-                    { timeout: 8000, maximumAge: 300000, enableHighAccuracy: false }
-                );
-            }
+            detectLocation(true);
         })();
 
         // Allow direct numeric typing (DD-MM-YYYY / HH:MM) alongside native date/time picker icon

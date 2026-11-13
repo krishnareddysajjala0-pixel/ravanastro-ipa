@@ -2874,6 +2874,22 @@ def daily_panchangam():
     lat = float(lat_str) if lat_str else 17.3850
     lon = float(lon_str) if lon_str else 78.4867
     
+    if place in ["Current Location", "Unknown Location", ""] and lat_str and lon_str:
+        try:
+            rev_url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=10&addressdetails=1"
+            headers = {"User-Agent": "RavanAstroApp/1.0", "Accept-Language": "en"}
+            r = requests.get(rev_url, headers=headers, timeout=2.0)
+            if r.status_code == 200:
+                addr = r.json().get("address", {})
+                city = _clean_place_part(addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or "")
+                state = _clean_place_part(addr.get("state") or "")
+                country = _clean_place_part(addr.get("country") or "")
+                resolved = ", ".join([p for p in [city, state, country] if p])
+                if resolved:
+                    place = resolved
+        except Exception:
+            pass
+    
     # Determine Timezone based on Latitude and Longitude
     timezone_str = get_timezone_str(lat, lon)
         
