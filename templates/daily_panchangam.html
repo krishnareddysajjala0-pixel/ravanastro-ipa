@@ -18,15 +18,15 @@
 
     <link rel="manifest" href="/static/manifest.json">
 
-    <meta name="theme-color" id="theme-color-meta" content="#0c0c0c">
+    <meta name="theme-color" id="theme-color-meta" content="#020617">
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('preferred-theme-v3') || localStorage.getItem('preferred-theme') || 'cosmic';
+          var t = localStorage.getItem('preferred-theme-v3') || localStorage.getItem('preferred-theme') || 'solar';
           if (t === 'solar' || t === 'cosmic') {
             document.documentElement.setAttribute('data-theme', t);
             var m = document.getElementById('theme-color-meta');
-            if (m) m.setAttribute('content', t === 'solar' ? '#ffffff' : '#0c0c0c');
+            if (m) m.setAttribute('content', t === 'solar' ? '#0f172a' : '#020617');
           }
         } catch (e) {}
       })();
@@ -40,7 +40,7 @@
 
         html { 
             overflow-x: hidden; 
-            background-color: #0c0c0c; /* Stable dark background for mobile Safari/Chrome */
+            background-color: #020617; /* Stable dark background eliminating white seam line */
             margin: 0 !important;
             padding: 0 !important;
             border: none !important;
@@ -2748,20 +2748,23 @@ body {
         function reverseGeocode(lat, lon, callback) {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 3500);
-            fetch(`/api/reverse_geocode?lat=${lat}&lon=${lon}`, { signal: controller.signal })
+            fetch(`/api/reverse_geocode?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`, { signal: controller.signal })
                 .then(r => r.json())
                 .then(data => {
                     clearTimeout(timeoutId);
-                    callback(data.display_name || 'Current Location');
+                    if (data && data.display_name && data.display_name !== 'Current Location' && data.display_name !== 'Unknown Location') {
+                        callback(data.display_name, data.country_code ? data.country_code.toLowerCase() : 'in');
+                    } else {
+                        callback(`Location (${parseFloat(lat).toFixed(2)}, ${parseFloat(lon).toFixed(2)})`, 'in');
+                    }
                 })
                 .catch(() => {
                     clearTimeout(timeoutId);
-                    callback('Current Location');
+                    callback(`Location (${parseFloat(lat).toFixed(2)}, ${parseFloat(lon).toFixed(2)})`, 'in');
                 });
         }
 
         function clearPanchLocation() {
-            sessionStorage.removeItem('panch_auto_detected');
             const latEl = document.getElementById('inp-lat');
             const lonEl = document.getElementById('inp-lon');
             const pi = document.getElementById('inp-place');
@@ -2775,137 +2778,152 @@ body {
             if (cs) cs.value = 'in';
             const sg = document.getElementById('panch-suggestions');
             if (sg) { sg.innerHTML = ''; sg.style.display = 'none'; }
-            setGeoStatus('', '');
+            try {
+                localStorage.removeItem('astro_device_location');
+                document.cookie = "device_loc=; path=/; max-age=0";
+            } catch(e) {}
+            setGeoStatus('లొకేషన్ క్లియర్ చేయబడింది.', '');
         }
         window.clearPanchLocation = clearPanchLocation;
 
-        function handlePositionSuccess(pos) {
-            if (!pos || !pos.coords) return;
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
+        function applyLocationAndCalculate(lat, lon, placeName, countryCode, isAuto) {
+            const numLat = parseFloat(lat);
+            const numLon = parseFloat(lon);
+            if (isNaN(numLat) || isNaN(numLon)) return;
+
             const latEl = document.getElementById('inp-lat');
             const lonEl = document.getElementById('inp-lon');
             const placeEl = document.getElementById('inp-place');
-            const formEl = document.getElementById('panch-form');
+            const countryEl = document.getElementById('inp-country');
 
-            const currentLat = parseFloat(latEl ? latEl.value : 0);
-            const currentLon = parseFloat(lonEl ? lonEl.value : 0);
-            const isDifferent = isNaN(currentLat) || isNaN(currentLon) ||
-                                (Math.abs(currentLat - lat) > 0.05 || Math.abs(currentLon - lon) > 0.05);
+            if (latEl) latEl.value = numLat.toFixed(4);
+            if (lonEl) lonEl.value = numLon.toFixed(4);
+            if (placeEl && placeName) placeEl.value = placeName;
+            if (countryEl && countryCode) countryEl.value = countryCode.toLowerCase();
 
-            if (latEl) latEl.value = lat.toFixed(4);
-            if (lonEl) lonEl.value = lon.toFixed(4);
+            try {
+                localStorage.setItem('astro_device_location', JSON.stringify({
+                    lat: numLat, lon: numLon, place: placeName, country_code: countryCode || 'in'
+                }));
+                document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
+                    lat: numLat, lon: numLon, place: placeName
+                })) + "; path=/; max-age=31536000; SameSite=Lax";
+            } catch(e) {}
+
+            fetch('/api/device_location', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ latitude: numLat, longitude: numLon, display_name: placeName })
+            }).catch(() => {});
+
             fillCurrentDateTime();
 
-            reverseGeocode(lat, lon, function(placeName) {
-                if (placeEl) placeEl.value = placeName;
-                try {
-                    localStorage.setItem('astro_device_location', JSON.stringify({
-                        lat: lat, lon: lon, place: placeName
-                    }));
-                    document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
-                        lat: lat, lon: lon, place: placeName
-                    })) + "; path=/; max-age=31536000";
-                } catch(e) {}
-
-                fetch('/api/device_location', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ latitude: lat, longitude: lon, display_name: placeName })
-                }).catch(() => {});
-
-                if (isDifferent && formEl) {
-                    setGeoStatus('✅ స్థానం గుర్తించబడింది. లోడ్ అవుతోంది...', 'success');
-                    const dobTextEl = document.getElementById('inp-dob-text');
-                    const tobTextEl = document.getElementById('inp-tob-text');
-                    if (dobTextEl) dobTextEl.setCustomValidity('');
-                    if (tobTextEl) tobTextEl.setCustomValidity('');
-                    showLoader();
-                    formEl.submit();
-                } else {
-                    setGeoStatus('✅ ప్రస్తుత స్థానం సెట్ చేయబడింది.', 'success');
-                }
-            });
-        }
-
-        function tryNativePanchFallback(isAutoLoad = false) {
-            fetch('/api/device_location')
-                .then(r => r.json())
-                .then(d => {
-                    if (d && d.available && d.latitude && d.longitude) {
-                        handlePositionSuccess({ coords: { latitude: d.latitude, longitude: d.longitude } });
-                    } else if (!isAutoLoad) {
-                        setGeoStatus('లొకేషన్ గుర్తించలేకపోయాము. దయచేసి మాన్యువల్‌గా స్థలం నమోదు చేయండి.', 'error');
-                    }
-                })
-                .catch(() => {
-                    if (!isAutoLoad) {
-                        setGeoStatus('లొకేషన్ గుర్తించలేకపోయాము. దయచేసి మాన్యువల్‌గా స్థలం నమోదు చేయండి.', 'error');
-                    }
-                });
+            const targetUrl = `/daily_panchangam?lat=${encodeURIComponent(numLat)}&lon=${encodeURIComponent(numLon)}&place=${encodeURIComponent(placeName || '')}`;
+            if (isAuto) {
+                window.location.replace(targetUrl);
+            } else {
+                setGeoStatus('✔ స్థానం గుర్తించబడింది. పంచాంగం లోడ్ అవుతోంది...', 'success');
+                showLoader();
+                window.location.href = targetUrl;
+            }
         }
 
         function detectLocation(isAutoLoad = false) {
+            const btn = (window.event && window.event.currentTarget) ? window.event.currentTarget : document.querySelector('.location-buttons .location-btn:first-child');
+            const origHtml = btn ? btn.innerHTML : '';
             if (!isAutoLoad) {
+                if (btn) btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {{ _("గుర్తిస్తోంది...") }}';
                 setGeoStatus('📍 మీ {{ _("ప్రస్తుత స్థానం") }} గుర్తిస్తోంది...', '');
             }
 
+            function onCoords(lat, lon) {
+                reverseGeocode(lat, lon, function(placeName, countryCode) {
+                    if (btn) btn.innerHTML = origHtml;
+                    applyLocationAndCalculate(lat, lon, placeName, countryCode, isAutoLoad);
+                });
+            }
+
+            function tryFallback() {
+                fetch('/api/device_location')
+                    .then(r => r.json())
+                    .then(d => {
+                        if (d && d.available && d.latitude && d.longitude) {
+                            onCoords(d.latitude, d.longitude);
+                        } else if (!isAutoLoad) {
+                            if (btn) btn.innerHTML = origHtml;
+                            setGeoStatus('లొకేషన్ గుర్తించలేకపోయాము. దయచేసి మాన్యువల్‌గా స్థలం నమోదు చేయండి.', 'error');
+                        }
+                    })
+                    .catch(() => {
+                        if (btn) btn.innerHTML = origHtml;
+                        if (!isAutoLoad) setGeoStatus('లొకేషన్ గుర్తించలేకపోయాము. దయచేసి మాన్యువల్‌గా స్థలం నమోదు చేయండి.', 'error');
+                    });
+            }
+
             if (!navigator.geolocation) {
-                tryNativePanchFallback(isAutoLoad);
+                tryFallback();
                 return;
             }
 
             navigator.geolocation.getCurrentPosition(
-                handlePositionSuccess,
+                function(pos) {
+                    onCoords(pos.coords.latitude, pos.coords.longitude);
+                },
                 function(err) {
                     navigator.geolocation.getCurrentPosition(
-                        handlePositionSuccess,
+                        function(pos) {
+                            onCoords(pos.coords.latitude, pos.coords.longitude);
+                        },
                         function() {
-                            tryNativePanchFallback(isAutoLoad);
+                            tryFallback();
                         },
                         { timeout: 7000, enableHighAccuracy: true }
                     );
                 },
-                { timeout: 5000, maximumAge: 300000, enableHighAccuracy: false }
+                { timeout: 5000, maximumAge: 60000, enableHighAccuracy: false }
             );
         }
         window.detectLocation = detectLocation;
 
         // Auto-detect device location on load
         (function autoDetectOnPanchangamLoad() {
-            const latEl = document.getElementById('inp-lat');
-            const lonEl = document.getElementById('inp-lon');
-            const placeEl = document.getElementById('inp-place');
-            const formEl = document.getElementById('panch-form');
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasLatParam = urlParams.has('lat') && urlParams.get('lat');
+            const hasLonParam = urlParams.has('lon') && urlParams.get('lon');
 
-            // 1. Check if we already have saved device location in localStorage
+            if (hasLatParam && hasLonParam) {
+                setGeoStatus('✔ ప్రస్తుత స్థానం సెట్ చేయబడింది.', 'success');
+                return;
+            }
+
             let savedLoc = null;
             try {
                 const raw = localStorage.getItem('astro_device_location');
                 if (raw) savedLoc = JSON.parse(raw);
             } catch(e) {}
 
+            const latEl = document.getElementById('inp-lat');
+            const lonEl = document.getElementById('inp-lon');
             const currLat = parseFloat(latEl ? latEl.value : 0);
             const currLon = parseFloat(lonEl ? lonEl.value : 0);
 
             if (savedLoc && savedLoc.lat && savedLoc.lon) {
                 const sLat = parseFloat(savedLoc.lat);
                 const sLon = parseFloat(savedLoc.lon);
-                const isDifferent = isNaN(currLat) || isNaN(currLon) ||
-                                    (Math.abs(currLat - sLat) > 0.05 || Math.abs(currLon - sLon) > 0.05);
+                const isDiff = isNaN(currLat) || isNaN(currLon) ||
+                               (Math.abs(currLat - sLat) > 0.05 || Math.abs(currLon - sLon) > 0.05);
 
-                if (isDifferent) {
-                    if (latEl) latEl.value = sLat.toFixed(4);
-                    if (lonEl) lonEl.value = sLon.toFixed(4);
-                    if (placeEl && savedLoc.place) placeEl.value = savedLoc.place;
-                    fillCurrentDateTime();
-                    showLoader();
-                    if (formEl) formEl.submit();
+                if (isDiff) {
+                    const targetUrl = `/daily_panchangam?lat=${encodeURIComponent(sLat)}&lon=${encodeURIComponent(sLon)}&place=${encodeURIComponent(savedLoc.place || '')}`;
+                    window.location.replace(targetUrl);
+                    return;
+                } else {
+                    setGeoStatus('✔ ప్రస్తుత స్థానం సెట్ చేయబడింది.', 'success');
                     return;
                 }
             }
 
-            // 2. Query browser GPS
+            // If not cached, query browser GPS automatically on load
             detectLocation(true);
         })();
 
@@ -3179,88 +3197,60 @@ body {
 
 
 
+        var gananaTimer = null;
         function showGananaLoader() {
-
             var overlay = document.getElementById('loading-overlay');
-
             if (!overlay) return;
-
-            playLoadingSound();
-
+            try { playLoadingSound(); } catch(e) {}
             overlay.style.display = 'flex';
-
             var textEl = overlay.querySelector('p, #typing-text, #typing-text-overlay, div[style*="color:#ffd700"], div[style*="color: #ffd700"]');
-
             if (textEl) textEl.textContent = '{{ _('గణన చేస్తోంది') }}';
-
+            if (gananaTimer) clearTimeout(gananaTimer);
+            gananaTimer = setTimeout(function() {
+                if (overlay) overlay.style.display = 'none';
+            }, 3500);
         }
 
-
-
         // Attach ONLY to navigation float-btn buttons (skip print)
-
         document.addEventListener('DOMContentLoaded', function() {
-
-            document.querySelectorAll('.float-btn').forEach(function(btn) {
-
-                var oc = btn.getAttribute('onclick') || '';
-
-                if (oc.indexOf('print()') !== -1) return;
-
-                if (oc.indexOf('fetch') !== -1) return;
-
-                btn.addEventListener('click', function() {
-
-                    showGananaLoader();
-
-                });
-
-            });
-
-
-
-            // Attach to nav-item <a> links
-
-            document.querySelectorAll('a.nav-item').forEach(function(link) {
-
-                var href = link.getAttribute('href') || '';
-
-                if (!href || href === '#') return;
-
-                link.addEventListener('click', function() {
-
-                    showGananaLoader();
-
-                });
-
-            });
-
-
-
-            // Attach to main form submit
-
-            document.querySelectorAll('form:not([id="dasaForm"])').forEach(function(form) {
-
-                form.addEventListener('submit', function() {
-
-                    showGananaLoader();
-
-                });
-
-            });
-
-        });
-
-
-
-        // Hide loader on back/forward cache
-
-        window.addEventListener('pageshow', function() {
-
             var overlay = document.getElementById('loading-overlay');
-
             if (overlay) overlay.style.display = 'none';
 
+            document.querySelectorAll('.float-btn').forEach(function(btn) {
+                var oc = btn.getAttribute('onclick') || '';
+                if (oc.indexOf('print()') !== -1) return;
+                if (oc.indexOf('fetch') !== -1) return;
+                btn.addEventListener('click', function() {
+                    showGananaLoader();
+                });
+            });
+
+            // Attach to nav-item <a> links
+            document.querySelectorAll('a.nav-item').forEach(function(link) {
+                var href = link.getAttribute('href') || '';
+                if (!href || href === '#') return;
+                link.addEventListener('click', function() {
+                    showGananaLoader();
+                });
+            });
+
+            // Attach to main form submit
+            document.querySelectorAll('form:not([id="dasaForm"])').forEach(function(form) {
+                form.addEventListener('submit', function() {
+                    showGananaLoader();
+                });
+            });
+        });
+
+        // Hide loader on window load and back/forward cache
+        window.addEventListener('load', function() {
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+        });
+
+        window.addEventListener('pageshow', function() {
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
         });
 
     })();

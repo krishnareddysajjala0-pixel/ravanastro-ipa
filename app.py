@@ -899,7 +899,7 @@ def api_device_location():
                 resp = jsonify({"status": "saved", "lat": lat_f, "lon": lon_f, "place": p_place})
                 import urllib.parse
                 cookie_val = urllib.parse.quote(json.dumps({'lat': lat_f, 'lon': lon_f, 'place': p_place}))
-                resp.set_cookie('device_loc', cookie_val, max_age=365*24*3600, path='/')
+                resp.set_cookie('device_loc', cookie_val, max_age=365*24*3600, path='/', samesite='Lax')
                 return resp
             except (ValueError, TypeError):
                 pass
@@ -2903,10 +2903,6 @@ def get_daily_panchangam_basic(jd, lat, lon, local_tz, local_midnight, calc_end_
 
 @app.route("/daily_panchangam", methods=["GET", "POST"])
 def daily_panchangam():
-    today = datetime.datetime.now()
-    dob = today.strftime("%Y-%m-%d")
-    tob = today.strftime("%H:%M")
-
     # 1. Resolve default place, lat, lon from device cookie or session
     default_place = "Hyderabad, Telangana"
     default_lat = 17.3850
@@ -2938,16 +2934,22 @@ def daily_panchangam():
     lon = default_lon
 
     # Use parameters from GET or POST, with fallback to default_lat/lon
-    dob = request.values.get("dob") or dob
-    tob = request.values.get("tob") or tob
-    place = request.values.get("place") or place
     lat_str = request.values.get("lat")
     lon_str = request.values.get("lon")
     
     lat = float(lat_str) if lat_str else lat
     lon = float(lon_str) if lon_str else lon
+    place = request.values.get("place") or place
+
+    # Determine Timezone based on Latitude and Longitude
+    timezone_str = get_timezone_str(lat, lon)
+    local_tz = pytz.timezone(timezone_str)
+    now_local = datetime.datetime.now(local_tz)
+
+    dob = request.values.get("dob") or now_local.strftime("%Y-%m-%d")
+    tob = request.values.get("tob") or now_local.strftime("%H:%M")
     
-    if place in ["Current Location", "Unknown Location", ""] and lat_str and lon_str:
+    if (not place or place in ["Current Location", "Unknown Location", ""]) and lat and lon:
         cache_key = (round(lat, 3), round(lon, 3))
         if cache_key in REVERSE_GEO_CACHE:
             place = REVERSE_GEO_CACHE[cache_key].get("display_name", place)
@@ -2960,11 +2962,6 @@ def daily_panchangam():
                     min_dist = dist
                     best_name = c["display_name"]
             place = best_name
-    
-    # Determine Timezone based on Latitude and Longitude
-    timezone_str = get_timezone_str(lat, lon)
-        
-    local_tz = pytz.timezone(timezone_str)
     try:
         dt_parts = dob.split("-")
         dob_display = f"{dt_parts[2]}-{dt_parts[1]}-{dt_parts[0]}" if len(dt_parts) == 3 else dob
@@ -3199,11 +3196,19 @@ def daily_panchangam():
         panch_data['transit_table'] = []
 
     
-    return render_template(
+    resp = make_response(render_template(
         "daily_panchangam.html",
         dob=dob, dob_display=dob_display, tob=tob, place=place, lat=lat, lon=lon,
         panch=panch_data
-    )
+    ))
+    if (lat_str or dev_cookie) and lat and lon and place and place not in ["Current Location", "Unknown Location"]:
+        try:
+            import urllib.parse
+            c_val = urllib.parse.quote(json.dumps({'lat': round(lat, 4), 'lon': round(lon, 4), 'place': place}))
+            resp.set_cookie('device_loc', c_val, max_age=365*24*3600, path='/', samesite='Lax')
+        except Exception:
+            pass
+    return resp
 
 @app.route("/calendar_view", methods=["GET", "POST"])
 def calendar_view():

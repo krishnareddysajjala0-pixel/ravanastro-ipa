@@ -4525,17 +4525,15 @@ body {
 
     </div>
 
-    <!-- Prabodha Tharangaalu Random Non-Repeating Scrolling Quote Bar -->
+    <!-- Prabodha Tharangaalu Full Quote Display Card with Next Button -->
     <div id="prabodha-quote-ticker" class="prabodha-quote-ticker print-hide" aria-live="polite" style="display: none;">
-      <div class="prabodha-quote-viewport" id="prabodha-quote-viewport">
-        <span id="prabodha-quote-track" class="prabodha-quote-track">
-          <span class="prabodha-quote-badge">
-            <span class="prabodha-quote-sparkle">✨</span>
-            <span class="prabodha-quote-title">{{ _('ప్రబోధ తరంగాలు') }}</span>
-            <span class="prabodha-quote-num-pill">(<span id="prabodha-quote-num"></span>)</span>
-          </span>
-          <span id="prabodha-quote-text" class="prabodha-quote-text"></span>
+      <div class="prabodha-quote-content" id="prabodha-quote-content">
+        <span class="prabodha-quote-badge">
+          <span class="prabodha-quote-sparkle">✨</span>
+          <span class="prabodha-quote-title">{{ _('ప్రబోధ తరంగాలు') }}</span>
+          <span class="prabodha-quote-num-pill">(<span id="prabodha-quote-num"></span>)</span>
         </span>
+        <span id="prabodha-quote-text" class="prabodha-quote-text"></span>
       </div>
       <button type="button" id="prabodha-quote-next-btn" class="prabodha-quote-next-btn" title="{{ _('తరువాతి వాక్యం') }}" aria-label="{{ _('తరువాతి వాక్యం') }}">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
@@ -8022,23 +8020,21 @@ body {
       }
     }
 
-    /* Prabodha Tharangaalu Highlighted Wisdom Quote Bar */
+    /* Prabodha Tharangaalu Highlighted Full Quote Display Card */
     .prabodha-quote-ticker {
       width: 100%;
-      margin-top: 10px;
-      padding: 5px 14px;
-      min-height: 42px;
+      margin-top: 12px;
+      padding: 10px 14px;
       border-radius: 14px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      overflow: hidden;
+      justify-content: space-between;
+      gap: 12px;
       box-sizing: border-box;
       background: linear-gradient(135deg, rgba(26, 16, 61, 0.98) 0%, rgba(46, 26, 107, 0.95) 45%, rgba(15, 23, 42, 0.98) 100%);
       border: 2.5px solid #ef4444 !important;
       animation: prabodha-rainbow-glow 7s linear infinite !important;
       color: #fef08a;
-      cursor: default;
       position: relative;
     }
 
@@ -8049,16 +8045,28 @@ body {
       color: #431407 !important;
     }
 
+    .prabodha-quote-content {
+      flex: 1 1 auto;
+      min-width: 0;
+      white-space: normal !important;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.6 !important;
+      font-size: 14px !important;
+      text-align: left;
+    }
+
     .prabodha-quote-badge {
       display: inline-flex !important;
       align-items: center !important;
       gap: 4px !important;
-      padding: 3px 8px !important;
-      border-radius: 16px !important;
+      padding: 2.5px 8px !important;
+      border-radius: 14px !important;
       font-weight: 800 !important;
-      font-size: 12.5px !important;
-      margin-right: 10px !important;
-      flex-shrink: 0 !important;
+      font-size: 12px !important;
+      margin-right: 8px !important;
+      margin-bottom: 2px !important;
+      vertical-align: middle !important;
       letter-spacing: 0.15px !important;
       background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
       color: #0f172a;
@@ -8075,9 +8083,9 @@ body {
 
     .prabodha-quote-num-pill {
       font-weight: 900 !important;
-      font-size: 12px !important;
-      padding: 1px 5px !important;
-      border-radius: 10px !important;
+      font-size: 11.5px !important;
+      padding: 0 4px !important;
+      border-radius: 8px !important;
       display: inline-block !important;
       background: rgba(15, 23, 42, 0.25);
       color: #0f172a;
@@ -8088,38 +8096,14 @@ body {
       color: #ffffff !important;
     }
 
-    .prabodha-quote-viewport {
-      flex: 1 1 auto;
-      min-width: 0;
-      overflow: hidden;
-      position: relative;
-      white-space: nowrap;
-      padding: 2px 0 !important;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    .prabodha-quote-track {
-      display: inline-flex !important;
-      align-items: center !important;
-      white-space: nowrap !important;
-      font-size: 14.5px !important;
-      font-weight: 700 !important;
-      line-height: 1.75 !important;
-      padding: 2px 0 !important;
-      will-change: transform;
-      animation: prabodha-marquee var(--pq-duration, 18s) linear infinite !important;
-      animation-play-state: running !important;
-    }
-
     .prabodha-quote-text {
       color: #fef08a;
-      font-weight: 700 !important;
-      line-height: 1.75 !important;
-      font-size: 14.5px !important;
+      font-weight: 600 !important;
+      line-height: 1.6 !important;
+      font-size: 14px !important;
       letter-spacing: 0.15px !important;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+      vertical-align: middle;
     }
 
     [data-theme="solar"] .prabodha-quote-text {
@@ -8127,18 +8111,10 @@ body {
       text-shadow: none !important;
     }
 
-    /* Never stop scrolling on mouse hover, click, or touch */
-    .prabodha-quote-ticker:hover .prabodha-quote-track,
-    .prabodha-quote-ticker:active .prabodha-quote-track,
-    .prabodha-quote-ticker:focus .prabodha-quote-track,
-    .prabodha-quote-ticker.paused .prabodha-quote-track {
-      animation-play-state: running !important;
-    }
-
     .prabodha-quote-next-btn {
-      flex: 0 0 30px;
-      width: 30px;
-      height: 30px;
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       border: 1.5px solid #fef08a;
       background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
@@ -8154,13 +8130,13 @@ body {
     }
 
     .prabodha-quote-next-btn:hover {
-      transform: scale(1.12);
+      transform: scale(1.14);
       background: linear-gradient(135deg, #ffd700 0%, #fbbf24 100%);
-      box-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+      box-shadow: 0 0 16px rgba(251, 191, 36, 0.85);
     }
 
     .prabodha-quote-next-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.92);
     }
 
     [data-theme="solar"] .prabodha-quote-next-btn {
@@ -8173,55 +8149,41 @@ body {
     [data-theme="solar"] .prabodha-quote-next-btn:hover {
       background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%) !important;
       border-color: #ffd700 !important;
-      transform: scale(1.12) !important;
+      transform: scale(1.14) !important;
       box-shadow: 0 3px 12px rgba(234, 88, 12, 0.6) !important;
-    }
-
-    @keyframes prabodha-marquee {
-      0% {
-        transform: translateX(var(--pq-start, 100%));
-      }
-      100% {
-        transform: translateX(var(--pq-end, -100%));
-      }
     }
 
     @media (max-width: 600px) {
       .prabodha-quote-ticker {
-        margin-top: 8px;
-        padding: 4px 10px;
-        gap: 6px;
-        min-height: 36px;
+        margin-top: 10px;
+        padding: 8px 10px;
+        gap: 8px;
         border-radius: 12px;
       }
+      .prabodha-quote-content {
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+      }
       .prabodha-quote-badge {
-        font-size: 11.5px !important;
+        font-size: 11px !important;
         padding: 2px 6px !important;
         margin-right: 6px !important;
       }
       .prabodha-quote-num-pill {
-        font-size: 11px !important;
-        padding: 0 3px !important;
-      }
-      .prabodha-quote-track {
-        font-size: 13px !important;
-        line-height: 1.6 !important;
-        padding: 1px 0 !important;
+        font-size: 10.5px !important;
       }
       .prabodha-quote-text {
         font-size: 13px !important;
-        line-height: 1.6 !important;
+        line-height: 1.55 !important;
       }
       .prabodha-quote-next-btn {
-        flex: 0 0 26px;
-        width: 26px;
-        height: 26px;
-        font-size: 11px;
+        flex: 0 0 28px;
+        width: 28px;
+        height: 28px;
       }
-    }
       .prabodha-quote-next-btn svg {
-        width: 15px;
-        height: 15px;
+        width: 14px;
+        height: 14px;
       }
     }
 
@@ -9366,40 +9328,16 @@ if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversa
         return pickedQuote;
     }
 
-    function updateMarqueeMetrics() {
-        var viewport = document.getElementById('prabodha-quote-viewport');
-        var track = document.getElementById('prabodha-quote-track');
-        if (!viewport || !track) return;
-        var vw = viewport.clientWidth || 300;
-        var tw = track.scrollWidth || 300;
-        var duration = Math.max(12, (vw + tw) / 58);
-        track.style.setProperty('--pq-start', vw + 'px');
-        track.style.setProperty('--pq-end', (-tw) + 'px');
-        track.style.setProperty('--pq-duration', duration.toFixed(2) + 's');
-    }
-
     function renderQuote(quote) {
         var ticker = document.getElementById('prabodha-quote-ticker');
         var textEl = document.getElementById('prabodha-quote-text');
         var numEl = document.getElementById('prabodha-quote-num');
-        var track = document.getElementById('prabodha-quote-track');
         if (!ticker || !textEl || !quote) return;
 
         if (numEl) numEl.textContent = quote.id;
         textEl.textContent = quote.text;
         ticker.setAttribute('data-quote-id', String(quote.id));
         ticker.style.display = 'flex';
-
-        if (track) {
-            track.style.animation = 'none';
-            void track.offsetHeight;
-            track.style.animation = '';
-        }
-
-        requestAnimationFrame(updateMarqueeMetrics);
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(updateMarqueeMetrics);
-        }
     }
 
     function fetchQuotes(url) {
@@ -9425,7 +9363,7 @@ if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversa
             });
     }
 
-    // Next quote arrow button listener
+    // Next quote arrow button listener: shows another quote on click
     var nextBtn = document.getElementById('prabodha-quote-next-btn');
     if (nextBtn) {
         nextBtn.addEventListener('click', function(e) {
@@ -9437,9 +9375,6 @@ if (typeof doSharePDF === 'undefined') { function doSharePDF() { triggerUniversa
         });
     }
 
-    // Continuous marquee scrolling without pausing on hover, click, or touch
-
-    window.addEventListener('resize', updateMarqueeMetrics);
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', loadAndShow);
     } else {

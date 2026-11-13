@@ -861,6 +861,84 @@
 
     }
 
+    .place-split-row {
+      display: grid;
+      grid-template-columns: minmax(130px, 37%) 1fr;
+      gap: 10px;
+      position: relative;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .country-box {
+      position: relative;
+    }
+
+    .country-box::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: var(--text-muted);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .country-select {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding: 14px 28px 14px 40px;
+      border-radius: 14px;
+      border: 2px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-main);
+      font-size: 14.5px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .country-select:focus {
+      outline: none;
+      border-color: var(--input-focus-border);
+      box-shadow: var(--input-focus-shadow), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      background: var(--card-bg);
+    }
+
+    [data-theme="solar"] .country-select {
+      background: #ffffff;
+      color: #291303;
+    }
+
+    [data-theme="solar"] .country-select option {
+      background: #ffffff;
+      color: #451a03;
+    }
+
+    @media (max-width: 600px) {
+      .place-split-row {
+        grid-template-columns: minmax(110px, 38%) 1fr !important;
+        gap: 8px !important;
+      }
+      .country-select {
+        padding: 12px 24px 12px 34px !important;
+        font-size: 13.5px !important;
+      }
+    }
+
 
 
     .suggestions {
@@ -2221,15 +2299,142 @@ body {
 
                 <label for="place1" class="required-field"><i class="fas fa-map-marker-alt"></i> {{ _('జన్మ స్థలం') }}</label>
 
-                <div class="input-container">
+                <div class="place-split-row">
+                  <div class="input-container country-box">
+                    <div class="input-icon"><i class="fas fa-globe-asia"></i></div>
+                    <select id="country1" name="country1" class="country-select" aria-label="Country">
+                      <option value="in" selected>India</option>
+                      <option value="af">Afghanistan</option>
+                      <option value="al">Albania</option>
+                      <option value="dz">Algeria</option>
+                      <option value="ad">Andorra</option>
+                      <option value="ao">Angola</option>
+                      <option value="ar">Argentina</option>
+                      <option value="am">Armenia</option>
+                      <option value="au">Australia</option>
+                      <option value="at">Austria</option>
+                      <option value="az">Azerbaijan</option>
+                      <option value="bh">Bahrain</option>
+                      <option value="bd">Bangladesh</option>
+                      <option value="by">Belarus</option>
+                      <option value="be">Belgium</option>
+                      <option value="bt">Bhutan</option>
+                      <option value="bo">Bolivia</option>
+                      <option value="ba">Bosnia and Herzegovina</option>
+                      <option value="bw">Botswana</option>
+                      <option value="br">Brazil</option>
+                      <option value="bn">Brunei</option>
+                      <option value="bg">Bulgaria</option>
+                      <option value="kh">Cambodia</option>
+                      <option value="cm">Cameroon</option>
+                      <option value="ca">Canada</option>
+                      <option value="cl">Chile</option>
+                      <option value="cn">China</option>
+                      <option value="co">Colombia</option>
+                      <option value="cr">Costa Rica</option>
+                      <option value="hr">Croatia</option>
+                      <option value="cu">Cuba</option>
+                      <option value="cy">Cyprus</option>
+                      <option value="cz">Czechia</option>
+                      <option value="dk">Denmark</option>
+                      <option value="do">Dominican Republic</option>
+                      <option value="ec">Ecuador</option>
+                      <option value="eg">Egypt</option>
+                      <option value="ee">Estonia</option>
+                      <option value="et">Ethiopia</option>
+                      <option value="fj">Fiji</option>
+                      <option value="fi">Finland</option>
+                      <option value="fr">France</option>
+                      <option value="ge">Georgia</option>
+                      <option value="de">Germany</option>
+                      <option value="gh">Ghana</option>
+                      <option value="gr">Greece</option>
+                      <option value="gt">Guatemala</option>
+                      <option value="hk">Hong Kong</option>
+                      <option value="hu">Hungary</option>
+                      <option value="is">Iceland</option>
+                      <option value="id">Indonesia</option>
+                      <option value="ir">Iran</option>
+                      <option value="iq">Iraq</option>
+                      <option value="ie">Ireland</option>
+                      <option value="il">Israel</option>
+                      <option value="it">Italy</option>
+                      <option value="jm">Jamaica</option>
+                      <option value="jp">Japan</option>
+                      <option value="jo">Jordan</option>
+                      <option value="kz">Kazakhstan</option>
+                      <option value="ke">Kenya</option>
+                      <option value="kw">Kuwait</option>
+                      <option value="kg">Kyrgyzstan</option>
+                      <option value="la">Laos</option>
+                      <option value="lv">Latvia</option>
+                      <option value="lb">Lebanon</option>
+                      <option value="lt">Lithuania</option>
+                      <option value="lu">Luxembourg</option>
+                      <option value="my">Malaysia</option>
+                      <option value="mv">Maldives</option>
+                      <option value="mt">Malta</option>
+                      <option value="mu">Mauritius</option>
+                      <option value="mx">Mexico</option>
+                      <option value="md">Moldova</option>
+                      <option value="mn">Mongolia</option>
+                      <option value="ma">Morocco</option>
+                      <option value="mm">Myanmar</option>
+                      <option value="na">Namibia</option>
+                      <option value="np">Nepal</option>
+                      <option value="nl">Netherlands</option>
+                      <option value="nz">New Zealand</option>
+                      <option value="ng">Nigeria</option>
+                      <option value="no">Norway</option>
+                      <option value="om">Oman</option>
+                      <option value="pk">Pakistan</option>
+                      <option value="pa">Panama</option>
+                      <option value="py">Paraguay</option>
+                      <option value="pe">Peru</option>
+                      <option value="ph">Philippines</option>
+                      <option value="pl">Poland</option>
+                      <option value="pt">Portugal</option>
+                      <option value="qa">Qatar</option>
+                      <option value="ro">Romania</option>
+                      <option value="ru">Russia</option>
+                      <option value="sa">Saudi Arabia</option>
+                      <option value="rs">Serbia</option>
+                      <option value="sg">Singapore</option>
+                      <option value="sk">Slovakia</option>
+                      <option value="si">Slovenia</option>
+                      <option value="za">South Africa</option>
+                      <option value="kr">South Korea</option>
+                      <option value="es">Spain</option>
+                      <option value="lk">Sri Lanka</option>
+                      <option value="se">Sweden</option>
+                      <option value="ch">Switzerland</option>
+                      <option value="tw">Taiwan</option>
+                      <option value="tz">Tanzania</option>
+                      <option value="th">Thailand</option>
+                      <option value="tt">Trinidad and Tobago</option>
+                      <option value="tn">Tunisia</option>
+                      <option value="tr">Turkey</option>
+                      <option value="ug">Uganda</option>
+                      <option value="ua">Ukraine</option>
+                      <option value="ae">United Arab Emirates</option>
+                      <option value="gb">United Kingdom</option>
+                      <option value="us">United States</option>
+                      <option value="uy">Uruguay</option>
+                      <option value="uz">Uzbekistan</option>
+                      <option value="ve">Venezuela</option>
+                      <option value="vn">Vietnam</option>
+                      <option value="zm">Zambia</option>
+                      <option value="zw">Zimbabwe</option>
+                    </select>
+                  </div>
 
-                  <div class="input-icon"><i class="fas fa-globe-asia"></i></div>
+                  <div class="input-container place-box">
+                    <div class="input-icon"><i class="fas fa-city"></i></div>
+                    <input type="text" class="place-input" id="place1" name="place1" autocomplete="off" required placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}">
+                  </div>
 
-                  <input type="text" class="place-input" id="place1" name="place1" autocomplete="off" required placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}">
-
+                  <div class="suggestions" id="suggestions1"></div>
                 </div>
-
-                <div class="suggestions" id="suggestions1"></div>
 
                 <input type="hidden" name="lat1" id="lat1">
 
@@ -2317,15 +2522,142 @@ body {
 
                 <label for="place2" class="required-field"><i class="fas fa-map-marker-alt"></i> {{ _('జన్మ స్థలం') }}</label>
 
-                <div class="input-container">
+                <div class="place-split-row">
+                  <div class="input-container country-box">
+                    <div class="input-icon"><i class="fas fa-globe-asia"></i></div>
+                    <select id="country2" name="country2" class="country-select" aria-label="Country">
+                      <option value="in" selected>India</option>
+                      <option value="af">Afghanistan</option>
+                      <option value="al">Albania</option>
+                      <option value="dz">Algeria</option>
+                      <option value="ad">Andorra</option>
+                      <option value="ao">Angola</option>
+                      <option value="ar">Argentina</option>
+                      <option value="am">Armenia</option>
+                      <option value="au">Australia</option>
+                      <option value="at">Austria</option>
+                      <option value="az">Azerbaijan</option>
+                      <option value="bh">Bahrain</option>
+                      <option value="bd">Bangladesh</option>
+                      <option value="by">Belarus</option>
+                      <option value="be">Belgium</option>
+                      <option value="bt">Bhutan</option>
+                      <option value="bo">Bolivia</option>
+                      <option value="ba">Bosnia and Herzegovina</option>
+                      <option value="bw">Botswana</option>
+                      <option value="br">Brazil</option>
+                      <option value="bn">Brunei</option>
+                      <option value="bg">Bulgaria</option>
+                      <option value="kh">Cambodia</option>
+                      <option value="cm">Cameroon</option>
+                      <option value="ca">Canada</option>
+                      <option value="cl">Chile</option>
+                      <option value="cn">China</option>
+                      <option value="co">Colombia</option>
+                      <option value="cr">Costa Rica</option>
+                      <option value="hr">Croatia</option>
+                      <option value="cu">Cuba</option>
+                      <option value="cy">Cyprus</option>
+                      <option value="cz">Czechia</option>
+                      <option value="dk">Denmark</option>
+                      <option value="do">Dominican Republic</option>
+                      <option value="ec">Ecuador</option>
+                      <option value="eg">Egypt</option>
+                      <option value="ee">Estonia</option>
+                      <option value="et">Ethiopia</option>
+                      <option value="fj">Fiji</option>
+                      <option value="fi">Finland</option>
+                      <option value="fr">France</option>
+                      <option value="ge">Georgia</option>
+                      <option value="de">Germany</option>
+                      <option value="gh">Ghana</option>
+                      <option value="gr">Greece</option>
+                      <option value="gt">Guatemala</option>
+                      <option value="hk">Hong Kong</option>
+                      <option value="hu">Hungary</option>
+                      <option value="is">Iceland</option>
+                      <option value="id">Indonesia</option>
+                      <option value="ir">Iran</option>
+                      <option value="iq">Iraq</option>
+                      <option value="ie">Ireland</option>
+                      <option value="il">Israel</option>
+                      <option value="it">Italy</option>
+                      <option value="jm">Jamaica</option>
+                      <option value="jp">Japan</option>
+                      <option value="jo">Jordan</option>
+                      <option value="kz">Kazakhstan</option>
+                      <option value="ke">Kenya</option>
+                      <option value="kw">Kuwait</option>
+                      <option value="kg">Kyrgyzstan</option>
+                      <option value="la">Laos</option>
+                      <option value="lv">Latvia</option>
+                      <option value="lb">Lebanon</option>
+                      <option value="lt">Lithuania</option>
+                      <option value="lu">Luxembourg</option>
+                      <option value="my">Malaysia</option>
+                      <option value="mv">Maldives</option>
+                      <option value="mt">Malta</option>
+                      <option value="mu">Mauritius</option>
+                      <option value="mx">Mexico</option>
+                      <option value="md">Moldova</option>
+                      <option value="mn">Mongolia</option>
+                      <option value="ma">Morocco</option>
+                      <option value="mm">Myanmar</option>
+                      <option value="na">Namibia</option>
+                      <option value="np">Nepal</option>
+                      <option value="nl">Netherlands</option>
+                      <option value="nz">New Zealand</option>
+                      <option value="ng">Nigeria</option>
+                      <option value="no">Norway</option>
+                      <option value="om">Oman</option>
+                      <option value="pk">Pakistan</option>
+                      <option value="pa">Panama</option>
+                      <option value="py">Paraguay</option>
+                      <option value="pe">Peru</option>
+                      <option value="ph">Philippines</option>
+                      <option value="pl">Poland</option>
+                      <option value="pt">Portugal</option>
+                      <option value="qa">Qatar</option>
+                      <option value="ro">Romania</option>
+                      <option value="ru">Russia</option>
+                      <option value="sa">Saudi Arabia</option>
+                      <option value="rs">Serbia</option>
+                      <option value="sg">Singapore</option>
+                      <option value="sk">Slovakia</option>
+                      <option value="si">Slovenia</option>
+                      <option value="za">South Africa</option>
+                      <option value="kr">South Korea</option>
+                      <option value="es">Spain</option>
+                      <option value="lk">Sri Lanka</option>
+                      <option value="se">Sweden</option>
+                      <option value="ch">Switzerland</option>
+                      <option value="tw">Taiwan</option>
+                      <option value="tz">Tanzania</option>
+                      <option value="th">Thailand</option>
+                      <option value="tt">Trinidad and Tobago</option>
+                      <option value="tn">Tunisia</option>
+                      <option value="tr">Turkey</option>
+                      <option value="ug">Uganda</option>
+                      <option value="ua">Ukraine</option>
+                      <option value="ae">United Arab Emirates</option>
+                      <option value="gb">United Kingdom</option>
+                      <option value="us">United States</option>
+                      <option value="uy">Uruguay</option>
+                      <option value="uz">Uzbekistan</option>
+                      <option value="ve">Venezuela</option>
+                      <option value="vn">Vietnam</option>
+                      <option value="zm">Zambia</option>
+                      <option value="zw">Zimbabwe</option>
+                    </select>
+                  </div>
 
-                <div class="input-icon"><i class="fas fa-globe-asia"></i></div>
+                  <div class="input-container place-box">
+                    <div class="input-icon"><i class="fas fa-city"></i></div>
+                    <input type="text" class="place-input" id="place2" name="place2" autocomplete="off" required placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}">
+                  </div>
 
-                <input type="text" class="place-input" id="place2" name="place2" autocomplete="off" required placeholder="{{ _('గ్రామం, నగరం, రాష్ట్రం') }}">
-
+                  <div class="suggestions" id="suggestions2"></div>
                 </div>
-
-                <div class="suggestions" id="suggestions2"></div>
 
                 <input type="hidden" name="lat2" id="lat2">
 
@@ -2520,124 +2852,106 @@ body {
 
 
 
-    function setupLocation(placeId, suggestionsId, latId, lonId) {
+    function setupLocation(placeId, countryId, suggestionsId, latId, lonId) {
 
         const placeInput = document.getElementById(placeId);
-
+        const countrySelect = document.getElementById(countryId);
         const suggestions = document.getElementById(suggestionsId);
-
         const latInput = document.getElementById(latId);
-
         const lonInput = document.getElementById(lonId);
 
         let timeout = null;
-
         let controller = null;
 
-
-
-        placeInput.addEventListener("input", () => {
-
-            const q = placeInput.value.trim();
-
+        const performSearch = () => {
+            const q = placeInput ? placeInput.value.trim() : "";
             if (timeout) clearTimeout(timeout);
-
             if (q.length < 2) {
-
-                suggestions.style.display = "none";
-
+                if (suggestions) suggestions.style.display = "none";
                 return;
-
             }
 
             timeout = setTimeout(async () => {
-
                 if (controller) controller.abort();
-
                 controller = new AbortController();
 
-                const url = `/api/search_place?q=${encodeURIComponent(q)}`;
+                const cVal = countrySelect ? (countrySelect.value || 'in') : 'in';
+                const url = `/api/search_place?q=${encodeURIComponent(q)}&country=${encodeURIComponent(cVal)}`;
                 try {
-                const res = await fetch(url, { signal: controller.signal });
+                    const res = await fetch(url, { signal: controller.signal });
+                    const data = await res.json();
+                    suggestions.innerHTML = "";
 
-                const data = await res.json();
+                    if (data.length === 0) {
+                        suggestions.innerHTML = `<div style="color: #888; font-style: italic;">{{ _('ఫలితాలు లేవు') }}</div>`;
+                    } else {
+                        data.forEach(p => {
+                            const div = document.createElement("div");
+                            const parts = (p.display_name || '').split(',');
+                            const mainTitle = parts[0].trim();
+                            const subTitle = parts.slice(1).join(',').trim();
+                            div.style.padding = "10px 14px";
+                            div.style.cursor = "pointer";
+                            div.style.borderBottom = "1px solid var(--card-border, rgba(0,0,0,0.08))";
+                            div.innerHTML = `<div style="font-weight: 600; color: var(--text-main, #1e293b); font-size: 14px;">${mainTitle}</div>${subTitle ? `<div style="font-size: 12px; color: var(--text-muted, #64748b); margin-top: 2px;">${subTitle}</div>` : ''}`;
 
-                suggestions.innerHTML = "";
+                            div.onclick = () => {
+                                placeInput.value = p.display_name;
+                                latInput.value = p.lat;
+                                lonInput.value = p.lon;
+                                suggestions.style.display = "none";
 
-                if (data.length === 0) {
+                                if (countrySelect && p.country_code) {
+                                    countrySelect.value = p.country_code.toLowerCase();
+                                }
 
-                    suggestions.innerHTML = `<div style="color: #888; font-style: italic;">{{ _('ఫలితాలు లేవు') }}</div>`;
-
-                } else {
-
-                    data.forEach(p => {
-
-                    const div = document.createElement("div");
-
-                    const parts = (p.display_name || '').split(',');
-                    const mainTitle = parts[0].trim();
-                    const subTitle = parts.slice(1).join(',').trim();
-                    div.style.padding = "10px 14px";
-                    div.style.cursor = "pointer";
-                    div.style.borderBottom = "1px solid var(--card-border, rgba(0,0,0,0.08))";
-                    div.innerHTML = `<div style="font-weight: 600; color: var(--text-main, #1e293b); font-size: 14px;">${mainTitle}</div>${subTitle ? `<div style="font-size: 12px; color: var(--text-muted, #64748b); margin-top: 2px;">${subTitle}</div>` : ''}`;
-
-                    div.onclick = () => {
-
-                        placeInput.value = p.display_name;
-
-                        latInput.value = p.lat;
-
-                        lonInput.value = p.lon;
-
-                        suggestions.style.display = "none";
-
-                        if (placeId === 'place1') {
-                            try {
-                                localStorage.setItem('astro_device_location', JSON.stringify({
-                                    lat: parseFloat(p.lat), lon: parseFloat(p.lon), place: p.display_name
-                                }));
-                                document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
-                                    lat: parseFloat(p.lat), lon: parseFloat(p.lon), place: p.display_name
-                                })) + "; path=/; max-age=31536000";
-                            } catch(e) {}
-                        }
-
-                    };
-
-                    suggestions.appendChild(div);
-
-                    });
-
-                }
-
-                suggestions.style.display = "block";
-
+                                if (placeId === 'place1') {
+                                    try {
+                                        localStorage.setItem('astro_device_location', JSON.stringify({
+                                            lat: parseFloat(p.lat), lon: parseFloat(p.lon), place: p.display_name, country_code: p.country_code ? p.country_code.toLowerCase() : 'in'
+                                        }));
+                                        document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
+                                            lat: parseFloat(p.lat), lon: parseFloat(p.lon), place: p.display_name
+                                        })) + "; path=/; max-age=31536000";
+                                    } catch(e) {}
+                                }
+                            };
+                            suggestions.appendChild(div);
+                        });
+                    }
+                    suggestions.style.display = "block";
                 } catch (e) {}
-
             }, 300);
+        };
 
-        });
+        if (placeInput) {
+            placeInput.addEventListener("input", performSearch);
+        }
 
-
+        if (countrySelect) {
+            countrySelect.addEventListener("change", () => {
+                if (latInput) latInput.value = "";
+                if (lonInput) lonInput.value = "";
+                if (suggestions) {
+                    suggestions.innerHTML = "";
+                    suggestions.style.display = "none";
+                }
+                const q = placeInput ? placeInput.value.trim() : "";
+                if (q.length >= 2) {
+                    performSearch();
+                }
+            });
+        }
 
         document.addEventListener("click", (e) => {
-
-            if (!placeInput.contains(e.target) && !suggestions.contains(e.target)) {
-
+            if (placeInput && suggestions && !placeInput.contains(e.target) && !suggestions.contains(e.target) && (!countrySelect || !countrySelect.contains(e.target))) {
                 suggestions.style.display = "none";
-
             }
-
         });
-
     }
 
-
-
-    setupLocation("place1", "suggestions1", "lat1", "lon1");
-
-    setupLocation("place2", "suggestions2", "lat2", "lon2");
+    setupLocation("place1", "country1", "suggestions1", "lat1", "lon1");
+    setupLocation("place2", "country2", "suggestions2", "lat2", "lon2");
 
 
 
@@ -2691,22 +3005,28 @@ body {
         fetch(`/api/reverse_geocode?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`)
             .then(r => r.json())
             .then(data => {
-                callback(data && data.display_name ? data.display_name : 'Current Location');
+                if (data && data.display_name) {
+                    callback(data.display_name, data.country_code ? data.country_code.toLowerCase() : 'in');
+                } else {
+                    callback('Current Location', 'in');
+                }
             })
-            .catch(() => callback('Current Location'));
+            .catch(() => callback('Current Location', 'in'));
     }
 
-    function setPersonLocation(num, lat, lon, placeName) {
+    function setPersonLocation(num, lat, lon, placeName, countryCode) {
         const latEl = document.getElementById('lat' + num);
         const lonEl = document.getElementById('lon' + num);
         const placeEl = document.getElementById('place' + num);
+        const cSelect = document.getElementById('country' + num);
         if (latEl) latEl.value = lat;
         if (lonEl) lonEl.value = lon;
         if (placeEl) placeEl.value = placeName;
+        if (cSelect && countryCode) cSelect.value = countryCode.toLowerCase();
     }
 
     function clearLocationFor(num) {
-        setPersonLocation(num, '', '', '');
+        setPersonLocation(num, '', '', '', 'in');
         const sugg = document.getElementById('suggestions' + num);
         if (sugg) {
             sugg.innerHTML = '';
@@ -2718,6 +3038,7 @@ body {
         const placeInput = document.getElementById('place' + num);
         const latInput = document.getElementById('lat' + num);
         const lonInput = document.getElementById('lon' + num);
+        const cSelect = document.getElementById('country' + num);
         const btn = (window.event && window.event.currentTarget) ? window.event.currentTarget : null;
         const origHtml = btn ? btn.innerHTML : '';
         if (btn) btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {{ _("గుర్తిస్తోంది...") }}';
@@ -2733,12 +3054,13 @@ body {
             if (latInput) latInput.value = numLat.toFixed(4);
             if (lonInput) lonInput.value = numLon.toFixed(4);
             if (placeInput) placeInput.value = `Location (${numLat.toFixed(2)}, ${numLon.toFixed(2)})`;
-            reverseGeocode(numLat, numLon, function(placeName) {
+            reverseGeocode(numLat, numLon, function(placeName, countryCode) {
                 if (placeName && placeInput) {
                     placeInput.value = placeName;
+                    if (cSelect && countryCode) cSelect.value = countryCode;
                     try {
                         localStorage.setItem('astro_device_location', JSON.stringify({
-                            lat: numLat, lon: numLon, place: placeName
+                            lat: numLat, lon: numLon, place: placeName, country_code: countryCode || 'in'
                         }));
                         document.cookie = "device_loc=" + encodeURIComponent(JSON.stringify({
                             lat: numLat, lon: numLon, place: placeName
@@ -2796,9 +3118,11 @@ body {
                     const p1 = document.getElementById('place1');
                     const lat1 = document.getElementById('lat1');
                     const lon1 = document.getElementById('lon1');
+                    const c1 = document.getElementById('country1');
                     if (p1 && !p1.value) p1.value = sl.place;
                     if (lat1 && !lat1.value) lat1.value = parseFloat(sl.lat).toFixed(4);
                     if (lon1 && !lon1.value) lon1.value = parseFloat(sl.lon).toFixed(4);
+                    if (c1 && sl.country_code) c1.value = sl.country_code.toLowerCase();
                 }
             }
         } catch(e) {}
@@ -2820,8 +3144,10 @@ body {
                         if (d.display_name && p1 && !p1.value) {
                             p1.value = d.display_name;
                         } else if (p1 && !p1.value) {
-                            reverseGeocode(numLat, numLon, function(placeName) {
+                            reverseGeocode(numLat, numLon, function(placeName, countryCode) {
                                 if (placeName && p1 && !p1.value) p1.value = placeName;
+                                const c1 = document.getElementById('country1');
+                                if (c1 && countryCode) c1.value = countryCode;
                             });
                         }
                     }
@@ -2841,14 +3167,16 @@ body {
                         const lat1El = document.getElementById('lat1');
                         const lon1El = document.getElementById('lon1');
                         const p1El = document.getElementById('place1');
+                        const c1El = document.getElementById('country1');
                         if (lat1El) lat1El.value = numLat.toFixed(4);
                         if (lon1El) lon1El.value = numLon.toFixed(4);
-                        reverseGeocode(numLat, numLon, function(placeName) {
+                        reverseGeocode(numLat, numLon, function(placeName, countryCode) {
                             if (placeName && p1El) {
                                 p1El.value = placeName;
+                                if (c1El && countryCode) c1El.value = countryCode;
                                 try {
                                     localStorage.setItem('astro_device_location', JSON.stringify({
-                                        lat: numLat, lon: numLon, place: placeName
+                                        lat: numLat, lon: numLon, place: placeName, country_code: countryCode || 'in'
                                     }));
                                 } catch(e) {}
                             }

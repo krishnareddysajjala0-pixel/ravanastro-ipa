@@ -18,15 +18,15 @@
 
     <link rel="icon" type="image/png" href="/static/favicon.png">
 
-    <meta name="theme-color" id="theme-color-meta" content="#0c0c0c">
+    <meta name="theme-color" id="theme-color-meta" content="#020617">
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('preferred-theme-v3') || localStorage.getItem('preferred-theme') || 'cosmic';
+          var t = localStorage.getItem('preferred-theme-v3') || localStorage.getItem('preferred-theme') || 'solar';
           if (t === 'solar' || t === 'cosmic') {
             document.documentElement.setAttribute('data-theme', t);
             var m = document.getElementById('theme-color-meta');
-            if (m) m.setAttribute('content', t === 'solar' ? '#ffffff' : '#0c0c0c');
+            if (m) m.setAttribute('content', t === 'solar' ? '#0f172a' : '#020617');
           }
         } catch (e) {}
       })();
@@ -39,7 +39,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box;  }
 
         html { 
-            background-color: #0c0c0c; 
+            background-color: #020617; 
             margin: 0 !important;
             padding: 0 !important;
             border: none !important;
