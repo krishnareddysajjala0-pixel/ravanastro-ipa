@@ -2089,13 +2089,9 @@ body {
         <div class="card">
 
             <div class="header" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-
-                <img src="/static/images/brand_logo.png" alt="Logo" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
-
+                <img src="/static/images/brand_logo.png" alt="" onerror="if(this.src.indexOf('/static/images/')!==-1){this.src='/static/brand_logo.png';}else{this.style.display='none';}" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
                 <h2>{{ _('పంచాంగం') }}</h2>
-
-                <img src="/static/images/brand_logo.png" alt="Logo" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
-
+                <img src="/static/images/brand_logo.png" alt="" onerror="if(this.src.indexOf('/static/images/')!==-1){this.src='/static/brand_logo.png';}else{this.style.display='none';}" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
             </div>
 
             
@@ -2611,6 +2607,7 @@ body {
             }
         }
 
+        var loaderSafetyTimer = null;
         function showLoader() {
             try {
                 playLoadingSound();
@@ -2618,6 +2615,10 @@ body {
             const overlay = document.getElementById('loading-overlay');
             if (overlay) overlay.style.display = 'flex';
             startTyping();
+            if (loaderSafetyTimer) clearTimeout(loaderSafetyTimer);
+            loaderSafetyTimer = setTimeout(function() {
+                if (overlay) overlay.style.display = 'none';
+            }, 4500);
         }
 
         

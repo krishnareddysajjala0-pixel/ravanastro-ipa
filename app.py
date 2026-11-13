@@ -753,10 +753,6 @@ def log_user_data_endpoint():
     """User data logging endpoint has been completely disabled."""
     return jsonify({'status': 'disabled'})
 
-def send_telegram_notification(*args, **kwargs):
-    """Telegram notifications for user data have been disabled."""
-    pass
-
 
 def calculate_anthara_periods(maha_name, start_date, end_date, lagna="", birth_dt=None):
     """Calculate anthara periods for a given Mahadasha"""
@@ -844,8 +840,11 @@ def get_planet_icon(planet_name):
     """Get icon for a planet"""
     return PLANET_ICONS.get(planet_name, "•")
 
-# ---------------- ROUTES ----------------
+# ---------------- ROUTES & FAST IN-MEMORY CACHES ----------------
 IP_LOCATION_CACHE = {"data": None, "timestamp": 0}
+REVERSE_GEO_CACHE = {}
+SEARCH_CACHE = {}
+GLOBAL_TF = None
 
 def get_server_ip_location():
     import time
@@ -1061,6 +1060,10 @@ def api_search_place():
     if not q or len(q) < 2:
         return jsonify([])
     
+    cache_key = (q.lower(), country)
+    if cache_key in SEARCH_CACHE:
+        return jsonify(SEARCH_CACHE[cache_key])
+    
     q_lower = q.lower()
     results = []
     seen = set()
@@ -1109,7 +1112,9 @@ def api_search_place():
     except Exception:
         pass
 
-    return jsonify(results[:10])
+    final_res = results[:10]
+    SEARCH_CACHE[cache_key] = final_res
+    return jsonify(final_res)
 
 @app.route("/api/reverse_geocode")
 def api_reverse_geocode():
@@ -1123,6 +1128,10 @@ def api_reverse_geocode():
         lon_f = float(lon)
     except ValueError:
         return jsonify({"display_name": "Unknown Location"})
+
+    cache_key = (round(lat_f, 3), round(lon_f, 3))
+    if cache_key in REVERSE_GEO_CACHE:
+        return jsonify(REVERSE_GEO_CACHE[cache_key])
 
     try:
         url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat_f}&lon={lon_f}&zoom=10&addressdetails=1"
@@ -1140,7 +1149,9 @@ def api_reverse_geocode():
             country_code = (addr.get("country_code") or "").lower()
             place = ", ".join([p for p in [city, state, country] if p])
             if place:
-                return jsonify({"display_name": place, "city": city, "state": state, "country": country, "country_code": country_code})
+                res_obj = {"display_name": place, "city": city, "state": state, "country": country, "country_code": country_code}
+                REVERSE_GEO_CACHE[cache_key] = res_obj
+                return jsonify(res_obj)
     except Exception:
         pass
 
@@ -1154,7 +1165,9 @@ def api_reverse_geocode():
             min_dist = dist
             best_name = c["display_name"]
             best_cc = c.get("country_code", "")
-    return jsonify({"display_name": best_name, "country_code": best_cc})
+    res_fallback = {"display_name": best_name, "country_code": best_cc}
+    REVERSE_GEO_CACHE[cache_key] = res_fallback
+    return jsonify(res_fallback)
 
 
 @app.route("/")
@@ -1178,32 +1191,31 @@ def set_lang(lang):
 
 
 def get_timezone_str(lat, lon):
+    global GLOBAL_TF
     try:
         lat = float(lat)
         lon = float(lon)
         if 6.0 <= lat <= 38.0 and 68.0 <= lon <= 98.0:
             return "Asia/Kolkata"
-        try:
-            from timezonefinder import TimezoneFinder
-            tf = TimezoneFinder()
-            if hasattr(tf, 'timezone_at'):
-                tz = tf.timezone_at(lat=lat, lng=lon) or tf.timezone_at(lng=lon, lat=lat)
-            elif hasattr(tf, 'certain_timezone_at'):
-                tz = tf.certain_timezone_at(lat=lat, lng=lon)
+        if GLOBAL_TF is None:
+            try:
+                from timezonefinder import TimezoneFinder
+                GLOBAL_TF = TimezoneFinder()
+            except Exception:
+                try:
+                    import timezonefinderL
+                    GLOBAL_TF = timezonefinderL.TimezoneFinder()
+                except Exception:
+                    pass
+        if GLOBAL_TF:
+            if hasattr(GLOBAL_TF, 'timezone_at'):
+                tz = GLOBAL_TF.timezone_at(lat=lat, lng=lon) or GLOBAL_TF.timezone_at(lng=lon, lat=lat)
+            elif hasattr(GLOBAL_TF, 'certain_timezone_at'):
+                tz = GLOBAL_TF.certain_timezone_at(lat=lat, lng=lon)
             else:
                 tz = None
             if tz:
                 return tz
-        except Exception:
-            pass
-        try:
-            import timezonefinderL
-            tf = timezonefinderL.TimezoneFinder()
-            tz = tf.timezone_at(lng=lon, lat=lat)
-            if tz:
-                return tz
-        except Exception:
-            pass
     except Exception as e:
         print("[get_timezone_str error]:", e)
     return "Asia/Kolkata"
@@ -2875,20 +2887,18 @@ def daily_panchangam():
     lon = float(lon_str) if lon_str else 78.4867
     
     if place in ["Current Location", "Unknown Location", ""] and lat_str and lon_str:
-        try:
-            rev_url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=10&addressdetails=1"
-            headers = {"User-Agent": "RavanAstroApp/1.0", "Accept-Language": "en"}
-            r = requests.get(rev_url, headers=headers, timeout=2.0)
-            if r.status_code == 200:
-                addr = r.json().get("address", {})
-                city = _clean_place_part(addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or "")
-                state = _clean_place_part(addr.get("state") or "")
-                country = _clean_place_part(addr.get("country") or "")
-                resolved = ", ".join([p for p in [city, state, country] if p])
-                if resolved:
-                    place = resolved
-        except Exception:
-            pass
+        cache_key = (round(lat, 3), round(lon, 3))
+        if cache_key in REVERSE_GEO_CACHE:
+            place = REVERSE_GEO_CACHE[cache_key].get("display_name", place)
+        else:
+            best_name = f"Location ({lat:.2f}, {lon:.2f})"
+            min_dist = 999999
+            for c in LOCAL_CITIES:
+                dist = abs(c["lat"] - lat) + abs(c["lon"] - lon)
+                if dist < min_dist and dist < 0.6:
+                    min_dist = dist
+                    best_name = c["display_name"]
+            place = best_name
     
     # Determine Timezone based on Latitude and Longitude
     timezone_str = get_timezone_str(lat, lon)
@@ -3339,52 +3349,66 @@ def calendar_view():
         pks_sr = 0 if "శుక్ల" in panch["paksha"] else 1
         t_sr = panch["tithi_full"]
         
-        # Calculate tithis at significant Muhurtas of the day
-        m_ar, pks_ar, t_ar, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(5, 0)))
-        m_md, pks_md, t_md, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(12, 15)))
-        m_ap, pks_ap, t_ap, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(14, 30)))
-        m_pd, pks_pd, t_pd, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(17, 45)))
-        m_ni, pks_ni, t_ni, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(23, 55)))
-        
+        # Calculate tithis at significant Muhurtas only for matching festival months
         # 1. Naraka Chaturdashi (Arunodaya Chaturdashi in Ashwayuja Krishna)
-        if m_ar == "ఆశ్వయుజ" and pks_ar == 1 and t_ar == "చతుర్దశి":
-            day_fests.append("నరక చతుర్దశి")
+        if m_sr == "ఆశ్వయుజ" and t_sr in ("త్రయోదశి", "చతుర్దశి"):
+            m_ar, pks_ar, t_ar, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(5, 0)))
+            if m_ar == "ఆశ్వయుజ" and pks_ar == 1 and t_ar == "చతుర్దశి":
+                day_fests.append("నరక చతుర్దశి")
             
         # 2. Deepavali (Pradosha Amavasya in Ashwayuja Krishna)
-        if m_pd == "ఆశ్వయుజ" and pks_pd == 1 and t_pd == "అమావాస్య":
-            m_prev, pks_prev, t_prev, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt - datetime.timedelta(days=1), datetime.time(17, 45)))
-            if not (m_prev == "ఆశ్వయుజ" and pks_prev == 1 and t_prev == "అమావాస్య"):
-                day_fests.append("దీపావళి")
+        if m_sr == "ఆశ్వయుజ" and t_sr in ("చతుర్దశి", "అమావాస్య"):
+            m_pd, pks_pd, t_pd, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(17, 45)))
+            if m_pd == "ఆశ్వయుజ" and pks_pd == 1 and t_pd == "అమావాస్య":
+                m_prev, pks_prev, t_prev, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt - datetime.timedelta(days=1), datetime.time(17, 45)))
+                if not (m_prev == "ఆశ్వయుజ" and pks_prev == 1 and t_prev == "అమావాస్య"):
+                    day_fests.append("దీపావళి")
                 
         # 3. Maha Shivaratri (Nishitha Chaturdashi in Magha Krishna)
-        if m_ni == "మాఘ" and pks_ni == 1 and t_ni == "చతుర్దశి":
-            day_fests.append("మహా శివరాత్రి")
+        if m_sr == "మాఘ" and t_sr in ("త్రయోదశి", "చతుర్దశి"):
+            m_ni, pks_ni, t_ni, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(23, 55)))
+            if m_ni == "మాఘ" and pks_ni == 1 and t_ni == "చతుర్దశి":
+                day_fests.append("మహా శివరాత్రి")
             
         # 4. Vinayaka Chavithi (Madhyahna Chavithi in Bhadrapada Shukla)
-        if m_md == "భాద్రపద" and pks_md == 0 and t_md == "చవితి":
-            day_fests.append("వినాయక చవితి")
+        if m_sr == "భాద్రపద" and t_sr in ("తదియ", "చవితి"):
+            m_md, pks_md, t_md, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(12, 15)))
+            if m_md == "భాద్రపద" and pks_md == 0 and t_md == "చవితి":
+                day_fests.append("వినాయక చవితి")
             
         # 5. Sri Rama Navami (Madhyahna Navami in Chaitra Shukla)
-        if m_md == "చైత్ర" and pks_md == 0 and t_md == "నవమి":
-            day_fests.append("శ్రీరామ నవమి")
+        if m_sr == "చైత్ర" and t_sr in ("అష్టమి", "నవమి"):
+            m_md, pks_md, t_md, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(12, 15)))
+            if m_md == "చైత్ర" and pks_md == 0 and t_md == "నవమి":
+                day_fests.append("శ్రీరామ నవమి")
             
         # 6. Sri Krishna Janmashtami (Nishitha Ashtami in Sravana Krishna)
-        if m_ni == "శ్రావణ" and pks_ni == 1 and t_ni == "అష్టమి":
-            day_fests.append("శ్రీ కృష్ణాష్టమి (గోకులాష్టమి)")
+        if m_sr == "శ్రావణ" and t_sr in ("సప్తమి", "అష్టమి"):
+            m_ni, pks_ni, t_ni, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(23, 55)))
+            if m_ni == "శ్రావణ" and pks_ni == 1 and t_ni == "అష్టమి":
+                day_fests.append("శ్రీ కృష్ణాష్టమి (గోకులాష్టమి)")
             
         # 7. Vijayadashami (Aparahna Dashami in Ashwayuja Shukla)
-        if m_ap == "ఆశ్వయుజ" and pks_ap == 0 and t_ap == "దశమి":
-            day_fests.append("విజయదశమి (దసరా)")
+        if m_sr == "ఆశ్వయుజ" and t_sr in ("నవమి", "దశమి"):
+            m_ap, pks_ap, t_ap, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(14, 30)))
+            if m_ap == "ఆశ్వయుజ" and pks_ap == 0 and t_ap == "దశమి":
+                day_fests.append("విజయదశమి (దసరా)")
             
         # 8. Kamadahana / Holi (Pradosha Purnima in Phalguna)
-        if m_pd == "ఫాల్గుణ" and pks_pd == 0 and t_pd == "పౌర్ణమి":
-            m_prev_p, pks_prev_p, t_prev_p, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt - datetime.timedelta(days=1), datetime.time(17, 45)))
-            if not (m_prev_p == "ఫాల్గుణ" and pks_prev_p == 0 and t_prev_p == "పౌర్ణమి"):
-                day_fests.append("కామదహనం / హోలీ")
-                
+        if m_sr == "ఫాల్గుణ" and t_sr in ("చతుర్దశి", "పౌర్ణమి"):
+            m_pd, pks_pd, t_pd, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(17, 45)))
+            if m_pd == "ఫాల్గుణ" and pks_pd == 0 and t_pd == "పౌర్ణమి":
+                m_prev_p, pks_prev_p, t_prev_p, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt - datetime.timedelta(days=1), datetime.time(17, 45)))
+                if not (m_prev_p == "ఫాల్గుణ" and pks_prev_p == 0 and t_prev_p == "పౌర్ణమి"):
+                    day_fests.append("కామదహనం / హోలీ")
+            
         # 9. Ugadi (Chaitra Shukla Padyami - Sunrise or daytime Kshaya)
-        if (m_sr == "చైత్ర" and pks_sr == 0 and t_sr == "పాడ్యమి") or (m_sr == "ఫాల్గుణ" and t_sr == "అమావాస్య" and m_md == "చైత్ర" and t_md == "పాడ్యమి"):
+        if m_sr == "చైత్ర" and pks_sr == 0 and t_sr == "పాడ్యమి":
             day_fests.append("ఉగాది")
+        elif m_sr == "ఫాల్గుణ" and t_sr == "అమావాస్య":
+            m_md, _, t_md, _ = get_tithi_info_at_time(datetime.datetime.combine(current_dt, datetime.time(12, 15)))
+            if m_md == "చైత్ర" and t_md == "పాడ్యమి":
+                day_fests.append("ఉగాది")
             
         # 10. Standard Udaya Tithi (Sunrise) Festivals
         sr_key = (m_sr, pks_sr, t_sr)
@@ -3681,11 +3705,10 @@ def nakshatra_chart():
         mobile_num = request.form.get("mobile", "")
         country_code = request.form.get("countryCode", "+91")
         mobile = f"{country_code} {mobile_num}" if mobile_num else ""
-        req_telegram = request.form.get("req_telegram", "no")
         
         session['chart_form'] = {
             'name': name, 'dob': dob, 'tob': tob, 'place': place,
-            'lat': lat, 'lon': lon, 'mobile': mobile, 'req_telegram': req_telegram
+            'lat': lat, 'lon': lon, 'mobile': mobile
         }
     else:
         name = request.args.get("name")
