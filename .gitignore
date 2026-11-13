@@ -31,3 +31,7 @@ node_modules/
 # Large Data
 winapp/sweph.zip
 winapp/sweph/
+
+# User data logging (removed)
+user_data.txt
+user_data*.txt

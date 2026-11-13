@@ -6489,35 +6489,7 @@ body {
 
 
 
-      // Notify backend to record to user_data.txt
 
-
-
-      try {
-
-
-
-        fetch('/log_user_data', {
-
-
-
-          method: 'POST',
-
-
-
-          headers: { 'Content-Type': 'application/json' },
-
-
-
-          body: JSON.stringify(profileData)
-
-
-
-        }).catch(err => console.log('Backend log sync silent catch:', err));
-
-
-
-      } catch (e) {}
 
 
 
@@ -7344,13 +7316,7 @@ body {
       saveProfilesList(profiles);
       renderSavedProfilesList();
 
-      try {
-        fetch('/log_user_data', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newProfile)
-        }).catch(e => console.error(e));
-      } catch(e) {}
+
 
       closeEditProfileModal();
       alert("{{ _('వివరాలు దాచబడ్డాయి!') }}");

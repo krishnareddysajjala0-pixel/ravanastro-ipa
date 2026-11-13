@@ -743,221 +743,19 @@ def is_date_within_range(check_date, start_date_str, end_date_str):
     except:
         return False
 
-# ---------------- GITHUB LOGGING HELPER ----------------
-def log_user_to_github(name, dob, tob, place, mobile=None):
-    """Log user data to user_data.txt using GitHub API or local file."""
-    try:
-        basedir = os.path.dirname(os.path.abspath(__file__))
-        log_file = os.path.join(basedir, "user_data.txt")
-        serial_no = 1
-        
-        # 1. Local Write (Always attempt as local backup)
-        try:
-            if os.path.exists(log_file):
-                with open(log_file, "r", encoding="utf-8") as f:
-                    lines = f.readlines()
-                    for line in reversed(lines):
-                        line = line.strip()
-                        if line and ". " in line:
-                            try:
-                                serial_no = int(line.split(". ")[0]) + 1
-                                break
-                            except Exception:
-                                pass
-            
-            timestamp = datetime.datetime.now().strftime("%d-%b-%Y %H:%M:%S")
-            phone_str = f", Mobile: {mobile}" if mobile else ""
-            log_entry = f"{serial_no}. [{timestamp}] Name: {name}{phone_str}, DOB: {dob}, TOB: {tob}, Place: {place}\n"
-            
-            with open(log_file, "a", encoding="utf-8") as f:
-                f.write(log_entry)
-            print(f"Data stored locally for: {name}")
-        except Exception as e:
-            print(f"Local file write error: {e}")
-
-        final_serial = [serial_no]
-
-        # 2. GitHub API Sync (For Render support)
-        def github_api_sync(entry_name, entry_text):
-            token = os.environ.get("GITHUB_TOKEN")
-            if not token:
-                print("GITHUB_TOKEN not found. Direct GitHub storage is disabled.")
-                return
-
-            repo = "krishnareddysajjala0-pixel/Timeastro"
-            path = "user_data.txt"
-            url_base = f"https://api.github.com/repos/{repo}/contents/{path}"
-            headers = {
-                "Authorization": f"token {token}",
-                "Accept": "application/vnd.github.v3+json",
-                "Cache-Control": "no-cache"
-            }
-
-            max_retries = 3
-            for attempt in range(max_retries):
-                try:
-                    # Cache buster to ensure we get the latest SHA from GitHub
-                    url = f"{url_base}?t={int(time.time() * 1000)}"
-                    
-                    # Get current file content and SHA
-                    res = requests.get(url, headers=headers)
-                    if res.status_code == 200:
-                        file_data = res.json()
-                        current_content_b64 = file_data.get("content", "")
-                        current_content = base64.b64decode(current_content_b64).decode("utf-8")
-                        sha = file_data.get("sha")
-                        
-                        # Determine new serial number for remote file
-                        lines = current_content.splitlines()
-                        remote_serial = 1
-                        for line in reversed(lines):
-                            line = line.strip()
-                            if line and ". " in line:
-                                try:
-                                    remote_serial = int(line.split(". ")[0]) + 1
-                                    break
-                                except Exception:
-                                    pass
-                        
-                        final_serial[0] = remote_serial
-                        
-                        remote_timestamp = datetime.datetime.now().strftime("%d-%b-%Y %H:%M:%S")
-                        new_entry = f"{remote_serial}. [{remote_timestamp}] Name: {entry_name}, DOB: {dob}, TOB: {tob}, Place: {place}\n"
-                        new_content = current_content + (new_entry if current_content.endswith("\n") else "\n" + new_entry)
-                        
-                        # Update file
-                        update_data = {
-                            "message": f"Log user data: {entry_name} (API) [skip ci]",
-                            "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
-                            "sha": sha
-                        }
-                        
-                        put_res = requests.put(url_base, headers=headers, data=json.dumps(update_data))
-                        if put_res.status_code in [200, 201]:
-                            print(f"Successfully stored {entry_name} to GitHub via API.")
-                            break
-                        elif put_res.status_code == 409:
-                            print(f"GitHub API conflict on attempt {attempt + 1}. Retrying...")
-                            time.sleep(1)
-                        else:
-                            print(f"GitHub API update failed: {put_res.text}")
-                            break
-                    else:
-                        print(f"Could not fetch user_data.txt from GitHub API: {res.text}")
-                        break
-                except Exception as e:
-                    print(f"GitHub API storage error: {e}")
-                    break
-
-        # 3. Local Git Sync (For local Windows environment without GITHUB_TOKEN)
-        def local_git_sync(entry_name):
-            try:
-                git_exec = GIT_PATH if os.path.exists(GIT_PATH) else "git"
-                subprocess.run([git_exec, "add", "user_data.txt"], check=True, capture_output=True, cwd=basedir)
-                subprocess.run([git_exec, "commit", "-m", f"Log new user data: {entry_name} [skip ci]"], capture_output=True, cwd=basedir)
-                subprocess.run([git_exec, "push"], check=True, capture_output=True, cwd=basedir)
-                print(f"Successfully pushed {entry_name} to GitHub via local Git.")
-            except Exception as e:
-                print(f"Local Git push failed: {e}")
-
-        # 2. GitHub API Sync (Run synchronously for Vercel/Render serverless reliability)
-        github_api_sync(name, log_entry)
-        
-        # 3. Local Git Sync (Run in background thread since it is local only)
-        try:
-            git_thread = threading.Thread(target=local_git_sync, args=(name,))
-            git_thread.daemon = True
-            git_thread.start()
-        except Exception:
-            pass
-
-        # 4. Telegram Notification (Run in background thread so mobile app is instant)
-        try:
-            tele_thread = threading.Thread(target=send_telegram_notification, args=(name, dob, tob, place, final_serial[0], mobile))
-            tele_thread.daemon = True
-            tele_thread.start()
-        except Exception as te:
-            print(f"Telegram thread error: {te}")
-        
-    except Exception as e:
-        print(f"Critical logging error: {e}")
+# ---------------- USER LOGGING (REMOVED & DISABLED) ----------------
+def log_user_to_github(*args, **kwargs):
+    """User data logging has been completely removed."""
+    pass
 
 @app.route('/log_user_data', methods=['POST'])
 def log_user_data_endpoint():
-    try:
-        data = request.get_json(silent=True) or {}
-        name = data.get('name', '')
-        dob = data.get('dob', '')
-        tob = data.get('tob', '')
-        place = data.get('place', '')
-        mobile = data.get('mobile', None)
-        if name and dob:
-            log_user_to_github(name, dob, tob, place, mobile=mobile)
-        return jsonify({'status': 'success'})
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 400
+    """User data logging endpoint has been completely disabled."""
+    return jsonify({'status': 'disabled'})
 
-
-DEFAULT_TELEGRAM_BOT_TOKEN = "8288114667:AAG6l1GiHwDf0dz9DITMQi-cdxAZJjHJmMU"
-DEFAULT_TELEGRAM_CHAT_ID = "5716746325"
-
-def send_telegram_notification(name, dob, tob, place, serial_no=None, mobile=None):
-    """Send user details to Telegram Bot channel/chat."""
-    token = os.environ.get("TELEGRAM_BOT_TOKEN") or DEFAULT_TELEGRAM_BOT_TOKEN
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID") or DEFAULT_TELEGRAM_CHAT_ID
-    if not token or not chat_id:
-        print("TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not configured. Skipping notification.")
-        return
-
-    # Fallback to calculate serial number locally if not passed
-    if not serial_no:
-        try:
-            basedir = os.path.dirname(os.path.abspath(__file__))
-            log_file = os.path.join(basedir, "user_data.txt")
-            if os.path.exists(log_file):
-                with open(log_file, "r", encoding="utf-8") as f:
-                    lines = f.readlines()
-                    for line in reversed(lines):
-                        line = line.strip()
-                        if line and ". " in line:
-                            try:
-                                serial_no = int(line.split(". ")[0])
-                                break
-                            except Exception:
-                                pass
-        except Exception:
-            pass
-
-    try:
-        serial_line = f"🔢 *Serial Number:* {serial_no}\n" if serial_no else ""
-        phone_line = f"📱 *Mobile:* {mobile}\n" if mobile else ""
-        message = (
-            f"🌟 *New User Query on Android app!*\n\n"
-            f"{serial_line}"
-            f"👤 *Name:* {name}\n"
-            f"{phone_line}"
-            f"📅 *DOB:* {dob}\n"
-            f"⏰ *TOB:* {tob}\n"
-            f"📍 *Place:* {place}"
-        )
-        url = f"https://api.telegram.org/bot{token}/sendMessage"
-        payload = {
-            "chat_id": chat_id,
-            "text": message,
-            "parse_mode": "Markdown"
-        }
-        
-        try:
-            res = requests.post(url, json=payload, timeout=10)
-            if res.status_code == 200:
-                print("Telegram notification sent successfully!")
-            else:
-                print(f"Telegram notification failed: {res.text}")
-        except Exception as api_e:
-            print(f"Telegram API error: {api_e}")
-            
-    except Exception as e:
-        print(f"Failed to send Telegram notification: {e}")
+def send_telegram_notification(*args, **kwargs):
+    """Telegram notifications for user data have been disabled."""
+    pass
 
 
 def calculate_anthara_periods(maha_name, start_date, end_date, lagna="", birth_dt=None):
@@ -1926,9 +1724,6 @@ def chart():
     lat = float(lat)
     lon = float(lon)
     
-    # Log User query to GitHub
-    log_user_to_github(name, dob, tob, place)
-
     data = get_kundali_data(name, dob, tob, place, lat, lon)
 
     # Store birth info in session for other pages
@@ -1993,9 +1788,6 @@ def compare_results():
 
     nakshatra_boxes1 = build_nakshatra_pada_boxes(data1)
     nakshatra_boxes2 = build_nakshatra_pada_boxes(data2)
-
-    log_user_to_github(name1 + " (Compare 1)", dob1, tob1, place1)
-    log_user_to_github(name2 + " (Compare 2)", dob2, tob2, place2)
 
     dasha_data1 = get_dasha_info(data1) if isinstance(data1, dict) else {}
     dasha_data2 = get_dasha_info(data2) if isinstance(data2, dict) else {}
@@ -3874,8 +3666,6 @@ def nakshatra_chart():
             'name': name, 'dob': dob, 'tob': tob, 'place': place,
             'lat': lat, 'lon': lon, 'mobile': mobile, 'req_telegram': req_telegram
         }
-        if name and dob:
-            log_user_to_github(name, dob, tob, place, mobile=mobile)
     else:
         name = request.args.get("name")
         dob = request.args.get("dob")
