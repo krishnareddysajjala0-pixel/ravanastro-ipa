@@ -1600,7 +1600,7 @@
 
       .page-header {
 
-        margin: 0 auto 4px auto !important;
+        margin: 4.5em auto 4px auto !important; /* Top leave 4 lines space */
 
       }
 
@@ -1614,6 +1614,8 @@
 
         font-size: 20px !important;
 
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+
       }
 
       .sub-title {
@@ -1624,11 +1626,13 @@
 
         margin-top: 2px !important;
 
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+
       }
 
       .chart-container {
 
-        border: 2px solid #000 !important;
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
 
         box-shadow: none !important;
 
@@ -1648,7 +1652,7 @@
 
       .nak-box {
 
-        border: 1.5px solid #222 !important;
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
 
         background: #ffffff !important;
 
@@ -1660,7 +1664,7 @@
 
       .center-box {
 
-        border: 2px solid #222 !important;
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
 
         background: #fafafa !important;
 
@@ -1674,13 +1678,28 @@
 
       }
 
+      .center-box,
+      .center-box table,
+      .center-box table td,
+      .center-content,
+      .center-content table,
+      .center-content table td,
+      .center-label,
+      .center-value {
+
+        font-size: 12px !important; /* Center box text size */
+
+        line-height: 1.35 !important;
+
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+
+      }
+
       .center-label {
 
         color: #713f12 !important; /* Dark golden bronze for clear readability in print/PDF */
 
         font-weight: 800 !important;
-
-        font-size: 11px !important;
 
       }
 
@@ -1689,8 +1708,6 @@
         color: #09090b !important; /* Deep dark black for clear reading */
 
         font-weight: 800 !important;
-
-        font-size: 11px !important;
 
       }
 
@@ -1840,17 +1857,25 @@
 
       /* PRESERVE EXACT PLANET COLORS IN PRINT / PDF */
 
-      .occupant-pill {
+      .occupant-pill,
+      .planet-name-pill,
+      .aspect-hand {
 
         font-weight: 900 !important;
 
-        font-size: 10.5px !important;
+        font-size: 12px !important; /* Planet names text size EQUAL to center box text size */
 
         padding: 0 2.5px !important;
 
-        line-height: 1.2 !important;
+        line-height: 1.25 !important;
 
         text-shadow: none !important;
+
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
 
       }
 
@@ -1858,11 +1883,11 @@
 
         font-weight: 800 !important;
 
-        font-size: 9.5px !important;
-
       }
 
-      .lagna-occupant {
+      /* LAGNAM NAMES SAME SIZE AS PLANET NAMES */
+      .lagna-occupant,
+      .occupant-pill.lagna-occupant {
 
         color: #b45309 !important;
 
@@ -1872,114 +1897,154 @@
 
         font-weight: 900 !important;
 
-        font-size: 9.5px !important;
+        font-size: 12px !important; /* Lagnam names same size as planet names */
 
-        padding: 0 2px !important;
+        padding: 0 2.5px !important;
+
+        line-height: 1.25 !important;
+
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+
+        -webkit-print-color-adjust: exact !important;
+
+        print-color-adjust: exact !important;
 
       }
 
+      /* DEGREES TEXT: REDUCED TO HALF OF PLANET NAME TEXT SIZE (12px / 2 = 6px) */
+      .planet-deg-suffix,
+      .occupant-pill .planet-deg-suffix,
+      .full-deg,
+      .short-deg,
+      .center-box .full-deg,
+      .center-box .short-deg,
+      .center-box small {
 
+        font-size: 6px !important;
+
+        font-size: 0.5em !important; /* exactly half of planet name text size */
+
+        font-weight: normal !important;
+
+        opacity: 0.85 !important;
+
+        vertical-align: baseline !important;
+
+        letter-spacing: -0.2px !important;
+
+      }
 
       .chart-grid {
         gap: 4px !important;
         padding: 2px !important;
       }
 
-      /* Print Colors: Punyam (Dark Green), Papam (Dark Red), Mixed (Top/Left Dark Green + Right/Bottom Dark Red), Lagna (Dark Green Border + Gold Glow) */
+      /* Box Colours matching HTML: Punyam (#10b981), Papam (#ef4444), Mixed (#10b981 / #ef4444), Lagna (#facc15 + #10b981) */
+      .nak-box.house-green,
       .house-green {
-        border: 3.5px solid #006400 !important;
+        border: 2.5px solid #10b981 !important;
         background: #f0fdf4 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .house-green .nak-box-header {
         background: #dcfce7 !important;
-        border-bottom: 2px solid #006400 !important;
+        border-bottom: 2px solid #10b981 !important;
       }
 
       .house-green .karma-badge-small {
-        color: #006400 !important;
+        color: #10b981 !important;
         background: #bbf7d0 !important;
-        border: 1.5px solid #006400 !important;
+        border: 1.5px solid #10b981 !important;
         font-weight: 800 !important;
       }
 
+      .nak-box.house-red,
       .house-red {
-        border: 3.5px solid #990000 !important;
+        border: 2.5px solid #ef4444 !important;
         background: #fef2f2 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .house-red .nak-box-header {
         background: #fee2e2 !important;
-        border-bottom: 2px solid #990000 !important;
+        border-bottom: 2px solid #ef4444 !important;
       }
 
       .house-red .karma-badge-small {
-        color: #990000 !important;
+        color: #ef4444 !important;
         background: #fecaca !important;
-        border: 1.5px solid #990000 !important;
+        border: 1.5px solid #ef4444 !important;
         font-weight: 800 !important;
       }
 
+      .nak-box.house-mixed,
       .house-mixed {
-        border-top: 3.5px solid #006400 !important;
-        border-left: 3.5px solid #006400 !important;
-        border-right: 3.5px solid #990000 !important;
-        border-bottom: 3.5px solid #990000 !important;
+        border-top: 2.5px solid #10b981 !important;
+        border-left: 2.5px solid #10b981 !important;
+        border-right: 2.5px solid #ef4444 !important;
+        border-bottom: 2.5px solid #ef4444 !important;
         background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .house-mixed .nak-box-header {
         background: linear-gradient(90deg, #dcfce7 0%, #fee2e2 100%) !important;
-        border-bottom: 2px solid #b45309 !important;
+        border-bottom: 2px solid #ca8a04 !important;
       }
 
       .house-mixed .karma-badge-small {
         background: linear-gradient(90deg, #bbf7d0 0%, #fecaca 100%) !important;
         color: #0f172a !important;
-        border: 1.5px solid #b45309 !important;
+        border: 1.5px solid #ca8a04 !important;
         font-weight: 800 !important;
       }
 
       /* Lagnam Box: Yellow Outer Border + Green Inner Line */
       .nak-box.lagna-box {
-        border: 3.5px solid #eab308 !important;
+        border: 3.5px solid #facc15 !important;
+        background: #ffffff !important;
         position: relative !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .nak-box.lagna-box::after {
         content: "" !important;
         position: absolute !important;
         inset: 2px !important;
-        border: 2.5px solid #006400 !important;
-        border-radius: 6px !important;
+        border: 2.5px solid #10b981 !important;
+        border-radius: 7px !important;
         pointer-events: none !important;
         z-index: 2 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .nak-box.lagna-box .nak-box-header {
-
         background: #fef3c7 !important;
-
-        border-bottom: 2.5px solid #b45309 !important;
-
+        border-bottom: 2px solid #fbbf24 !important;
       }
 
       .nak-box.lagna-box .house-badge {
-
         background: #b45309 !important;
-
         color: #ffffff !important;
-
         font-weight: 900 !important;
-
       }
 
       .nak-box.lagna-box .rashi-title-text {
-
         color: #78350f !important;
-
         font-weight: 900 !important;
+      }
 
+      .nak-box:not(.house-green):not(.house-red):not(.house-mixed):not(.lagna-box) {
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
 
@@ -3097,20 +3162,19 @@ html, body {
 @media print {
   @page {
     size: A4 portrait !important;
-    margin: 4mm !important;
+    margin: 6mm 8mm !important;
   }
 
   html, body {
     width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
-    max-height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow: hidden !important;
     background: #ffffff !important;
     color: #000000 !important;
-    font-size: 8px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .container {
@@ -3138,22 +3202,24 @@ html, body {
   }
 
   .page-header {
-    margin: 0 0 2mm 0 !important;
+    margin: 4.5em auto 4px auto !important; /* Top leave 4 lines space */
     padding: 0 !important;
   }
 
-  .page-header h1 {
-    font-size: 14px !important;
+  .page-header h1,
+  .page-header .main-title {
+    font-size: 20px !important;
     margin: 0 0 1mm 0 !important;
     color: #000000 !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
 
   .chart-container {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 1mm !important;
-    border: 1.5px solid #000 !important;
+    padding: 2px !important;
+    border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
     box-shadow: none !important;
     background: #ffffff !important;
     page-break-inside: avoid !important;
@@ -3166,69 +3232,380 @@ html, body {
   .chart-grid {
     width: 100% !important;
     min-width: 0 !important;
-    gap: 1mm !important;
+    gap: 3px !important;
     grid-template-columns: repeat(4, 1fr) !important;
   }
 
   .nak-box {
-    border: 1px solid #333 !important;
-    border-radius: 4px !important;
+    min-height: 155px !important;
+    border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+    border-radius: 6px !important;
     padding: 1px !important;
     background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .center-box {
+    border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+    background: #fafafa !important;
+    padding: 4px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .center-box,
+  .center-box table,
+  .center-box table td,
+  .center-content,
+  .center-content table,
+  .center-content table td,
+  .center-label,
+  .center-value {
+    font-size: 12px !important; /* Center box text size */
+    line-height: 1.35 !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
 
   .nak-box-header {
-    padding: 1px 2px !important;
-    border-bottom: 1px solid #666 !important;
+    padding: 2px 4px !important;
+    border-bottom: 1.5px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .house-badge, .karma-badge-small {
-    font-size: 7px !important;
+    font-size: 8.5px !important;
     padding: 0 2px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .rashi-title-text {
-    font-size: 8.5px !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
     color: #000000 !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
 
   .nak-name-cell {
     min-width: 14px !important;
-    max-width: 20px !important;
+    max-width: 22px !important;
     padding: 0.5px !important;
     border-right: 1px solid #888 !important;
   }
 
   .nak-name-text {
-    font-size: 7px !important;
-    line-height: 1.0 !important;
+    font-size: 8px !important;
+    line-height: 1.05 !important;
     color: #451a03 !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
 
   .pada-row {
-    font-size: 7px !important;
-    gap: 1px !important;
+    font-size: 12px !important;
+    gap: 2px !important;
+    line-height: 1.25 !important;
+    padding: 0.5px 0 !important;
   }
 
   .pada-num {
-    width: 9px !important;
-    height: 9px !important;
-    min-width: 9px !important;
-    font-size: 6.5px !important;
+    width: 13px !important;
+    height: 13px !important;
+    min-width: 13px !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
   }
 
-  .occupant-pill {
-    font-size: 7px !important;
-    padding: 0 !important;
+  /* Planet names text size EQUAL to center box text size */
+  .occupant-pill,
+  .planet-name-pill,
+  .aspect-hand {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    font-weight: 900 !important;
+    padding: 0 1.5px !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  .center-table {
-    font-size: 7px !important;
+  /* Lagnam names same size as planet names */
+  .lagna-occupant,
+  .occupant-pill.lagna-occupant {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    font-weight: 900 !important;
+    padding: 0 1.5px !important;
+    color: #b45309 !important;
+    background: #fef3c7 !important;
+    border: 1px solid #d97706 !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  .center-table th, .center-table td {
-    padding: 1px 2px !important;
+  /* Degrees text: reduce to half of planet name text size (12px / 2 = 6px) */
+  .planet-deg-suffix,
+  .occupant-pill .planet-deg-suffix,
+  .full-deg,
+  .short-deg,
+  .center-box .full-deg,
+  .center-box .short-deg,
+  .center-box small {
+    font-size: 6px !important;
+    font-size: 0.5em !important;
+    font-weight: normal !important;
+    opacity: 0.85 !important;
+    vertical-align: baseline !important;
   }
+
+  /* Box Colours Matching HTML */
+  .nak-box.house-green,
+  .house-green {
+    border: 2.5px solid #10b981 !important;
+    background: #f0fdf4 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .house-green .nak-box-header {
+    background: #dcfce7 !important;
+    border-bottom: 2px solid #10b981 !important;
+  }
+  .house-green .karma-badge-small {
+    color: #10b981 !important;
+    background: #bbf7d0 !important;
+    border: 1.5px solid #10b981 !important;
+    font-weight: 800 !important;
+  }
+
+  .nak-box.house-red,
+  .house-red {
+    border: 2.5px solid #ef4444 !important;
+    background: #fef2f2 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .house-red .nak-box-header {
+    background: #fee2e2 !important;
+    border-bottom: 2px solid #ef4444 !important;
+  }
+  .house-red .karma-badge-small {
+    color: #ef4444 !important;
+    background: #fecaca !important;
+    border: 1.5px solid #ef4444 !important;
+    font-weight: 800 !important;
+  }
+
+  .nak-box.house-mixed,
+  .house-mixed {
+    border-top: 2.5px solid #10b981 !important;
+    border-left: 2.5px solid #10b981 !important;
+    border-right: 2.5px solid #ef4444 !important;
+    border-bottom: 2.5px solid #ef4444 !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .house-mixed .nak-box-header {
+    background: linear-gradient(90deg, #dcfce7 0%, #fee2e2 100%) !important;
+    border-bottom: 2px solid #ca8a04 !important;
+  }
+  .house-mixed .karma-badge-small {
+    background: linear-gradient(90deg, #bbf7d0 0%, #fecaca 100%) !important;
+    color: #0f172a !important;
+    border: 1.5px solid #ca8a04 !important;
+    font-weight: 800 !important;
+  }
+
+  .nak-box.lagna-box {
+    border: 3.5px solid #facc15 !important;
+    background: #ffffff !important;
+    position: relative !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .nak-box.lagna-box::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 2px !important;
+    border: 2.5px solid #10b981 !important;
+    border-radius: 7px !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .nak-box.lagna-box .nak-box-header {
+    background: #fef3c7 !important;
+    border-bottom: 2px solid #fbbf24 !important;
+  }
+  .nak-box.lagna-box .house-badge {
+    background: #b45309 !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+  }
+  .nak-box.lagna-box .rashi-title-text {
+    color: #78350f !important;
+    font-weight: 900 !important;
+  }
+
+  .nak-box:not(.house-green):not(.house-red):not(.house-mixed):not(.lagna-box) {
+    border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+    background: #ffffff !important;
+  }
+}
+
+/* ===== MOBILE PDF RENDERING SUPPORT ===== */
+body.mobile-pdf-rendering .page-header {
+  margin: 4.5em auto 4px auto !important;
+}
+
+body.mobile-pdf-rendering .center-box,
+body.mobile-pdf-rendering .center-box table,
+body.mobile-pdf-rendering .center-box table td,
+body.mobile-pdf-rendering .center-content,
+body.mobile-pdf-rendering .center-content table,
+body.mobile-pdf-rendering .center-content table td,
+body.mobile-pdf-rendering .center-label,
+body.mobile-pdf-rendering .center-value {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+}
+
+body.mobile-pdf-rendering .occupant-pill,
+body.mobile-pdf-rendering .planet-name-pill,
+body.mobile-pdf-rendering .aspect-hand {
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+  font-weight: 900 !important;
+  font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+}
+
+body.mobile-pdf-rendering .lagna-occupant,
+body.mobile-pdf-rendering .occupant-pill.lagna-occupant {
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+  font-weight: 900 !important;
+  font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+}
+
+body.mobile-pdf-rendering .planet-deg-suffix,
+body.mobile-pdf-rendering .occupant-pill .planet-deg-suffix,
+body.mobile-pdf-rendering .full-deg,
+body.mobile-pdf-rendering .short-deg,
+body.mobile-pdf-rendering .center-box .full-deg,
+body.mobile-pdf-rendering .center-box .short-deg,
+body.mobile-pdf-rendering .center-box small {
+  font-size: 6px !important;
+  font-size: 0.5em !important;
+  font-weight: normal !important;
+  opacity: 0.85 !important;
+  vertical-align: baseline !important;
+}
+
+body.mobile-pdf-rendering .nak-box.house-green,
+body.mobile-pdf-rendering .house-green {
+  border: 2.5px solid #10b981 !important;
+  background: #f0fdf4 !important;
+}
+
+body.mobile-pdf-rendering .house-green .nak-box-header {
+  background: #dcfce7 !important;
+  border-bottom: 2px solid #10b981 !important;
+}
+
+body.mobile-pdf-rendering .house-green .karma-badge-small {
+  color: #10b981 !important;
+  background: #bbf7d0 !important;
+  border: 1.5px solid #10b981 !important;
+  font-weight: 800 !important;
+}
+
+body.mobile-pdf-rendering .nak-box.house-red,
+body.mobile-pdf-rendering .house-red {
+  border: 2.5px solid #ef4444 !important;
+  background: #fef2f2 !important;
+}
+
+body.mobile-pdf-rendering .house-red .nak-box-header {
+  background: #fee2e2 !important;
+  border-bottom: 2px solid #ef4444 !important;
+}
+
+body.mobile-pdf-rendering .house-red .karma-badge-small {
+  color: #ef4444 !important;
+  background: #fecaca !important;
+  border: 1.5px solid #ef4444 !important;
+  font-weight: 800 !important;
+}
+
+body.mobile-pdf-rendering .nak-box.house-mixed,
+body.mobile-pdf-rendering .house-mixed {
+  border-top: 2.5px solid #10b981 !important;
+  border-left: 2.5px solid #10b981 !important;
+  border-right: 2.5px solid #ef4444 !important;
+  border-bottom: 2.5px solid #ef4444 !important;
+  background: #ffffff !important;
+}
+
+body.mobile-pdf-rendering .house-mixed .nak-box-header {
+  background: linear-gradient(90deg, #dcfce7 0%, #fee2e2 100%) !important;
+  border-bottom: 2px solid #ca8a04 !important;
+}
+
+body.mobile-pdf-rendering .house-mixed .karma-badge-small {
+  background: linear-gradient(90deg, #bbf7d0 0%, #fecaca 100%) !important;
+  color: #0f172a !important;
+  border: 1.5px solid #ca8a04 !important;
+  font-weight: 800 !important;
+}
+
+body.mobile-pdf-rendering .nak-box.lagna-box {
+  border: 3.5px solid #facc15 !important;
+  background: #ffffff !important;
+  position: relative !important;
+}
+
+body.mobile-pdf-rendering .nak-box.lagna-box::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 2px !important;
+  border: 2.5px solid #10b981 !important;
+  border-radius: 7px !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+body.mobile-pdf-rendering .nak-box.lagna-box .nak-box-header {
+  background: #fef3c7 !important;
+  border-bottom: 2px solid #fbbf24 !important;
+}
+
+body.mobile-pdf-rendering .nak-box.lagna-box .house-badge {
+  background: #b45309 !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+body.mobile-pdf-rendering .nak-box.lagna-box .rashi-title-text {
+  color: #78350f !important;
+  font-weight: 900 !important;
+}
+
+body.mobile-pdf-rendering .nak-box:not(.house-green):not(.house-red):not(.house-mixed):not(.lagna-box) {
+  border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+  background: #ffffff !important;
+}
+
+body.mobile-pdf-rendering .center-box {
+  border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+  background: #fafafa !important;
 }
 </style>
 
@@ -4024,6 +4401,19 @@ html, body {
 
     window.onbeforeprint = function () {
 
+      // Capture computed HTML theme colors so PDF matches HTML exactly
+      try {
+        const rootStyles = getComputedStyle(document.documentElement);
+        const posColor = rootStyles.getPropertyValue('--color-pos').trim() || '#047857';
+        const negColor = rootStyles.getPropertyValue('--color-neg').trim() || '#b91c1c';
+        const boxBorder = rootStyles.getPropertyValue('--box-border').trim() || '#d97706';
+        document.documentElement.style.setProperty('--print-color-pos', posColor);
+        document.documentElement.style.setProperty('--print-color-neg', negColor);
+        document.documentElement.style.setProperty('--print-box-border', boxBorder);
+      } catch(e) {}
+
+      document.body.classList.add('mobile-pdf-rendering');
+
       document.documentElement.removeAttribute('data-theme');
 
       document.documentElement.style.backgroundColor = '#ffffff';
@@ -4039,6 +4429,14 @@ html, body {
 
 
     window.onafterprint = function () {
+
+      document.body.classList.remove('mobile-pdf-rendering');
+
+      try {
+        document.documentElement.style.removeProperty('--print-color-pos');
+        document.documentElement.style.removeProperty('--print-color-neg');
+        document.documentElement.style.removeProperty('--print-box-border');
+      } catch(e) {}
 
       const rawSavedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
       const savedTheme = (rawSavedTheme === 'solar' || rawSavedTheme === 'cosmic') ? rawSavedTheme : 'solar';
@@ -4058,21 +4456,27 @@ html, body {
 
     };
 
-        window.doSharePDF = function(action) {
+    window.doSharePDF = function(action) {
       if (!action) action = 'print';
       var pTitle = "{{ _('నక్షత్ర పాద కుండలి') }}";
       let uName = "{{ name|default('') }}".trim();
       let title = (uName ? (uName + ' ') : '') + pTitle;
       document.title = title;
 
+      if (typeof window.onbeforeprint === 'function') {
+        window.onbeforeprint();
+      }
+
       // 1. Native iOS WKWebView bridge
       if (window.webkit && window.webkit.messageHandlers) {
         if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
           window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: title });
+          setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 3000);
           return;
         }
         if (window.webkit.messageHandlers.nativePrint) {
           window.webkit.messageHandlers.nativePrint.postMessage({ title: title });
+          setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 3000);
           return;
         }
       }
@@ -4080,6 +4484,7 @@ html, body {
       // 2. Android App
       if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
         window.AndroidPrint.printPage();
+        setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 3000);
         return;
       }
 
