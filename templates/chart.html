@@ -3518,17 +3518,8 @@
 
 
       .center {
-
-
-
-        border: 3px solid #000000 !important;
-
-
-
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
         background: #fff !important;
-
-
-
       }
 
 
@@ -4483,7 +4474,7 @@
 
       .box {
         background: #ffffff !important;
-        border: 4px solid #000000 !important;
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
         border-radius: 10px !important;
 
 
@@ -4612,7 +4603,7 @@
 
 
 
-        border: 3px solid #000000 !important;
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
 
 
 
@@ -4810,30 +4801,30 @@
 
       .box.house-green,
       .house-green {
-        border: 4px solid #006400 !important;
+        border: 2.5px solid #10b981 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
       .box.house-red,
       .house-red {
-        border: 4px solid #990000 !important;
+        border: 2.5px solid #ef4444 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
       .box.house-mixed,
       .house-mixed {
-        border-top: 4px solid #006400 !important;
-        border-left: 4px solid #006400 !important;
-        border-right: 4px solid #990000 !important;
-        border-bottom: 4px solid #990000 !important;
+        border-top: 2.5px solid #10b981 !important;
+        border-left: 2.5px solid #10b981 !important;
+        border-right: 2.5px solid #ef4444 !important;
+        border-bottom: 2.5px solid #ef4444 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
       .box.lagna, .lagna {
-        border: 4px solid #eab308 !important;
+        border: 3.5px solid #facc15 !important;
         position: relative !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -4843,8 +4834,8 @@
         content: "" !important;
         position: absolute !important;
         inset: 2px !important;
-        border: 3px solid #006400 !important;
-        border-radius: 6px !important;
+        border: 2.5px solid #10b981 !important;
+        border-radius: 8px !important;
         pointer-events: none !important;
         z-index: 2 !important;
         -webkit-print-color-adjust: exact !important;
@@ -6072,6 +6063,63 @@
     body.mobile-pdf-rendering .box .lagna-text,
     body.mobile-pdf-rendering .box .lagna-text * {
       color: var(--print-color-lagna, #9a3412) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .box.house-green,
+    body.mobile-pdf-rendering .house-green {
+      border: 2.5px solid #10b981 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .box.house-red,
+    body.mobile-pdf-rendering .house-red {
+      border: 2.5px solid #ef4444 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .box.house-mixed,
+    body.mobile-pdf-rendering .house-mixed {
+      border-top: 2.5px solid #10b981 !important;
+      border-left: 2.5px solid #10b981 !important;
+      border-right: 2.5px solid #ef4444 !important;
+      border-bottom: 2.5px solid #ef4444 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .box.lagna,
+    body.mobile-pdf-rendering .lagna {
+      border: 3.5px solid #facc15 !important;
+      position: relative !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .box.lagna::after,
+    body.mobile-pdf-rendering .lagna::after {
+      content: "" !important;
+      position: absolute !important;
+      inset: 2px !important;
+      border: 2.5px solid #10b981 !important;
+      border-radius: 8px !important;
+      pointer-events: none !important;
+      z-index: 2 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .box:not(.house-green):not(.house-red):not(.house-mixed):not(.lagna) {
+      border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .center {
+      border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
@@ -9986,8 +10034,10 @@ body {
           const rootStyles = getComputedStyle(document.documentElement);
           const posColor = rootStyles.getPropertyValue('--color-pos').trim() || '#047857';
           const negColor = rootStyles.getPropertyValue('--color-neg').trim() || '#b91c1c';
+          const boxBorder = rootStyles.getPropertyValue('--box-border').trim() || '#d97706';
           document.documentElement.style.setProperty('--print-color-pos', posColor);
           document.documentElement.style.setProperty('--print-color-neg', negColor);
+          document.documentElement.style.setProperty('--print-box-border', boxBorder);
           const lagnaEl = document.querySelector('.lagna-text');
           if (lagnaEl) {
             const lagnaColor = getComputedStyle(lagnaEl).color;
@@ -10104,6 +10154,7 @@ body {
           document.documentElement.style.removeProperty('--print-color-pos');
           document.documentElement.style.removeProperty('--print-color-neg');
           document.documentElement.style.removeProperty('--print-color-lagna');
+          document.documentElement.style.removeProperty('--print-box-border');
         } catch(e) {}
 
 
