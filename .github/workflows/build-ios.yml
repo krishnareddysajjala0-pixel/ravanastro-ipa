@@ -15,7 +15,7 @@ permissions:
 jobs:
   build-ios:
     name: Build iOS App (.ipa)
-    runs-on: macos-14
+    runs-on: macos-latest
     env:
       ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: "node24"
 
