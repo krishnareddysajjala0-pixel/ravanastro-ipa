@@ -3410,34 +3410,14 @@
 
 
       html, body {
-
-
-
         background: #fff !important;
-
-
-
         color: #000 !important;
-
-
-
         padding: 0 !important;
-
-
-
         margin: 0 !important;
-
-
-
         height: auto !important;
-
-
-
         width: 1024px !important; /* Unified width for same PDF quality on Mobile and Web */
-
-
-
         min-width: 1024px !important;
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
 
 
 
@@ -4421,66 +4401,29 @@
 
 
       .maha-planet-favorable {
-
-
-
         color: #006400 !important;
-
-
-
-        font-weight: bold;
-
-
-
+        font-weight: bold !important;
         -webkit-print-color-adjust: exact;
-
-
-
         print-color-adjust: exact;
-
-
-
       }
-
-
-
-
-
-
 
       .maha-planet-unfavorable {
-
-
-
         color: #b22222 !important;
-
-
-
-        font-weight: bold;
-
-
-
+        font-weight: bold !important;
         -webkit-print-color-adjust: exact;
-
-
-
         print-color-adjust: exact;
-
-
-
       }
 
+      .maha-favorable,
+      .maha-unfavorable {
+        font-weight: normal !important;
+        font-size: inherit !important;
+      }
 
-
-
-
-
-
-            /* All rows of anukulam in green, all rows of pratikulam in red */
+      /* All rows of anukulam in green, all rows of pratikulam in red */
       .maha-print-table tr.row-anukulam td,
       .maha-print-table tr.row-anukulam td * {
         color: #008000 !important;
-        font-weight: 700 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -4488,9 +4431,19 @@
       .maha-print-table tr.row-pratikulam td,
       .maha-print-table tr.row-pratikulam td * {
         color: #dc2626 !important;
-        font-weight: 700 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+      }
+
+      .maha-print-table tr td:nth-child(2),
+      .maha-print-table tr td:nth-child(2) * {
+        font-weight: bold !important;
+      }
+
+      .maha-print-table tr td:nth-child(3),
+      .maha-print-table tr td:nth-child(3) * {
+        font-weight: normal !important;
+        font-size: inherit !important;
       }
 
       .maha-current-row td {
@@ -4743,14 +4696,76 @@
 
 
 
-      .hand {
+      /* All planet names and hands names MUST be in equal size */
+      .box,
+      .box b,
+      .box span,
+      .box .hand,
+      .box .hand *,
+      .box .full-name,
+      .box .short-name,
+      .box .pos,
+      .box .neg,
+      .box .lagna-text {
+        font-size: 16px !important;
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+      }
+      .box small,
+      .box .full-deg,
+      .box .short-deg {
+        font-size: 13px !important;
+      }
+      .box.box-condensed,
+      .box.box-condensed b,
+      .box.box-condensed span,
+      .box.box-condensed .hand,
+      .box.box-condensed .hand *,
+      .box.box-condensed .full-name,
+      .box.box-condensed .short-name,
+      .box.box-condensed .pos,
+      .box.box-condensed .neg,
+      .box.box-condensed .lagna-text {
+        font-size: 14px !important;
+      }
+      .box.box-condensed small,
+      .box.box-condensed .full-deg,
+      .box.box-condensed .short-deg {
+        font-size: 11.5px !important;
+      }
 
-
-
-        font-size: 22.7px !important; /* Same size as planet names (22.7px) */
-
-
-
+      body[data-print-mode="kundali-only"] .box,
+      body[data-print-mode="kundali-only"] .box b,
+      body[data-print-mode="kundali-only"] .box span,
+      body[data-print-mode="kundali-only"] .box .hand,
+      body[data-print-mode="kundali-only"] .box .hand *,
+      body[data-print-mode="kundali-only"] .box .full-name,
+      body[data-print-mode="kundali-only"] .box .short-name,
+      body[data-print-mode="kundali-only"] .box .pos,
+      body[data-print-mode="kundali-only"] .box .neg,
+      body[data-print-mode="kundali-only"] .box .lagna-text {
+        font-size: 18px !important;
+      }
+      body[data-print-mode="kundali-only"] .box small,
+      body[data-print-mode="kundali-only"] .box .full-deg,
+      body[data-print-mode="kundali-only"] .box .short-deg {
+        font-size: 14.5px !important;
+      }
+      body[data-print-mode="kundali-only"] .box.box-condensed,
+      body[data-print-mode="kundali-only"] .box.box-condensed b,
+      body[data-print-mode="kundali-only"] .box.box-condensed span,
+      body[data-print-mode="kundali-only"] .box.box-condensed .hand,
+      body[data-print-mode="kundali-only"] .box.box-condensed .hand *,
+      body[data-print-mode="kundali-only"] .box.box-condensed .full-name,
+      body[data-print-mode="kundali-only"] .box.box-condensed .short-name,
+      body[data-print-mode="kundali-only"] .box.box-condensed .pos,
+      body[data-print-mode="kundali-only"] .box.box-condensed .neg,
+      body[data-print-mode="kundali-only"] .box.box-condensed .lagna-text {
+        font-size: 15px !important;
+      }
+      body[data-print-mode="kundali-only"] .box.box-condensed small,
+      body[data-print-mode="kundali-only"] .box.box-condensed .full-deg,
+      body[data-print-mode="kundali-only"] .box.box-condensed .short-deg {
+        font-size: 12px !important;
       }
 
 
@@ -7382,6 +7397,11 @@ body {
   text-align: left !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
+}
+
+.box .hand,
+.box .hand * {
+  font-size: inherit !important;
 }
 
 .box .lagna-text {

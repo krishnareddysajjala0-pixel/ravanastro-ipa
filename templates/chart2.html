@@ -2897,50 +2897,24 @@
 
 
         .favorable {
-
-
-
             color: var(--color-pos);
-
-
-
-            font-weight: 700;
-
-
-
+            font-weight: normal;
             font-size: 11px;
-
-
-
             margin-left: 8px;
-
-
-
             letter-spacing: 0.5px;
-
-
-
         }
 
-
-
-
-
-
-
         .unfavorable {
-
-
-
             color: var(--color-neg);
-
-
-
-            font-weight: 700;
-
-
-
+            font-weight: normal;
             font-size: 11px;
+            margin-left: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .anthara-name {
+            font-weight: 700;
+        }
 
 
 
@@ -3584,7 +3558,7 @@
                 min-width: 0 !important;
                 height: auto !important;
                 overflow: visible !important;
-                font-family: 'Noto Sans Telugu', Arial, sans-serif !important;
+                font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
                 -webkit-print-color-adjust: exact;
                 opacity: 1 !important;
             }
@@ -3918,8 +3892,17 @@
 
             .text-favorable   { color: #006400 !important; }
             .text-unfavorable { color: #dc2626 !important; }
-            .favorable   { color: #006400 !important; font-size: 9pt !important; }
-            .unfavorable { color: #dc2626 !important; font-size: 9pt !important; }
+            .favorable   { color: #006400 !important; font-size: inherit !important; font-weight: normal !important; }
+            .unfavorable { color: #dc2626 !important; font-size: inherit !important; font-weight: normal !important; }
+            .anthara-name,
+            .maha-dasa-name,
+            .print-summary-section tr td:nth-child(2) {
+                font-weight: bold !important;
+            }
+            .print-summary-section tr td:nth-child(3) {
+                font-weight: normal !important;
+                font-size: inherit !important;
+            }
 
             /* Print Entire text coloring for Dasa & Anthara Dasa */
             .current-dasa-inline.dasa-anukulam,
@@ -5013,17 +4996,31 @@
 
 
         body.mobile-pdf-rendering {
-
-
-
             background: #ffffff !important;
-
-
-
             color: #000000 !important;
+            font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+        }
 
+        body.mobile-pdf-rendering,
+        body.mobile-pdf-rendering * {
+            font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+        }
 
+        body.mobile-pdf-rendering .favorable,
+        body.mobile-pdf-rendering .unfavorable {
+            font-weight: normal !important;
+            font-size: inherit !important;
+        }
 
+        body.mobile-pdf-rendering .anthara-name,
+        body.mobile-pdf-rendering .maha-dasa-name,
+        body.mobile-pdf-rendering .print-summary-section tr td:nth-child(2) {
+            font-weight: bold !important;
+        }
+
+        body.mobile-pdf-rendering .print-summary-section tr td:nth-child(3) {
+            font-weight: normal !important;
+            font-size: inherit !important;
         }
 
 
@@ -7287,11 +7284,11 @@ body {
                 <span class="planet-icon" style="font-size: 20px;">{{ current_dasa_icon }}</span>
                 <span>{{ _('ప్రస్తుత') }} {{ _('మహాదశ') }}:
                     {% if current_dasa_favorable %}
-                    <span class="highlight text-favorable" style="font-size: 16px;">{{ maha }}</span></span> - <span
-                    class="favorable">{{ _('అనుకూలము') }}</span>
+                    <span class="highlight text-favorable" style="font-size: 16px; font-weight: bold;">{{ maha }}</span></span> - <span
+                    class="favorable" style="font-weight: normal;">{{ _('అనుకూలము') }}</span>
                 {% else %}
-                <span class="highlight text-unfavorable" style="font-size: 16px;">{{ maha }}</span></span> - <span
-                    class="unfavorable">{{ _('ప్రతికూలము') }}</span>
+                <span class="highlight text-unfavorable" style="font-size: 16px; font-weight: bold;">{{ maha }}</span></span> - <span
+                    class="unfavorable" style="font-weight: normal;">{{ _('ప్రతికూలము') }}</span>
                 {% endif %}
                 {% if current_maha_pos and current_maha_pos.planet_house %}
                 <span class="dasa-kundali-pos kundali-pos-info" style="font-size: 14px; font-weight: 600; margin-left: 6px;">
@@ -7429,10 +7426,10 @@ body {
                     {% for dasa in all_dasas %}
                     <tr class="{{ 'row-anukulam' if dasa.is_favorable else 'row-pratikulam' }}">
                         <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: bold;">{{ loop.index }}</td>
-                        <td style="border: 1px solid #000; padding: 10px;">
+                        <td style="border: 1px solid #000; padding: 10px; font-weight: bold;">
                             {{ dasa.icon }} {{ dasa.maha }}
                         </td>
-                        <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: bold;">
+                        <td style="border: 1px solid #000; padding: 10px; text-align: center; font-weight: normal;">
                             {% if dasa.is_favorable %}{{ _('అనుకూలము') }}{% else %}{{ _('ప్రతికూలము') }}{% endif %}
                         </td>
 
@@ -7531,11 +7528,11 @@ body {
                             <div class="maha-dasa-name">
                                 <span style="color: {{ dasa.color }}; margin-right: 6px;">{{ dasa.icon }}</span>
                                 {% if dasa.is_favorable %}
-                                <span class="text-favorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
-                                <span class="favorable">{{ _('అనుకూలము') }}</span>
+                                <span class="text-favorable" style="font-weight: bold;">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
+                                <span class="favorable" style="font-weight: normal;">{{ _('అనుకూలము') }}</span>
                                 {% else %}
-                                <span class="text-unfavorable">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
-                                <span class="unfavorable">{{ _('ప్రతికూలము') }}</span>
+                                <span class="text-unfavorable" style="font-weight: bold;">{{ dasa.maha }} {{ _('మహాదశ') }} ({{ dasa.years }} {{ _('సంవత్సరాలు') }})</span>
+                                <span class="unfavorable" style="font-weight: normal;">{{ _('ప్రతికూలము') }}</span>
                                 {% endif %}
                             </div>
                             <div class="maha-dasa-period">
@@ -7779,37 +7776,13 @@ body {
 
 
                                                 {% if a.is_favorable %}
-
-
-
-                                                <span class="anthara-name text-favorable"
-
-
-
+                                                <span class="anthara-name text-favorable" style="font-weight: bold;"
                                                     data-planet="{{ a.anthara }}">{{ a.anthara }}</span>
-
-
-
-                                                <span class="favorable">{{ _('అనుకూలము') }}</span>
-
-
-
+                                                <span class="favorable" style="font-weight: normal;">{{ _('అనుకూలము') }}</span>
                                                 {% else %}
-
-
-
-                                                <span class="anthara-name text-unfavorable"
-
-
-
+                                                <span class="anthara-name text-unfavorable" style="font-weight: bold;"
                                                     data-planet="{{ a.anthara }}">{{ a.anthara }}</span>
-
-
-
-                                                <span class="unfavorable">{{ _('ప్రతికూలము') }}</span>
-
-
-
+                                                <span class="unfavorable" style="font-weight: normal;">{{ _('ప్రతికూలము') }}</span>
                                                 {% endif %}
 
 
