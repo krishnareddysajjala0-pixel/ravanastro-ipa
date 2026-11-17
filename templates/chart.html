@@ -4696,7 +4696,15 @@
 
 
 
-      /* All planet names and hands names MUST be in equal size */
+      /* In Kundali PDF: Planet names and hand names text size EQUAL to center box text size (21.8px) */
+      .center,
+      .center table,
+      .center table td,
+      .center-content {
+        font-size: 21.8px !important;
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+      }
+
       .box,
       .box b,
       .box span,
@@ -4706,15 +4714,7 @@
       .box .short-name,
       .box .pos,
       .box .neg,
-      .box .lagna-text {
-        font-size: 16px !important;
-        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
-      }
-      .box small,
-      .box .full-deg,
-      .box .short-deg {
-        font-size: 13px !important;
-      }
+      .box .lagna-text,
       .box.box-condensed,
       .box.box-condensed b,
       .box.box-condensed span,
@@ -4724,15 +4724,7 @@
       .box.box-condensed .short-name,
       .box.box-condensed .pos,
       .box.box-condensed .neg,
-      .box.box-condensed .lagna-text {
-        font-size: 14px !important;
-      }
-      .box.box-condensed small,
-      .box.box-condensed .full-deg,
-      .box.box-condensed .short-deg {
-        font-size: 11.5px !important;
-      }
-
+      .box.box-condensed .lagna-text,
       body[data-print-mode="kundali-only"] .box,
       body[data-print-mode="kundali-only"] .box b,
       body[data-print-mode="kundali-only"] .box span,
@@ -4742,14 +4734,7 @@
       body[data-print-mode="kundali-only"] .box .short-name,
       body[data-print-mode="kundali-only"] .box .pos,
       body[data-print-mode="kundali-only"] .box .neg,
-      body[data-print-mode="kundali-only"] .box .lagna-text {
-        font-size: 18px !important;
-      }
-      body[data-print-mode="kundali-only"] .box small,
-      body[data-print-mode="kundali-only"] .box .full-deg,
-      body[data-print-mode="kundali-only"] .box .short-deg {
-        font-size: 14.5px !important;
-      }
+      body[data-print-mode="kundali-only"] .box .lagna-text,
       body[data-print-mode="kundali-only"] .box.box-condensed,
       body[data-print-mode="kundali-only"] .box.box-condensed b,
       body[data-print-mode="kundali-only"] .box.box-condensed span,
@@ -4760,12 +4745,23 @@
       body[data-print-mode="kundali-only"] .box.box-condensed .pos,
       body[data-print-mode="kundali-only"] .box.box-condensed .neg,
       body[data-print-mode="kundali-only"] .box.box-condensed .lagna-text {
-        font-size: 15px !important;
+        font-size: 21.8px !important;
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
       }
+
+      .box small,
+      .box .full-deg,
+      .box .short-deg,
+      .box.box-condensed small,
+      .box.box-condensed .full-deg,
+      .box.box-condensed .short-deg,
+      body[data-print-mode="kundali-only"] .box small,
+      body[data-print-mode="kundali-only"] .box .full-deg,
+      body[data-print-mode="kundali-only"] .box .short-deg,
       body[data-print-mode="kundali-only"] .box.box-condensed small,
       body[data-print-mode="kundali-only"] .box.box-condensed .full-deg,
       body[data-print-mode="kundali-only"] .box.box-condensed .short-deg {
-        font-size: 12px !important;
+        font-size: 16px !important;
       }
 
 
@@ -4774,30 +4770,36 @@
 
 
 
-      .pos {
-
-
-
-        color: #006400 !important;
-
-
-
+      /* In Kundali PDF: Planet names colour set SAME as in HTML */
+      .pos,
+      .pos *,
+      .box .pos,
+      .box .pos *,
+      .box .pos b,
+      .box .pos span {
+        color: var(--print-color-pos, var(--color-pos, #047857)) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
+      .neg,
+      .neg *,
+      .box .neg,
+      .box .neg *,
+      .box .neg b,
+      .box .neg span {
+        color: var(--print-color-neg, var(--color-neg, #b91c1c)) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
 
-
-
-
-
-
-      .neg {
-
-
-
-        color: #8b0000 !important;
-
-
-
+      .lagna-text,
+      .lagna-text *,
+      .box .lagna-text,
+      .box .lagna-text * {
+        color: var(--print-color-lagna, #9a3412) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
 
@@ -6004,6 +6006,74 @@
       box-shadow: none !important;
       border: none !important;
       zoom: 1 !important;
+    }
+
+    body.mobile-pdf-rendering .center,
+    body.mobile-pdf-rendering .center table,
+    body.mobile-pdf-rendering .center table td,
+    body.mobile-pdf-rendering .center-content {
+      font-size: 21.8px !important;
+      font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+    }
+
+    body.mobile-pdf-rendering .box,
+    body.mobile-pdf-rendering .box b,
+    body.mobile-pdf-rendering .box span,
+    body.mobile-pdf-rendering .box .hand,
+    body.mobile-pdf-rendering .box .hand *,
+    body.mobile-pdf-rendering .box .full-name,
+    body.mobile-pdf-rendering .box .short-name,
+    body.mobile-pdf-rendering .box .pos,
+    body.mobile-pdf-rendering .box .neg,
+    body.mobile-pdf-rendering .box .lagna-text,
+    body.mobile-pdf-rendering .box.box-condensed,
+    body.mobile-pdf-rendering .box.box-condensed b,
+    body.mobile-pdf-rendering .box.box-condensed span,
+    body.mobile-pdf-rendering .box.box-condensed .hand,
+    body.mobile-pdf-rendering .box.box-condensed .hand *,
+    body.mobile-pdf-rendering .box.box-condensed .full-name,
+    body.mobile-pdf-rendering .box.box-condensed .short-name,
+    body.mobile-pdf-rendering .box.box-condensed .pos,
+    body.mobile-pdf-rendering .box.box-condensed .neg,
+    body.mobile-pdf-rendering .box.box-condensed .lagna-text {
+      font-size: 21.8px !important;
+      font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+    }
+
+    body.mobile-pdf-rendering .box small,
+    body.mobile-pdf-rendering .box .full-deg,
+    body.mobile-pdf-rendering .box .short-deg,
+    body.mobile-pdf-rendering .box.box-condensed small,
+    body.mobile-pdf-rendering .box.box-condensed .full-deg,
+    body.mobile-pdf-rendering .box.box-condensed .short-deg {
+      font-size: 16px !important;
+    }
+
+    body.mobile-pdf-rendering .pos,
+    body.mobile-pdf-rendering .pos *,
+    body.mobile-pdf-rendering .box .pos,
+    body.mobile-pdf-rendering .box .pos * {
+      color: var(--print-color-pos, var(--color-pos, #047857)) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .neg,
+    body.mobile-pdf-rendering .neg *,
+    body.mobile-pdf-rendering .box .neg,
+    body.mobile-pdf-rendering .box .neg * {
+      color: var(--print-color-neg, var(--color-neg, #b91c1c)) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body.mobile-pdf-rendering .lagna-text,
+    body.mobile-pdf-rendering .lagna-text *,
+    body.mobile-pdf-rendering .box .lagna-text,
+    body.mobile-pdf-rendering .box .lagna-text * {
+      color: var(--print-color-lagna, #9a3412) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
     body.mobile-pdf-rendering[data-print-mode="kundali-only"] #mahadasha-print-section {
@@ -9911,7 +9981,21 @@ body {
 
       window.onbeforeprint = function () {
 
-
+        // 0. Capture computed HTML theme colors so PDF matches HTML exactly
+        try {
+          const rootStyles = getComputedStyle(document.documentElement);
+          const posColor = rootStyles.getPropertyValue('--color-pos').trim() || '#047857';
+          const negColor = rootStyles.getPropertyValue('--color-neg').trim() || '#b91c1c';
+          document.documentElement.style.setProperty('--print-color-pos', posColor);
+          document.documentElement.style.setProperty('--print-color-neg', negColor);
+          const lagnaEl = document.querySelector('.lagna-text');
+          if (lagnaEl) {
+            const lagnaColor = getComputedStyle(lagnaEl).color;
+            if (lagnaColor && lagnaColor !== 'rgba(0, 0, 0, 0)') {
+              document.documentElement.style.setProperty('--print-color-lagna', lagnaColor);
+            }
+          }
+        } catch(e) {}
 
         // 1. Remove data-theme so browser prints in light mode
 
@@ -10015,6 +10099,12 @@ body {
 
 
         setTheme(savedTheme);
+
+        try {
+          document.documentElement.style.removeProperty('--print-color-pos');
+          document.documentElement.style.removeProperty('--print-color-neg');
+          document.documentElement.style.removeProperty('--print-color-lagna');
+        } catch(e) {}
 
 
 
