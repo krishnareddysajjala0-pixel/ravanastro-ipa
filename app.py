@@ -282,9 +282,14 @@ def inject_translation():
 
 @app.after_request
 def add_no_cache_headers(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
+    if request.path.startswith('/static/'):
+        response.headers["Cache-Control"] = "public, max-age=604800"
+        response.headers.pop("Pragma", None)
+        response.headers.pop("Expires", None)
+    else:
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
     return response
 
 # ---------------- Swiss Ephemeris ----------------
