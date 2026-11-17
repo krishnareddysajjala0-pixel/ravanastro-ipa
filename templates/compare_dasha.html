@@ -28,14 +28,24 @@
           document.title = pTitle;
         }
 
+        function doAfterPrintCompareDasha() {
+          var overlay = document.getElementById('loading-overlay');
+          if (overlay) overlay.style.display = 'none';
+        }
+        window.onafterprint = doAfterPrintCompareDasha;
+        window.addEventListener('afterprint', doAfterPrintCompareDasha);
+        window.addEventListener('focus', doAfterPrintCompareDasha);
+
         // 1. Native iOS WKWebView bridge
         if (window.webkit && window.webkit.messageHandlers) {
           if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
             window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: pTitle });
+            setTimeout(doAfterPrintCompareDasha, 1500);
             return;
           }
           if (window.webkit.messageHandlers.nativePrint) {
             window.webkit.messageHandlers.nativePrint.postMessage({ title: pTitle });
+            setTimeout(doAfterPrintCompareDasha, 1500);
             return;
           }
         }
@@ -43,11 +53,13 @@
         // 2. Android App
         if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
           window.AndroidPrint.printPage();
+          setTimeout(doAfterPrintCompareDasha, 1500);
           return;
         }
 
         // 3. Desktop / Safari
         window.print();
+        setTimeout(doAfterPrintCompareDasha, 400);
       };
       window.triggerUniversalPrint = window.handleCompareDashaPrint;
     </script>
@@ -1400,7 +1412,11 @@ body {
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.float-btn').forEach(function(btn) {
                 var oc = btn.getAttribute('onclick') || '';
-                if (oc.indexOf('print()') !== -1) return;
+                var ocLower = oc.toLowerCase();
+                if (btn.classList.contains('btn-print') || 
+                    btn.classList.contains('print-hide') || 
+                    ocLower.indexOf('print') !== -1 || 
+                    ocLower.indexOf('pdf') !== -1) return;
                 if (oc.indexOf('fetch') !== -1) return;
                 btn.addEventListener('click', function() {
                     showGananaLoader();

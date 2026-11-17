@@ -128,14 +128,8 @@
 
 
         window.onafterprint = doAfterPrintChart2;
-
-
-
-        // addEventListener is more reliable on Android WebViews than window.onafterprint
-
-
-
         window.addEventListener('afterprint', doAfterPrintChart2);
+        window.addEventListener('focus', doAfterPrintChart2);
 
 
 
@@ -9187,12 +9181,11 @@ body {
 
 
                 var oc = btn.getAttribute('onclick') || '';
-
-
-
-                if (oc.indexOf('print') !== -1 || oc.indexOf('Print') !== -1) return;
-
-
+                var ocLower = oc.toLowerCase();
+                if (btn.classList.contains('btn-print') || 
+                    btn.classList.contains('print-hide') || 
+                    ocLower.indexOf('print') !== -1 || 
+                    ocLower.indexOf('pdf') !== -1) return;
 
                 if (oc.indexOf('fetch') !== -1) return;
 
@@ -9321,10 +9314,12 @@ body {
             if (window.webkit && window.webkit.messageHandlers) {
                 if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
                     window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: title });
+                    setTimeout(doAfterPrintChart2, 1500);
                     return;
                 }
                 if (window.webkit.messageHandlers.nativePrint) {
                     window.webkit.messageHandlers.nativePrint.postMessage({ title: title });
+                    setTimeout(doAfterPrintChart2, 1500);
                     return;
                 }
             }
@@ -9332,11 +9327,13 @@ body {
             // 2. Android App
             if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
                 window.AndroidPrint.printPage();
+                setTimeout(doAfterPrintChart2, 1500);
                 return;
             }
 
             // 3. Desktop / Safari
             window.print();
+            setTimeout(doAfterPrintChart2, 400);
         };
 
         window.triggerDirectPDFDownload = function() {

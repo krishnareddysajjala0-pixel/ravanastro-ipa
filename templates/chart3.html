@@ -5687,6 +5687,7 @@ body {
 
   window.onafterprint = doAfterPrintChart3;
   window.addEventListener('afterprint', doAfterPrintChart3);
+  window.addEventListener('focus', doAfterPrintChart3);
 
   if (window.matchMedia) {
     var mql = window.matchMedia('print');

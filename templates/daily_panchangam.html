@@ -3218,7 +3218,11 @@ body {
 
             document.querySelectorAll('.float-btn').forEach(function(btn) {
                 var oc = btn.getAttribute('onclick') || '';
-                if (oc.indexOf('print()') !== -1) return;
+                var ocLower = oc.toLowerCase();
+                if (btn.classList.contains('btn-print') || 
+                    btn.classList.contains('print-hide') || 
+                    ocLower.indexOf('print') !== -1 || 
+                    ocLower.indexOf('pdf') !== -1) return;
                 if (oc.indexOf('fetch') !== -1) return;
                 btn.addEventListener('click', function() {
                     showGananaLoader();

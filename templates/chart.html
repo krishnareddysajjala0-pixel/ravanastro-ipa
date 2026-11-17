@@ -10134,42 +10134,28 @@ body {
 
 
       if (window.matchMedia) {
-
-
-
         const mediaQueryList = window.matchMedia('print');
-
-
-
-        mediaQueryList.addListener(function(mql) {
-
-
-
-          if (!mql.matches) {
-
-
-
-            doAfterPrint();
-
-
-
-          }
-
-
-
-        });
-
-
-
+        if (typeof mediaQueryList.addListener === 'function') {
+          mediaQueryList.addListener(function(mql) {
+            if (!mql.matches) {
+              doAfterPrint();
+            }
+          });
+        } else if (typeof mediaQueryList.addEventListener === 'function') {
+          mediaQueryList.addEventListener('change', function(mql) {
+            if (!mql.matches) {
+              doAfterPrint();
+            }
+          });
+        }
       }
 
-
-
       window.onafterprint = doAfterPrint;
-
-
-
       window.addEventListener('afterprint', doAfterPrint);
+      window.addEventListener('focus', function() {
+        // Regained focus after print preview / dialog cancel or close
+        doAfterPrint();
+      });
 
 
 
@@ -10258,45 +10244,25 @@ body {
 
 
       function openPrintOptions() {
-
-
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) overlay.style.display = 'none';
 
         const modal = document.getElementById('print-options-modal');
-
-
-
-        modal.style.display = 'flex';
-
-
+        if (modal) modal.style.display = 'flex';
 
         // Reset to default selection
-
-
-
-        document.getElementById('po-kundali-only').checked = true;
-
-
+        const radio = document.getElementById('po-kundali-only');
+        if (radio) radio.checked = true;
 
         selectPrintOption('kundali-only');
-
-
-
       }
 
-
-
-
-
-
-
       function closePrintOptions() {
+        const modal = document.getElementById('print-options-modal');
+        if (modal) modal.style.display = 'none';
 
-
-
-        document.getElementById('print-options-modal').style.display = 'none';
-
-
-
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) overlay.style.display = 'none';
       }
 
 
@@ -10403,10 +10369,12 @@ body {
         if (window.webkit && window.webkit.messageHandlers) {
           if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
             window.webkit.messageHandlers.nativeSavePDF.postMessage({ title: title, mode: mode });
+            setTimeout(doAfterPrint, 1500);
             return;
           }
           if (window.webkit.messageHandlers.nativePrint) {
             window.webkit.messageHandlers.nativePrint.postMessage({ title: title, mode: mode });
+            setTimeout(doAfterPrint, 1500);
             return;
           }
         }
@@ -10414,11 +10382,13 @@ body {
         // 2. Android App (with AndroidPrint interface)
         if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
           window.AndroidPrint.printPage();
+          setTimeout(doAfterPrint, 1500);
           return;
         }
 
         // 3. Desktop / Safari standard browser print
         window.print();
+        setTimeout(doAfterPrint, 400);
       }
 
       window.triggerDirectPDFDownload = function(mode) {
@@ -10980,12 +10950,12 @@ body {
 
 
                 var oc = btn.getAttribute('onclick') || '';
-
-
-
-                if (btn.id === 'print-options-btn' || oc.indexOf('print') !== -1) return;
-
-
+                var ocLower = oc.toLowerCase();
+                if (btn.id === 'print-options-btn' || 
+                    btn.classList.contains('btn-print') || 
+                    btn.classList.contains('print-hide') || 
+                    ocLower.indexOf('print') !== -1 || 
+                    ocLower.indexOf('pdf') !== -1) return;
 
                 if (oc.indexOf('fetch') !== -1) return;
 
@@ -11079,22 +11049,17 @@ body {
 
 
 
-        // Hide loader on back/forward cache
-
-
-
+        // Hide loader on back/forward cache and popstate
         window.addEventListener('pageshow', function() {
-
-
-
             var overlay = document.getElementById('loading-overlay');
-
-
-
             if (overlay) overlay.style.display = 'none';
+            if (typeof closePrintOptions === 'function') closePrintOptions();
+        });
 
-
-
+        window.addEventListener('popstate', function() {
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+            if (typeof closePrintOptions === 'function') closePrintOptions();
         });
 
 
