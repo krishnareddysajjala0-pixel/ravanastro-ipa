@@ -80,41 +80,16 @@
 
 
         window.onbeforeprint = function() {
-
-
-
-            if (window.innerWidth < 768) {
-
-
-
-                document.body.classList.add('mobile-print-force');
-
-
-
-            }
-
-
-
+            document.body.classList.add('mobile-pdf-rendering');
+            document.documentElement.removeAttribute('data-theme');
         };
 
-
-
-
-
-
-
         function doAfterPrintChart2() {
-
-
-
-            document.body.classList.remove('mobile-print-force');
-
-
-
+            document.body.classList.remove('mobile-pdf-rendering');
+            const rawSavedTheme = localStorage.getItem('preferred-theme-v3') || 'solar';
+            const savedTheme = (rawSavedTheme === 'solar' || rawSavedTheme === 'cosmic') ? rawSavedTheme : 'solar';
+            document.documentElement.setAttribute('data-theme', savedTheme);
             // Always hide loading overlay after print/cancel (Android WebView fix)
-
-
-
             var overlay = document.getElementById('loading-overlay');
 
 
@@ -3554,18 +3529,19 @@
                 color: #000 !important;
                 padding: 0 !important;
                 margin: 0 auto !important;
-                width: 100% !important;
-                min-width: 0 !important;
+                width: 1024px !important;
+                min-width: 1024px !important;
                 height: auto !important;
                 overflow: visible !important;
                 font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
-                -webkit-print-color-adjust: exact;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
                 opacity: 1 !important;
             }
 
             .container {
-                width: 100% !important;
-                min-width: 0 !important;
+                width: 1024px !important;
+                min-width: 1024px !important;
                 margin: 0 auto !important;
                 padding: 0 !important;
                 zoom: 0.95 !important;
@@ -5011,7 +4987,19 @@
         body.mobile-pdf-rendering {
             background: #ffffff !important;
             color: #000000 !important;
+            width: 1024px !important;
+            min-width: 1024px !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
             font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+        }
+
+        body.mobile-pdf-rendering .container {
+            width: 1024px !important;
+            min-width: 1024px !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            zoom: 0.95 !important;
         }
 
         body.mobile-pdf-rendering,
@@ -9356,6 +9344,10 @@ body {
             let title = (uName ? (uName + ' ') : '') + pTitle;
             document.title = title;
 
+            if (typeof window.onbeforeprint === 'function') {
+                window.onbeforeprint();
+            }
+
             // 1. Native iOS WKWebView bridge
             if (window.webkit && window.webkit.messageHandlers) {
                 if (action === 'pdf' && window.webkit.messageHandlers.nativeSavePDF) {
@@ -9515,12 +9507,18 @@ body {
 
 <script>
 function triggerUniversalPrint() {
+  if (typeof window.onbeforeprint === 'function') {
+    try { window.onbeforeprint(); } catch(e) {}
+  }
   if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
     window.webkit.messageHandlers.nativePrint.postMessage('print');
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 2000);
   } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
     window.AndroidPrint.printPage();
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 2000);
   } else {
     window.print();
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 500);
   }
 }
 if (typeof handleMobilePrintClick === 'undefined') { function handleMobilePrintClick() { triggerUniversalPrint(); } }

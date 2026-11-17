@@ -10061,11 +10061,9 @@ body {
           }
         } catch(e) {}
 
-        // 1. Remove data-theme so browser prints in light mode
-
-
-
+        // 1. Remove data-theme and add mobile-pdf-rendering
         document.documentElement.removeAttribute('data-theme');
+        document.body.classList.add('mobile-pdf-rendering');
 
 
 
@@ -10177,10 +10175,8 @@ body {
 
 
 
+        document.body.classList.remove('mobile-pdf-rendering');
         // Restore body styles
-
-
-
         document.body.style.background = '';
 
 
@@ -11476,12 +11472,18 @@ body {
 
 <script>
 function triggerUniversalPrint() {
+  if (typeof window.onbeforeprint === 'function') {
+    try { window.onbeforeprint(); } catch(e) {}
+  }
   if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
     window.webkit.messageHandlers.nativePrint.postMessage('print');
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 2000);
   } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
     window.AndroidPrint.printPage();
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 2000);
   } else {
     window.print();
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 500);
   }
 }
 if (typeof handleMobilePrintClick === 'undefined') { function handleMobilePrintClick() { triggerUniversalPrint(); } }

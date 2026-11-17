@@ -3166,10 +3166,11 @@ html, body {
   }
 
   html, body {
-    width: 100% !important;
+    width: 1024px !important;
+    min-width: 1024px !important;
     height: auto !important;
     min-height: 0 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     background: #ffffff !important;
     color: #000000 !important;
@@ -3178,8 +3179,9 @@ html, body {
   }
 
   .container {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 1024px !important;
+    min-width: 1024px !important;
+    max-width: 1024px !important;
     margin: 0 auto !important;
     padding: 0 !important;
     overflow: visible !important;
@@ -4677,12 +4679,18 @@ body.mobile-pdf-rendering .center-box {
 
 <script>
 function triggerUniversalPrint() {
+  if (typeof window.onbeforeprint === 'function') {
+    try { window.onbeforeprint(); } catch(e) {}
+  }
   if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.nativePrint) {
     window.webkit.messageHandlers.nativePrint.postMessage('print');
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 2000);
   } else if (window.AndroidPrint && typeof window.AndroidPrint.printPage === 'function') {
     window.AndroidPrint.printPage();
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 2000);
   } else {
     window.print();
+    setTimeout(function() { if (typeof window.onafterprint === 'function') { window.onafterprint(); } }, 500);
   }
 }
 if (typeof handleMobilePrintClick === 'undefined') { function handleMobilePrintClick() { triggerUniversalPrint(); } }
