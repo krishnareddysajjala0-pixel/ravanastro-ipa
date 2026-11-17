@@ -3592,23 +3592,23 @@
                 background: #f5f5f5 !important;
                 border: 1px solid #333 !important;
                 border-radius: 4px !important;
-                padding: 5px 8px !important;
-                margin: 0 auto 6px auto !important;
+                padding: 6px 10px !important;
+                margin: 4.5em auto 2.5em auto !important; /* On top leave 4 lines space, after box leave 3 lines space */
                 width: 98% !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
             .cosmic-header * { color: #000 !important; }
-            .party-name { color: #8B0000 !important; font-weight: bold !important; font-size: 11pt !important; margin-bottom: 3px !important; }
-            .person-name { font-size: 13pt !important; font-weight: bold !important; color: #000080 !important; margin-bottom: 3px !important; }
+            .party-name { color: #8B0000 !important; font-weight: bold !important; font-size: 14.5pt !important; margin-bottom: 5px !important; }
+            .person-name { font-size: 17pt !important; font-weight: bold !important; color: #000080 !important; margin-bottom: 5px !important; }
             .info-row {
                 display: flex !important;
                 flex-direction: row !important;
                 flex-wrap: wrap !important;
                 justify-content: center !important;
-                gap: 12px !important;
-                font-size: 8.5pt !important;
-                margin: 2px auto 0 auto !important;
+                gap: 14px !important;
+                font-size: 11pt !important;
+                margin: 4px auto 0 auto !important;
                 text-align: left !important;
             }
             .info-item {
@@ -3618,11 +3618,13 @@
                 border: none !important;
                 background: transparent !important;
                 padding: 0 !important;
+                font-size: 11pt !important;
             }
             .info-label {
                 font-weight: bold !important;
                 color: #000 !important;
                 margin-right: 2px !important;
+                font-size: 11pt !important;
             }
 
             /* ── Nakshatra box ── */
@@ -3644,50 +3646,50 @@
             .current-dasa-box {
                 background: #f9f9f9 !important;
                 border: 1.5px solid #333 !important;
-                padding: 4px 8px !important;
-                margin: 0 auto 6px auto !important;
+                padding: 6px 10px !important;
+                margin: 0 auto 2.5em auto !important; /* After box leave 3 lines space */
                 width: 98% !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
-                font-size: 9pt !important;
+                font-size: 12pt !important;
             }
             .current-dasa-box * { color: #000 !important; }
             .current-dasa-inline {
-                font-size: 9.5pt !important;
-                margin-bottom: 2px !important;
+                font-size: 12.5pt !important;
+                margin-bottom: 4px !important;
             }
             .current-dasa-inline span {
-                font-size: 9.5pt !important;
+                font-size: 12.5pt !important;
             }
-            .current-dasa-title { color: #d2691e !important; font-size: 11pt !important; }
+            .current-dasa-title { color: #d2691e !important; font-size: 14.5pt !important; }
             .progress-container { display: none !important; }
 
             /* ── Print Summary Table (End of Page 1 -> Breaks to Page 2) ── */
             .print-summary-section {
                 display: block !important;
-                margin-top: 6px !important;
+                margin-top: 0 !important;
                 margin-bottom: 0 !important;
                 page-break-after: always !important;
                 break-after: page !important;
             }
             .print-summary-section div[style*="font-size: 20px"] {
-                font-size: 11pt !important;
-                margin-bottom: 4px !important;
+                font-size: 14.5pt !important;
+                margin-bottom: 8px !important;
             }
             .print-summary-section table {
                 width: 98% !important;
                 margin: 0 auto !important;
                 border-collapse: collapse !important;
-                font-size: 8pt !important;
+                font-size: 10.5pt !important;
             }
             .print-summary-section th, .print-summary-section td {
                 border: 1px solid #333 !important;
-                padding: 2px 4px !important;
-                font-size: 8pt !important;
+                padding: 5px 6px !important;
+                font-size: 10.5pt !important;
                 color: #000 !important;
             }
             .print-summary-section td div {
-                font-size: 7.5pt !important;
+                font-size: 10pt !important;
             }
 
             /* ────────────────────────────────────────────
@@ -5094,21 +5096,48 @@
 
 
         body.mobile-pdf-rendering .cosmic-header {
-
-
-
             background: #f5f5f5 !important;
-
-
-
             border: 1px solid #333 !important;
-
-
-
             color: #000000 !important;
+            margin: 4.5em auto 2.5em auto !important;
+            padding: 6px 10px !important;
+        }
+        body.mobile-pdf-rendering .cosmic-header .party-name { font-size: 14.5pt !important; margin-bottom: 5px !important; }
+        body.mobile-pdf-rendering .cosmic-header .person-name { font-size: 17pt !important; margin-bottom: 5px !important; }
+        body.mobile-pdf-rendering .cosmic-header .info-row,
+        body.mobile-pdf-rendering .cosmic-header .info-row *,
+        body.mobile-pdf-rendering .cosmic-header .info-item,
+        body.mobile-pdf-rendering .cosmic-header .info-item * {
+            font-size: 11pt !important;
+        }
 
+        body.mobile-pdf-rendering .current-dasa-box {
+            margin: 0 auto 2.5em auto !important;
+            padding: 6px 10px !important;
+            font-size: 12pt !important;
+        }
+        body.mobile-pdf-rendering .current-dasa-box * { font-size: 12pt !important; }
+        body.mobile-pdf-rendering .current-dasa-inline,
+        body.mobile-pdf-rendering .current-dasa-inline span {
+            font-size: 12.5pt !important;
+        }
+        body.mobile-pdf-rendering .current-dasa-title { font-size: 14.5pt !important; }
 
-
+        body.mobile-pdf-rendering .print-summary-section {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+        body.mobile-pdf-rendering .print-summary-section div[style*="font-size: 20px"] { font-size: 14.5pt !important; margin-bottom: 8px !important; }
+        body.mobile-pdf-rendering .print-summary-section table,
+        body.mobile-pdf-rendering .summary-table {
+            font-size: 10.5pt !important;
+        }
+        body.mobile-pdf-rendering .print-summary-section th,
+        body.mobile-pdf-rendering .print-summary-section td,
+        body.mobile-pdf-rendering .summary-table th,
+        body.mobile-pdf-rendering .summary-table td {
+            font-size: 10.5pt !important;
+            padding: 5px 6px !important;
         }
 
 
@@ -6493,27 +6522,45 @@ body {
     /* Page 1: Cosmic Header + Current Dasha + Complete 12-Dasha Summary Table */
     .cosmic-header,
     .cosmic-header-card {
-        margin: 0 auto 3px auto !important;
-        padding: 4px 6px !important;
+        margin: 4.5em auto 2.5em auto !important; /* Top 4 lines space, 3 lines space after */
+        padding: 6px 10px !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
     }
 
+    .cosmic-header .party-name { font-size: 14.5pt !important; margin-bottom: 5px !important; }
+    .cosmic-header .person-name { font-size: 17pt !important; margin-bottom: 5px !important; }
+    .cosmic-header .info-row,
+    .cosmic-header .info-row *,
+    .cosmic-header .info-item,
+    .cosmic-header .info-item * {
+        font-size: 11pt !important;
+    }
+
     .current-dasa-box {
-        margin: 0 auto 3px auto !important;
-        padding: 4px 6px !important;
+        margin: 0 auto 2.5em auto !important; /* 3 lines space after */
+        padding: 6px 10px !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
+        font-size: 12pt !important;
+    }
+    .current-dasa-box * { font-size: 12pt !important; }
+    .current-dasa-inline,
+    .current-dasa-inline span {
+        font-size: 12.5pt !important;
+    }
+    .current-dasa-title {
+        font-size: 14.5pt !important;
     }
 
     .dasa-summary-card,
     .print-summary-section {
         display: block !important;
-        margin: 2px auto 0 auto !important;
+        margin: 0 auto !important;
         padding: 2px !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
@@ -6521,13 +6568,25 @@ body {
         break-after: page !important;
     }
 
-    .summary-table {
-        font-size: 8px !important;
+    .print-summary-section div[style*="font-size: 20px"] {
+        font-size: 14.5pt !important;
+        margin-bottom: 8px !important;
+    }
+
+    .summary-table,
+    .print-summary-section table {
+        font-size: 10.5pt !important;
         width: 100% !important;
     }
 
-    .summary-table th, .summary-table td {
-        padding: 2px 3px !important;
+    .summary-table th, .summary-table td,
+    .print-summary-section th, .print-summary-section td {
+        padding: 5px 6px !important;
+        font-size: 10.5pt !important;
+    }
+
+    .print-summary-section td div {
+        font-size: 10pt !important;
     }
 
     /* Pages 2, 3, 4: Strictly 4 Mahadasha Cards per Page (Cards 1-4, 5-8, 9-12) */
