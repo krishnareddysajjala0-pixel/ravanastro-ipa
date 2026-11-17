@@ -3580,11 +3580,14 @@
                 display: none !important;
             }
 
-            /* ── Glow container: remove decorative chrome ── */
+            /* ── Glow container: remove decorative chrome & guarantee 7 lines top space on Page 1 ── */
             .glow-container {
                 background: #fff !important;
                 border: none !important;
-                padding: 0 !important;
+                padding-top: 7.5em !important; /* Top leave 7 lines space before printing */
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                padding-bottom: 0 !important;
             }
 
             /* ── Cosmic header (name / birth details - Page 1) ── */
@@ -3593,14 +3596,22 @@
                 border: 1px solid #333 !important;
                 border-radius: 4px !important;
                 padding: 6px 10px !important;
-                margin: 7.5em auto 4.2em auto !important; /* On top leave 7 lines space, after box leave 5 lines space */
+                margin: 0 auto 4.2em auto !important; /* After box leave 5 lines space */
                 width: 98% !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
             .cosmic-header * { color: #000 !important; }
             .party-name { color: #8B0000 !important; font-weight: bold !important; font-size: 14.5pt !important; margin-bottom: 5px !important; }
-            .person-name { font-size: 17pt !important; font-weight: bold !important; color: #000000 !important; margin-bottom: 5px !important; }
+            .person-name,
+            .cosmic-header .person-name {
+                font-size: 17pt !important;
+                font-weight: bold !important;
+                color: #000000 !important;
+                -webkit-text-fill-color: #000000 !important;
+                text-shadow: none !important;
+                margin-bottom: 5px !important;
+            }
             .info-row {
                 display: flex !important;
                 flex-direction: row !important;
@@ -5068,42 +5079,33 @@
 
 
         body.mobile-pdf-rendering .glow-container {
-
-
-
             background: #ffffff !important;
-
-
-
             border: none !important;
-
-
-
             box-shadow: none !important;
-
-
-
             color: #000000 !important;
-
-
-
-            padding: 10px !important;
-
-
-
+            padding-top: 7.5em !important; /* Top leave 7 lines space before printing */
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-bottom: 0 !important;
         }
-
-
 
         body.mobile-pdf-rendering .cosmic-header {
             background: #f5f5f5 !important;
             border: 1px solid #333 !important;
             color: #000000 !important;
-            margin: 7.5em auto 4.2em auto !important;
+            margin: 0 auto 4.2em auto !important; /* After box leave 5 lines space */
             padding: 6px 10px !important;
         }
         body.mobile-pdf-rendering .cosmic-header .party-name { font-size: 14.5pt !important; margin-bottom: 5px !important; }
-        body.mobile-pdf-rendering .cosmic-header .person-name { font-size: 17pt !important; font-weight: bold !important; color: #000000 !important; margin-bottom: 5px !important; }
+        body.mobile-pdf-rendering .person-name,
+        body.mobile-pdf-rendering .cosmic-header .person-name {
+            font-size: 17pt !important;
+            font-weight: bold !important;
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000 !important;
+            text-shadow: none !important;
+            margin-bottom: 5px !important;
+        }
         body.mobile-pdf-rendering .cosmic-header .info-row,
         body.mobile-pdf-rendering .cosmic-header .info-row *,
         body.mobile-pdf-rendering .cosmic-header .info-item,
@@ -6024,7 +6026,7 @@ body {
 
 /* ===== HIGH-CONTRAST READABILITY FIXES FOR HEADER INFO PILLS & PROGRESS STATS ===== */
 @media screen {
-    .cosmic-header .person-name {
+    body:not(.mobile-pdf-rendering) .cosmic-header .person-name {
         color: #ffffff !important;
         background: none !important;
         -webkit-background-clip: initial !important;
@@ -6522,7 +6524,7 @@ body {
     /* Page 1: Cosmic Header + Current Dasha + Complete 12-Dasha Summary Table */
     .cosmic-header,
     .cosmic-header-card {
-        margin: 7.5em auto 4.2em auto !important; /* Top 7 lines space, 5 lines space after */
+        margin: 0 auto 4.2em auto !important; /* After box leave 5 lines space */
         padding: 6px 10px !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
@@ -6531,7 +6533,15 @@ body {
     }
 
     .cosmic-header .party-name { font-size: 14.5pt !important; margin-bottom: 5px !important; }
-    .cosmic-header .person-name { font-size: 17pt !important; font-weight: bold !important; color: #000000 !important; margin-bottom: 5px !important; }
+    .cosmic-header .person-name,
+    .person-name {
+        font-size: 17pt !important;
+        font-weight: bold !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        text-shadow: none !important;
+        margin-bottom: 5px !important;
+    }
     .cosmic-header .info-row,
     .cosmic-header .info-row *,
     .cosmic-header .info-item,

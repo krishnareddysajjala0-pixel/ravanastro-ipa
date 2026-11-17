@@ -4833,11 +4833,21 @@
       .box.lagna::after, .lagna::after {
         content: "" !important;
         position: absolute !important;
+        top: 2px !important;
+        bottom: 2px !important;
+        left: 2px !important;
+        right: 2px !important;
         inset: 2px !important;
         border: 2.5px solid #10b981 !important;
         border-radius: 8px !important;
         pointer-events: none !important;
         z-index: 2 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .box:not(.house-green):not(.house-red):not(.house-mixed):not(.lagna) {
+        border: 2px solid var(--print-box-border, var(--box-border, #d97706)) !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -6103,6 +6113,10 @@
     body.mobile-pdf-rendering .lagna::after {
       content: "" !important;
       position: absolute !important;
+      top: 2px !important;
+      bottom: 2px !important;
+      left: 2px !important;
+      right: 2px !important;
       inset: 2px !important;
       border: 2.5px solid #10b981 !important;
       border-radius: 8px !important;
