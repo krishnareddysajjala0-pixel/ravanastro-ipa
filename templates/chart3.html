@@ -4830,6 +4830,32 @@ body {
     font-size: 7.1pt !important;
     line-height: 1.15 !important;
   }
+
+  /* Page 1: after guru varga vyakti line leave 2 lines space */
+  #chart3-page-1 .party-info {
+    margin-bottom: 24px !important;
+  }
+
+  /* Page 1: Increase font size of friendly-section-title / enemy-section-title */
+  #chart3-page-1 .section-title,
+  #chart3-page-1 .friendly-section-title,
+  #chart3-page-1 .enemy-section-title {
+    font-size: 19pt !important;
+    margin-top: 10px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Page 2: adjust empty space equally on top and bottom (vertically center content) */
+  #chart3-page-2 {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-height: 245mm !important;
+    height: 245mm !important;
+    box-sizing: border-box !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
 }
 </style>
 </head>

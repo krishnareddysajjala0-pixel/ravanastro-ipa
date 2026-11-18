@@ -1,0 +1,273 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1080" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#15803d"/>
+      <stop offset="70%" stop-color="#0f5c2b"/>
+      <stop offset="100%" stop-color="#093d1b"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="glowGold" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#fbbf24" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <style>
+    .te-font {
+      font-family: 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif;
+    }
+    .en-font {
+      font-family: 'Outfit', 'Segoe UI', Roboto, sans-serif;
+    }
+  </style>
+
+  <!-- Green Card Background -->
+  <rect width="1000" height="1080" rx="28" fill="url(#bgGrad)"/>
+
+  <!-- Top "శ్రీ" Symbol -->
+  <g filter="url(#shadow)">
+    <text x="500" y="54" text-anchor="middle" class="te-font" font-size="48" font-weight="900" fill="#facc15" stroke="#78350f" stroke-width="1.8">శ్రీ</text>
+  </g>
+
+  <!-- Main Chakra Wheel Group -->
+  <g filter="url(#shadow)">
+    <!-- Outer rim -->
+    <circle cx="500" cy="480" r="400" fill="#0f172a" stroke="#000000" stroke-width="6"/>
+    <path d="M 500.00 398.00 L 500.00 80.00 A 400 400 0 0 1 700.00 133.59 L 541.00 408.99 A 82 82 0 0 0 500.00 398.00 Z" fill="#dc2626" stroke="#000000" stroke-width="2"/>
+    <path d="M 541.00 408.99 L 700.00 133.59 A 400 400 0 0 1 846.41 280.00 L 571.01 439.00 A 82 82 0 0 0 541.00 408.99 Z" fill="#facc15" stroke="#000000" stroke-width="2"/>
+    <path d="M 571.01 439.00 L 846.41 280.00 A 400 400 0 0 1 900.00 480.00 L 582.00 480.00 A 82 82 0 0 0 571.01 439.00 Z" fill="#84cc16" stroke="#000000" stroke-width="2"/>
+    <path d="M 582.00 480.00 L 900.00 480.00 A 400 400 0 0 1 846.41 680.00 L 571.01 521.00 A 82 82 0 0 0 582.00 480.00 Z" fill="#1d4ed8" stroke="#000000" stroke-width="2"/>
+    <path d="M 571.01 521.00 L 846.41 680.00 A 400 400 0 0 1 700.00 826.41 L 541.00 551.01 A 82 82 0 0 0 571.01 521.00 Z" fill="#db2777" stroke="#000000" stroke-width="2"/>
+    <path d="M 541.00 551.01 L 700.00 826.41 A 400 400 0 0 1 500.00 880.00 L 500.00 562.00 A 82 82 0 0 0 541.00 551.01 Z" fill="#06b6d4" stroke="#000000" stroke-width="2"/>
+    <path d="M 500.00 562.00 L 500.00 880.00 A 400 400 0 0 1 300.00 826.41 L 459.00 551.01 A 82 82 0 0 0 500.00 562.00 Z" fill="#18181b" stroke="#000000" stroke-width="2"/>
+    <path d="M 459.00 551.01 L 300.00 826.41 A 400 400 0 0 1 153.59 680.00 L 428.99 521.00 A 82 82 0 0 0 459.00 551.01 Z" fill="#ea580c" stroke="#000000" stroke-width="2"/>
+    <path d="M 428.99 521.00 L 153.59 680.00 A 400 400 0 0 1 100.00 480.00 L 418.00 480.00 A 82 82 0 0 0 428.99 521.00 Z" fill="#831843" stroke="#000000" stroke-width="2"/>
+    <path d="M 418.00 480.00 L 100.00 480.00 A 400 400 0 0 1 153.59 280.00 L 428.99 439.00 A 82 82 0 0 0 418.00 480.00 Z" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+    <path d="M 428.99 439.00 L 153.59 280.00 A 400 400 0 0 1 300.00 133.59 L 459.00 408.99 A 82 82 0 0 0 428.99 439.00 Z" fill="#9333ea" stroke="#000000" stroke-width="2"/>
+    <path d="M 459.00 408.99 L 300.00 133.59 A 400 400 0 0 1 500.00 80.00 L 500.00 398.00 A 82 82 0 0 0 459.00 408.99 Z" fill="#15803d" stroke="#000000" stroke-width="2"/>
+    <circle cx="500" cy="480" r="170" fill="none" stroke="#000000" stroke-width="2"/>
+    <g transform="translate(586.70, 156.41) rotate(15.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">మేషం</text>
+    </g>
+    <g transform="translate(530.63, 143.39) rotate(5.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <g transform="translate(641.77, 173.17) rotate(24.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <path d="M 506.81 220.09 Q 548.11 220.42 570.92 215.34 Q 588.13 231.14 624.06 251.51" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(555.65, 272.33) rotate(15.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">శరీర సంబంధ</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">అవయవములు</text>
+    </g>
+    <g transform="translate(535.72, 346.70) rotate(15.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">1</text>
+    </g>
+    <g transform="translate(736.88, 243.12) rotate(45.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">వృషభం</text>
+    </g>
+    <g transform="translate(694.83, 203.81) rotate(35.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పుణ్యము</text>
+    </g>
+    <g transform="translate(776.19, 285.17) rotate(54.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పాపము</text>
+    </g>
+    <path d="M 635.85 258.31 Q 671.45 279.25 693.75 286.25 Q 700.75 308.55 721.69 344.15" fill="none" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(652.03, 327.97) rotate(45.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#0f172a">వాక్కు</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#0f172a">ఆయుష్షు</text>
+    </g>
+    <g transform="translate(597.58, 382.42) rotate(45.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">2</text>
+    </g>
+    <g transform="translate(823.59, 393.30) rotate(75.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">మిథునం</text>
+    </g>
+    <g transform="translate(806.83, 338.23) rotate(65.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పాపము</text>
+    </g>
+    <g transform="translate(836.61, 449.37) rotate(84.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పాపము</text>
+    </g>
+    <path d="M 728.49 355.94 Q 748.86 391.87 764.66 409.08 Q 759.58 431.89 759.91 473.19" fill="none" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(707.67, 424.35) rotate(75.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#0f172a">ధన సంబంధ</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#0f172a">తండ్రి సంబంధ</text>
+    </g>
+    <g transform="translate(633.30, 444.28) rotate(75.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">3</text>
+    </g>
+    <g transform="translate(823.59, 566.70) rotate(105.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">కర్కాటకం</text>
+    </g>
+    <g transform="translate(836.61, 510.63) rotate(95.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పాపము</text>
+    </g>
+    <g transform="translate(806.83, 621.77) rotate(114.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <path d="M 759.91 486.81 Q 759.58 528.11 764.66 550.92 Q 748.86 568.13 728.49 604.06" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(707.67, 535.65) rotate(105.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="15.5" font-weight="800" fill="#ffffff">స్థిరాస్తులు</text>
+    </g>
+    <g transform="translate(633.30, 515.72) rotate(105.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">4</text>
+    </g>
+    <g transform="translate(736.88, 716.88) rotate(135.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">సింహం</text>
+    </g>
+    <g transform="translate(776.19, 674.83) rotate(125.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <g transform="translate(694.83, 756.19) rotate(144.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <path d="M 721.69 615.85 Q 700.75 651.45 693.75 673.75 Q 671.45 680.75 635.85 701.69" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(652.03, 632.03) rotate(135.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">విద్య</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">జ్ఞానము</text>
+    </g>
+    <g transform="translate(597.58, 577.58) rotate(135.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">5</text>
+    </g>
+    <g transform="translate(586.70, 803.59) rotate(165.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">కన్య</text>
+    </g>
+    <g transform="translate(641.77, 786.83) rotate(155.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పుణ్యము</text>
+    </g>
+    <g transform="translate(530.63, 816.61) rotate(174.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పాపము</text>
+    </g>
+    <path d="M 624.06 708.49 Q 588.13 728.86 570.92 744.66 Q 548.11 739.58 506.81 739.91" fill="none" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(555.65, 687.67) rotate(165.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#0f172a">శత్రు, ఋణ</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#0f172a">రోగ</text>
+    </g>
+    <g transform="translate(535.72, 613.30) rotate(165.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">6</text>
+    </g>
+    <g transform="translate(413.30, 803.59) rotate(195.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">తుల</text>
+    </g>
+    <g transform="translate(469.37, 816.61) rotate(185.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పాపము</text>
+    </g>
+    <g transform="translate(358.23, 786.83) rotate(204.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పాపము</text>
+    </g>
+    <path d="M 493.19 739.91 Q 451.89 739.58 429.08 744.66 Q 411.87 728.86 375.94 708.49" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(444.35, 687.67) rotate(195.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">భార్య</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">దేహ సుఖ</text>
+    </g>
+    <g transform="translate(464.28, 613.30) rotate(195.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">7</text>
+    </g>
+    <g transform="translate(263.12, 716.88) rotate(225.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">వృశ్చికం</text>
+    </g>
+    <g transform="translate(305.17, 756.19) rotate(215.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పాపము</text>
+    </g>
+    <g transform="translate(223.81, 674.83) rotate(234.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <path d="M 364.15 701.69 Q 328.55 680.75 306.25 673.75 Q 299.25 651.45 278.31 615.85" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(347.97, 632.03) rotate(225.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">ఆయుష్షు</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">ప్రయాణములు</text>
+    </g>
+    <g transform="translate(402.42, 577.58) rotate(225.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">8</text>
+    </g>
+    <g transform="translate(176.41, 566.70) rotate(255.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">ధనుస్సు</text>
+    </g>
+    <g transform="translate(193.17, 621.77) rotate(245.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <g transform="translate(163.39, 510.63) rotate(264.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <path d="M 271.51 604.06 Q 251.14 568.13 235.34 550.92 Q 240.42 528.11 240.09 486.81" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(292.33, 535.65) rotate(255.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">దానధర్మములు</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">కీర్తి</text>
+    </g>
+    <g transform="translate(366.70, 515.72) rotate(255.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">9</text>
+    </g>
+    <g transform="translate(176.41, 393.30) rotate(285.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">మకరం</text>
+    </g>
+    <g transform="translate(163.39, 449.37) rotate(275.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పుణ్యము</text>
+    </g>
+    <g transform="translate(193.17, 338.23) rotate(294.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#0f172a">పాపము</text>
+    </g>
+    <path d="M 240.09 473.19 Q 240.42 431.89 235.34 409.08 Q 251.14 391.87 271.51 355.94" fill="none" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(292.33, 424.35) rotate(285.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="15.5" font-weight="800" fill="#0f172a">భక్తి, కర్మ</text>
+    </g>
+    <g transform="translate(366.70, 444.28) rotate(285.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#0f172a">10</text>
+    </g>
+    <g transform="translate(263.12, 243.12) rotate(315.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">కుంభం</text>
+    </g>
+    <g transform="translate(223.81, 285.17) rotate(305.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పాపము</text>
+    </g>
+    <g transform="translate(305.17, 203.81) rotate(324.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పాపము</text>
+    </g>
+    <path d="M 278.31 344.15 Q 299.25 308.55 306.25 286.25 Q 328.55 279.25 364.15 258.31" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(347.97, 327.97) rotate(315.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">విద్య అజ్ఞానము</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">సంపద</text>
+    </g>
+    <g transform="translate(402.42, 382.42) rotate(315.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">11</text>
+    </g>
+    <g transform="translate(413.30, 156.41) rotate(345.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">మీనం</text>
+    </g>
+    <g transform="translate(358.23, 173.17) rotate(335.20)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పాపము</text>
+    </g>
+    <g transform="translate(469.37, 143.39) rotate(354.80)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="12" font-weight="800" fill="#ffffff">పుణ్యము</text>
+    </g>
+    <path d="M 375.94 251.51 Q 411.87 231.14 429.08 215.34 Q 451.89 220.42 493.19 220.09" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+    <g transform="translate(444.35, 272.33) rotate(345.00)">
+      <text x="0" y="-9" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">మరణము</text>
+      <text x="0" y="11" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="14" font-weight="800" fill="#ffffff">మోక్షము</text>
+    </g>
+    <g transform="translate(464.28, 346.70) rotate(345.00)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" class="te-font" font-size="22" font-weight="900" fill="#ffffff">12</text>
+    </g>
+    <circle cx="500" cy="480" r="82" fill="#ffffff" stroke="#000000" stroke-width="4.5"/>
+    <text x="500" y="446" text-anchor="middle" class="te-font" font-size="28" font-weight="900" fill="#1e3a8a">గు</text>
+    <text x="500" y="483" text-anchor="middle" class="te-font" font-size="34" font-weight="900" fill="#1e3a8a">గురువు</text>
+    <text x="500" y="520" text-anchor="middle" class="te-font" font-size="28" font-weight="900" fill="#1e3a8a">వు</text>
+  </g>
+
+  <!-- Bottom Title & Ornaments -->
+  <g filter="url(#shadow)">
+    <text x="500" y="930" text-anchor="middle" class="te-font" font-size="38" font-weight="900" fill="#ff4081" stroke="#ffffff" stroke-width="1.8" filter="url(#glowGold)">కాల, కర్మ చక్రములు</text>
+    <g stroke="#facc15" stroke-width="2" fill="none">
+      <line x1="240" y1="952" x2="760" y2="952"/>
+      <polygon points="500,946 506,952 500,958 494,952" fill="#facc15"/>
+      <polygon points="484,948 488,952 484,956 480,952" fill="#facc15"/>
+      <polygon points="516,948 520,952 516,956 512,952" fill="#facc15"/>
+      <path d="M 240 952 C 220 942, 200 962, 180 947" stroke="#facc15" stroke-width="2.5"/>
+      <path d="M 760 952 C 780 942, 800 962, 820 947" stroke="#facc15" stroke-width="2.5"/>
+    </g>
+    <text x="500" y="985" text-anchor="middle" class="en-font" font-size="18" font-weight="700" fill="#ffffff" letter-spacing="0.5">Author : The Only Guru of Three Religions</text>
+    <text x="500" y="1015" text-anchor="middle" class="en-font" font-size="16" font-weight="600" fill="#fef08a" letter-spacing="0.5">The Spiritual Emperor Thraitha Thought Originator</text>
+    <text x="500" y="1045" text-anchor="middle" class="te-font" font-size="14.5" font-weight="700" fill="#e2e8f0" opacity="0.95">ద్వాదశ గ్రహ జ్యోతిష శాస్త్రవేత్త, ఆధ్యాత్మిక సామ్రాజ్య చక్రవర్తి శ్రీశ్రీశ్రీ ఆచార్య ప్రబోధానంద భగవానులు</text>
+  </g>
+</svg>
