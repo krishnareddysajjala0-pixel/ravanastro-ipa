@@ -3881,7 +3881,10 @@
 
 
         padding: 0 !important;
-        zoom: 0.98 !important;
+
+
+
+        zoom: 0.74 !important;
 
 
 
@@ -4015,7 +4018,7 @@
         width: 1024px !important;
         min-width: 1024px !important;
         max-width: 1024px !important;
-        zoom: 0.98 !important; /* Exact same zoom and dimensions as #print-wrapper */
+        zoom: 0.78 !important; /* Exact same zoom and dimensions as #print-wrapper */
         box-shadow: none !important;
         border: none !important;
       }
@@ -5864,36 +5867,26 @@
 
 
   
-/* ===== COMPACT MAHA PRINT TABLE MATCHING KUNDALI WIDTH & 8K CHAKRA WHEEL ===== */
+/* ===== COMPACT MAHA PRINT TABLE MATCHING KUNDALI WIDTH & AUTO-ADJUSTING CELL WIDTHS ===== */
 @media print {
-  #print-wrapper {
-    page-break-after: always !important;
-    break-after: page !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
   body[data-print-mode="kundali-and-dasha"] #mahadasha-print-section {
     display: block !important;
     page-break-before: always !important;
     break-before: page !important;
-    page-break-after: avoid !important;
-    break-after: avoid !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     width: 1024px !important;
     max-width: 1024px !important;
-    zoom: 0.98 !important;
-    margin: 0 auto !important;
-    padding: 0 4px !important;
+    zoom: 0.78 !important;
+    margin: 20px auto 0 auto !important;
     text-align: center !important;
     box-sizing: border-box !important;
   }
 
   .maha-print-title {
-    font-size: 16pt !important;
+    font-size: 22pt !important;
     font-weight: 800 !important;
-    margin: 2px auto 8px auto !important;
+    margin: 0 auto 2.2em auto !important; /* Leave two lines space after this text */
     text-align: center !important;
     font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
@@ -5902,11 +5895,9 @@
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-    border: 2px solid #000000 !important;
+    border-collapse: collapse !important;
     table-layout: auto !important;
-    font-size: 10pt !important;
+    font-size: 26px !important; /* Double the text size */
     background: #ffffff !important;
     font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
@@ -5915,51 +5906,24 @@
     background-color: #e2e8f0 !important;
     color: #000000 !important;
     font-weight: bold !important;
-    border-right: 1.5px solid #000000 !important;
-    border-bottom: 1.5px solid #000000 !important;
-    padding: 2.5px 5px !important;
+    border: 1.5px solid #000 !important;
+    padding: 5px 6px !important;
     text-align: center !important;
     white-space: nowrap !important;
-    font-size: 10pt !important;
+    font-size: 26px !important; /* Double the text size */
   }
 
   .maha-print-table td {
-    border-right: 1.5px solid #000000 !important;
-    border-bottom: 1.5px solid #000000 !important;
-    padding: 2px 4px !important;
+    border: 1.5px solid #000 !important;
+    padding: 5px 6px !important;
     text-align: center !important;
     white-space: nowrap !important;
-    font-size: 9.8pt !important;
+    font-size: 26px !important; /* Double the text size */
     vertical-align: middle !important;
   }
 
-  .maha-print-table th:last-child,
-  .maha-print-table td:last-child {
-    border-right: none !important; /* Ending vertical line framed by table outer border without cutting */
-  }
-
-  .maha-print-table tr:last-child td {
-    border-bottom: none !important;
-  }
-
   .maha-print-table td * {
-    font-size: 9.8pt !important;
-  }
-
-  .chakra-wheel-print-container {
-    text-align: center !important;
-    margin-top: 10px !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  .thraitha-chakra-img {
-    max-height: 700px !important;
-    width: 95% !important;
-    max-width: 780px !important;
-    height: auto !important;
-    display: block !important;
-    margin: 0 auto !important;
+    font-size: 26px !important;
   }
 }
 </style>
@@ -7760,7 +7724,7 @@ body {
     min-width: 1024px !important;
     margin: 0 auto !important;
     padding: 0 !important;
-    zoom: 0.98 !important;
+    zoom: 0.74 !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     page-break-after: always !important;
@@ -7806,7 +7770,7 @@ body {
     min-width: 1024px !important;
     margin: 0 auto !important;
     padding: 0 !important;
-    zoom: 0.98 !important; /* Exact same zoom and width as #print-wrapper */
+    zoom: 0.74 !important; /* Exact same zoom and width as #print-wrapper */
     page-break-before: always !important;
     break-before: page !important;
     page-break-inside: avoid !important;
@@ -8124,7 +8088,7 @@ body {
 
 
 
-<body data-print-mode="kundali-and-dasha">
+<body>
     <!-- Top Control Row Bar (Theme, Back, Print, Karma, Aspects, Language in Single Line at Top) -->
     <div class="top-control-bar print-hide">
       <!-- 1. Nakshatra Kundali Button -->
@@ -9178,11 +9142,6 @@ body {
 
 
     </table>
-
-    <!-- 8K Thraitha Kala Karma Chakra Wheel inserted directly after 120 Years Dasa Cycle Table -->
-    <div class="chakra-wheel-print-container" style="text-align: center; margin-top: 10px; page-break-inside: avoid; break-inside: avoid;">
-      <img src="{{ url_for('static', filename='images/thraitha_chakra_8k.svg') }}" class="thraitha-chakra-img" alt="{{ _('కాల, కర్మ చక్రములు') }}" style="max-height: 700px; width: 95%; max-width: 780px; height: auto; display: block; margin: 0 auto;" />
-    </div>
 
 
 
@@ -10571,11 +10530,13 @@ body {
         if (overlay) overlay.style.display = 'none';
 
         const modal = document.getElementById('print-options-modal');
-        if (modal) modal.style.display = 'none';
+        if (modal) modal.style.display = 'flex';
 
-        // Direct Kundali + Dasacharam print as default without showing options
-        document.body.setAttribute('data-print-mode', 'kundali-and-dasha');
-        doPrint('print');
+        // Reset to default selection
+        const radio = document.getElementById('po-kundali-only');
+        if (radio) radio.checked = true;
+
+        selectPrintOption('kundali-only');
       }
 
       function closePrintOptions() {
@@ -10674,8 +10635,9 @@ body {
 
             function doPrint(action) {
         if (!action) action = 'print';
-        const mode = 'kundali-and-dasha';
-        document.body.setAttribute('data-print-mode', 'kundali-and-dasha');
+        const selected = document.querySelector('input[name="print-mode"]:checked');
+        const mode = selected ? selected.value : 'kundali-only';
+        document.body.setAttribute('data-print-mode', mode);
 
         closePrintOptions();
         window.onbeforeprint();
