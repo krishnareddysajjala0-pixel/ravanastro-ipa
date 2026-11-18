@@ -3642,16 +3642,22 @@ body.mobile-pdf-rendering .center-box {
     overflow: hidden !important;
   }
 
-  body.transit-loaded .nakshatra-chart-container,
   body.transit-loaded #chart-pdf-export-container {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    zoom: 0.65 !important;
+    zoom: 1 !important;
+  }
+
+  body.transit-loaded .nakshatra-chart-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    zoom: 1 !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
-    page-break-after: avoid !important;
-    break-after: avoid !important;
+    page-break-after: always !important;
+    break-after: page !important;
   }
 
   body.transit-loaded #transit-container {
@@ -3659,12 +3665,14 @@ body.mobile-pdf-rendering .center-box {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 100% !important;
-    margin: 4px auto 0 auto !important;
+    margin: 0 auto !important;
     zoom: 1 !important;
-    page-break-before: avoid !important;
-    break-before: avoid !important;
+    page-break-before: always !important;
+    break-before: page !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 }
 </style>

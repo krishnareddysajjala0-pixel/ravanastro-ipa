@@ -57,7 +57,7 @@
     <div class="planets-content">
       {% for line in chart[box_lagna].split('<br>') %}
         {% if _("లగ్నం") in line %}
-          <div style="color: gold; font-weight: bold; margin-bottom: 5px;">
+          <div class="lagna-text" style="color: gold; font-weight: bold; margin-bottom: 5px;">
             {{ line | safe }}
           </div>
         {% elif line.strip() %}
@@ -71,11 +71,11 @@
   </div>
 {% endmacro %}
 
-<div class="header" style="margin-top: 30px; border-top: 2px dashed rgba(255, 215, 0, 0.3); padding-top: 20px;">
-  <div class="page-title" style="font-size: 20px; color: #ff9800;">
+<div class="header transit-header" style="margin-top: 30px; border-top: 2px dashed rgba(255, 215, 0, 0.3); padding-top: 20px;">
+  <div class="page-title transit-title" style="font-size: 20px; color: #ff9800;">
     <i class="fas fa-clock"></i> {{ name }}
   </div>
-  <div style="text-align: center; color: #a0a0ff; font-size: 14px; margin-bottom: 10px;">
+  <div class="transit-datetime" style="text-align: center; color: #a0a0ff; font-size: 14px; margin-bottom: 10px;">
     {{ _('తేదీ:') }} {{ dob }} | {{ _('సమయం:') }} {{ tob }}
   </div>
 </div>
@@ -112,7 +112,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2" style="text-align: center; padding-top: 10px; color: #a0a0ff; font-style: italic; font-size: 11px;">
+            <td colspan="2" class="transit-note" style="text-align: center; padding-top: 10px; color: #a0a0ff; font-style: italic; font-size: 11px;">
               {{ _('ఈ చక్రం ప్రస్తుత సమయానికి చెందిన గ్రహ స్థితులను సూచిస్తుంది.') }}
             </td>
           </tr>
