@@ -2135,9 +2135,9 @@
     --text-muted: #334155 !important;
     --border-color: #cbd5e1 !important;
     --card-border: #cbd5e1 !important;
-    --table-header-bg: #f1f5f9 !important;
+    --table-header-bg: #ffffff !important;
     --table-row-bg: #ffffff !important;
-    --table-row-alt-bg: #f8fafc !important;
+    --table-row-alt-bg: #ffffff !important;
     --table-border: #cbd5e1 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -2209,7 +2209,7 @@
   }
 
   [data-theme] .card-top .current-loc-item {
-    background: #f1f5f9 !important;
+    background: transparent !important;
     border-color: #cbd5e1 !important;
     color: #0f172a !important;
   }
@@ -2403,7 +2403,7 @@
     word-break: break-word !important;
     white-space: normal !important;
   }
-  /* Print: First column and first two rows with background colors */
+  /* Print: First column and all table headers with pure white background (no colors) */
   #chart3-page-1 .data-table th:first-child,
   #chart3-page-1 .data-table td:first-child,
   #chart3-page-1 .unified-varga-table th.param-header,
@@ -2411,7 +2411,8 @@
     width: 7.6% !important;
     min-width: 7.6% !important;
     max-width: 7.6% !important;
-    background: #e2e8f0 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     font-weight: 800 !important;
     color: #0f172a !important;
     border: 1px solid #94a3b8 !important;
@@ -2424,11 +2425,13 @@
     border: 1px solid #94a3b8 !important;
   }
   #chart3-page-1 .unified-varga-table th.guru-group-header {
-    background: #dcfce7 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #166534 !important;
   }
   #chart3-page-1 .unified-varga-table th.shani-group-header {
-    background: #f3e8ff !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #6b21a8 !important;
   }
   #chart3-page-1 .data-table th:not(:first-child),
@@ -2452,7 +2455,8 @@
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.kuja-planet,
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.ketu-planet,
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.bhoomi-planet {
-    background: #f0fdf4 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #15803d !important;
   }
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.shani-planet,
@@ -2461,7 +2465,8 @@
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.budha-planet,
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.shukra-planet,
   #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.rahu-planet {
-    background: #faf5ff !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #7e22ce !important;
   }
   #chart3-page-1 .disease-row td,
@@ -2524,7 +2529,8 @@
   }
   .party-badge {
     display: inline-block !important;
-    background: #f1f5f9 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #0f172a !important;
     border: 1px solid #0f172a !important;
     font-size: 11.9pt !important;
@@ -2584,7 +2590,8 @@
 
   .own-house-badge {
     border: 1px solid #15803d !important;
-    background: #dcfce7 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #14532d !important;
     font-weight: 800 !important;
     font-size: 8.1pt !important;
@@ -2668,7 +2675,8 @@
     margin: 0 !important;
     padding: 0.5px 2px !important;
     border-radius: 2px !important;
-    background: #fef2f2 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     border: 1px solid #fca5a5 !important;
     color: #991b1b !important;
     font-weight: 700 !important;
@@ -2735,6 +2743,8 @@
   #chart3-page-1 .party-info .party-badge {
     font-size: 15.8pt !important;
     padding: 1.5px 10px !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
   }
   #chart3-page-1 .party-info div {
     font-size: 13.5pt !important;
@@ -2759,6 +2769,7 @@
   html body .result-card.friendly-card,
   html body .result-card.enemy-card {
     background: #ffffff !important;
+    background-color: #ffffff !important;
     padding: 2px 4px !important;
     justify-content: flex-start !important;
     align-items: stretch !important;
@@ -2778,6 +2789,8 @@
   html body .result-card .own-house-badge {
     font-size: 10pt !important;
     padding: 0.5px 3px !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
   }
   html body .result-card .info-row,
   html body .result-card .info-row-inline,
@@ -4534,6 +4547,137 @@ body {
   #chart3-page-1 .section-title,
   #varga-table-section .section-title {
     font-size: 10.5pt !important;
+  }
+}
+</style>
+
+<style id="chart3-print-no-backgrounds">
+/* ===== STRICT: REMOVE ALL BACKGROUND COLORS IN CHART3 PRINT / PDF ===== */
+@media print {
+  *, *::before, *::after {
+    background-image: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  html,
+  body,
+  .container,
+  #chart3-pdf-export-container,
+  .print-page-container,
+  #chart3-page-1,
+  #chart3-page-2,
+  .header,
+  .section-header,
+  .party-info-box,
+  .party-info,
+  .party-info.guru-bg,
+  .party-info.shani-bg,
+  .party-badge,
+  .table-container,
+  .data-table,
+  .data-table th,
+  .data-table td,
+  .unified-varga-table,
+  .unified-varga-table th,
+  .unified-varga-table td,
+  .unified-varga-table tr,
+  .unified-varga-table thead,
+  .unified-varga-table tbody,
+  .disease-row,
+  .disease-cell,
+  .disease-list,
+  .disease-list li,
+  .results-grid,
+  .result-card,
+  .result-card *,
+  .own-house-badge,
+  .bitter-enemy-alert,
+  .card-top .current-loc-item {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Specific overrides for all varga table headers, columns, and party themes */
+  #chart3-page-1 .unified-varga-table th,
+  #chart3-page-1 .unified-varga-table td,
+  #chart3-page-1 .unified-varga-table th.varga-group-header,
+  #chart3-page-1 .unified-varga-table th.guru-group-header,
+  #chart3-page-1 .unified-varga-table th.shani-group-header,
+  #chart3-page-1 .unified-varga-table thead tr th,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.guru-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.surya-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.chandra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.kuja-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.ketu-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.bhoomi-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.shani-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.mitra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.chitra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.budha-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.shukra-planet,
+  #chart3-page-1 .unified-varga-table thead tr:nth-child(2) th.rahu-planet,
+  #chart3-page-1 .unified-varga-table tbody td:first-child,
+  #chart3-page-1 .unified-varga-table th.param-header,
+  #chart3-page-1 .data-table th:first-child,
+  #chart3-page-1 .data-table td:first-child,
+  html body.is-guru-party-body .unified-varga-table th,
+  html body.is-guru-party-body .unified-varga-table td,
+  html body.is-shani-party-body .unified-varga-table th,
+  html body.is-shani-party-body .unified-varga-table td,
+  html body.is-guru-party-body .unified-varga-table th.guru-group-header,
+  html body.is-guru-party-body .unified-varga-table th.shani-group-header,
+  html body.is-shani-party-body .unified-varga-table th.guru-group-header,
+  html body.is-shani-party-body .unified-varga-table th.shani-group-header,
+  html body.is-guru-party-body .unified-varga-table thead tr:nth-child(2) th,
+  html body.is-shani-party-body .unified-varga-table thead tr:nth-child(2) th,
+  html body.is-guru-party-body .unified-varga-table td,
+  html body.is-shani-party-body .unified-varga-table td,
+  [data-theme] .unified-varga-table td,
+  [data-theme] .unified-varga-table th {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Result cards: strictly pure white background */
+  html body .result-card,
+  html body .result-card.friendly-card,
+  html body .result-card.enemy-card,
+  html body [data-theme] .result-card,
+  html body .result-card.is-own-house {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Badges & Alerts: crisp borders, zero colored background fill */
+  .own-house-badge,
+  html body .result-card .own-house-badge {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #15803d !important;
+    color: #14532d !important;
+  }
+
+  .bitter-enemy-alert {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #dc2626 !important;
+    color: #991b1b !important;
+  }
+
+  .party-badge,
+  #chart3-page-1 .party-info .party-badge {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #0f172a !important;
+    color: #0f172a !important;
+  }
+
+  .card-top .current-loc-item,
+  [data-theme] .card-top .current-loc-item {
+    background: transparent !important;
+    background-color: transparent !important;
   }
 }
 </style>
