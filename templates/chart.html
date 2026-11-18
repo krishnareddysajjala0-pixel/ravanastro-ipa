@@ -3477,7 +3477,7 @@
 
 
 
-        margin-top: 0 !important;
+        margin-top: 2.2em !important; /* Leave 2 lines space on top and then print */
 
 
 
@@ -5998,6 +5998,12 @@
       zoom: 1 !important;
     }
 
+    body.mobile-pdf-rendering .header,
+    body.mobile-pdf-rendering #print-wrapper .header,
+    body.mobile-pdf-rendering #transit-container .header {
+      margin-top: 2.2em !important; /* Leave 2 lines space on top and then print */
+    }
+
     body.mobile-pdf-rendering.transit-loaded #print-wrapper {
       page-break-after: always !important;
       break-after: page !important;
@@ -7726,7 +7732,7 @@ body {
   }
 
   body.transit-loaded #print-wrapper .header {
-    margin: 0 0 2px 0 !important;
+    margin: 2.2em 0 2px 0 !important; /* Leave 2 lines space on top and then print */
     padding: 0 !important;
     width: 100% !important;
     text-align: center !important;
@@ -7779,7 +7785,7 @@ body {
   }
 
   body.transit-loaded #transit-container .header {
-    margin: 0 0 8px 0 !important;
+    margin: 2.2em 0 8px 0 !important; /* Leave 2 lines space on top and then print */
     padding: 0 !important;
     border-top: none !important;
     width: 100% !important;
@@ -8155,7 +8161,7 @@ body {
 
 
 
-      <h1 class="page-title" style="margin-bottom: 0; font-size: 32px;">{{ _('జాఫతకము') }}</h1>
+      <h1 class="page-title" style="margin-bottom: 0; font-size: 32px;">{{ _('జాతకము') }}</h1>
 
 
 
