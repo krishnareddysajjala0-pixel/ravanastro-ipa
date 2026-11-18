@@ -4129,15 +4129,15 @@
 
 
 
-        font-size: 18pt;
+        font-size: 22pt !important;
 
 
 
-        font-weight: bold;
+        font-weight: 800 !important;
 
 
 
-        margin-bottom: 12px;
+        margin-bottom: 2.2em !important; /* Leave two lines space after this text */
 
 
 
@@ -4145,7 +4145,7 @@
 
 
 
-        font-family: 'Noto Sans Telugu', sans-serif;
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
 
 
 
@@ -4161,19 +4161,19 @@
 
 
 
-        width: 100%;          /* match kundali chart width */
+        width: 100% !important;          /* match kundali chart width */
 
 
 
-        margin: 0 auto;       /* center the table */
+        margin: 0 auto !important;       /* center the table */
 
 
 
-        border-collapse: collapse;
+        border-collapse: collapse !important;
 
 
 
-        font-size: 14pt;
+        font-size: 26px !important; /* Double the text size */
 
 
 
@@ -4189,7 +4189,7 @@
 
 
 
-        font-family: 'Noto Sans Telugu', sans-serif;
+        font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
 
 
 
@@ -4213,7 +4213,7 @@
 
 
 
-        font-weight: bold;
+        font-weight: bold !important;
 
 
 
@@ -4221,11 +4221,19 @@
 
 
 
-        padding: 6px 8px !important;
+        padding: 5px 6px !important;
 
 
 
-        text-align: center;
+        text-align: center !important;
+
+
+
+        font-size: 26px !important; /* Double the text size */
+
+
+
+        white-space: nowrap !important;
 
 
 
@@ -4253,15 +4261,39 @@
 
 
 
-        padding: 6px 8px !important;
+        padding: 5px 6px !important;
 
 
 
-        text-align: center;
+        text-align: center !important;
+
+
+
+        font-size: 26px !important; /* Double the text size */
+
+
+
+        white-space: nowrap !important;
+
+
+
+        vertical-align: middle !important;
 
 
 
         color: #000 !important;
+
+
+
+      }
+
+
+
+      .maha-print-table td * {
+
+
+
+        font-size: 26px !important;
 
 
 
@@ -5839,21 +5871,24 @@
 @media print {
   body[data-print-mode="kundali-and-dasha"] #mahadasha-print-section {
     display: block !important;
-    page-break-before: avoid !important;
-    break-before: avoid !important;
+    page-break-before: always !important;
+    break-before: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
     width: 1024px !important;
     max-width: 1024px !important;
     zoom: 0.78 !important;
-    margin: 8px auto 0 auto !important;
+    margin: 20px auto 0 auto !important;
     text-align: center !important;
     box-sizing: border-box !important;
   }
 
   .maha-print-title {
-    font-size: 17pt !important;
+    font-size: 22pt !important;
     font-weight: 800 !important;
-    margin: 0 auto 6px auto !important;
+    margin: 0 auto 2.2em auto !important; /* Leave two lines space after this text */
     text-align: center !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
 
   .maha-print-table {
@@ -5861,9 +5896,10 @@
     max-width: 100% !important;
     margin: 0 auto !important;
     border-collapse: collapse !important;
-    table-layout: auto !important; /* Auto adjust row width according to matter in cells */
-    font-size: 17px !important; /* +30% over 13px for readability */
+    table-layout: auto !important;
+    font-size: 26px !important; /* Double the text size */
     background: #ffffff !important;
+    font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
 
   .maha-print-table th {
@@ -5871,19 +5907,23 @@
     color: #000000 !important;
     font-weight: bold !important;
     border: 1.5px solid #000 !important;
-    padding: 3.5px 6px !important;
+    padding: 5px 6px !important;
     text-align: center !important;
     white-space: nowrap !important;
-    font-size: 17px !important; /* +30% over 13px for readability */
+    font-size: 26px !important; /* Double the text size */
   }
 
   .maha-print-table td {
     border: 1.5px solid #000 !important;
-    padding: 3px 6px !important;
+    padding: 5px 6px !important;
     text-align: center !important;
     white-space: nowrap !important;
-    font-size: 17px !important; /* +30% over 13px for readability */
+    font-size: 26px !important; /* Double the text size */
     vertical-align: middle !important;
+  }
+
+  .maha-print-table td * {
+    font-size: 26px !important;
   }
 }
 </style>
@@ -6114,7 +6154,39 @@
       min-width: 1024px !important;
       background: #ffffff !important;
       color: #000000 !important;
-      margin-top: 15px !important;
+      margin-top: 20px !important;
+    }
+
+    body.mobile-pdf-rendering[data-print-mode="kundali-and-dasha"] .maha-print-title {
+      font-size: 22pt !important;
+      font-weight: 800 !important;
+      margin: 0 auto 2.2em auto !important;
+      text-align: center !important;
+      font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+    }
+
+    body.mobile-pdf-rendering[data-print-mode="kundali-and-dasha"] .maha-print-table {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto !important;
+      border-collapse: collapse !important;
+      table-layout: auto !important;
+      font-size: 26px !important;
+      background: #ffffff !important;
+      font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
+    }
+
+    body.mobile-pdf-rendering[data-print-mode="kundali-and-dasha"] .maha-print-table th,
+    body.mobile-pdf-rendering[data-print-mode="kundali-and-dasha"] .maha-print-table td {
+      border: 1.5px solid #000 !important;
+      padding: 5px 6px !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+      font-size: 26px !important;
+    }
+
+    body.mobile-pdf-rendering[data-print-mode="kundali-and-dasha"] .maha-print-table td * {
+      font-size: 26px !important;
     }
 
     body.mobile-pdf-rendering #transit-toggle-bar,
