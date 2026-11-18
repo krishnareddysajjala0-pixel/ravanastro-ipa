@@ -3578,10 +3578,10 @@
                 break-inside: avoid !important;
             }
             .cosmic-header * { color: #000 !important; }
-            .party-name { color: #8B0000 !important; font-weight: bold !important; font-size: 14.5pt !important; margin-bottom: 5px !important; }
+            .party-name { color: #8B0000 !important; font-weight: bold !important; font-size: 18.125pt !important; margin-bottom: 5px !important; }
             .person-name,
             .cosmic-header .person-name {
-                font-size: 17pt !important;
+                font-size: 21.25pt !important;
                 font-weight: bold !important;
                 color: #000000 !important;
                 -webkit-text-fill-color: #000000 !important;
@@ -3594,7 +3594,7 @@
                 flex-wrap: wrap !important;
                 justify-content: center !important;
                 gap: 14px !important;
-                font-size: 11pt !important;
+                font-size: 13.75pt !important;
                 margin: 4px auto 0 auto !important;
                 text-align: left !important;
             }
@@ -3605,13 +3605,13 @@
                 border: none !important;
                 background: transparent !important;
                 padding: 0 !important;
-                font-size: 11pt !important;
+                font-size: 13.75pt !important;
             }
             .info-label {
                 font-weight: bold !important;
                 color: #000 !important;
                 margin-right: 2px !important;
-                font-size: 11pt !important;
+                font-size: 13.75pt !important;
             }
 
             /* ── Nakshatra box ── */
@@ -3625,9 +3625,9 @@
                 break-inside: avoid !important;
             }
             .nakshatra-box * { color: #000 !important; }
-            .nakshatra-name { font-size: 10pt !important; }
-            .time-label { color: #555 !important; font-size: 8.5pt !important; }
-            .time-value { color: #b22222 !important; font-weight: bold !important; font-size: 10pt !important; }
+            .nakshatra-name { font-size: 12.5pt !important; }
+            .time-label { color: #555 !important; font-size: 10.6pt !important; }
+            .time-value { color: #b22222 !important; font-weight: bold !important; font-size: 12.5pt !important; }
 
             /* ── Current Dasa box (Page 1) ── */
             .current-dasa-box {
@@ -3638,17 +3638,17 @@
                 width: 98% !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
-                font-size: 12pt !important;
+                font-size: 15pt !important;
             }
             .current-dasa-box * { color: #000 !important; }
             .current-dasa-inline {
-                font-size: 12.5pt !important;
+                font-size: 15.625pt !important;
                 margin-bottom: 4px !important;
             }
             .current-dasa-inline span {
-                font-size: 12.5pt !important;
+                font-size: 15.625pt !important;
             }
-            .current-dasa-title { color: #d2691e !important; font-size: 14.5pt !important; }
+            .current-dasa-title { color: #d2691e !important; font-size: 18.125pt !important; }
             .progress-container { display: none !important; }
 
             /* ── Print Summary Table (End of Page 1 -> Breaks to Page 2) ── */
@@ -3660,23 +3660,23 @@
                 break-after: page !important;
             }
             .print-summary-section div[style*="font-size: 20px"] {
-                font-size: 14.5pt !important;
+                font-size: 18.125pt !important;
                 margin-bottom: 8px !important;
             }
             .print-summary-section table {
                 width: 98% !important;
                 margin: 0 auto !important;
                 border-collapse: collapse !important;
-                font-size: 10.5pt !important;
+                font-size: 13.125pt !important;
             }
             .print-summary-section th, .print-summary-section td {
                 border: 1px solid #333 !important;
                 padding: 5px 6px !important;
-                font-size: 10.5pt !important;
+                font-size: 13.125pt !important;
                 color: #000 !important;
             }
             .print-summary-section td div {
-                font-size: 10pt !important;
+                font-size: 12.5pt !important;
             }
 
             /* ────────────────────────────────────────────
@@ -3957,35 +3957,47 @@
             }
 
             .anthara-container > div:first-child {
-                font-size: 7.2pt !important;
+                font-size: 7.5pt !important;
                 margin-bottom: 1px !important;
             }
 
             .anthara-table {
                 width: 100% !important;
                 border-collapse: collapse !important;
-                font-size: 7.2pt !important;
+                font-size: 7.625pt !important;
                 background: #fff !important;
+                table-layout: auto !important;
                 page-break-inside: auto !important;
                 break-inside: auto !important;
+            }
+
+            .anthara-table th,
+            .anthara-table td {
+                width: auto !important;
+                white-space: nowrap !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
             }
 
             .anthara-table th {
                 background: #e8e8e8 !important;
                 color: #000 !important;
                 border: 1px solid #999 !important;
-                padding: 1px 3px !important;
-                font-size: 7.5pt !important;
-                text-align: left !important;
+                padding: 0.6px 3px !important;
+                font-size: 7.75pt !important;
+                text-align: center !important;
+                white-space: nowrap !important;
             }
 
             .anthara-table td {
                 color: #000 !important;
                 border: 1px solid #ccc !important;
-                padding: 0.8px 3px !important;
-                font-size: 7.2pt !important;
+                padding: 0.5px 3px !important;
+                font-size: 7.625pt !important;
                 vertical-align: middle !important;
-                line-height: 1.12 !important;
+                line-height: 1.08 !important;
+                text-align: center !important;
+                white-space: nowrap !important;
             }
 
             .anthara-table tr.current td {
@@ -3998,13 +4010,15 @@
                 gap: 2px !important;
                 color: #8B0000 !important;
                 font-weight: bold !important;
-                font-size: 7.2pt !important;
+                font-size: 7.625pt !important;
+                text-align: left !important;
+                white-space: nowrap !important;
             }
 
             .table-icon {
-                width: 10px !important;
-                height: 10px !important;
-                font-size: 8px !important;
+                width: 12px !important;
+                height: 12px !important;
+                font-size: 10px !important;
                 border-radius: 50% !important;
                 border: 1px solid #555 !important;
                 background: transparent !important;
@@ -4015,16 +4029,16 @@
 
             .anthara-table td.date-cell {
                 color: #8B4513 !important;
-                font-size: 7.2pt !important;
+                font-size: 7.625pt !important;
                 font-weight: bold !important;
-                white-space: nowrap;
+                white-space: nowrap !important;
             }
 
             .anthara-table td.age-cell {
                 color: #555 !important;
-                font-size: 7.2pt !important;
+                font-size: 7.625pt !important;
                 font-weight: bold !important;
-                white-space: nowrap;
+                white-space: nowrap !important;
             }
         }
         
@@ -5084,10 +5098,10 @@
             margin: 0 auto 4.2em auto !important; /* After box leave 5 lines space */
             padding: 6px 10px !important;
         }
-        body.mobile-pdf-rendering .cosmic-header .party-name { font-size: 14.5pt !important; margin-bottom: 5px !important; }
+        body.mobile-pdf-rendering .cosmic-header .party-name { font-size: 18.125pt !important; margin-bottom: 5px !important; }
         body.mobile-pdf-rendering .person-name,
         body.mobile-pdf-rendering .cosmic-header .person-name {
-            font-size: 17pt !important;
+            font-size: 21.25pt !important;
             font-weight: bold !important;
             color: #000000 !important;
             -webkit-text-fill-color: #000000 !important;
@@ -5098,36 +5112,112 @@
         body.mobile-pdf-rendering .cosmic-header .info-row *,
         body.mobile-pdf-rendering .cosmic-header .info-item,
         body.mobile-pdf-rendering .cosmic-header .info-item * {
-            font-size: 11pt !important;
+            font-size: 13.75pt !important;
         }
 
         body.mobile-pdf-rendering .current-dasa-box {
             margin: 0 auto 4.2em auto !important;
             padding: 6px 10px !important;
-            font-size: 12pt !important;
+            font-size: 15pt !important;
         }
-        body.mobile-pdf-rendering .current-dasa-box * { font-size: 12pt !important; }
+        body.mobile-pdf-rendering .current-dasa-box * { font-size: 15pt !important; }
         body.mobile-pdf-rendering .current-dasa-inline,
         body.mobile-pdf-rendering .current-dasa-inline span {
-            font-size: 12.5pt !important;
+            font-size: 15.625pt !important;
         }
-        body.mobile-pdf-rendering .current-dasa-title { font-size: 14.5pt !important; }
+        body.mobile-pdf-rendering .current-dasa-title { font-size: 18.125pt !important; }
 
         body.mobile-pdf-rendering .print-summary-section {
             margin-top: 0 !important;
             margin-bottom: 0 !important;
         }
-        body.mobile-pdf-rendering .print-summary-section div[style*="font-size: 20px"] { font-size: 14.5pt !important; margin-bottom: 8px !important; }
+        body.mobile-pdf-rendering .print-summary-section div[style*="font-size: 20px"] { font-size: 18.125pt !important; margin-bottom: 8px !important; }
         body.mobile-pdf-rendering .print-summary-section table,
         body.mobile-pdf-rendering .summary-table {
-            font-size: 10.5pt !important;
+            font-size: 13.125pt !important;
         }
         body.mobile-pdf-rendering .print-summary-section th,
         body.mobile-pdf-rendering .print-summary-section td,
         body.mobile-pdf-rendering .summary-table th,
         body.mobile-pdf-rendering .summary-table td {
-            font-size: 10.5pt !important;
+            font-size: 13.125pt !important;
             padding: 5px 6px !important;
+        }
+        body.mobile-pdf-rendering .print-summary-section td div {
+            font-size: 12.5pt !important;
+        }
+
+        body.mobile-pdf-rendering .maha-dasa-name {
+            font-size: 9.75pt !important;
+            line-height: 1.08 !important;
+            margin-bottom: 0 !important;
+        }
+        body.mobile-pdf-rendering .maha-dasa-period {
+            font-size: 8.5pt !important;
+            line-height: 1.05 !important;
+            margin: 0 !important;
+        }
+        body.mobile-pdf-rendering .maha-dasa-age {
+            font-size: 8.5pt !important;
+        }
+        body.mobile-pdf-rendering .maha-dasa-number {
+            font-size: 9.375pt !important;
+            padding: 0.5px 3px !important;
+            min-width: 15px !important;
+        }
+        body.mobile-pdf-rendering .anthara-title {
+            font-size: 7.5pt !important;
+            line-height: 1 !important;
+            margin: 0 0 0.5px 0 !important;
+        }
+        body.mobile-pdf-rendering .anthara-container {
+            padding: 0 2px !important;
+            margin: 0 !important;
+        }
+        body.mobile-pdf-rendering .anthara-table {
+            margin: 0 !important;
+            font-size: 7.625pt !important;
+            border-collapse: collapse !important;
+            table-layout: auto !important;
+            width: 100% !important;
+        }
+        body.mobile-pdf-rendering .anthara-table th,
+        body.mobile-pdf-rendering .anthara-table td {
+            width: auto !important;
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+        body.mobile-pdf-rendering .anthara-table th {
+            padding: 0.6px 3px !important;
+            font-size: 7.75pt !important;
+            line-height: 1.08 !important;
+            white-space: nowrap !important;
+            text-align: center !important;
+        }
+        body.mobile-pdf-rendering .anthara-table td {
+            padding: 0.5px 3px !important;
+            font-size: 7.625pt !important;
+            line-height: 1.08 !important;
+            white-space: nowrap !important;
+            text-align: center !important;
+        }
+        body.mobile-pdf-rendering .anthara-table .planet-cell {
+            font-size: 7.625pt !important;
+            white-space: nowrap !important;
+            text-align: left !important;
+        }
+        body.mobile-pdf-rendering .anthara-table td.date-cell,
+        body.mobile-pdf-rendering .anthara-table td.age-cell {
+            font-size: 7.625pt !important;
+            white-space: nowrap !important;
+        }
+        body.mobile-pdf-rendering .status-badge,
+        body.mobile-pdf-rendering .anthara-table .status-badge {
+            font-size: 7.25pt !important;
+            padding: 0 3px !important;
+            line-height: 1.05 !important;
+            white-space: nowrap !important;
         }
 
 
@@ -6464,7 +6554,7 @@ body {
         zoom: 1 !important;
         background: #ffffff !important;
         color: #000000 !important;
-        font-size: 8px !important;
+        font-size: 10px !important;
         overflow: visible !important;
     }
 
@@ -6520,10 +6610,10 @@ body {
         break-after: avoid !important;
     }
 
-    .cosmic-header .party-name { font-size: 14.5pt !important; margin-bottom: 5px !important; }
+    .cosmic-header .party-name { font-size: 18.125pt !important; margin-bottom: 5px !important; }
     .cosmic-header .person-name,
     .person-name {
-        font-size: 17pt !important;
+        font-size: 21.25pt !important;
         font-weight: bold !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
@@ -6534,7 +6624,7 @@ body {
     .cosmic-header .info-row *,
     .cosmic-header .info-item,
     .cosmic-header .info-item * {
-        font-size: 11pt !important;
+        font-size: 13.75pt !important;
     }
 
     .current-dasa-box {
@@ -6544,15 +6634,15 @@ body {
         break-inside: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
-        font-size: 12pt !important;
+        font-size: 15pt !important;
     }
-    .current-dasa-box * { font-size: 12pt !important; }
+    .current-dasa-box * { font-size: 15pt !important; }
     .current-dasa-inline,
     .current-dasa-inline span {
-        font-size: 12.5pt !important;
+        font-size: 15.625pt !important;
     }
     .current-dasa-title {
-        font-size: 14.5pt !important;
+        font-size: 18.125pt !important;
     }
 
     .dasa-summary-card,
@@ -6567,24 +6657,24 @@ body {
     }
 
     .print-summary-section div[style*="font-size: 20px"] {
-        font-size: 14.5pt !important;
+        font-size: 18.125pt !important;
         margin-bottom: 8px !important;
     }
 
     .summary-table,
     .print-summary-section table {
-        font-size: 10.5pt !important;
+        font-size: 13.125pt !important;
         width: 100% !important;
     }
 
     .summary-table th, .summary-table td,
     .print-summary-section th, .print-summary-section td {
         padding: 5px 6px !important;
-        font-size: 10.5pt !important;
+        font-size: 13.125pt !important;
     }
 
     .print-summary-section td div {
-        font-size: 10pt !important;
+        font-size: 12.5pt !important;
     }
 
     /* Pages 2, 3, 4: Strictly 4 Mahadasha Cards per Page (Cards 1-4, 5-8, 9-12) */
@@ -6623,34 +6713,34 @@ body {
     }
 
     .maha-dasa-name {
-        font-size: 7.8pt !important;
+        font-size: 9.75pt !important;
         line-height: 1.08 !important;
         margin-bottom: 0 !important;
     }
 
     .maha-dasa-period {
-        font-size: 6.8pt !important;
+        font-size: 8.5pt !important;
         line-height: 1.05 !important;
         margin: 0 !important;
     }
 
     .maha-dasa-age {
-        font-size: 6.8pt !important;
+        font-size: 8.5pt !important;
     }
 
     .maha-dasa-number {
-        font-size: 7.5pt !important;
+        font-size: 9.375pt !important;
         padding: 0.5px 3px !important;
         min-width: 15px !important;
     }
 
     .anthara-title {
-        font-size: 6pt !important;
+        font-size: 7.5pt !important;
         line-height: 1 !important;
         margin: 0 0 0.5px 0 !important;
     }
 
-    /* Anthara table: prevent 2-line wraps so 4 cards fit comfortably on each A4 page */
+    /* Anthara table: auto adjust cell widths based on required text */
     .anthara-container {
         padding: 0 2px !important;
         margin: 0 !important;
@@ -6658,47 +6748,51 @@ body {
 
     .anthara-table {
         margin: 0 !important;
-        font-size: 6.1pt !important;
+        font-size: 7.625pt !important;
         border-collapse: collapse !important;
-        table-layout: fixed !important;
+        table-layout: auto !important;
         width: 100% !important;
     }
 
-    .anthara-table th:nth-child(1), .anthara-table td:nth-child(1) { width: 28% !important; }
-    .anthara-table th:nth-child(2), .anthara-table td:nth-child(2) { width: 14.5% !important; }
-    .anthara-table th:nth-child(3), .anthara-table td:nth-child(3) { width: 14.5% !important; }
-    .anthara-table th:nth-child(4), .anthara-table td:nth-child(4) { width: 14.5% !important; }
-    .anthara-table th:nth-child(5), .anthara-table td:nth-child(5) { width: 14.5% !important; }
-    .anthara-table th:nth-child(6), .anthara-table td:nth-child(6) { width: 14% !important; }
+    .anthara-table th,
+    .anthara-table td {
+        width: auto !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
 
     .anthara-table th {
-        padding: 0.5px 2px !important;
-        font-size: 6.2pt !important;
-        line-height: 1.05 !important;
+        padding: 0.6px 3px !important;
+        font-size: 7.75pt !important;
+        line-height: 1.08 !important;
         white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        text-align: center !important;
     }
 
     .anthara-table td {
-        padding: 0.4px 2px !important;
-        font-size: 6.1pt !important;
-        line-height: 1.05 !important;
+        padding: 0.5px 3px !important;
+        font-size: 7.625pt !important;
+        line-height: 1.08 !important;
         white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        text-align: center !important;
     }
 
-    .anthara-table .planet-cell,
+    .anthara-table .planet-cell {
+        font-size: 7.625pt !important;
+        white-space: nowrap !important;
+        text-align: left !important;
+    }
+
     .anthara-table td.date-cell,
     .anthara-table td.age-cell {
-        font-size: 6.1pt !important;
+        font-size: 7.625pt !important;
         white-space: nowrap !important;
     }
 
     .status-badge,
     .anthara-table .status-badge {
-        font-size: 5.8pt !important;
+        font-size: 7.25pt !important;
         padding: 0 3px !important;
         line-height: 1.05 !important;
         white-space: nowrap !important;
