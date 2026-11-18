@@ -2792,19 +2792,38 @@
     background: #ffffff !important;
     background-color: #ffffff !important;
   }
-  html body .result-card .info-row,
-  html body .result-card .info-row-inline,
-  html body .result-card .info-row .label,
-  html body .result-card .info-row .val {
-    font-size: 10.8pt !important;
-    line-height: 1.1 !important;
+  html body .result-card .info-row {
     margin-bottom: 1.5px !important;
   }
   html body .result-card .info-row-inline {
-    gap: 3px !important;
-  }
-  html body .result-card .info-col {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    width: 100% !important;
     gap: 2px !important;
+    margin-bottom: 2px !important;
+    overflow: hidden !important;
+  }
+  html body .result-card .info-row-inline .info-col {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+  html body .result-card .info-row-inline .label,
+  html body .result-card .info-row-inline .val {
+    font-size: 7.1pt !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    display: inline-block !important;
   }
   html body .result-card.friendly-card .planet-name,
   html body .result-card.friendly-card .info-row .label {
@@ -4439,16 +4458,25 @@ body {
         /* Extra Card & Status Layout Rules */
         .info-row-inline {
             display: flex;
+            flex-wrap: nowrap;
             justify-content: space-between;
             align-items: center;
+            white-space: nowrap;
             gap: 8px;
             margin-bottom: 6px;
             font-size: 13.5px;
         }
         .info-col {
-            display: flex;
+            display: inline-flex;
+            flex-wrap: nowrap;
             align-items: center;
+            white-space: nowrap;
             gap: 4px;
+        }
+        .info-col .label,
+        .info-col .val {
+            white-space: nowrap;
+            word-break: keep-all;
         }
         .val.own-val {
             color: var(--val-own-color, #fbbf24);
@@ -4552,8 +4580,42 @@ body {
 </style>
 
 <style id="chart3-print-no-backgrounds">
-/* ===== STRICT: REMOVE ALL BACKGROUND COLORS IN CHART3 PRINT / PDF ===== */
+/* ===== STRICT: REMOVE ALL BACKGROUND COLORS & FORMAT IN CHART3 PRINT / PDF ===== */
 @media print {
+  /* 1. Leave 2 lines space on top of each page */
+  @page {
+    size: A4 portrait !important;
+    margin-top: 11mm !important;
+    margin-bottom: 3.5mm !important;
+    margin-left: 3.5mm !important;
+    margin-right: 3.5mm !important;
+  }
+
+  /* 2. Hide all floating bars and navigation */
+  .fixed-bottom-bar,
+  #action-bar,
+  .float-btn,
+  .fixed-bottom-bar-nav,
+  .top-control-bar,
+  .theme-switcher,
+  .language-switcher,
+  #language-switcher-container,
+  .print-hide,
+  #loading-overlay,
+  .footer,
+  .disclaimer,
+  .scrolling-footer {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* 3. Pure white backgrounds everywhere */
   *, *::before, *::after {
     background-image: none !important;
     text-shadow: none !important;
@@ -4640,12 +4702,61 @@ body {
     background-color: #ffffff !important;
   }
 
-  /* Result cards: strictly pure white background */
+  /* Explicit high-specificity overrides for party-info across all theme selectors */
+  .party-info,
+  .party-info.guru-bg,
+  .party-info.shani-bg,
+  [data-theme] .party-info,
+  [data-theme] .party-info.guru-bg,
+  [data-theme] .party-info.shani-bg,
+  html:not([data-theme]) .party-info.guru-bg,
+  html:not([data-theme]) .party-info.shani-bg,
+  [data-theme="solar"] .party-info.guru-bg,
+  [data-theme="solar"] .party-info.shani-bg,
+  [data-theme="light"] .party-info.guru-bg,
+  [data-theme="light"] .party-info.shani-bg,
+  [data-theme="default"] .party-info.guru-bg,
+  [data-theme="default"] .party-info.shani-bg,
+  [data-theme="cosmic"] .party-info.guru-bg,
+  [data-theme="cosmic"] .party-info.shani-bg,
+  [data-theme="sunset"] .party-info.guru-bg,
+  [data-theme="sunset"] .party-info.shani-bg,
+  [data-theme="luxury"] .party-info.guru-bg,
+  [data-theme="luxury"] .party-info.shani-bg,
+  [data-theme="mandala"] .party-info.guru-bg,
+  [data-theme="mandala"] .party-info.shani-bg,
+  [data-theme="twilight"] .party-info.guru-bg,
+  [data-theme="twilight"] .party-info.shani-bg,
+  [data-theme="aurora"] .party-info.guru-bg,
+  [data-theme="aurora"] .party-info.shani-bg,
+  [data-theme="cyberpunk"] .party-info.guru-bg,
+  [data-theme="cyberpunk"] .party-info.shani-bg {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #0f172a !important;
+  }
+
+  /* Result cards: strictly pure white background across all themes */
   html body .result-card,
   html body .result-card.friendly-card,
   html body .result-card.enemy-card,
   html body [data-theme] .result-card,
-  html body .result-card.is-own-house {
+  html body .result-card.is-own-house,
+  [data-theme] .result-card,
+  [data-theme] .result-card.friendly-card,
+  [data-theme] .result-card.enemy-card,
+  [data-theme="solar"] body .result-card,
+  [data-theme="solar"] body .result-card.friendly-card,
+  [data-theme="solar"] body .result-card.enemy-card,
+  [data-theme="light"] body .result-card,
+  [data-theme="light"] body .result-card.friendly-card,
+  [data-theme="light"] body .result-card.enemy-card,
+  [data-theme="default"] body .result-card,
+  [data-theme="default"] body .result-card.friendly-card,
+  [data-theme="default"] body .result-card.enemy-card,
+  html:not([data-theme]) body .result-card,
+  html:not([data-theme]) body .result-card.friendly-card,
+  html:not([data-theme]) body .result-card.enemy-card {
     background: #ffffff !important;
     background-color: #ffffff !important;
   }
@@ -4678,6 +4789,46 @@ body {
   [data-theme] .card-top .current-loc-item {
     background: transparent !important;
     background-color: transparent !important;
+  }
+
+  /* 4. Strict Single Line for ప్రస్తుత స్థానము & స్వంత ఇల్లు */
+  html body .result-card .info-row-inline {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    gap: 2px !important;
+    margin-bottom: 2px !important;
+    overflow: hidden !important;
+  }
+
+  html body .result-card .info-row-inline .info-col {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  html body .result-card .info-row-inline .label,
+  html body .result-card .info-row-inline .val {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    display: inline-block !important;
+    font-size: 7.1pt !important;
+    line-height: 1.15 !important;
+  }
+
+  html[lang="en"] body .result-card .info-row-inline .label,
+  html[lang="en"] body .result-card .info-row-inline .val {
+    font-size: 7.1pt !important;
+    line-height: 1.15 !important;
   }
 }
 </style>
