@@ -3881,10 +3881,7 @@
 
 
         padding: 0 !important;
-
-
-
-        zoom: 0.74 !important;
+        zoom: 0.98 !important;
 
 
 
@@ -4018,7 +4015,7 @@
         width: 1024px !important;
         min-width: 1024px !important;
         max-width: 1024px !important;
-        zoom: 0.78 !important; /* Exact same zoom and dimensions as #print-wrapper */
+        zoom: 0.98 !important; /* Exact same zoom and dimensions as #print-wrapper */
         box-shadow: none !important;
         border: none !important;
       }
@@ -5886,8 +5883,9 @@
     break-inside: avoid !important;
     width: 1024px !important;
     max-width: 1024px !important;
-    zoom: 0.74 !important;
-    margin: 10px auto 0 auto !important;
+    zoom: 0.98 !important;
+    margin: 0 auto !important;
+    padding: 0 4px !important;
     text-align: center !important;
     box-sizing: border-box !important;
   }
@@ -5895,7 +5893,7 @@
   .maha-print-title {
     font-size: 16pt !important;
     font-weight: 800 !important;
-    margin: 4px auto 10px auto !important;
+    margin: 2px auto 8px auto !important;
     text-align: center !important;
     font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
@@ -5904,9 +5902,11 @@
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    border-collapse: collapse !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border: 2px solid #000000 !important;
     table-layout: auto !important;
-    font-size: 11pt !important;
+    font-size: 10pt !important;
     background: #ffffff !important;
     font-family: var(--font-te, 'Anek Telugu', 'Noto Serif Telugu', 'Ramabhadra', serif) !important;
   }
@@ -5915,39 +5915,50 @@
     background-color: #e2e8f0 !important;
     color: #000000 !important;
     font-weight: bold !important;
-    border: 1.5px solid #000 !important;
-    padding: 3px 6px !important;
+    border-right: 1.5px solid #000000 !important;
+    border-bottom: 1.5px solid #000000 !important;
+    padding: 2.5px 5px !important;
     text-align: center !important;
     white-space: nowrap !important;
-    font-size: 11pt !important;
+    font-size: 10pt !important;
   }
 
   .maha-print-table td {
-    border: 1.5px solid #000 !important;
-    padding: 2.5px 6px !important;
+    border-right: 1.5px solid #000000 !important;
+    border-bottom: 1.5px solid #000000 !important;
+    padding: 2px 4px !important;
     text-align: center !important;
     white-space: nowrap !important;
-    font-size: 10.5pt !important;
+    font-size: 9.8pt !important;
     vertical-align: middle !important;
   }
 
+  .maha-print-table th:last-child,
+  .maha-print-table td:last-child {
+    border-right: none !important; /* Ending vertical line framed by table outer border without cutting */
+  }
+
+  .maha-print-table tr:last-child td {
+    border-bottom: none !important;
+  }
+
   .maha-print-table td * {
-    font-size: 10.5pt !important;
+    font-size: 9.8pt !important;
   }
 
   .chakra-wheel-print-container {
     text-align: center !important;
-    margin-top: 12px !important;
+    margin-top: 10px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
   .thraitha-chakra-img {
-    max-height: 520px !important;
-    max-width: 95% !important;
+    max-height: 700px !important;
+    width: 95% !important;
+    max-width: 780px !important;
     height: auto !important;
-    width: auto !important;
-    display: inline-block !important;
+    display: block !important;
     margin: 0 auto !important;
   }
 }
@@ -7749,7 +7760,7 @@ body {
     min-width: 1024px !important;
     margin: 0 auto !important;
     padding: 0 !important;
-    zoom: 0.74 !important;
+    zoom: 0.98 !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     page-break-after: always !important;
@@ -7795,7 +7806,7 @@ body {
     min-width: 1024px !important;
     margin: 0 auto !important;
     padding: 0 !important;
-    zoom: 0.74 !important; /* Exact same zoom and width as #print-wrapper */
+    zoom: 0.98 !important; /* Exact same zoom and width as #print-wrapper */
     page-break-before: always !important;
     break-before: page !important;
     page-break-inside: avoid !important;
@@ -9169,8 +9180,8 @@ body {
     </table>
 
     <!-- 8K Thraitha Kala Karma Chakra Wheel inserted directly after 120 Years Dasa Cycle Table -->
-    <div class="chakra-wheel-print-container" style="text-align: center; margin-top: 12px; page-break-inside: avoid; break-inside: avoid;">
-      <img src="{{ url_for('static', filename='images/thraitha_chakra_8k.svg') }}" class="thraitha-chakra-img" alt="{{ _('కాల, కర్మ చక్రములు') }}" style="max-height: 520px; max-width: 95%; height: auto; width: auto; display: inline-block; margin: 0 auto;" />
+    <div class="chakra-wheel-print-container" style="text-align: center; margin-top: 10px; page-break-inside: avoid; break-inside: avoid;">
+      <img src="{{ url_for('static', filename='images/thraitha_chakra_8k.svg') }}" class="thraitha-chakra-img" alt="{{ _('కాల, కర్మ చక్రములు') }}" style="max-height: 700px; width: 95%; max-width: 780px; height: auto; display: block; margin: 0 auto;" />
     </div>
 
 

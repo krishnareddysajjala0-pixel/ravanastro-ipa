@@ -4845,16 +4845,57 @@ body {
     margin-bottom: 8px !important;
   }
 
-  /* Page 2: adjust empty space equally on top and bottom (vertically center content) */
+  /* Page 2: Remove hardcoded height and vertical flex center that pushes content down and cuts off cards */
   #chart3-page-2 {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    min-height: 245mm !important;
-    height: 245mm !important;
+    display: block !important;
     box-sizing: border-box !important;
-    padding-top: 0 !important;
+    padding-top: 4mm !important;
     padding-bottom: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 275mm !important;
+  }
+
+  /* Compact Enemy title on Page 2 */
+  #chart3-page-2 .enemy-section-title {
+    margin: 5px 0 3px 0 !important;
+    font-size: 13.5pt !important;
+  }
+
+  /* Cards on Page 2: optimize font sizes and spacing so all text fits completely without cutting */
+  #chart3-page-2 .results-grid {
+    gap: 2px 4px !important;
+    margin-top: 1px !important;
+    margin-bottom: 2px !important;
+  }
+
+  #chart3-page-2 .result-card {
+    padding: 2px 3px !important;
+    margin: 0 !important;
+  }
+
+  #chart3-page-2 .result-card .planet-name {
+    font-size: 11pt !important;
+    line-height: 1.1 !important;
+  }
+
+  #chart3-page-2 .result-card .info-row.rulership-row .val,
+  html body #chart3-page-2 .result-card .info-row.rulership-row .val {
+    font-size: 7.7pt !important;
+    line-height: 1.04 !important;
+    margin-top: 1px !important;
+  }
+
+  #chart3-page-2 .result-card .card-footer {
+    margin-top: 1px !important;
+    padding-top: 1px !important;
+  }
+
+  #chart3-page-2 .result-card .status-msg,
+  #chart3-page-2 .result-card .bitter-enemy-alert {
+    font-size: 6.8pt !important;
+    padding: 0.5px 2px !important;
   }
 }
 </style>
