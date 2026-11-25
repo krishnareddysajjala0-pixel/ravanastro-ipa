@@ -4844,7 +4844,6 @@ body {
 <body class="{{ 'is-guru-party-body' if is_guru_party else 'is-shani-party-body' }}" style="--guru-color: {{ '#00ff00' if is_guru_party else '#ff3333' }}; --shani-color: {{ '#ff3333' if is_guru_party else '#00ff00' }};">
 
   <div class="container">
-
     <div id="chart3-pdf-export-container">
     <div class="print-page-container" id="chart3-page-1">
 
@@ -5620,15 +5619,14 @@ body {
         }
 
         function showLoader() {
-
             playLoadingSound();
-
             const overlay = document.getElementById('loading-overlay');
-
             if (overlay) overlay.style.display = 'flex';
-
             startTyping();
-
+            if (window._loaderGuardTimer) clearTimeout(window._loaderGuardTimer);
+            window._loaderGuardTimer = setTimeout(function() {
+                if (overlay) overlay.style.display = 'none';
+            }, 10000);
         }
 
         document.querySelectorAll('.nav-item').forEach(item => {
@@ -5694,19 +5692,16 @@ body {
         }
 
         function showGananaLoader() {
-
             var overlay = document.getElementById('loading-overlay');
-
             if (!overlay) return;
-
             playLoadingSound();
-
             overlay.style.display = 'flex';
-
             var textEl = overlay.querySelector('p, #typing-text, #typing-text-overlay, div[style*="color:#ffd700"], div[style*="color: #ffd700"]');
-
             if (textEl) textEl.textContent = '{{ _('గణన చేస్తోంది') }}';
-
+            if (window._loaderGuardTimer) clearTimeout(window._loaderGuardTimer);
+            window._loaderGuardTimer = setTimeout(function() {
+                if (overlay) overlay.style.display = 'none';
+            }, 10000);
         }
 
         // Attach ONLY to navigation float-btn buttons (skip print)
@@ -5760,12 +5755,15 @@ body {
 
         // Hide loader on back/forward cache
 
-        window.addEventListener('pageshow', function() {
-
+        // Hide loader on back/forward cache, popstate, and app resume
+        function hideChart3LoaderOverlay() {
             var overlay = document.getElementById('loading-overlay');
-
             if (overlay) overlay.style.display = 'none';
-
+        }
+        window.addEventListener('pageshow', hideChart3LoaderOverlay);
+        window.addEventListener('popstate', hideChart3LoaderOverlay);
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) hideChart3LoaderOverlay();
         });
 
     })();

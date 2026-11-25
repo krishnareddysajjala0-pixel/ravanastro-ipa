@@ -7,17 +7,16 @@
 <head>
     <script>
         (function() {
-            var isApp = {% if is_app %}true{% else %}false{% endif %} || !!(
+            var isAndroid = !!(
                 window.AndroidPrint ||
-                window.Capacitor ||
                 (navigator.userAgent && (navigator.userAgent.indexOf('RavanAstroApp') !== -1 || navigator.userAgent.indexOf('wv') !== -1)) ||
-                window.location.hostname === '127.0.0.1' ||
-                window.location.hostname === 'localhost' ||
-                window.location.port === '5000' ||
-                new URLSearchParams(window.location.search).get('app') === '1'
+                (window.location.port === '5000' && new URLSearchParams(window.location.search).get('app') === '1')
             );
-            if (isApp) {
+            if (isAndroid) {
+                document.documentElement.classList.add('is-android-app');
                 document.documentElement.classList.add('is-mobile-app');
+            } else {
+                document.documentElement.classList.add('is-web-app');
             }
         })();
     </script>
@@ -3155,39 +3154,84 @@ html, body {
   padding: 1px 1px !important;
 }
 
-.nak-name-text {
+html.is-android-app .nak-name-text {
   font-size: 8px !important;
   line-height: 1.0 !important;
   letter-spacing: -0.2px !important;
 }
 
-.pada-row {
+html.is-android-app .pada-row {
   font-size: 8px !important;
   gap: 1.5px !important;
 }
 
-.pada-num {
+html.is-android-app .pada-num {
   width: 11px !important;
   height: 11px !important;
   min-width: 11px !important;
   font-size: 7.5px !important;
 }
 
-.occupant-pill {
+html.is-android-app .occupant-pill {
   font-size: 8px !important;
   padding: 0 1px !important;
 }
 
-.occupants-wrap {
+html.is-android-app .occupants-wrap {
   gap: 1px 2px !important;
 }
 
-.center-table {
+html.is-android-app .center-table {
   font-size: 9px !important;
 }
 
-.center-table td, .center-table th {
+html.is-android-app .center-table td, html.is-android-app .center-table th {
   padding: 1px 2px !important;
+}
+
+/* ==========================================================================
+   WEB APP: Planet names size EQUAL to center box text size (12px)
+   ========================================================================== */
+html:not(.is-android-app) .occupant-pill,
+html:not(.is-android-app) .planet-name-pill,
+html:not(.is-android-app) .aspect-hand,
+html:not(.is-android-app) .occupant-pill.lagna-occupant,
+html.is-web-app .occupant-pill,
+html.is-web-app .planet-name-pill,
+html.is-web-app .aspect-hand,
+html.is-web-app .occupant-pill.lagna-occupant {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  padding: 1px 4px !important;
+}
+
+html:not(.is-android-app) .planet-deg-suffix,
+html:not(.is-android-app) .occupant-pill .planet-deg-suffix,
+html.is-web-app .planet-deg-suffix,
+html.is-web-app .occupant-pill .planet-deg-suffix {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  margin-left: 2px !important;
+}
+
+html:not(.is-android-app) .pada-row,
+html.is-web-app .pada-row {
+  font-size: 11.5px !important;
+  gap: 2.5px !important;
+}
+
+html:not(.is-android-app) .pada-num,
+html.is-web-app .pada-num {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  font-size: 10px !important;
+}
+
+html:not(.is-android-app) .nak-name-text,
+html.is-web-app .nak-name-text {
+  font-size: 11px !important;
 }
 
 /* Bottom Bar */
@@ -4569,15 +4613,20 @@ body.mobile-pdf-rendering .center-box {
       if (customDate) formData.append('transit_date', customDate);
       if (customTime) formData.append('transit_time', customTime);
 
+      const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      const fetchTimer = controller ? setTimeout(() => controller.abort(), 12000) : null;
+
       fetch('/nakshatra_transit_chart', {
         method: 'POST',
-        body: formData
+        body: formData,
+        signal: controller ? controller.signal : undefined
       })
       .then(response => {
         if (!response.ok) throw new Error('Network response was not ok');
         return response.text();
       })
       .then(html => {
+        if (fetchTimer) clearTimeout(fetchTimer);
         if (loading) loading.style.display = 'none';
         if (container) {
           container.innerHTML = html;
@@ -4590,6 +4639,7 @@ body.mobile-pdf-rendering .center-box {
         if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })
       .catch(error => {
+        if (fetchTimer) clearTimeout(fetchTimer);
         console.error('Error fetching transit chart:', error);
         if (loading) loading.style.display = 'none';
         if (btn) btn.style.display = 'inline-flex';

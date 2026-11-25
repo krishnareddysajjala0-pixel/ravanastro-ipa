@@ -2307,11 +2307,7 @@
 
 
 
-      input,
-
-
-
-      .btn {
+      input {
 
 
 
@@ -6001,6 +5997,18 @@ body {
           .catch(() => {});
       };
 
+      // 0. Instant cached-first path so Home renders without blocking on network/GPS
+      try {
+        const cachedLoc = JSON.parse(localStorage.getItem('astro_device_location') || 'null');
+        if (cachedLoc && cachedLoc.lat && cachedLoc.lon && cachedLoc.place && cachedLoc.place !== 'Unknown Location') {
+          applyLocationData(cachedLoc.lat, cachedLoc.lon, cachedLoc.place);
+          if (cachedLoc.country_code && typeof syncCountrySelect === 'function') {
+            syncCountrySelect(cachedLoc.country_code);
+          }
+          return;
+        }
+      } catch (e) {}
+
       // 1. Fetch server/device location (immediate, non-blocking)
       fetch('/api/device_location')
         .then(r => r.json())
@@ -8525,6 +8533,19 @@ body {
 
 
 
+      function hideLoaderOverlay() {
+          clearTimeout(window._loaderSafetyTimer);
+          const overlay = document.getElementById('loading-overlay');
+          const mainLoading = document.getElementById('loading');
+          if (overlay) overlay.style.display = 'none';
+          if (mainLoading) mainLoading.style.display = 'none';
+      }
+
+      function armLoaderSafetyTimeout() {
+          clearTimeout(window._loaderSafetyTimer);
+          window._loaderSafetyTimer = setTimeout(hideLoaderOverlay, 10000);
+      }
+
       function showLoader() {
 
 
@@ -8542,6 +8563,8 @@ body {
 
 
           playLoadingSound();
+
+          armLoaderSafetyTimeout();
 
 
 
@@ -8768,6 +8791,8 @@ body {
 
 
             overlay.style.display = 'flex';
+
+            armLoaderSafetyTimeout();
 
 
 
@@ -9028,22 +9053,14 @@ body {
 
 
 
-        // Hide loader on back/forward cache
+        // Hide loader on back/forward cache, history pop, or tab resume
 
 
 
-        window.addEventListener('pageshow', function() {
-
-
-
-            var overlay = document.getElementById('loading-overlay');
-
-
-
-            if (overlay) overlay.style.display = 'none';
-
-
-
+        window.addEventListener('pageshow', hideLoaderOverlay);
+        window.addEventListener('popstate', hideLoaderOverlay);
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) hideLoaderOverlay();
         });
 
 

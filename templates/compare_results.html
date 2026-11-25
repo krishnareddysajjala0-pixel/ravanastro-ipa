@@ -5285,6 +5285,17 @@ body {
 
 
 
+    function hideLoaderOverlay() {
+        clearTimeout(window._loaderSafetyTimer);
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) overlay.style.display = 'none';
+    }
+
+    function armLoaderSafetyTimeout() {
+        clearTimeout(window._loaderSafetyTimer);
+        window._loaderSafetyTimer = setTimeout(hideLoaderOverlay, 10000);
+    }
+
     function showLoader() {
 
         playLoadingSound();
@@ -5292,6 +5303,8 @@ body {
         const overlay = document.getElementById('loading-overlay');
 
         if (overlay) overlay.style.display = 'flex';
+
+        armLoaderSafetyTimeout();
 
         startTyping();
 
@@ -5399,6 +5412,8 @@ body {
 
             overlay.style.display = 'flex';
 
+            armLoaderSafetyTimeout();
+
             var textEl = overlay.querySelector('p, #typing-text, #typing-text-overlay, div[style*="color:#ffd700"], div[style*="color: #ffd700"]');
 
             if (textEl) textEl.textContent = '{{ _('గణన చేస్తోంది') }}';
@@ -5466,14 +5481,12 @@ body {
 
 
 
-        // Hide loader on back/forward cache
+        // Hide loader on back/forward cache, history pop, or tab resume
 
-        window.addEventListener('pageshow', function() {
-
-            var overlay = document.getElementById('loading-overlay');
-
-            if (overlay) overlay.style.display = 'none';
-
+        window.addEventListener('pageshow', hideLoaderOverlay);
+        window.addEventListener('popstate', hideLoaderOverlay);
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) hideLoaderOverlay();
         });
 
     })();

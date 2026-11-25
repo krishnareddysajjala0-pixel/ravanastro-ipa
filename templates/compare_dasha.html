@@ -1361,9 +1361,22 @@ body {
             } catch (e) {}
         }
 
+        function hideLoaderOverlay() {
+            clearTimeout(window._loaderSafetyTimer);
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        function armLoaderSafetyTimeout() {
+            clearTimeout(window._loaderSafetyTimer);
+            window._loaderSafetyTimer = setTimeout(hideLoaderOverlay, 10000);
+        }
+
         function showLoader() {
             playLoadingSound();
-            document.getElementById('loading-overlay').style.display = 'flex';
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'flex';
+            armLoaderSafetyTimeout();
         }
 
         document.querySelectorAll('.nav-item').forEach(item => {
@@ -1404,6 +1417,7 @@ body {
             if (!overlay) return;
             playLoadingSound();
             overlay.style.display = 'flex';
+            armLoaderSafetyTimeout();
             var textEl = overlay.querySelector('p, #typing-text, #typing-text-overlay, div[style*="color:#ffd700"], div[style*="color: #ffd700"]');
             if (textEl) textEl.textContent = '{{ _('గణన చేస్తోంది') }}';
         }
@@ -1440,10 +1454,11 @@ body {
             });
         });
 
-        // Hide loader on back/forward cache
-        window.addEventListener('pageshow', function() {
-            var overlay = document.getElementById('loading-overlay');
-            if (overlay) overlay.style.display = 'none';
+        // Hide loader on back/forward cache, history pop, or tab resume
+        window.addEventListener('pageshow', hideLoaderOverlay);
+        window.addEventListener('popstate', hideLoaderOverlay);
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) hideLoaderOverlay();
         });
     })();
     </script>

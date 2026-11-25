@@ -7231,22 +7231,7 @@ body {
 
 
     <div class="top-control-bar print-hide">
-
-
-      <!-- 1. Back / Home Button -->
-
-
-
-
-
-      
-      
-
-
-      <!-- 2. Language Switcher (LAST / RIGHT) -->
-
-
-            <!-- 2. Kundali Position & Aspects Toggle Button (MIDDLE) -->
+      <!-- 2. Kundali Position & Aspects Toggle Button (MIDDLE) -->
       <button class="top-btn-hands ctrl-btn" id="kundaliPosBtn" onclick="toggleKundaliPositions()" title="{{ _('కుండలి స్థానం') }}">
         <i class="fas fa-map-marker-alt"></i>
         <span>{{ _('కుండలి స్థానం') }}</span>
@@ -9092,21 +9077,14 @@ body {
 
 
         function showLoader() {
-
-
-
             playLoadingSound();
-
-
-
-            document.getElementById('loading-overlay').style.display = 'flex';
-
-
-
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'flex';
             startTyping();
-
-
-
+            if (window._loaderGuardTimer) clearTimeout(window._loaderGuardTimer);
+            window._loaderGuardTimer = setTimeout(function() {
+                if (overlay) overlay.style.display = 'none';
+            }, 10000);
         }
 
 
@@ -9288,33 +9266,16 @@ body {
 
 
         function showGananaLoader() {
-
-
-
             var overlay = document.getElementById('loading-overlay');
-
-
-
             if (!overlay) return;
-
-
-
             playLoadingSound();
-
-
-
             overlay.style.display = 'flex';
-
-
-
             var textEl = overlay.querySelector('p, #typing-text, #typing-text-overlay, div[style*="color:#ffd700"], div[style*="color: #ffd700"]');
-
-
-
             if (textEl) textEl.textContent = '{{ _('గణన చేస్తోంది') }}';
-
-
-
+            if (window._loaderGuardTimer) clearTimeout(window._loaderGuardTimer);
+            window._loaderGuardTimer = setTimeout(function() {
+                if (overlay) overlay.style.display = 'none';
+            }, 10000);
         }
 
 
@@ -9438,18 +9399,15 @@ body {
 
 
 
-        window.addEventListener('pageshow', function() {
-
-
-
+        // Hide loader on back/forward cache, popstate, and app resume
+        function hideChart2LoaderOverlay() {
             var overlay = document.getElementById('loading-overlay');
-
-
-
             if (overlay) overlay.style.display = 'none';
-
-
-
+        }
+        window.addEventListener('pageshow', hideChart2LoaderOverlay);
+        window.addEventListener('popstate', hideChart2LoaderOverlay);
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) hideChart2LoaderOverlay();
         });
 
 

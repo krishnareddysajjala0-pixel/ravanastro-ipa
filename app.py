@@ -10,10 +10,6 @@ import base64
 import json
 import re
 import time
-import requests
-import base64
-import json
-import re
 
 try:
     from dotenv import load_dotenv
@@ -24,34 +20,27 @@ except ImportError:
 # Cache loaded translation dictionaries in memory
 TRANSLATIONS_CACHE = {}
 TR_STRING_CACHE = {}
+_CACHE_LOCK = threading.RLock()
 TIME_KEYWORDS = ["ఉ: ", "సా: ", "ఉ:", "సా:", "గం", "ని", "సం", "నెలలు", "నుండి", "నుంచి", "వరకు", "రేపు", "నిన్న", "ముగింపు", "మొదలు"]
 TIME_KEYWORDS.sort(key=len, reverse=True)
 
 def get_translations_dict(lang):
     if not lang or lang == 'te':
         return {}
-    if lang not in TRANSLATIONS_CACHE:
-        path = os.path.join(os.path.dirname(__file__), "translations", f"translations_{lang}.json")
-        if os.path.exists(path):
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    TRANSLATIONS_CACHE[lang] = json.load(f)
-            except Exception as e:
-                print(f"Error loading vocabulary {lang}: {e}")
-                TRANSLATIONS_CACHE[lang] = {}
-        else:
-            TRANSLATIONS_CACHE[lang] = {}
-    return TRANSLATIONS_CACHE[lang]
-
-# Pre-warm all language dictionaries in memory in background thread for instant language selection without delaying startup
-import threading
-def _bg_prewarm():
-    for _l in ['en', 'hi', 'kn', 'ta', 'ml', 'or']:
+    with _CACHE_LOCK:
+        if lang in TRANSLATIONS_CACHE:
+            return TRANSLATIONS_CACHE[lang]
+    path = os.path.join(os.path.dirname(__file__), "translations", f"translations_{lang}.json")
+    loaded = {}
+    if os.path.exists(path):
         try:
-            get_translations_dict(_l)
-        except Exception:
-            pass
-threading.Thread(target=_bg_prewarm, daemon=True).start()
+            with open(path, 'r', encoding='utf-8') as f:
+                loaded = json.load(f)
+        except Exception as e:
+            print(f"Error loading vocabulary {lang}: {e}")
+    with _CACHE_LOCK:
+        TRANSLATIONS_CACHE[lang] = loaded
+    return loaded
 
 
 def tr(text, lang=None):
@@ -162,49 +151,45 @@ def render_template(template_name_or_list, **context):
 
 RULES_CACHE = {}
 
+def _load_json_with_cache(cache_key, filename, lang='te'):
+    """Thread-safe JSON loader for astrology constants with optional localized override."""
+    with _CACHE_LOCK:
+        if cache_key in RULES_CACHE:
+            return RULES_CACHE[cache_key]
+
+    base_dir = os.path.dirname(__file__)
+    if lang != 'te':
+        base, ext = os.path.splitext(filename)
+        localized_path = os.path.join(base_dir, f"{base}_{lang}{ext}")
+        if os.path.exists(localized_path):
+            try:
+                with open(localized_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                with _CACHE_LOCK:
+                    RULES_CACHE[cache_key] = data
+                return data
+            except Exception as e:
+                print(f"Error loading localized {localized_path}: {e}")
+
+    default_path = os.path.join(base_dir, filename)
+    try:
+        with open(default_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        with _CACHE_LOCK:
+            RULES_CACHE[cache_key] = data
+        return data
+    except Exception as e:
+        print(f"Error loading {filename}: {e}")
+        return {}
+
 def load_rules(filename, lang=None):
     if not lang:
         lang = 'te'
         if has_request_context():
             lang = session.get('lang') or request.cookies.get('lang') or 'te'
 
-    cache_key = (filename, lang)
-    if cache_key in RULES_CACHE:
-        return RULES_CACHE[cache_key]
-
-    if filename == 'astro_constants.json':
-        path = os.path.join(os.path.dirname(__file__), filename)
-        try:
-            with open(path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                RULES_CACHE[cache_key] = data
-                return data
-        except Exception as e:
-            print(f"Error loading {filename}: {e}")
-            return {}
-
-    if lang != 'te':
-        base, ext = os.path.splitext(filename)
-        localized_filename = f"{base}_{lang}{ext}"
-        path = os.path.join(os.path.dirname(__file__), localized_filename)
-        if os.path.exists(path):
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    RULES_CACHE[cache_key] = data
-                    return data
-            except Exception as e:
-                print(f"Error loading localized {localized_filename}: {e}")
-                
-    path = os.path.join(os.path.dirname(__file__), filename)
-    try:
-        with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            RULES_CACHE[cache_key] = data
-            return data
-    except Exception as e:
-        print(f"Error loading {filename}: {e}")
-        return {}
+    eff_lang = 'te' if filename == 'astro_constants.json' else lang
+    return _load_json_with_cache((filename, lang), filename, eff_lang)
 
 def load_localized_constants(lang=None):
     if not lang:
@@ -212,43 +197,29 @@ def load_localized_constants(lang=None):
         if has_request_context():
             lang = session.get('lang') or request.cookies.get('lang') or 'te'
 
-    cache_key = ('astro_constants_localized', lang)
-    if cache_key in RULES_CACHE:
-        return RULES_CACHE[cache_key]
-
-    filename = 'astro_constants.json'
-    if lang != 'te':
-        base, ext = os.path.splitext(filename)
-        localized_filename = f"{base}_{lang}{ext}"
-        path = os.path.join(os.path.dirname(__file__), localized_filename)
-        if os.path.exists(path):
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    RULES_CACHE[cache_key] = data
-                    return data
-            except Exception as e:
-                print(f"Error loading localized {localized_filename}: {e}")
-    path = os.path.join(os.path.dirname(__file__), filename)
-    try:
-        with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            RULES_CACHE[cache_key] = data
-            return data
-    except Exception as e:
-        print(f"Error loading {filename}: {e}")
-        return {}
+    return _load_json_with_cache(('astro_constants_localized', lang), 'astro_constants.json', lang)
 
 def prewarm_caches():
     languages = ['en', 'kn', 'hi', 'ta', 'ml', 'or']
-    for l in languages:
-        get_translations_dict(l)
-        load_rules('astro_constants.json', l)
-        load_localized_constants(l)
+    # Warm current/default Telugu rules first, then other languages lazily in background
     load_rules('astro_constants.json', 'te')
     load_localized_constants('te')
+    for l in languages:
+        try:
+            get_translations_dict(l)
+            load_rules('astro_constants.json', l)
+            load_localized_constants(l)
+        except Exception:
+            pass
 
-prewarm_caches()
+threading.Thread(target=prewarm_caches, daemon=True).start()
+
+
+def _compact_birth_info_for_session(data):
+    """Strip large rendered HTML fields before storing birth_info in signed session cookie."""
+    if not isinstance(data, dict):
+        return data
+    return {k: v for k, v in data.items() if k not in ('chart', 'all_nakshatras')}
 
 
 
@@ -287,8 +258,9 @@ def add_no_cache_headers(response):
         response.headers.pop("Pragma", None)
         response.headers.pop("Expires", None)
     else:
-        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        response.headers["Pragma"] = "no-cache"
+        # Use no-cache without no-store so WebView back/forward history works without ERR_CACHE_MISS
+        response.headers["Cache-Control"] = "no-cache, must-revalidate"
+        response.headers.pop("Pragma", None)
         response.headers["Expires"] = "0"
     return response
 
@@ -1777,8 +1749,8 @@ def chart():
     
     data = get_kundali_data(name, dob, tob, place, lat, lon)
 
-    # Store birth info in session for other pages
-    session['birth_info'] = data
+    # Store compact birth info in session for other pages
+    session['birth_info'] = _compact_birth_info_for_session(data)
 
     # Calculate dasha data for the print Mahadasha table
     dasha_data = get_dasha_info(data)
@@ -2373,7 +2345,24 @@ def chart2():
     nak_remaining = birth_info.get('nak_remaining', '0గం 0ని')
 
     if not dob:
-        return "❌ No birth info found"
+        form_data = session.get('chart_form', {})
+        if form_data.get('name') and form_data.get('dob') and form_data.get('lat') and form_data.get('lon'):
+            birth_info = _compact_birth_info_for_session(get_kundali_data(
+                form_data['name'], form_data['dob'], form_data.get('tob', ''),
+                form_data.get('place', ''), float(form_data['lat']), float(form_data['lon'])
+            ))
+            session['birth_info'] = birth_info
+            dob = birth_info.get('dob', '')
+            tob = birth_info.get('tob', '')
+            name = birth_info.get('name', '')
+            place = birth_info.get('place', '')
+            day_name = birth_info.get('day_name', '')
+            nakshatra = birth_info.get('nakshatra', '')
+            padam = birth_info.get('padam', 1)
+            nak_elapsed = birth_info.get('nak_elapsed', '0గం 0ని')
+            nak_remaining = birth_info.get('nak_remaining', '0గం 0ని')
+        else:
+            return redirect(url_for('index'))
 
     dasha_data = get_dasha_info(birth_info)
 
@@ -2447,6 +2436,14 @@ def chart3():
     """Display Dwadasa Grahamula Phalitalu"""
     current_year = datetime.datetime.now().year
     birth_info = session.get('birth_info', {})
+    if not birth_info:
+        form_data = session.get('chart_form', {})
+        if form_data.get('name') and form_data.get('dob') and form_data.get('lat') and form_data.get('lon'):
+            birth_info = _compact_birth_info_for_session(get_kundali_data(
+                form_data['name'], form_data['dob'], form_data.get('tob', ''),
+                form_data.get('place', ''), float(form_data['lat']), float(form_data['lon'])
+            ))
+            session['birth_info'] = birth_info
     lagna = birth_info.get('lagna', '')
 
     native_party = ""
@@ -2556,33 +2553,29 @@ def chart3():
                            friends=friends,
                            enemies=enemies)
 
+@app.route("/health")
+def health_check():
+    """Lightweight health check endpoint for embedded mobile WebView server recovery."""
+    return jsonify({"status": "ok"}), 200
+
+
 @app.route("/go-to-birth-chart")
 def go_to_birth_chart():
-    """Redirect to birth chart with session data"""
+    """Redirect directly to birth chart with session data (avoids auto-submit POST history loop)."""
     birth_info = session.get('birth_info', {})
-    if birth_info:
-        # Instead of just rendering chart.html which requires complex SWISSEPH calculations,
-        # we repopulate a pseudo-form request to the main chart endpoint or we can 
-        # just regenerate chart() if we refactored it. Since /chart expects POST data,
-        # we'll build a simple redirect page that auto-submits.
-        return f"""
-        <html>
-            <body onload="document.forms[0].submit()">
-                <form action="/chart" method="POST">
-                    <input type="hidden" name="name" value="{birth_info.get('name', '')}">
-                    <input type="hidden" name="dob" value="{birth_info.get('dob', '')}">
-                    <input type="hidden" name="tob" value="{birth_info.get('tob', '')}">
-                    <input type="hidden" name="place" value="{birth_info.get('place', '')}">
-                    <input type="hidden" name="lat" value="{birth_info.get('lat', '')}">
-                    <input type="hidden" name="lon" value="{birth_info.get('lon', '')}">
-                </form>
-                <p>Loading Birth Chart...</p>
-            </body>
-        </html>
-        """
-    else:
-        # Redirect to index if no birth info
-        return redirect(url_for('index'))
+    if birth_info and birth_info.get('dob'):
+        if not session.get('chart_form'):
+            session['chart_form'] = {
+                'name': birth_info.get('name', ''),
+                'dob': birth_info.get('dob', ''),
+                'tob': birth_info.get('tob', ''),
+                'place': birth_info.get('place', ''),
+                'lat': birth_info.get('lat'),
+                'lon': birth_info.get('lon')
+            }
+        return redirect(url_for('chart'))
+    # Redirect to index if no birth info
+    return redirect(url_for('index'))
 
 @app.route("/go-to-dasha-chart")
 def go_to_dasha_chart():
@@ -3828,7 +3821,7 @@ def nakshatra_chart():
     lon = float(lon)
 
     data = get_kundali_data(name, dob, tob, place, lat, lon)
-    session['birth_info'] = data
+    session['birth_info'] = _compact_birth_info_for_session(data)
 
     dasha_data = get_dasha_info(data)
     nakshatra_boxes = build_nakshatra_pada_boxes(data)

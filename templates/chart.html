@@ -8997,13 +8997,11 @@ body {
   <div id="transit-container"></div>
 
   <!-- Toggle button for transit chart (shown after transit loads) -->
-  <div id="transit-toggle-bar" class="print-hide" style="display:none; text-align:center; margin: 8px 0;">
+  <div id="transit-toggle-bar" class="print-hide" style="display:none; text-align:center; margin: 10px 0;">
     <button id="transit-toggle-btn" onclick="toggleTransitChart()"
       style="background:linear-gradient(135deg,#f59e0b,#d97706); color:#000; border:none;
-             padding:8px 20px; border-radius:8px; font-size:14px; font-weight:700;
-             cursor:pointer; font-family:'Noto Sans Telugu',sans-serif;
-             box-shadow:0 3px 10px rgba(245,158,11,0.4); display:inline-flex;
-             align-items:center; gap:8px;">
+             border-radius:12px; font-family:'Noto Sans Telugu',sans-serif; font-weight:700; cursor:pointer;
+             box-shadow:0 3px 10px rgba(245,158,11,0.4);">
       <i class="fas fa-eye-slash" id="transit-toggle-icon"></i>
       <span id="transit-toggle-text">{{ _('ఈ రోజు కుండలి దాచు') }}</span>
     </button>
@@ -9394,7 +9392,7 @@ body {
 
 
 
-            style="flex:1; min-width:80px; padding:10px 0; border-radius:10px; border:1px solid rgba(255,255,255,0.2);
+            style="flex:1; min-width:90px; min-height:42px; padding:10px 16px; border-radius:10px; border:1px solid rgba(255,255,255,0.2);
 
 
 
@@ -9402,11 +9400,11 @@ body {
 
 
 
-                   font-family:'Noto Sans Telugu',sans-serif; cursor:pointer;
+                   font-family:'Noto Sans Telugu',sans-serif; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;
 
 
 
-                   transition:all 0.2s; font-weight:600;">
+                   transition:all 0.2s; font-weight:700;">
 
 
 
@@ -9420,11 +9418,11 @@ body {
 
           <button onclick="doPrint()"
 
-            style="flex:1; min-width:90px; padding:10px 0; border-radius:10px; border:none;
+            style="flex:1; min-width:90px; min-height:42px; padding:10px 16px; border-radius:10px; border:none;
 
                    background:linear-gradient(135deg,#e91e63,#c2185b); color:#fff; font-size:13px;
 
-                   font-family:'Noto Sans Telugu',sans-serif; cursor:pointer;
+                   font-family:'Noto Sans Telugu',sans-serif; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px;
 
                    box-shadow:0 4px 15px rgba(233,30,99,0.4); font-weight:700;
 
@@ -10109,15 +10107,20 @@ body {
         if (customDate) formData.append('transit_date', customDate);
         if (customTime) formData.append('transit_time', customTime);
 
+        const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+        const fetchTimer = controller ? setTimeout(() => controller.abort(), 12000) : null;
+
         fetch('/transit_chart', {
           method: 'POST',
-          body: formData
+          body: formData,
+          signal: controller ? controller.signal : undefined
         })
         .then(response => {
           if (!response.ok) throw new Error('Network response was not ok');
           return response.text();
         })
         .then(html => {
+          if (fetchTimer) clearTimeout(fetchTimer);
           if (loading) loading.style.display = 'none';
           const globalOverlay = document.getElementById('loading-overlay');
           if (globalOverlay) globalOverlay.style.display = 'none';
@@ -10134,6 +10137,7 @@ body {
           if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
         })
         .catch(error => {
+          if (fetchTimer) clearTimeout(fetchTimer);
           console.error('Error fetching transit chart:', error);
           if (loading) loading.style.display = 'none';
           const globalOverlay = document.getElementById('loading-overlay');
@@ -10984,21 +10988,14 @@ body {
 
 
       function showLoader() {
-
-
-
           playLoadingSound();
-
-
-
-          document.getElementById('loading-overlay').style.display = 'flex';
-
-
-
+          var overlay = document.getElementById('loading-overlay');
+          if (overlay) overlay.style.display = 'flex';
           startTyping();
-
-
-
+          if (window._loaderGuardTimer) clearTimeout(window._loaderGuardTimer);
+          window._loaderGuardTimer = setTimeout(function() {
+              if (overlay) overlay.style.display = 'none';
+          }, 10000);
       }
 
 
@@ -11184,33 +11181,16 @@ body {
 
 
         function showGananaLoader() {
-
-
-
             var overlay = document.getElementById('loading-overlay');
-
-
-
             if (!overlay) return;
-
-
-
             playLoadingSound();
-
-
-
             overlay.style.display = 'flex';
-
-
-
             var textEl = overlay.querySelector('p, #typing-text, #typing-text-overlay, div[style*="color:#ffd700"], div[style*="color: #ffd700"]');
-
-
-
             if (textEl) textEl.textContent = '{{ _('గణన చేస్తోంది') }}';
-
-
-
+            if (window._loaderGuardTimer) clearTimeout(window._loaderGuardTimer);
+            window._loaderGuardTimer = setTimeout(function() {
+                if (overlay) overlay.style.display = 'none';
+            }, 10000);
         }
 
 
@@ -11331,17 +11311,16 @@ body {
 
 
 
-        // Hide loader on back/forward cache and popstate
-        window.addEventListener('pageshow', function() {
+        // Hide loader on back/forward cache, popstate, and app resume
+        function hideChartLoaderOverlay() {
             var overlay = document.getElementById('loading-overlay');
             if (overlay) overlay.style.display = 'none';
             if (typeof closePrintOptions === 'function') closePrintOptions();
-        });
-
-        window.addEventListener('popstate', function() {
-            var overlay = document.getElementById('loading-overlay');
-            if (overlay) overlay.style.display = 'none';
-            if (typeof closePrintOptions === 'function') closePrintOptions();
+        }
+        window.addEventListener('pageshow', hideChartLoaderOverlay);
+        window.addEventListener('popstate', hideChartLoaderOverlay);
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) hideChartLoaderOverlay();
         });
 
 
