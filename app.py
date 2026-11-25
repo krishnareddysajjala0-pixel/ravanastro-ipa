@@ -1983,6 +1983,10 @@ def transit_chart():
     for i in range(12):
         houses_map[LAGNA_NAMES_TELUGU[(idx+i)%12]] = i+1
 
+    day_eng = local_dt.strftime("%A")
+    day_name = DAY_TELUGU.get(day_eng, day_eng)
+    place = request.form.get("place", "")
+
     return render_template(
         "transit_partial.html",
         chart=chart_data,
@@ -1991,7 +1995,9 @@ def transit_chart():
         houses=houses_map,
         name="ఈ రోజు గ్రహ స్థితి",
         dob=local_dt.strftime("%d-%m-%Y"),
-        tob=local_dt.strftime("%H:%M:%S")
+        tob=local_dt.strftime("%H:%M:%S"),
+        day_name=day_name,
+        place=place
     )
 
 def get_dasha_info(birth_info):

@@ -103,6 +103,20 @@
             </td>
           </tr>
           <tr>
+            <td style="color: #ffd700;"><i class="fas fa-calendar-alt"></i> {{ _('తేదీ:') }}</td>
+            <td style="color: var(--text-main);">{{ dob }}{% if day_name %} ({{ day_name }}){% endif %}</td>
+          </tr>
+          <tr>
+            <td style="color: #ffd700;"><i class="fas fa-clock"></i> {{ _('సమయం:') }}</td>
+            <td style="color: var(--text-main);">{{ tob }}</td>
+          </tr>
+          {% if place %}
+          <tr>
+            <td style="color: #ffd700;"><i class="fas fa-map-marker-alt"></i> {{ _('స్థలం:') }}</td>
+            <td style="color: var(--text-main);">{{ place.split(',')[0] if ',' in place else place }}</td>
+          </tr>
+          {% endif %}
+          <tr>
             <td style="color: #ffd700;"><i class="fas fa-compass"></i> {{ _('లగ్నం:') }}</td>
             <td style="color: var(--text-main);">
               {{ lagna }} 
