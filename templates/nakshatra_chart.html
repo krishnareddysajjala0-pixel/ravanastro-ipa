@@ -3154,84 +3154,90 @@ html, body {
   padding: 1px 1px !important;
 }
 
-html.is-android-app .nak-name-text {
-  font-size: 8px !important;
-  line-height: 1.0 !important;
-  letter-spacing: -0.2px !important;
-}
-
-html.is-android-app .pada-row {
-  font-size: 8px !important;
-  gap: 1.5px !important;
-}
-
-html.is-android-app .pada-num {
-  width: 11px !important;
-  height: 11px !important;
-  min-width: 11px !important;
-  font-size: 7.5px !important;
-}
-
-html.is-android-app .occupant-pill {
-  font-size: 8px !important;
-  padding: 0 1px !important;
-}
-
-html.is-android-app .occupants-wrap {
-  gap: 1px 2px !important;
-}
-
-html.is-android-app .center-table {
-  font-size: 9px !important;
-}
-
-html.is-android-app .center-table td, html.is-android-app .center-table th {
-  padding: 1px 2px !important;
-}
-
 /* ==========================================================================
-   WEB APP: Planet names size EQUAL to center box text size (12px)
+   SCREEN-ONLY COMPACT STYLES FOR ANDROID APP (Does NOT affect PDF print)
    ========================================================================== */
-html:not(.is-android-app) .occupant-pill,
-html:not(.is-android-app) .planet-name-pill,
-html:not(.is-android-app) .aspect-hand,
-html:not(.is-android-app) .occupant-pill.lagna-occupant,
-html.is-web-app .occupant-pill,
-html.is-web-app .planet-name-pill,
-html.is-web-app .aspect-hand,
-html.is-web-app .occupant-pill.lagna-occupant {
-  font-size: 12px !important;
-  font-weight: 800 !important;
-  line-height: 1.25 !important;
-  padding: 1px 4px !important;
-}
+@media screen {
+  html.is-android-app:not(.mobile-pdf-rendering) .nak-name-text {
+    font-size: 8px !important;
+    line-height: 1.0 !important;
+    letter-spacing: -0.2px !important;
+  }
 
-html:not(.is-android-app) .planet-deg-suffix,
-html:not(.is-android-app) .occupant-pill .planet-deg-suffix,
-html.is-web-app .planet-deg-suffix,
-html.is-web-app .occupant-pill .planet-deg-suffix {
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  margin-left: 2px !important;
-}
+  html.is-android-app:not(.mobile-pdf-rendering) .pada-row {
+    font-size: 8px !important;
+    gap: 1.5px !important;
+  }
 
-html:not(.is-android-app) .pada-row,
-html.is-web-app .pada-row {
-  font-size: 11.5px !important;
-  gap: 2.5px !important;
-}
+  html.is-android-app:not(.mobile-pdf-rendering) .pada-num {
+    width: 11px !important;
+    height: 11px !important;
+    min-width: 11px !important;
+    font-size: 7.5px !important;
+  }
 
-html:not(.is-android-app) .pada-num,
-html.is-web-app .pada-num {
-  width: 14px !important;
-  height: 14px !important;
-  min-width: 14px !important;
-  font-size: 10px !important;
-}
+  html.is-android-app:not(.mobile-pdf-rendering) .occupant-pill {
+    font-size: 8px !important;
+    padding: 0 1px !important;
+  }
 
-html:not(.is-android-app) .nak-name-text,
-html.is-web-app .nak-name-text {
-  font-size: 11px !important;
+  html.is-android-app:not(.mobile-pdf-rendering) .occupants-wrap {
+    gap: 1px 2px !important;
+  }
+
+  html.is-android-app:not(.mobile-pdf-rendering) .center-table {
+    font-size: 9px !important;
+  }
+
+  html.is-android-app:not(.mobile-pdf-rendering) .center-table td,
+  html.is-android-app:not(.mobile-pdf-rendering) .center-table th {
+    padding: 1px 2px !important;
+  }
+
+  /* ==========================================================================
+     WEB APP: Planet names size EQUAL to center box text size (12px)
+     ========================================================================== */
+  html:not(.is-android-app) .occupant-pill,
+  html:not(.is-android-app) .planet-name-pill,
+  html:not(.is-android-app) .aspect-hand,
+  html:not(.is-android-app) .occupant-pill.lagna-occupant,
+  html.is-web-app .occupant-pill,
+  html.is-web-app .planet-name-pill,
+  html.is-web-app .aspect-hand,
+  html.is-web-app .occupant-pill.lagna-occupant {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    padding: 1px 4px !important;
+  }
+
+  html:not(.is-android-app) .planet-deg-suffix,
+  html:not(.is-android-app) .occupant-pill .planet-deg-suffix,
+  html.is-web-app .planet-deg-suffix,
+  html.is-web-app .occupant-pill .planet-deg-suffix {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin-left: 2px !important;
+  }
+
+  html:not(.is-android-app) .pada-row,
+  html.is-web-app .pada-row {
+    font-size: 11.5px !important;
+    gap: 2.5px !important;
+  }
+
+  html:not(.is-android-app) .pada-num,
+  html.is-web-app .pada-num {
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    font-size: 10px !important;
+  }
+
+  html:not(.is-android-app) .nak-name-text,
+  html.is-web-app .nak-name-text {
+    font-size: 11px !important;
+  }
 }
 
 /* Bottom Bar */
@@ -3398,9 +3404,23 @@ html.is-web-app .nak-name-text {
     print-color-adjust: exact !important;
   }
 
+  html.is-android-app .center-box,
+  html.is-android-app .center-box table,
+  html.is-android-app .center-box table td,
+  html.is-android-app .center-table,
+  html.is-android-app .center-table td,
+  html.is-android-app .center-table th,
+  html.is-android-app .center-content,
+  html.is-android-app .center-content table,
+  html.is-android-app .center-content table td,
+  html.is-android-app .center-label,
+  html.is-android-app .center-value,
   .center-box,
   .center-box table,
   .center-box table td,
+  .center-table,
+  .center-table td,
+  .center-table th,
   .center-content,
   .center-content table,
   .center-content table td,
@@ -3622,9 +3642,51 @@ html.is-web-app .nak-name-text {
   }
 }
 
-/* ===== MOBILE PDF RENDERING SUPPORT ===== */
+/* ===== MOBILE PDF RENDERING SUPPORT (MATCHES WEB PRINT 100%) ===== */
+html.mobile-pdf-rendering,
+body.mobile-pdf-rendering {
+  width: 1024px !important;
+  min-width: 1024px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+body.mobile-pdf-rendering .container {
+  width: 1024px !important;
+  min-width: 1024px !important;
+  max-width: 1024px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  zoom: 0.90 !important;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  overflow: visible !important;
+}
+
+body.mobile-pdf-rendering .top-control-bar,
+body.mobile-pdf-rendering .fixed-bottom-bar,
+body.mobile-pdf-rendering #action-bar,
+body.mobile-pdf-rendering .no-print,
+body.mobile-pdf-rendering nav,
+body.mobile-pdf-rendering .floating-actions,
+body.mobile-pdf-rendering #loading-overlay,
+body.mobile-pdf-rendering .theme-switcher,
+body.mobile-pdf-rendering .language-switcher,
+body.mobile-pdf-rendering .zoom-toolbar,
+body.mobile-pdf-rendering #zoom-toolbar,
+body.mobile-pdf-rendering .results-section,
+body.mobile-pdf-rendering .notes-section {
+  display: none !important;
+}
+
 body.mobile-pdf-rendering .page-header {
-  margin: 4.5em auto 1.1em auto !important;
+  margin: 0.8em auto 0.3em auto !important;
   padding: 0 !important;
 }
 
@@ -3663,6 +3725,9 @@ body.mobile-pdf-rendering .nak-box {
 body.mobile-pdf-rendering .center-box,
 body.mobile-pdf-rendering .center-box table,
 body.mobile-pdf-rendering .center-box table td,
+body.mobile-pdf-rendering .center-table,
+body.mobile-pdf-rendering .center-table td,
+body.mobile-pdf-rendering .center-table th,
 body.mobile-pdf-rendering .center-content,
 body.mobile-pdf-rendering .center-content table,
 body.mobile-pdf-rendering .center-content table td,
@@ -4110,33 +4175,15 @@ body.mobile-pdf-rendering .center-box {
 <body>
 <div class="container">
 
-    <!-- Top Control Row Bar (Theme, Home, Back, Print, Aspects, Language in Single Line at Top) -->
+    <!-- Top Control Row Bar (Aspects, Language in Single Line at Top) -->
     <div class="top-control-bar print-hide">
-      <!-- 1. Home Button -->
-      <a href="/" class="ctrl-btn top-btn-home" style="text-decoration: none; color: #ffffff;">
-        <i class="fas fa-home"></i>
-        <span>{{ _('హోమ్') }}</span>
-      </a>
-
-      <!-- 3. Back / Normal Kundali Button -->
-      <a href="/chart" class="ctrl-btn top-btn-back" style="text-decoration: none; color: #ffffff;">
-        <i class="fas fa-arrow-left"></i>
-        <span>{{ _('సాధారణ కుండలి') }}</span>
-      </a>
-
-      <!-- 3. Print / PDF Button -->
-      <button class="ctrl-btn top-btn-print" type="button" onclick="doSharePDF()">
-        <i class="fas fa-print"></i>
-        <span>{{ _('ప్రింట్') }}</span>
-      </button>
-
-      <!-- 4. Aspects Button -->
+      <!-- Aspects Button -->
       <button class="top-btn-hands ctrl-btn" id="chupuluBtn" onclick="toggleAspects()" title="Toggle Aspects">
         <i class="fas fa-eye"></i>
         <span>{{ _('చూపులు') }}</span>
       </button>
 
-      <!-- 5. Language Switcher (LAST / RIGHT) -->
+      <!-- Language Switcher (LAST / RIGHT) -->
       <div class="language-switcher">
         <button class="top-btn-lang ctrl-btn" onclick="toggleLangMenu(event)" title="Change Language">
           <i class="fas fa-language"></i>
@@ -4699,6 +4746,7 @@ body.mobile-pdf-rendering .center-box {
       } catch(e) {}
 
       document.body.classList.add('mobile-pdf-rendering');
+      document.documentElement.classList.add('mobile-pdf-rendering');
 
       document.documentElement.removeAttribute('data-theme');
 
@@ -4717,6 +4765,7 @@ body.mobile-pdf-rendering .center-box {
     window.onafterprint = function () {
 
       document.body.classList.remove('mobile-pdf-rendering');
+      document.documentElement.classList.remove('mobile-pdf-rendering');
 
       try {
         document.documentElement.style.removeProperty('--print-color-pos');
