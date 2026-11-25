@@ -1858,12 +1858,18 @@ def compare_results():
 
 @app.route("/transit_chart", methods=["POST"])
 def transit_chart():
+    # Ensure standard Lahiri Ayanamsa is used for all transit calculations
+    swe.set_sid_mode(swe.SIDM_LAHIRI)
+
     lat = request.form.get("lat")
     lon = request.form.get("lon")
     timezone_str = request.form.get("timezone", "Asia/Kolkata")
     
     if not lat or not lon:
-        return "❌ Location not provided", 400
+        birth_info = session.get('birth_info', {})
+        lat = birth_info.get('lat', 17.3850)
+        lon = birth_info.get('lon', 78.4867)
+        timezone_str = birth_info.get('timezone_str', 'Asia/Kolkata')
 
     lat = float(lat)
     lon = float(lon)
