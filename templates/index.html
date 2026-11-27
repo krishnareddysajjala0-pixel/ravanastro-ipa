@@ -3169,6 +3169,81 @@
       color: var(--btn-modal-save-text, #ffffff) !important;
     }
 
+  
+    /* Custom Styled Checkboxes for Saved Profiles & Modals */
+    .custom-cb-wrapper {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      position: relative !important;
+      margin: 0 !important;
+    }
+
+    .custom-cb-wrapper input.app-checkbox {
+      position: absolute !important;
+      opacity: 0 !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      pointer-events: none !important;
+      border: none !important;
+      clip: rect(0, 0, 0, 0) !important;
+    }
+
+    .custom-checkbox-visual {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 19px !important;
+      height: 19px !important;
+      min-width: 19px !important;
+      min-height: 19px !important;
+      border-radius: 5px !important;
+      border: 1.8px solid #ffd700 !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      box-sizing: border-box !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      flex-shrink: 0 !important;
+    }
+
+    .custom-cb-wrapper:hover .custom-checkbox-visual {
+      border-color: #ffe654 !important;
+      background: rgba(255, 215, 0, 0.15) !important;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3) !important;
+    }
+
+    .custom-cb-wrapper input.app-checkbox:checked + .custom-checkbox-visual {
+      background: #ffd700 !important;
+      border-color: #ffd700 !important;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
+    }
+
+    .custom-cb-wrapper input.app-checkbox:checked + .custom-checkbox-visual::after {
+      content: '✓' !important;
+      font-size: 14px !important;
+      font-weight: 900 !important;
+      color: #1a162b !important;
+      line-height: 1 !important;
+      display: block !important;
+    }
+
+    .custom-cb-wrapper input.app-checkbox:indeterminate + .custom-checkbox-visual {
+      background: #ffd700 !important;
+      border-color: #ffd700 !important;
+    }
+
+    .custom-cb-wrapper input.app-checkbox:indeterminate + .custom-checkbox-visual::after {
+      content: '−' !important;
+      font-size: 16px !important;
+      font-weight: 900 !important;
+      color: #1a162b !important;
+      line-height: 1 !important;
+      display: block !important;
+    }
+
   </style>
 
 
@@ -4569,8 +4644,9 @@ body {
 
       <!-- Bulk Selection Toolbar -->
       <div id="saved-profiles-toolbar" style="display:none; align-items:center; justify-content:space-between; margin-bottom:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,215,0,0.25); border-radius:10px; padding:8px 12px; gap:8px;">
-        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; font-weight:700; color:#cbd5e1; user-select:none; margin:0;">
-          <input type="checkbox" id="select-all-profiles-cb" onchange="toggleSelectAllProfiles(this)" style="width:17px; height:17px; accent-color:#ffd700; cursor:pointer;">
+        <label class="custom-cb-wrapper" style="font-size:13px; font-weight:700; color:#cbd5e1;">
+          <input type="checkbox" id="select-all-profiles-cb" class="app-checkbox" onchange="toggleSelectAllProfiles(this)">
+          <span class="custom-checkbox-visual"></span>
           <span>{{ _('అన్నీ ఎంచుకోండి') }}</span>
         </label>
         <button type="button" id="btn-delete-selected" onclick="deleteSelectedProfiles()" style="display:none; padding:6px 14px; border-radius:8px; border:none; background:linear-gradient(135deg, #ef4444, #dc2626); color:#fff; font-size:12px; font-weight:700; cursor:pointer; align-items:center; gap:6px; box-shadow:0 2px 10px rgba(239,68,68,0.4);">
@@ -6648,8 +6724,9 @@ body {
 
 
             <div style="font-size: 16px; font-weight: 800; color: #ffd700; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;">
-              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 0; user-select: none;">
-                <input type="checkbox" class="profile-select-checkbox" data-id="${p.id}" onchange="onProfileCheckboxChange()" style="width: 17px; height: 17px; accent-color: #ffd700; cursor: pointer;">
+              <label class="custom-cb-wrapper">
+                <input type="checkbox" class="profile-select-checkbox app-checkbox" data-id="${p.id}" onchange="onProfileCheckboxChange()">
+                <span class="custom-checkbox-visual"></span>
                 <span><i class="fas fa-user-circle"></i> ${p.name}</span>
               </label>
               <span style="font-size: 11px; color: #94a3b8; font-weight: normal;">${p.savedAt || ''}</span>
@@ -7454,7 +7531,7 @@ body {
       const count = checked.length;
       const msg = count === 1
         ? "{{ _('ఈ వివరాలను నిజంగా తొలగించాలా?') }}"
-        : `ఎంచుకున్న ${count} వివరాలను నిజంగా తొలగించాలా?`;
+        : "{{ _('ఎంచుకున్న వివరాలను నిజంగా తొలగించాలా?') }}" + ` (${count})`;
 
       showCustomConfirm(msg, function() {
         const selectedIds = new Set(Array.from(checked).map(cb => parseInt(cb.dataset.id, 10)));
