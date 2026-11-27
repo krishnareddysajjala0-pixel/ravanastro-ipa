@@ -3560,22 +3560,17 @@
 
 
 
-      .page-title {
-
-
-
+      .page-title,
+      .header .page-title,
+      #print-wrapper .header .page-title {
         color: #d2691e !important;
-
-
-
-        font-size: 39px !important; /* Increased by another 30% to 39px */
-
-
-
+        -webkit-text-fill-color: #d2691e !important;
+        font-size: 39px !important;
+        font-weight: 800 !important;
         margin-bottom: 2px !important;
-
-
-
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
       }
 
 
@@ -8161,7 +8156,7 @@ body {
 
 
 
-      <h1 class="page-title" style="margin-bottom: 0; font-size: 32px;">{{ _('జాఫతకము') }}</h1>
+      <h1 class="page-title" style="margin-bottom: 0; font-size: 32px; color: #d2691e !important; -webkit-text-fill-color: #d2691e !important;">{{ _('జాఫతకము') }}</h1>
 
 
 

@@ -4567,6 +4567,17 @@ body {
         </div>
       </div>
 
+      <!-- Bulk Selection Toolbar -->
+      <div id="saved-profiles-toolbar" style="display:none; align-items:center; justify-content:space-between; margin-bottom:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,215,0,0.25); border-radius:10px; padding:8px 12px; gap:8px;">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; font-weight:700; color:#cbd5e1; user-select:none; margin:0;">
+          <input type="checkbox" id="select-all-profiles-cb" onchange="toggleSelectAllProfiles(this)" style="width:17px; height:17px; accent-color:#ffd700; cursor:pointer;">
+          <span>{{ _('అన్నీ ఎంచుకోండి') }}</span>
+        </label>
+        <button type="button" id="btn-delete-selected" onclick="deleteSelectedProfiles()" style="display:none; padding:6px 14px; border-radius:8px; border:none; background:linear-gradient(135deg, #ef4444, #dc2626); color:#fff; font-size:12px; font-weight:700; cursor:pointer; align-items:center; gap:6px; box-shadow:0 2px 10px rgba(239,68,68,0.4);">
+          <i class="fas fa-trash-alt"></i> <span id="delete-selected-text">{{ _('ఎంచుకున్నవి తొలగించు') }}</span>
+        </button>
+      </div>
+
       <!-- Profiles Scrollable List -->
 
 
@@ -6577,10 +6588,9 @@ body {
 
 
 
+      const toolbar = document.getElementById('saved-profiles-toolbar');
       if (profiles.length === 0) {
-
-
-
+        if (toolbar) toolbar.style.display = 'none';
         container.innerHTML = `
 
 
@@ -6638,17 +6648,11 @@ body {
 
 
             <div style="font-size: 16px; font-weight: 800; color: #ffd700; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;">
-
-
-
-              <span><i class="fas fa-user-circle"></i> ${p.name}</span>
-
-
-
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 0; user-select: none;">
+                <input type="checkbox" class="profile-select-checkbox" data-id="${p.id}" onchange="onProfileCheckboxChange()" style="width: 17px; height: 17px; accent-color: #ffd700; cursor: pointer;">
+                <span><i class="fas fa-user-circle"></i> ${p.name}</span>
+              </label>
               <span style="font-size: 11px; color: #94a3b8; font-weight: normal;">${p.savedAt || ''}</span>
-
-
-
             </div>
 
 
@@ -6738,9 +6742,13 @@ body {
 
 
       container.innerHTML = html;
-
-
-
+      if (toolbar) {
+        toolbar.style.display = 'flex';
+        const masterCb = document.getElementById('select-all-profiles-cb');
+        if (masterCb) { masterCb.checked = false; masterCb.indeterminate = false; }
+        const delBtn = document.getElementById('btn-delete-selected');
+        if (delBtn) delBtn.style.display = 'none';
+      }
     }
 
 
@@ -7408,21 +7416,63 @@ body {
 
 
 
+    function toggleSelectAllProfiles(masterCb) {
+      const cbs = document.querySelectorAll('.profile-select-checkbox');
+      cbs.forEach(cb => { cb.checked = masterCb.checked; });
+      onProfileCheckboxChange();
+    }
+
+    function onProfileCheckboxChange() {
+      const cbs = document.querySelectorAll('.profile-select-checkbox');
+      const checked = document.querySelectorAll('.profile-select-checkbox:checked');
+      const masterCb = document.getElementById('select-all-profiles-cb');
+      const delBtn = document.getElementById('btn-delete-selected');
+      const delText = document.getElementById('delete-selected-text');
+
+      if (masterCb) {
+        masterCb.checked = (cbs.length > 0 && checked.length === cbs.length);
+        masterCb.indeterminate = (checked.length > 0 && checked.length < cbs.length);
+      }
+
+      if (delBtn) {
+        if (checked.length > 0) {
+          delBtn.style.display = 'inline-flex';
+          if (delText) {
+            delText.textContent = checked.length === cbs.length
+              ? `{{ _('అన్నీ తొలగించు') }} (${checked.length})`
+              : `{{ _('ఎంచుకున్నవి తొలగించు') }} (${checked.length})`;
+          }
+        } else {
+          delBtn.style.display = 'none';
+        }
+      }
+    }
+
+    function deleteSelectedProfiles() {
+      const checked = document.querySelectorAll('.profile-select-checkbox:checked');
+      if (checked.length === 0) return;
+      const count = checked.length;
+      const msg = count === 1
+        ? "{{ _('ఈ వివరాలను నిజంగా తొలగించాలా?') }}"
+        : `ఎంచుకున్న ${count} వివరాలను నిజంగా తొలగించాలా?`;
+
+      showCustomConfirm(msg, function() {
+        const selectedIds = new Set(Array.from(checked).map(cb => parseInt(cb.dataset.id, 10)));
+        let profiles = getSavedProfiles();
+        profiles = profiles.filter(p => !selectedIds.has(p.id));
+        saveProfilesList(profiles);
+        renderSavedProfilesList();
+        updateSavedProfilesCount();
+      });
+    }
+
     function deleteSavedProfile(id) {
       showCustomConfirm("{{ _('ఈ వివరాలను నిజంగా తొలగించాలా?') }}", function() {
         let profiles = getSavedProfiles();
-
-
-
-      profiles = profiles.filter(p => p.id !== id);
-
-
-
-      saveProfilesList(profiles);
-
-
-
-      renderSavedProfilesList();
+        profiles = profiles.filter(p => p.id !== id);
+        saveProfilesList(profiles);
+        renderSavedProfilesList();
+        updateSavedProfilesCount();
       });
     }
 

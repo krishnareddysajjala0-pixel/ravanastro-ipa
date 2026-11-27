@@ -1,0 +1,360 @@
+<!-- Page 2: Nakshatra Pada Kundali (Strict 1 Page) -->
+<div id="full-print-nakshatra-section" class="full-report-section">
+<div id="nakshatra-pdf-export-container">
+  <div class="page-header">
+
+    <div class="main-title">
+
+      <img src="/static/images/brand_logo.png" alt="Logo" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
+
+      {{ _('నక్షత్ర పాద జాఫతక చక్రము') }}
+
+      <img src="/static/images/brand_logo.png" alt="Logo" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
+
+    </div>
+
+    <div class="sub-title">
+
+      {{ name }} | {{ dob }} ({{ day_name }}) | {{ tob }} | {{ place }}
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Macro for Nakshatra Box -->
+
+  {% macro render_nak_box(rashi_name) %}
+  {% set b = nakshatra_boxes[rashi_name] %}
+  {% set p_2l = {
+    'సూర్యుడు': 'సూర్య', 'సూర్య': 'సూర్య', 'రవి': 'సూర్య',
+    'చంద్రుడు': 'చంద్ర', 'చంద్ర': 'చంద్ర',
+    'కుజుడు': 'కుజ', 'కుజ': 'కుజ',
+    'బుధుడు': 'బుధ', 'బుధ': 'బుధ',
+    'గురు': 'గురు', 'గురువు': 'గురు',
+    'శుక్రుడు': 'శుక్ర', 'శుక్ర': 'శుక్ర',
+    'శని': 'శని',
+    'రాహు': 'రాహు', 'రాహువు': 'రాహు',
+    'కేతు': 'కేతు', 'కేతువు': 'కేతు',
+    'భూమి': 'భూమి',
+    'చిత్ర': 'చిత్ర',
+    'మిత్ర': 'మిత్ర',
+    'లగ్నం': 'లగ్నం', 'లగ్న': 'లగ్నం',
+    'Sun': 'Su', 'Moon': 'Mo', 'Mars': 'Ma', 'Mercury': 'Me',
+    'Jupiter': 'Ju', 'Venus': 'Ve', 'Saturn': 'Sa', 'Rahu': 'Ra',
+    'Ketu': 'Ke', 'Earth': 'Ea', 'Mitra': 'Mi', 'Chitra': 'Ch', 'Lagna': 'Lagna'
+  } %}
+  <div class="nak-box {{ b.karma_class }} {% if b.is_lagna %}lagna-box{% endif %}">
+    <div class="nak-box-header">
+      <span class="house-badge">{{ b.house_no }}</span>
+      <span class="rashi-title-text">{{ _(b.rashi_name) }}</span>
+      <span class="karma-badge-small" title="{% if b.karma_label == 'పు+పా' %}{{ _('పుణ్యం + పాపం') }}{% else %}{{ _(b.karma_label) }}{% endif %}">{{ _(b.karma_label) }}</span>
+    </div>
+
+    <div class="nak-padas-container">
+      {% for nak in b.nakshatras %}
+      <div class="nak-group-row">
+        <div class="nak-name-cell" title="{{ nak.nakshatra_name }}">
+          <span class="nak-name-text">{{ _(nak.short_nakshatra_name) if nak.short_nakshatra_name else _(nak.nakshatra_name) }}</span>
+        </div>
+        <div class="padas-list-cell">
+          {% for p in nak.padas %}
+          <div class="pada-row {% if p.occupants %}has-occupant{% endif %}">
+            <span class="pada-num">{{ p.nak_pada_num }}</span>
+            {% if p.occupants %}
+              <span class="occupants-wrap">
+                {% for occ in p.occupants %}
+                  {% set occ_name_2l = p_2l.get(occ.name, occ.name) %}
+                  {% if occ.is_lagna %}
+                    <span class="occupant-pill lagna-occupant">🚩 {{ _("లగ్నం") }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
+                  {% elif occ.is_hand %}
+                    <span class="occupant-pill aspect-hand" style="color: {{ occ.color }};">👉 {{ _(occ_name_2l) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
+                  {% else %}
+                    <span class="occupant-pill planet-name-pill" style="color: {{ occ.color }};">{{ _(occ_name_2l) }}{% if occ.deg_only %}&nbsp;<span class="planet-deg-suffix">{{ occ.deg_only }}</span>{% endif %}</span>
+                  {% endif %}
+                {% endfor %}
+              </span>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
+  </div>
+
+  <!-- 4x4 South Indian Grid Chart -->
+
+  <div class="chart-container">
+
+    <div class="chart-grid">
+
+      <!-- Row 1 -->
+
+      {{ render_nak_box("మీనం") }}
+
+      {{ render_nak_box("మేషం") }}
+
+      {{ render_nak_box("వృషభం") }}
+
+      {{ render_nak_box("మిథునం") }}
+
+
+
+      <!-- Row 2 -->
+
+      {{ render_nak_box("కుంభం") }}
+
+
+
+            <!-- Center Box -->
+
+      <div class="center-box">
+
+        <div class="center-content">
+
+          <table
+
+            style="width: 100%; border-collapse: separate; border-spacing: 0 3.5px; font-size: 12px; text-align: left; margin: 0 auto;">
+
+            <tr>
+
+              <td class="center-label">{{ _('వర్గము:') }}</td>
+
+              <td class="center-value" style="font-weight: bold; animation: nav-rainbow 3s linear infinite !important;">
+
+                {% if lagna in ["మేషం", "కర్కాటకం", "సింహం", "వృశ్చికం", "ధనస్సు", "మీనం"] %}
+
+                  <span style="color: var(--color-pos);">{{ _('గురు పార్టీ') }}</span>
+
+                {% else %}
+
+                  <span style="color: var(--color-neg);">{{ _('శని పార్టీ') }}</span>
+
+                {% endif %}
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('పేరు:') }}</td>
+
+              <td class="center-value pdf-person-name">{{ name }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label"><i class="fas fa-calendar-alt"></i> {{ _('తేదీ:') }}</td>
+
+              <td class="center-value">{{ dob }} ({{ day_name }})</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label"><i class="fas fa-clock"></i> {{ _('సమయం:') }}</td>
+
+              <td class="center-value">{{ tob }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label"><i class="fas fa-map-marker-alt"></i> {{ _('స్థలం:') }}</td>
+
+              <td class="center-value">{{ place.split(',')[0] if ',' in place else place }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label"><i class="fas fa-compass"></i> {{ _('లగ్నం:') }}</td>
+
+              <td class="center-value">
+
+                {{ lagna }} 
+
+                {% if lagna_deg is defined and lagna_deg %}
+
+                  (<span class="full-deg">{{ lagna_deg }}</span>)
+
+                {% endif %}
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label"><i class="fas fa-certificate"></i> {{ _('తిథి:') }}</td>
+
+              <td class="center-value">{{ _(tithi_paksha) }} - {{ _(tithi_name) }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label"><i class="fas fa-star"></i> {{ _('నక్షత్రం:') }}</td>
+
+              <td class="center-value">
+
+                {{ nakshatra }} ({{ padam }} {{ _('పాదం') }})
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('పూర్తి నక్షత్ర పరిమాణం:') }}</td>
+
+              <td class="center-value">{{ nak_total }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('నక్షత్ర భుక్తి:') }}</td>
+
+              <td class="center-value">{{ nak_elapsed }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('నక్షత్ర భోగ్యం:') }}</td>
+
+              <td class="center-value">{{ nak_remaining }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('జన్మ దశ:') }}</td>
+
+              <td class="center-value">{{ birth_dasa }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('దశ భుక్తి:') }}</td>
+
+              <td class="center-value">{{ gata_str }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('దశ భోగ్యం:') }}</td>
+
+              <td class="center-value">{{ bhogya_str }}</td>
+
+            </tr>
+
+            <tr>
+
+              <td class="center-label">{{ _('ప్రస్తుత దశ - అంతర్దశ:') }}</td>
+
+              <td class="center-value">{{ maha }} - {{ current_anthara }}</td>
+
+            </tr>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+
+      {{ render_nak_box("కర్కాటకం") }}
+
+
+
+      <!-- Row 3 -->
+
+      {{ render_nak_box("మకరం") }}
+
+      {{ render_nak_box("సింహం") }}
+
+
+
+      <!-- Row 4 -->
+
+      {{ render_nak_box("ధనస్సు") }}
+
+      {{ render_nak_box("వృశ్చికం") }}
+
+      {{ render_nak_box("తులా") }}
+
+      {{ render_nak_box("కన్య") }}
+
+    </div>
+
+  </div>
+
+
+
+      <!-- Transit Date/Time & Action Section -->
+    <div class="no-print" style="text-align: center; margin: 22px auto 14px auto; max-width: 520px; padding: 0 12px;">
+      
+      <!-- Inline Date & Time Fields directly above 'ఈ రోజు గ్రహ స్థితి' button -->
+      <div id="nak-transit-inputs-bar" class="transit-inputs-bar nak-transit-inputs-bar">
+        <!-- Date field -->
+        <div class="transit-input-group date-group">
+          <label for="nak-transit-custom-date">
+            <i class="fas fa-calendar-alt"></i> <span>{{ _('తేది') }}:</span>
+          </label>
+          <input type="date" id="nak-transit-custom-date">
+        </div>
+
+        <!-- Time field -->
+        <div class="transit-input-group time-group">
+          <label for="nak-transit-custom-time">
+            <i class="fas fa-clock"></i> <span>{{ _('సమయం') }}:</span>
+          </label>
+          <input type="time" id="nak-transit-custom-time">
+        </div>
+      </div>
+
+      <!-- Main Button -->
+      <button onclick="fetchNakshatraTransitChart()" id="transit-btn" class="transit-submit-btn">
+        <i class="fas fa-satellite" style="filter: drop-shadow(0 0 5px red) drop-shadow(0 0 5px orange) drop-shadow(0 0 5px yellow) drop-shadow(0 0 5px green) drop-shadow(0 0 5px blue) drop-shadow(0 0 5px indigo) drop-shadow(0 0 5px violet);"></i> <span>{{ _('ఈ రోజు గ్రహ స్థితి') }}</span>
+      </button>
+
+      <div id="transit-loading" style="display: none; color: #10b981; margin-top: 12px; font-size: 14px; font-weight: 600;">
+        <i class="fas fa-spinner fa-spin"></i> {{ _('జనరేట్ చేస్తోంది...') }}
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Toggle button for transit chart (shown after transit loads) -->
+
+  <div id="transit-toggle-bar" class="no-print" style="display: none; text-align: center; margin: 10px 0;">
+
+    <button id="transit-toggle-btn" onclick="toggleTransitChart()" class="action-btn-pill" style="border-color: #10b981; color: #10b981;">
+
+      <i class="fas fa-eye-slash" id="transit-toggle-icon"></i>
+
+      <span id="transit-toggle-text">{{ _('ఈ రోజు గోచార కుండలి దాచు') }}</span>
+
+    </button>
+
+  </div>
+
+
+
+  <!-- Today's Transit Nakshatra Chart Container -->
+
+  <div
+</div>
