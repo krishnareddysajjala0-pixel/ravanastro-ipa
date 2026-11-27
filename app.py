@@ -1718,6 +1718,108 @@ def get_kundali_data(name, dob, tob, place, lat, lon):
         'nak_index': nak_index
     }
 
+
+def get_chart3_data(birth_info, selected_lang="te"):
+    """Compute and format data for Dwadasa Grahamula Phalitalu (Chart 3)"""
+    lagna = birth_info.get('lagna', '') if birth_info else ''
+    native_party = ""
+    friends = []
+    enemies = []
+
+    if birth_info:
+        planet_positions = birth_info.get('planet_positions', [])
+        
+        # Load dynamic constants and rules from JSON files
+        ASTRO_CONSTANTS = load_rules('astro_constants.json')
+        GURU_PARTY_LAGNAS = ASTRO_CONSTANTS.get('GURU_PARTY_LAGNAS', [])
+        GURU_PARTY_PLANETS = ASTRO_CONSTANTS.get('GURU_PARTY_PLANETS', [])
+        BITTER_ENEMIES = ASTRO_CONSTANTS.get('BITTER_ENEMIES', {})
+        PLANET_RULERSHIPS = load_localized_constants().get('PLANET_RULERSHIPS', {})
+        OWN_HOUSE_RULES = ASTRO_CONSTANTS.get('OWN_HOUSE_RULES', {})
+        
+        native_party = "గురు వర్గము" if lagna in GURU_PARTY_LAGNAS else "శని వర్గము"
+        
+        results_data = []
+        for p in planet_positions:
+            p_name = p['name']
+            p_lagna = p['lagna']
+            
+            # is_friend?
+            is_green = any(gp in p_name or p_name in gp for gp in GURU_PARTY_PLANETS)
+            is_friend = (is_green == (native_party == "గురు వర్గము"))
+            
+            # is_own_house?
+            own_house = "N/A"
+            is_own_house = False
+            for rule_name, rule_house in OWN_HOUSE_RULES.items():
+                if rule_name in p_name or p_name in rule_name:
+                    own_house = rule_house
+                    is_own_house = (p_lagna == rule_house)
+                    break
+            
+            # bitter_enemy?
+            bitter_enemy = None
+            for be_key, be_val in BITTER_ENEMIES.items():
+                if be_key in p_name or p_name in be_key:
+                    bitter_enemy = be_val
+                    break
+
+            # detailed Rulership
+            rulership = "N/A"
+            for r_name, r_text in PLANET_RULERSHIPS.items():
+                if r_name and (r_name in p_name or p_name in r_name):
+                    rulership = r_text
+                    break
+            
+            if rulership == "N/A":
+                canonical_p_map = {
+                    "కేతు": ["కేతు", "కేతువు", "Ke", "Ketu"],
+                    "భూమి": ["భూమి", "Ea", "Earth", "Bhoomi"],
+                    "సూర్య": ["సూర్య", "సూర్యుడు", "Su", "Sun"],
+                    "చంద్ర": ["చంద్ర", "చంద్రుడు", "Mo", "Moon"],
+                    "కుజ": ["కుజ", "కుజుడు", "Ma", "Mars"],
+                    "బుధ": ["బుధ", "బుధుడు", "Me", "Mercury"],
+                    "గురు": ["గురు", "గురువు", "Ju", "Jupiter"],
+                    "శుక్ర": ["శుక్ర", "శుక్రుడు", "Ve", "Venus"],
+                    "శని": ["శని", "శనీశ్వరుడు", "Sa", "Saturn"],
+                    "రాహు": ["రాహు", "రాహువు", "Ra", "Rahu"],
+                    "చిత్ర": ["చిత్ర", "Ch", "Chitra"],
+                    "మిత్ర": ["మిత్ర", "Mi", "Mitra"]
+                }
+                for c_telugu, aliases in canonical_p_map.items():
+                    if any(a in p_name or p_name in a for a in aliases):
+                        for a in aliases:
+                            if a in PLANET_RULERSHIPS:
+                                rulership = PLANET_RULERSHIPS[a]
+                                break
+                        if rulership != "N/A":
+                            break
+
+            results_data.append({
+                "name": p_name,
+                "current_lagna": p_lagna,
+                "own_house": own_house,
+                "is_own_house": is_own_house,
+                "is_friend": is_friend,
+                "bitter_enemy": bitter_enemy,
+                "color": p.get('color', '#ffffff'),
+                "degree": p.get('degree', ''),
+                "strength": p.get('strength', 0),
+                "nakshatra": p.get('nakshatra', ''),
+                "padam": p.get('padam', ''),
+                "rulership": rulership,
+                "is_hand": p.get('is_hand', False)
+            })
+
+        friends = [p for p in results_data if p['is_friend'] and not p['is_hand']]
+        enemies = [p for p in results_data if not p['is_friend'] and not p['is_hand']]
+
+    return {
+        "native_party": native_party,
+        "friends": friends,
+        "enemies": enemies
+    }
+
 @app.route("/chart", methods=["GET", "POST"])
 def chart():
     if request.method == "POST":
@@ -1755,7 +1857,23 @@ def chart():
     # Calculate dasha data for the print Mahadasha table
     dasha_data = get_dasha_info(data)
 
-    return render_template("chart.html", **data, **dasha_data)
+    # Calculate Nakshatra pada boxes for full report print
+    nakshatra_boxes = build_nakshatra_pada_boxes(data)
+
+    # Calculate Chart 3 (Dwadasa Grahalu) for full report print
+    selected_lang = session.get("lang") or request.cookies.get("lang") or "te"
+    c3_data = get_chart3_data(session.get('birth_info', {}), selected_lang)
+
+    return render_template(
+        "chart.html",
+        **data,
+        **dasha_data,
+        nakshatra_boxes=nakshatra_boxes,
+        native_party=c3_data.get('native_party', ''),
+        friends=c3_data.get('friends', []),
+        enemies=c3_data.get('enemies', []),
+        planet_colors=PLANET_COLORS
+    )
 
 @app.route("/compare_kundali")
 def compare_kundali():
@@ -2446,100 +2564,11 @@ def chart3():
             session['birth_info'] = birth_info
     lagna = birth_info.get('lagna', '')
 
-    native_party = ""
-    friends = []
-    enemies = []
-
-    if birth_info:
-        planet_positions = birth_info.get('planet_positions', [])
-        
-        # Load dynamic constants and rules from JSON files
-        ASTRO_CONSTANTS = load_rules('astro_constants.json')
-        GURU_PARTY_LAGNAS = ASTRO_CONSTANTS.get('GURU_PARTY_LAGNAS', [])
-        GURU_PARTY_PLANETS = ASTRO_CONSTANTS.get('GURU_PARTY_PLANETS', [])
-        BITTER_ENEMIES = ASTRO_CONSTANTS.get('BITTER_ENEMIES', {})
-        PLANET_RULERSHIPS = load_localized_constants().get('PLANET_RULERSHIPS', {})
-        OWN_HOUSE_RULES = ASTRO_CONSTANTS.get('OWN_HOUSE_RULES', {})
-        
-        native_party = "గురు వర్గము" if lagna in GURU_PARTY_LAGNAS else "శని వర్గము"
-        
-        # Process planets
-        results_data = []
-        for p in planet_positions:
-            p_name = p['name']
-            p_lagna = p['lagna']
-            
-            # is_friend?
-            is_green = any(gp in p_name or p_name in gp for gp in GURU_PARTY_PLANETS)
-            is_friend = (is_green == (native_party == "గురు వర్గము"))
-            
-            # is_own_house?
-            own_house = "N/A"
-            is_own_house = False
-            for rule_name, rule_house in OWN_HOUSE_RULES.items():
-                if rule_name in p_name or p_name in rule_name:
-                    own_house = rule_house
-                    is_own_house = (p_lagna == rule_house)
-                    break
-            
-            # bitter_enemy?
-            bitter_enemy = None
-            for be_key, be_val in BITTER_ENEMIES.items():
-                if be_key in p_name or p_name in be_key:
-                    bitter_enemy = be_val
-                    break
-
-            # detailed Rulership (ఆధీనములో ఉన్నవి)
-            rulership = "N/A"
-            for r_name, r_text in PLANET_RULERSHIPS.items():
-                if r_name and (r_name in p_name or p_name in r_name):
-                    rulership = r_text
-                    break
-            
-            # Robust fallback for Ketu, Bhumi and other planets
-            if rulership == "N/A":
-                canonical_p_map = {
-                    "కేతు": ["కేతు", "కేతువు", "Ke", "Ketu"],
-                    "భూమి": ["భూమి", "Ea", "Earth", "Bhoomi"],
-                    "సూర్య": ["సూర్య", "సూర్యుడు", "Su", "Sun"],
-                    "చంద్ర": ["చంద్ర", "చంద్రుడు", "Mo", "Moon"],
-                    "కుజ": ["కుజ", "కుజుడు", "Ma", "Mars"],
-                    "బుధ": ["బుధ", "బుధుడు", "Me", "Mercury"],
-                    "గురు": ["గురు", "గురువు", "Ju", "Jupiter"],
-                    "శుక్ర": ["శుక్ర", "శుక్రుడు", "Ve", "Venus"],
-                    "శని": ["శని", "శనీశ్వరుడు", "Sa", "Saturn"],
-                    "రాహు": ["రాహు", "రాహువు", "Ra", "Rahu"],
-                    "చిత్ర": ["చిత్ర", "Ch", "Chitra"],
-                    "మిత్ర": ["మిత్ర", "Mi", "Mitra"]
-                }
-                for c_telugu, aliases in canonical_p_map.items():
-                    if any(a in p_name or p_name in a for a in aliases):
-                        for a in aliases:
-                            if a in PLANET_RULERSHIPS:
-                                rulership = PLANET_RULERSHIPS[a]
-                                break
-                        if rulership != "N/A":
-                            break
-
-            results_data.append({
-                "name": p_name,
-                "current_lagna": p_lagna,
-                "own_house": own_house,
-                "is_own_house": is_own_house,
-                "is_friend": is_friend,
-                "bitter_enemy": bitter_enemy,
-                "color": p.get('color', '#ffffff'),
-                "degree": p.get('degree', ''),
-                "strength": p.get('strength', 0),
-                "nakshatra": p.get('nakshatra', ''),
-                "padam": p.get('padam', ''),
-                "rulership": rulership,
-                "is_hand": p.get('is_hand', False)
-            })
-
-        # Group into Friends and Enemies (Main planets only for the summary cards)
-        friends = [p for p in results_data if p['is_friend'] and not p['is_hand']]
-        enemies = [p for p in results_data if not p['is_friend'] and not p['is_hand']]
+    selected_lang = session.get('lang') or request.cookies.get('lang') or 'te'
+    c3_data = get_chart3_data(birth_info, selected_lang)
+    native_party = c3_data.get('native_party', '')
+    friends = c3_data.get('friends', [])
+    enemies = c3_data.get('enemies', [])
 
     name = birth_info.get('name', '') if birth_info else ''
     selected_lang = session.get('lang') or request.cookies.get('lang') or 'te'

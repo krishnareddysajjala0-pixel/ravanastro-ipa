@@ -4676,6 +4676,8 @@ body {
 
 
       <input type="hidden" id="edit-profile-id">
+      <input type="hidden" id="edit-lat">
+      <input type="hidden" id="edit-lon">
 
 
 
@@ -5546,76 +5548,62 @@ body {
       }
 
       // Check if lat/lon are set
-
-
-
       if (!latInput.value || !lonInput.value) {
-
-
-
         e.preventDefault();
+        const overlay = document.getElementById('loading-overlay');
+        const qPlace = placeInput.value.trim();
 
+        // If place text is entered, auto-resolve and submit immediately!
+        if (qPlace.length >= 2) {
+          if (overlay) {
+            overlay.style.display = 'flex';
+            const tEl = overlay.querySelector('p, #typing-text, #typing-text-overlay, div[style*="color:#ffd700"], div[style*="color: #ffd700"]');
+            if (tEl) tEl.textContent = '{{ _("లొకేషన్ సేకరిస్తోంది...") }}';
+          }
+          const cVal = (countrySelect && countrySelect.value) ? countrySelect.value : 'in';
+          fetch(`/api/search_place?q=${encodeURIComponent(qPlace)}&country=${encodeURIComponent(cVal)}`)
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.length > 0) {
+                latInput.value = data[0].lat;
+                lonInput.value = data[0].lon;
+                if (data[0].display_name) placeInput.value = data[0].display_name;
+                mainForm.submit();
+              } else {
+                if (overlay) overlay.style.display = 'none';
+                placeInput.style.borderColor = "#ff6b6b";
+                placeInput.style.animation = "shake 0.5s";
+                alert("{{ _('దయచేసి సరైన జన్మ స్థలాన్ని ఎంచుకోండి') }}");
+              }
+            })
+            .catch(() => {
+              if (overlay) overlay.style.display = 'none';
+              placeInput.style.borderColor = "#ff6b6b";
+              placeInput.style.animation = "shake 0.5s";
+              alert("{{ _('దయచేసి సరైన జన్మ స్థలాన్ని ఎంచుకోండి') }}");
+            });
+          return;
+        }
 
-
-
-
-
-
+        // No place entered at all - cancel loader and shake
+        if (overlay) overlay.style.display = 'none';
         placeInput.style.borderColor = "#ff6b6b";
-
-
-
         placeInput.style.animation = "shake 0.5s";
-
-
-
-
-
-
 
         const placeContainer = placeInput.closest('.place-container') || placeInput.parentNode;
         let errorMsg = placeContainer.querySelector('.location-error');
-
         if (!errorMsg) {
-
           errorMsg = document.createElement('div');
-
           errorMsg.className = 'error-message location-error';
-
           errorMsg.style.display = 'block';
-
           errorMsg.textContent = '{{ _("దయచేసి జాబితా నుండి ఒక స్థలాన్ని ఎంచుకోండి") }}';
-
           placeContainer.appendChild(errorMsg);
-
         }
 
-
-
-
-
-
-
         setTimeout(() => {
-
-
-
           placeInput.style.animation = "";
-
-
-
         }, 500);
-
-
-
-
-
-
-
         return;
-
-
-
       }
 
 
@@ -6771,6 +6759,10 @@ body {
       if (placeEl) placeEl.placeholder = "{{ _('లొకేషన్ సేకరిస్తోంది...') }}";
 
       const applyEditCoords = async (lat, lon) => {
+        const editLatEl = document.getElementById("edit-lat");
+        const editLonEl = document.getElementById("edit-lon");
+        if (editLatEl) editLatEl.value = lat;
+        if (editLonEl) editLonEl.value = lon;
         try {
           const response = await fetch(`/api/reverse_geocode?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`);
           const data = await response.json();
@@ -6843,7 +6835,11 @@ body {
     function clearEditLocation() {
       const placeEl = document.getElementById('edit-place');
       const sugEl = document.getElementById('edit-suggestions');
+      const editLatEl = document.getElementById("edit-lat");
+      const editLonEl = document.getElementById("edit-lon");
       if (placeEl) placeEl.value = "";
+      if (editLatEl) editLatEl.value = "";
+      if (editLonEl) editLonEl.value = "";
       if (sugEl) {
         sugEl.innerHTML = "";
         sugEl.style.display = "none";
@@ -6888,6 +6884,10 @@ body {
             div.onclick = (e) => {
               e.stopPropagation();
               editPlaceInput.value = p.display_name;
+              const editLatEl = document.getElementById("edit-lat");
+              const editLonEl = document.getElementById("edit-lon");
+              if (editLatEl && p.lat) editLatEl.value = p.lat;
+              if (editLonEl && p.lon) editLonEl.value = p.lon;
               if (p.country_code) syncEditCountrySelect(p.country_code);
               suggestionsEl.style.display = "none";
               suggestionsEl.innerHTML = "";
@@ -7027,6 +7027,12 @@ body {
       if (editCountryEl) editCountryEl.value = mainCountry || 'in';
 
       document.getElementById('edit-place').value = mainPlace || '';
+      const mainLat = document.getElementById('lat') ? document.getElementById('lat').value : '';
+      const mainLon = document.getElementById('lon') ? document.getElementById('lon').value : '';
+      const editLat = document.getElementById('edit-lat');
+      const editLon = document.getElementById('edit-lon');
+      if (editLat) editLat.value = mainLat || '';
+      if (editLon) editLon.value = mainLon || '';
 
 
 
@@ -7067,6 +7073,8 @@ body {
 
 
               document.getElementById('edit-place').value = data.display_name;
+              if (document.getElementById('edit-lat')) document.getElementById('edit-lat').value = lat;
+              if (document.getElementById('edit-lon')) document.getElementById('edit-lon').value = lon;
 
 
 
@@ -7164,8 +7172,10 @@ body {
 
       document.getElementById('edit-place').value = profile.place || '';
       const editCountryEl = document.getElementById('edit-country');
-      if (editCountryEl) editCountryEl.value = 'in';
+      if (editCountryEl) editCountryEl.value = profile.country || 'in';
       syncEditCountryFromPlace(profile.place || '');
+      if (document.getElementById('edit-lat')) document.getElementById('edit-lat').value = profile.lat || '';
+      if (document.getElementById('edit-lon')) document.getElementById('edit-lon').value = profile.lon || '';
 
 
 
@@ -7221,73 +7231,41 @@ body {
 
 
 
-    function saveEditedProfile() {
-
-
-
+    async function saveEditedProfile() {
       const idStr = document.getElementById('edit-profile-id').value;
-
-
-
-      const id = parseInt(idStr, 10);
-
-
-
       const name = document.getElementById('edit-name').value.trim();
-
-
-
       const dob = document.getElementById('edit-dob').value;
-
-
-
       const tob = document.getElementById('edit-tob').value;
-
-
-
       const place = document.getElementById('edit-place').value.trim();
-
-
-
-
-
-
+      let lat = document.getElementById('edit-lat') ? document.getElementById('edit-lat').value.trim() : '';
+      let lon = document.getElementById('edit-lon') ? document.getElementById('edit-lon').value.trim() : '';
+      const countryEl = document.getElementById('edit-country');
+      const country = countryEl ? countryEl.value : 'in';
 
       if (!name) {
-
-
-
         alert("{{ _('దయచేసి పేరు నమోదు చేయండి') }}");
-
-
-
         return;
-
-
-
       }
-
-
-
       if (!dob) {
-
-
-
         alert("{{ _('దయచేసి జన్మ తేది ఎంచుకోండి') }}");
-
-
-
         return;
-
-
-
       }
 
-
-
-
-
-
+      // If lat/lon missing but place provided, geocode automatically before saving!
+      if ((!lat || !lon) && place) {
+        try {
+          const res = await fetch(`/api/search_place?q=${encodeURIComponent(place)}&country=${encodeURIComponent(country)}`);
+          const data = await res.json();
+          if (data && data.length > 0) {
+            lat = data[0].lat;
+            lon = data[0].lon;
+            if (document.getElementById('edit-lat')) document.getElementById('edit-lat').value = lat;
+            if (document.getElementById('edit-lon')) document.getElementById('edit-lon').value = lon;
+          }
+        } catch(e) {
+          console.error('Error auto-geocoding place on save:', e);
+        }
+      }
 
       let profiles = getSavedProfiles();
 
@@ -7299,6 +7277,9 @@ body {
           profiles[idx].dob = dob;
           profiles[idx].tob = tob;
           profiles[idx].place = place;
+          profiles[idx].lat = lat;
+          profiles[idx].lon = lon;
+          profiles[idx].country = country;
           saveProfilesList(profiles);
           renderSavedProfilesList();
           closeEditProfileModal();
@@ -7313,14 +7294,15 @@ body {
         dob: dob,
         tob: tob,
         place: place,
+        lat: lat,
+        lon: lon,
+        country: country,
         savedAt: new Date().toLocaleDateString('te-IN')
       };
       profiles.push(newProfile);
 
       saveProfilesList(profiles);
       renderSavedProfilesList();
-
-
 
       closeEditProfileModal();
       alert("{{ _('వివరాలు దాచబడ్డాయి!') }}");
@@ -7370,6 +7352,31 @@ body {
 
 
       if (lonInput) lonInput.value = profile.lon || '';
+
+      // Backward compatibility: If older saved profile lacks lat/lon, auto-resolve immediately!
+      if (profile.place && (!profile.lat || !profile.lon)) {
+        const countryVal = profile.country || (countrySelect ? countrySelect.value : 'in');
+        fetch(`/api/search_place?q=${encodeURIComponent(profile.place)}&country=${encodeURIComponent(countryVal)}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data && data.length > 0) {
+              const rLat = data[0].lat;
+              const rLon = data[0].lon;
+              if (latInput) latInput.value = rLat;
+              if (lonInput) lonInput.value = rLon;
+              profile.lat = rLat;
+              profile.lon = rLon;
+              const allProfiles = getSavedProfiles();
+              const pIdx = allProfiles.findIndex(p => p.id === profile.id);
+              if (pIdx !== -1) {
+                allProfiles[pIdx].lat = rLat;
+                allProfiles[pIdx].lon = rLon;
+                saveProfilesList(allProfiles);
+              }
+            }
+          })
+          .catch(e => console.error('Error auto-resolving legacy profile coords:', e));
+      }
 
 
 
