@@ -1181,26 +1181,29 @@
 
 
 
-    .header {
+    /* Header: Clean 2-line layout without any card background, border, or box shadow */
+    .header,
+    #print-wrapper .header {
+      text-align: center !important;
+      margin-top: 0 !important;
+      margin-bottom: 8px !important;
+      padding-top: 0 !important;
+      padding-bottom: 16px !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      position: relative !important;
+      overflow: visible !important;
+    }
 
-
-
-      text-align: center;
-
-
-
-      margin-bottom: 12px ;
-
-
-
-      padding-bottom: 20px;
-
-
-
-      position: relative;
-
-
-
+    .header::before,
+    #print-wrapper .header::before {
+      display: none !important;
+      content: none !important;
     }
 
 
