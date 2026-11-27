@@ -1734,7 +1734,7 @@ def get_chart3_data(birth_info, selected_lang="te"):
         GURU_PARTY_LAGNAS = ASTRO_CONSTANTS.get('GURU_PARTY_LAGNAS', [])
         GURU_PARTY_PLANETS = ASTRO_CONSTANTS.get('GURU_PARTY_PLANETS', [])
         BITTER_ENEMIES = ASTRO_CONSTANTS.get('BITTER_ENEMIES', {})
-        PLANET_RULERSHIPS = load_localized_constants().get('PLANET_RULERSHIPS', {})
+        PLANET_RULERSHIPS = load_localized_constants(selected_lang).get('PLANET_RULERSHIPS', {})
         OWN_HOUSE_RULES = ASTRO_CONSTANTS.get('OWN_HOUSE_RULES', {})
         
         native_party = "గురు వర్గము" if lagna in GURU_PARTY_LAGNAS else "శని వర్గము"

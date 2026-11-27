@@ -86,7 +86,7 @@
                         <td class="gemstone-cell kuja-planet">{{ _('పగడం') }}</td>
                         <td class="gemstone-cell ketu-planet">{{ _('వైఢూర్యం') }}</td>
                         <td class="gemstone-cell bhoomi-planet">{{ _('నల్లరాయి') }}</td>
-                        <td class="gemstone-cell shani-planet">{{ _('నీలం') }}</td>
+                        <td class="gemstone-cell shani-planet">{% if not current_lang or current_lang == 'te' %}నీలం{% else %}{{ _('నీలం రత్నం') }}{% endif %}</td>
                         <td class="gemstone-cell mitra-planet">{{ _('ఎర్రరాయి') }}</td>
                         <td class="gemstone-cell chitra-planet">{{ _('తెల్లరాయి') }}</td>
                         <td class="gemstone-cell budha-planet">{{ _('పచ్చ') }}</td>
@@ -243,8 +243,8 @@
         </div>
         <!-- Page 1 also holds party badge + 1st half of Friendly Planets so print fits strictly on 2 pages -->
         {% if native_party %}
-        <div class="party-info {{ 'guru-bg' if native_party == 'గురు వర్గము' else 'shani-bg' }}">
-            <div class="party-badge">{% if native_party == 'గురు వర్గము' %}{{ _('గురు వర్గ వ్యక్తి') }}{% else %}{{ _('శని వర్గ వ్యక్తి') }}{% endif %}</div>
+        <div class="party-info {{ 'guru-bg' if (native_party == 'గురు వర్గము' or native_party == _('గురు వర్గము')) else 'shani-bg' }}">
+            <div class="party-badge">{% if native_party == 'గురు వర్గము' or native_party == _('గురు వర్గము') %}{{ _('గురు వర్గ వ్యక్తి') }}{% else %}{{ _('శని వర్గ వ్యక్తి') }}{% endif %}</div>
             <div style="font-size: 14px; margin-top: 5px; opacity: 0.9;">{{ _('మీ లగ్నం:') }} <strong>{{ lagna }}</strong></div>
         </div>
         {% endif %}
